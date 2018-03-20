@@ -1,0 +1,12 @@
+---
+title: "Collection of Methods for immune cell deconvolution from bulk RNAseq"
+author: "Gregor Sturm"
+date: \today
+output: pdf_document
+bibliography: references.bib
+vignette: >
+  %\VignetteIndexEntry{ Collection of Methods for immune cell deconvolution from bulk RNAseq }
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc} 
+---
+

@@ -1,0 +1,23 @@
+language: r
+
+sudo: required
+
+os:
+    - linux
+    - osx
+
+r_packages:
+    - rmarkdown
+
+r_github_packages:
+    - jimhester/covr
+
+after_success:
+    - Rscript -e 'library(covr);codecov()'
+
+notifications:
+    email:
+      recipients:
+          - sturm@pieris.com
+      on_success: change
+      on_failure: always

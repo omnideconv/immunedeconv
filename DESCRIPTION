@@ -1,4 +1,4 @@
-Package: immune_deconvolution_methods
+Package: immunedeconv
 Title: Collection of Methods for immune cell deconvolution from bulk RNAseq
 Version: 0.0.1
 Maintainer: Gregor Sturm <sturm@pieris.com>

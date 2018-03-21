@@ -1,12 +1,11 @@
 ---
 title: "Collection of Methods for immune cell deconvolution from bulk RNAseq"
 author: "Gregor Sturm"
-date: \today
-output: pdf_document
-bibliography: references.bib
+date:  "`r Sys.Date()`"
+output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ Collection of Methods for immune cell deconvolution from bulk RNAseq }
+  %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
-  %\usepackage[utf8]{inputenc} 
+  \usepackage[utf8]{inputenc}
 ---
 

@@ -5,14 +5,20 @@ Maintainer: Gregor Sturm <sturm@pieris.com>
 Description: What the package does (one paragraph).
 Author: Gregor Sturm
 Depends: R (>= 3.3.1)
-Imports:
+Imports: tidyverse
 Suggests:
     testthat,
     knitr,
     rmarkdown
+Remotes:
+    Accio/BioQC,
+    dviraran/xCell,
+    GfellerLab/EPIC,
+    ebecht/MCPcounter/Source
 VignetteBuilder: knitr
 License: CC-BY-4.0
 Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
 LazyData: true
 URL: https://github.com/grst/immune_deconvolution_methods
 BugRepots: https://github.com/grst/immune_deconvolution_methods/issues

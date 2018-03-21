@@ -16,6 +16,7 @@ vignettes/*.pdf
 
 # ignore emacs backup files
 *~
+~$*
 
 # ignore builds
 builds
@@ -23,4 +24,3 @@ builds
 # other files
 *.Rproj
 datasets
-docs

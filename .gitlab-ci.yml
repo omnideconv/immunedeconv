@@ -13,6 +13,7 @@ r-base:
   image: r-base:latest
   script:
     - Rscript -e 'install.packages(c("devtools", "roxygen2", "covr"))'
+    - Rscript -e 'devtools::install_github("hadley/devtools")'
     - Rscript -e 'devtools::install_dev_deps()'
     - Rscript -e 'devtools::check()'
     - Rscript -e 'covr::codecov(type = "all", quiet = FALSE)'

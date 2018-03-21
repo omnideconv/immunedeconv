@@ -1,5 +1,3 @@
-source("DOCKER_codes.R")
-
 #' Use quanTIseq (F. Finotello, C. Mayer, C. Plattner, G. Laschober, D. Rieder, 
 #' H. Hackl, A. Krogsdam, W. Posch, D. Wilflingseder, S. Sopper, M. Jsselsteijn,
 #' D. Johnsons, Y. Xu, Y. Wang, M. E. Sanders, M. V. Estrada, P. Ericsson-Gonzalez,
@@ -53,23 +51,21 @@ quantiseq_decon = function(mix.mat,
   listsig<-c("TIL10")
   if (signame %in% listsig) {
     
-    sig.mat.file<-file.path("home/deconvolution/",
-                            paste0(signame, "_signature.txt"))
+    sig.mat.file <- system.file("extdata", "quantiseq", paste0(signame, "_signature.txt"),
+                                package="immunedeconv", mustWork=TRUE)
     
-    mRNA.file<-file.path("home/deconvolution/",
-                         paste0(signame, "_mRNA_scaling.txt"))
+    mRNA.file <- system.file("extdata", "quantiseq", paste0(signame, "_mRNA_scaling.txt"),
+                             package="immunedeconv", mustWork=TRUE)
     
-    fileab<-file.path("home/deconvolution/",
-      paste0(signame,"_TCGA_aberrant_immune_genes.txt"))
+    fileab <- system.file("extdata", "quantiseq", paste0(signame,"_TCGA_aberrant_immune_genes.txt"),
+                          package="immunedeconv", mustWork=TRUE) 
     
     if (rmgenes=="default") {
-      filerm<-file.path("home/deconvolution/",
-                        paste0(signame,"_rmgenes.txt"))
-      
+      filerm <- system.file("extdata", "quantiseq", paste0(signame,"_rmgenes.txt"),
+                            package="immunedeconv", mustWork=TRUE) 
     } else if (rmgenes=="path") {
-      filerm<-file.path("home/deconvolution/",
-                        paste0(signame,"rmgenes.txt"))
-      
+      filerm <- system.file("extdata", "quantiseq", paste0(signame,"rmgenes.txt"),
+                            package="immunedeconv", mustWork=TRUE) 
     }
   
     

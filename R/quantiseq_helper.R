@@ -31,7 +31,8 @@ makeQN<-function(mix.mat) {
 
 mapGenes<-function(mydata) {
 
-  HGNC<-read.csv("home/deconvolution/HGNC_genenames_20170418.txt", header=TRUE, sep="\t")
+  HGNC<-read.csv(system.file("extdata", "quantiseq", "HGNC_genenames_20170418.txt", package="immunedeconv", mustWork=TURE),
+                 header=TRUE, sep="\t")
 
   curgenes<-rownames(mydata)
   newgenes<-rep(NA,length(curgenes))
@@ -194,7 +195,7 @@ DCrr<-function(b, A, method, scaling){
 
 celldensities <- function(DCres){
 
-  imageinfo <- read.csv("/home/deconvolution/totalcells.txt", header=FALSE, sep="\t", stringsAsFactors = FALSE)
+  imageinfo <- system.file("extdata", "quantiseq", "totalcells.txt", package="immunedeconv", mustWork=TRUE)
   csbj <- intersect(rownames(DCres), imageinfo[,1])
   imageinfo <- imageinfo[imageinfo[,1] %in% csbj,, drop=FALSE]
   DCres <- DCres[csbj,, drop=FALSE]

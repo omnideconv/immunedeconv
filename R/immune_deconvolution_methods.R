@@ -4,7 +4,9 @@
 #' @name immune_deconvolution_methods
 NULL
 
-
+#' list of supported immune deconvolution methods
+#' @export
+deconvolution_methods = c("mcp_counter", "epic", "quantiseq", "xcell")
 
 #' Add together two numbers.
 #' 
@@ -15,7 +17,7 @@ NULL
 #' add(1, 1)
 #' add(10, 1)
 #' @export
-deconvolute = function(gene_expression_matrix, method=c("mcp_counter", "epic", "quantiseq", "xcell")) {
+deconvolute = function(gene_expression_matrix, method=deconvolution_methods) {
   res = switch(method,
          xcell=xCellAnalysis(gene_expression_matrix),
          mcp_counter=MCPcounter.estimate(gene_expression_matrix, "HUGO_symbols"),

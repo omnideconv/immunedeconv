@@ -19,3 +19,6 @@ vignettes/*.pdf
 
 # ignore builds
 builds
+
+# other files
+*.Rproj

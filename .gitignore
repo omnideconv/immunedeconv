@@ -22,3 +22,5 @@ builds
 
 # other files
 *.Rproj
+datasets
+docs

@@ -11,6 +11,7 @@ Suggests:
     knitr,
     rmarkdown
 Remotes:
+    bioc::Biobase,
     bioc::GSVA,
     bioc::GSEABase,
     Accio/BioQC,

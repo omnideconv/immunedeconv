@@ -12,7 +12,7 @@ r-base:
   stage: test
   image: r-base:latest
   script:
-    - Rscript -e 'install.packages(c("devtools", "roxygen2", covr))'
+    - Rscript -e 'install.packages(c("devtools", "roxygen2", "covr"))'
     - Rscript -e 'devtools::install_dev_deps()'
     - Rscript -e 'devtools::check()'
     - Rscript -e 'covr::codecov(type = "all", quiet = FALSE)'

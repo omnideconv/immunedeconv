@@ -12,6 +12,7 @@ r-base:
   stage: test
   image: r-base:latest
   script:
+    - Rscript -e 'source("https://bioconductor.org/biocLite.R"); biocLite("BiocInstaller")'
     - Rscript -e 'install.packages(c("devtools", "roxygen2", "covr"))'
     - Rscript -e 'devtools::install_github("hadley/devtools")'
     - Rscript -e 'devtools::install_dev_deps()'

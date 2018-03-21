@@ -1,9 +1,8 @@
 Package: immunedeconv
 Title: Collection of Methods for immune cell deconvolution from bulk RNAseq
 Version: 0.0.1
-Maintainer: Gregor Sturm <sturm@pieris.com>
 Description: What the package does (one paragraph).
-Author: Gregor Sturm
+Authors@R: person("Gregor", "Sturm", role=c("aut", "cre"), mail=mail@gregor-sturm.de)
 Depends: R (>= 3.3.1)
 Imports: tidyverse
 Suggests:
@@ -11,6 +10,7 @@ Suggests:
     knitr,
     rmarkdown
 Remotes:
+    bioc::BiocInstaller,
     bioc::Biobase,
     bioc::GSVA,
     bioc::GSEABase,

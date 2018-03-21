@@ -1,13 +1,10 @@
-#' What the package does (one paragraph).
+#' Collection of immune cell deconvolution methods. 
 #'
 #' @docType package
 #' @name immune_deconvolution_methods
 NULL
 
-#
-# Write functions only and document them with roxygen-styled comments.
-# Example below taken from http://r-pkgs.had.co.nz/man.html
-#
+
 
 #' Add together two numbers.
 #' 
@@ -18,6 +15,13 @@ NULL
 #' add(1, 1)
 #' add(10, 1)
 #' @export
-add <- function(x, y) {
-      x + y
+deconvolute = function(gene_expression_matrix, method=c("mcp_counter", "epic", "quantiseq", "xcell")) {
+  res = switch(method,
+         xcell=xCellAnalysis(gene_expression_matrix),
+         mcp_counter=MCPcounter.estimate(gene_expression_matrix, "HUGO_symbols"),
+         epic=function() {
+            epic_res_raw = EPIC(bulk=eset_mat)
+            t(epic_res_raw$cellFractions)
+         })
+  res
 }

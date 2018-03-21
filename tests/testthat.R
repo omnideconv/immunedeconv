@@ -1,4 +1,4 @@
 library(testthat)
-library(immune_deconvolution_methods)
+library(immunedeconv)
 
-test_check("immune_deconvolution_methods")
+test_check("immunedeconv")

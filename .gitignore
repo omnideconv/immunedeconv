@@ -16,3 +16,6 @@ vignettes/*.pdf
 
 # ignore emacs backup files
 *~
+
+# ignore builds
+builds

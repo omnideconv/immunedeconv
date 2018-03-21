@@ -3,7 +3,7 @@ variables:
 
 before_script:
   - apt-get update -qq
-  - apt-get install -y --no-install-recommends libcurl4-openssl-dev libssh2-1-dev libssl-dev git
+  - apt-get install -y --no-install-recommends libcurl4-openssl-dev libssh2-1-dev libssl-dev git libxml2-dev
   - apt-get install -y --no-install-recommends qpdf pandoc pandoc-citeproc
   - export _R_CHECK_CRAN_INCOMING_=FALSE
   - export _R_CHECK_FORCE_SUGGESTS_=TRUE

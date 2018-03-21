@@ -8,6 +8,9 @@ NULL
 #' @export
 deconvolution_methods = c("mcp_counter", "epic", "quantiseq", "xcell")
 
+#' a mapping of the various cell_types between the different methods to a common standard
+cell_type_mapping = read_xlsx(system.file("extdata", "cell_type_mapping.xlsx", package="immunedeconv", mustWork=TRUE))
+
 #' Add together two numbers.
 #' 
 #' @param x A number.
@@ -24,6 +27,13 @@ deconvolute = function(gene_expression_matrix, method=deconvolution_methods) {
          epic=function() {
             epic_res_raw = EPIC(bulk=eset_mat)
             t(epic_res_raw$cellFractions)
-         })
+         }) %>% 
+    as_tibble(rownames="method_cell_type")
+  
+  res = cell_type_mapping %>%
+    select(method_cell_type=!!method, cell_type) %>% 
+    inner_join(res, by="method_cell_type") %>%
+    select(-method_cell_type)
+  
   res
 }

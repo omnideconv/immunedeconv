@@ -4,7 +4,9 @@ Version: 0.0.1
 Description: What the package does (one paragraph).
 Authors@R: person("Gregor", "Sturm", role=c("aut", "cre"), email="mail@gregor-sturm.de")
 Depends: R (>= 3.3.1)
-Imports: tidyverse
+Imports:
+    tidyverse,
+    readxl
 Suggests:
     testthat,
     knitr,

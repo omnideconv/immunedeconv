@@ -2,3 +2,4 @@ export("deconvolute")
 
 import("tidyverse")
 importFrom("xCell", "xCellAnalysis")
+importFrom("readxl", "read_xlsx")

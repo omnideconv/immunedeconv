@@ -11,6 +11,8 @@ Suggests:
     knitr,
     rmarkdown
 Remotes:
+    bioc::GSVA,
+    bioc::GSEABase,
     Accio/BioQC,
     dviraran/xCell,
     GfellerLab/EPIC,

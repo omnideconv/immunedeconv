@@ -1,5 +1,9 @@
 export("deconvolute")
+export("make_random_bulk", "make_bulk_eset")
+export("xCell.data")
 
+import("methods")
 import("tidyverse")
-importFrom("xCell", "xCellAnalysis")
+import("xCell")
 importFrom("readxl", "read_xlsx")
+importFrom("EPIC", "EPIC")

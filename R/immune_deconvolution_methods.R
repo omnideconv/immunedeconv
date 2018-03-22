@@ -3,6 +3,7 @@
 #' @docType package
 #' @name immune_deconvolution_methods
 #' @import methods
+#' @import dplyr
 NULL
 
 #' list of supported immune deconvolution methods

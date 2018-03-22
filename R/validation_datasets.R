@@ -1,5 +1,6 @@
 #' @importFrom assertthat assert_that
-
+#' @import dplyr
+NULL
 
 #' @export
 download_dataset = function(which_dataset=available_datasets) {

@@ -1,4 +1,7 @@
 # immune_deconvolution_methods #
 
-[![Build Status](https://travis-ci.org/grst/immune_deconvolution_methods.svg?branch=master)](https://travis-ci.org/grst/immune_deconvolution_methods)
-[![codecov.io](https://codecov.io/github/grst/immune_deconvolution_methods/coverage.svg?branch=master)](https://codecov.io/github/grst/immune_deconvolution_methods?branch=master)
+[![pipeline
+status](https://gitlab.com/pieris-bioinfo/immune_deconvolution_methods/badges/master/pipeline.svg)](https://gitlab.com/pieris-bioinfo/immune_deconvolution_methods/commits/master)
+
+[![coverage
+report](https://gitlab.com/pieris-bioinfo/immune_deconvolution_methods/badges/master/coverage.svg)](https://gitlab.com/pieris-bioinfo/immune_deconvolution_methods/commits/master)

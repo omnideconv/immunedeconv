@@ -18,7 +18,7 @@ load(system.file("extdata", "fantom5_expression_set.rda", package="immunedeconv"
 
 expr_mat = exprs(fantom5_expression_set)
 rownames(expr_mat) = fData(fantom5_expression_set) %>% pull("hgnc_symbol")
-r =deconvolute(expr_mat, method="xcell")
+r = deconvolute(expr_mat, "xcell")
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.

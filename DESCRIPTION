@@ -6,13 +6,15 @@ Authors@R: person("Gregor", "Sturm", role=c("aut", "cre"), email="mail@gregor-st
 Depends: R (>= 3.3.1)
 Imports:
     tidyverse,
-    readxl
+    readxl,
+    assertthat
 Suggests:
     testthat,
     knitr,
     rmarkdown
 Remotes:
     bioc::BiocInstaller,
+    bioc::preprocessCore,
     bioc::Biobase,
     bioc::GSVA,
     bioc::GSEABase,

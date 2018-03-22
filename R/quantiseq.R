@@ -1,8 +1,10 @@
-#' Use quanTIseq (F. Finotello, C. Mayer, C. Plattner, G. Laschober, D. Rieder, 
+#' Use quanTIseq to deconvolute a gene expression matrix. 
+#' 
+#' F. Finotello, C. Mayer, C. Plattner, G. Laschober, D. Rieder, 
 #' H. Hackl, A. Krogsdam, W. Posch, D. Wilflingseder, S. Sopper, M. Jsselsteijn,
 #' D. Johnsons, Y. Xu, Y. Wang, M. E. Sanders, M. V. Estrada, P. Ericsson-Gonzalez,
 #' J. Balko, N. F. de Miranda, Z. Trajanoski. "quanTIseq: quantifying immune contexture of human tumors".
-#' bioRxiv 223180. https://doi.org/10.1101/223180.) to deconvolute a gene expression matrix. 
+#' bioRxiv 223180. https://doi.org/10.1101/223180.
 #' 
 #' @param mix.mat table with the gene TPM (or microarray expression values) for all samples to be deconvoluted
 #'     (Gene symbols on the first column and sample IDs on the first row). Expression data must be on non-log scale
@@ -23,17 +25,17 @@
 #' @param btotalcells compute cell densities instead of fractions
 #'     Default: FALSE
 #' @param rmgenes Default: "default" for RNAseq, "none" for microArray data
+#' 
+#' @import preprocessCore
 #' @export
-quantiseq_decon = function(mix.mat,
-                           arrays=FALSE,
-                           signame="TIL10",
-                           tumor=FALSE,
-                           mRNAscale=TRUE,
-                           method="lsei",
-                           btotalcells=FALSE,
-                           rmgenes="unassigned") {
-
-  library(preprocessCore)
+deconvolute_quantiseq.default = function(mix.mat,
+                                         arrays=FALSE,
+                                         signame="TIL10",
+                                         tumor=FALSE,
+                                         mRNAscale=TRUE,
+                                         method="lsei",
+                                         btotalcells=FALSE,
+                                         rmgenes="unassigned") {
   
   message("\nRunning quanTIseq deconvolution module\n")
   
@@ -45,7 +47,6 @@ quantiseq_decon = function(mix.mat,
     rmgenes<-"default"
     
   }
-  
   
   # Files
   listsig<-c("TIL10")
@@ -199,8 +200,4 @@ quantiseq_decon = function(mix.mat,
     #             file=fileout)
   }
   
-
-
 }
-
-

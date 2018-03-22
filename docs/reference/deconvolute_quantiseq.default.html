@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Perform an immune cell deconvolution on a dataset. — deconvolute • immunedeconv</title>
+<title>Use quanTIseq to deconvolute a gene expression matrix. — deconvolute_quantiseq.default • immunedeconv</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,13 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Perform an immune cell deconvolution on a dataset. — deconvolute" />
+<meta property="og:title" content="Use quanTIseq to deconvolute a gene expression matrix. — deconvolute_quantiseq.default" />
 
-<meta property="og:description" content="Perform an immune cell deconvolution on a dataset." />
+<meta property="og:description" content="F. Finotello, C. Mayer, C. Plattner, G. Laschober, D. Rieder,
+H. Hackl, A. Krogsdam, W. Posch, D. Wilflingseder, S. Sopper, M. Jsselsteijn,
+D. Johnsons, Y. Xu, Y. Wang, M. E. Sanders, M. V. Estrada, P. Ericsson-Gonzalez,
+J. Balko, N. F. de Miranda, Z. Trajanoski. "quanTIseq: quantifying immune contexture of human tumors".
+bioRxiv 223180. https://doi.org/10.1101/223180." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -102,80 +106,77 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Perform an immune cell deconvolution on a dataset.</h1>
-    <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/immune_deconvolution_methods.R'><code>R/immune_deconvolution_methods.R</code></a></small>
+    <h1>Use quanTIseq to deconvolute a gene expression matrix.</h1>
+    <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/quantiseq.R'><code>R/quantiseq.R</code></a></small>
     </div>
 
     
-    <p>Perform an immune cell deconvolution on a dataset.</p>
+    <p>F. Finotello, C. Mayer, C. Plattner, G. Laschober, D. Rieder,
+H. Hackl, A. Krogsdam, W. Posch, D. Wilflingseder, S. Sopper, M. Jsselsteijn,
+D. Johnsons, Y. Xu, Y. Wang, M. E. Sanders, M. V. Estrada, P. Ericsson-Gonzalez,
+J. Balko, N. F. de Miranda, Z. Trajanoski. "quanTIseq: quantifying immune contexture of human tumors".
+bioRxiv 223180. https://doi.org/10.1101/223180.</p>
     
 
-    <pre class="usage"><span class='fu'>deconvolute.default</span>(<span class='no'>gene_expression</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>, <span class='no'>...</span>)
-
-<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>,
-  <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>)
-
-<span class='co'># S4 method for eSet,character</span>
-<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>)
-
-<span class='co'># S4 method for matrix,character</span>
-<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>, <span class='no'>method</span>)</pre>
+    <pre class="usage"><span class='fu'>deconvolute_quantiseq.default</span>(<span class='no'>mix.mat</span>, <span class='kw'>arrays</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>signame</span> <span class='kw'>=</span> <span class='st'>"TIL10"</span>,
+  <span class='kw'>tumor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>mRNAscale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"lsei"</span>, <span class='kw'>btotalcells</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>rmgenes</span> <span class='kw'>=</span> <span class='st'>"unassigned"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>gene_expression</th>
-      <td><p>A number.</p></td>
+      <th>mix.mat</th>
+      <td><p>table with the gene TPM (or microarray expression values) for all samples to be deconvoluted
+(Gene symbols on the first column and sample IDs on the first row). Expression data must be on non-log scale</p></td>
+    </tr>
+    <tr>
+      <th>arrays</th>
+      <td><p>specifies whether expression data are from microarrays (instead of RNA-seq).
+If TRUE, the "--rmgenes" parameter is set to "none".</p></td>
+    </tr>
+    <tr>
+      <th>signame</th>
+      <td><p>name of the signature matrix. Currently only <code>TIL10</code> is available.</p></td>
+    </tr>
+    <tr>
+      <th>tumor</th>
+      <td><p>specifies whether expression data are from tumor samples. If TRUE, signature genes
+with high expression in tumor samples are removed (see 1).
+Default: FALSE.</p></td>
+    </tr>
+    <tr>
+      <th>mRNAscale</th>
+      <td><p>specifies whether cell fractions must be scaled to account for cell-type-specific
+mRNA content.
+Default: TRUE.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>a string specifying the method. Supported methods are <code>xcell</code>, <code>...</code></p></td>
+      <td><p>deconvolution method to be used: "hampel", "huber", or "bisquare" for robust regression
+with Huber, Hampel, or Tukey bisquare estimators, respectively, or "lsei" for constrained
+least squares regression. The fraction of uncharacterized cells ("other") is computed only
+by the "lsei" method.
+Default: "lsei".</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>arguments passed to the respective method</p></td>
+      <th>btotalcells</th>
+      <td><p>compute cell densities instead of fractions
+Default: FALSE</p></td>
     </tr>
     <tr>
-      <th>eset</th>
-      <td><p>Expression set</p></td>
-    </tr>
-    <tr>
-      <th>col</th>
-      <td><p>column name of the <code>fData</code> column that contains HGNC gene symbols.</p></td>
+      <th>rmgenes</th>
+      <td><p>Default: "default" for RNAseq, "none" for microArray data</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>data.frame</code> with <code>cell_type</code> as first column and a column with the
-calculated cell fractions for each sample.</p>
-    
-    <h2 class="hasAnchor" id="methods-by-class-"><a class="anchor" href="#methods-by-class-"></a>Methods (by class)</h2>
-
-    <ul>
-<li><p><code>gene_expression = eSet,method = character</code>: <code>eset</code> is a <code><a href='http://www.rdocumentation.org/packages/Biobase/topics/class.ExpressionSet'>Biobase::ExpressionSet</a></code>.
-<code>fData</code> contains a column with HGNC gene symbols (specify column name)</p></li>
-<li><p><code>gene_expression = matrix,method = character</code>: <code>matrix</code> is matrix with HGNC gene symbols as row names.</p></li>
-</ul>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>deconvolute</span>(<span class='no'>gene_expression_matrix</span>, <span class='st'>"xcell"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in deconvolute(gene_expression_matrix, "xcell"): object 'gene_expression_matrix' not found</span></div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#methods-by-class-">Methods (by class)</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

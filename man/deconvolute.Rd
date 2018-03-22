@@ -7,7 +7,7 @@
 \alias{deconvolute}
 \alias{deconvolute,eSet,character-method}
 \alias{deconvolute,matrix,character-method}
-\title{Add together two numbers.}
+\title{Perform an immune cell deconvolution on a dataset.}
 \usage{
 deconvolute.default(gene_expression, method = deconvolution_methods, ...)
 
@@ -20,19 +20,22 @@ deconvolute(gene_expression, method = deconvolution_methods,
 \S4method{deconvolute}{matrix,character}(gene_expression, method)
 }
 \arguments{
-\item{x}{A number.}
+\item{gene_expression}{A number.}
 
-\item{y}{A number.}
+\item{method}{a string specifying the method. Supported methods are \code{xcell}, \code{...}}
+
+\item{...}{arguments passed to the respective method}
 
 \item{eset}{Expression set}
 
 \item{col}{column name of the \code{fData} column that contains HGNC gene symbols.}
 }
 \value{
-The sum of \code{x} and \code{y}.
+\code{data.frame} with \code{cell_type} as first column and a column with the
+calculated cell fractions for each sample.
 }
 \description{
-Add together two numbers.
+Perform an immune cell deconvolution on a dataset.
 }
 \section{Methods (by class)}{
 \itemize{
@@ -43,6 +46,6 @@ Add together two numbers.
 }}
 
 \examples{
-add(1, 1)
-add(10, 1)
+deconvolute(gene_expression_matrix, "xcell")
+
 }

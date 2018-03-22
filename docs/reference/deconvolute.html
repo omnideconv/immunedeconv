@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • immunedeconv</title>
+<title>Add together two numbers. — deconvolute • immunedeconv</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,7 +25,10 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Add together two numbers. — deconvolute" />
+
+<meta property="og:description" content="Add together two numbers." />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -38,7 +41,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -97,86 +100,77 @@
       </header>
 
       <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.0.1</small>
-      </h1>
+    <h1>Add together two numbers.</h1>
+    <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/immune_deconvolution_methods.R'><code>R/immune_deconvolution_methods.R</code></a></small>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    
+    <p>Add together two numbers.</p>
+    
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <pre class="usage"><span class='fu'>deconvolute.default</span>(<span class='no'>gene_expression</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>, <span class='no'>...</span>)
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="cell_type_mapping.html">cell_type_mapping</a></code> </p>
-          </td>
-          <td><p>a mapping of the various cell_types between the different methods to a common standard</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="deconvolute.html">deconvolute.default()</a></code> <code><a href="deconvolute.html">deconvolute()</a></code> </p>
-          </td>
-          <td><p>Add together two numbers.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="deconvolution_methods.html">deconvolution_methods</a></code> </p>
-          </td>
-          <td><p>list of supported immune deconvolution methods</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="immune_deconvolution_methods.html">immune_deconvolution_methods</a></code> </p>
-          </td>
-          <td><p>Collection of immune cell deconvolution methods.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="make_bulk_eset.html">make_bulk_eset()</a></code> </p>
-          </td>
-          <td><p>make a random expression set from a single cell dataset</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="make_random_bulk.html">make_random_bulk()</a></code> </p>
-          </td>
-          <td><p>make a random bulk sample from a single cell dataset</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="quantiseq_decon.html">quantiseq_decon()</a></code> </p>
-          </td>
-          <td><p>Use quanTIseq (F. Finotello, C. Mayer, C. Plattner, G. Laschober, D. Rieder,
-H. Hackl, A. Krogsdam, W. Posch, D. Wilflingseder, S. Sopper, M. Jsselsteijn,
-D. Johnsons, Y. Xu, Y. Wang, M. E. Sanders, M. V. Estrada, P. Ericsson-Gonzalez,
-J. Balko, N. F. de Miranda, Z. Trajanoski. "quanTIseq: quantifying immune contexture of human tumors".
-bioRxiv 223180. https://doi.org/10.1101/223180.) to deconvolute a gene expression matrix.</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>,
+  <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>)
+
+<span class='co'># S4 method for eSet,character</span>
+<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>)
+
+<span class='co'># S4 method for matrix,character</span>
+<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>, <span class='no'>method</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A number.</p></td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td><p>A number.</p></td>
+    </tr>
+    <tr>
+      <th>eset</th>
+      <td><p>Expression set</p></td>
+    </tr>
+    <tr>
+      <th>col</th>
+      <td><p>column name of the <code>fData</code> column that contains HGNC gene symbols.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>The sum of <code>x</code> and <code>y</code>.</p>
+    
+    <h2 class="hasAnchor" id="methods-by-class-"><a class="anchor" href="#methods-by-class-"></a>Methods (by class)</h2>
+
+    <ul>
+<li><p><code>gene_expression = eSet,method = character</code>: <code>eset</code> is a <code><a href='http://www.rdocumentation.org/packages/Biobase/topics/class.ExpressionSet'>Biobase::ExpressionSet</a></code>.
+<code>fData</code> contains a column with HGNC gene symbols (specify column name)</p></li>
+<li><p><code>gene_expression = matrix,method = character</code>: <code>matrix</code> is matrix with HGNC gene symbols as row names.</p></li>
+</ul>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>add</span>(<span class='fl'>1</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in add(1, 1): could not find function "add"</span></div><div class='input'><span class='fu'>add</span>(<span class='fl'>10</span>, <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in add(10, 1): could not find function "add"</span></div></pre>
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#methods-by-class-">Methods (by class)</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 

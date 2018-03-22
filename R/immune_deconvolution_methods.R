@@ -2,6 +2,8 @@
 #'
 #' @docType package
 #' @name immune_deconvolution_methods
+#' @import methods
+
 NULL
 
 #' list of supported immune deconvolution methods
@@ -9,7 +11,7 @@ NULL
 deconvolution_methods = c("mcp_counter", "epic", "quantiseq", "xcell")
 
 #' a mapping of the various cell_types between the different methods to a common standard
-cell_type_mapping = read_xlsx(system.file("extdata", "cell_type_mapping.xlsx", package="immunedeconv", mustWork=TRUE))
+cell_type_mapping = readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx", package="immunedeconv", mustWork=TRUE))
 
 xCell.data = xCell::xCell.data
 

@@ -9,7 +9,7 @@ help:
 
 .PHONY: roxygenize
 roxygenize:
-	Rscript -e "devtools::document()"
+	Rscript -e "library(methods); library(devtools); document()"
 
 .PHONY: check
 check:
@@ -19,7 +19,7 @@ check:
 	Rscript -e 'devtools::check()'
 
 .PHONY: install
-install: | check
+install: | check roxygenize
 	R CMD INSTALL .
 
 .PHONY: docs

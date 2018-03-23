@@ -15,7 +15,7 @@ celltype2dataset_mapping = readxl::read_xlsx(system.file("extdata", "cell_type_m
 #' List of available validation datasets
 #' 
 #' @export
-available_datasets = celltype2dataset_mapping %>% select(-cell_type) %>% colnames()
+available_datasets = colnames(dplyr::select(celltype2dataset_mapping, -cell_type))
 
 #' annotate cell types with the cell types available in the dataset
 #' @export

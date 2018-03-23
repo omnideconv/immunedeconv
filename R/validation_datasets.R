@@ -31,54 +31,54 @@ map_results_to_dataset = function(results, which_dataset=available_datasets) {
 #' make a random bulk sample from a single-cell dataset
 #' 
 #' @param eset `Biobase::ExpressionSet` with a `cell_type` column in `pData`.
+#' @param cell_fractions named list indicating the fraction of each cell type 
+#'    which will be in the sample. 
 #' 
 #' @export
-make_random_bulk = function(eset, n_cells=500) {
-  # list of available cell_types
-  available_cell_types = pData(eset) %>%
-    as_tibble() %>%
-    select(cell_type) %>%
-    distinct()
+make_random_bulk = function(eset, cell_fractions, n_cells=500) {
+  cell_numbers = round(cell_fractions * n_cells)
+  
+  # sample n cells from each cell type as specified in `cell_numbers`
+  cell_ids = lapply(names(cell_numbers), function(cell_type) {
+    n = cell_numbers[[cell_type]]
+    pData(eset) %>%
+      as_tibble() %>%
+      rowid_to_column("id") %>%
+      filter(cell_type==!!cell_type) %>% 
+      dplyr::sample_n(n, replace=TRUE)
+  }) %>% 
+    bind_rows() %>%
+    pull(id)
   
   # create random subsample of available cells
-  cell_ids = base::sample(dim(eset)["Samples"], size=n_cells)
   reduced_eset = eset[,cell_ids]
   
   # simulated bulk tissue as sum of all selected single cells
   expr = apply(exprs(reduced_eset), 1, sum) %>% as_tibble()
-  
-  # calculate known proportions of the sample
-  proportions = pData(reduced_eset) %>% 
-    select(cell_type) %>% 
-    group_by(cell_type) %>%
-    count() %>%
-    mutate(fraction=n/!!n_cells) %>%
-    select(-n) %>%
-    right_join(available_cell_types, by="cell_type") %>%
-    mutate(fraction=ifelse(is.na(fraction),0,fraction))
-  
-  return(list(expr=expr, proportions=proportions))
+
+  return(expr)
 }
 
 
 #' make a random expression set from a single-cell dataset
 #' 
+#' @param eset `Biobase::ExpressionSet` with a `cell_type` column in `pData`.
+#' @param cell_fractions n x n_cell_types dataframe with the fraction for each 
+#'     sample in each row. 
+#' @param n_cell number of single cells to use in each sample
+#' 
 #' @export
-make_bulk_eset = function(eset, n=100, n_cells=500) {
-  bulk_samples = lapply(1:n, function(x){ make_random_bulk(eset) })
-  expr = bind_cols(lapply(bulk_samples, function(x){x$expr})) %>% as.matrix()
-  pdata = bind_rows(lapply(bulk_samples, function(x) {
-    # suprressWarning: setting row names on a tibble is deprecated
-    suppressWarnings({
-      x$proportions %>% column_to_rownames(var="cell_type") %>% t() %>% as_tibble()
-    })
-  }))
+make_bulk_eset = function(eset, cell_fractions, n_cells=500) {
+  expr = lapply(1:nrow(cell_fractions), function(i) { 
+    make_random_bulk(eset, cell_fractions[i,], n_cells=n_cells) 
+  }) %>% 
+    bind_cols() %>% 
+    as.matrix()
   
-  # suprressWarning: setting row names on a tibble is deprecated
-  suppressWarnings({
-    rownames(pdata) = colnames(expr)
-  })
   rownames(expr) = fData(eset)$gene_symbol
+  
+  pdata = cell_fractions %>% as.data.frame()
+  rownames(pdata) = colnames(expr)
   
   ExpressionSet(expr, 
                 phenoData = new("AnnotatedDataFrame", data=pdata),

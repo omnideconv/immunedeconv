@@ -54,7 +54,7 @@ deconvolute_quantiseq = function(gene_expresssion_matrix) {
 #'     calculated cell fractions for each sample. 
 #'     
 #' @examples
-#' deconvolute(gene_expression_matrix, "xcell")
+#' # Not run: deconvolute(gene_expression_matrix, "xcell")
 #' 
 #' @name deconvolute
 deconvolute.default = function(gene_expression, method=deconvolution_methods, ...) {

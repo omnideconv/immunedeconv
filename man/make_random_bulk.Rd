@@ -2,10 +2,13 @@
 % Please edit documentation in R/validation_datasets.R
 \name{make_random_bulk}
 \alias{make_random_bulk}
-\title{make a random bulk sample from a single cell dataset}
+\title{make a random bulk sample from a single-cell dataset}
 \usage{
 make_random_bulk(eset, n_cells = 500)
 }
+\arguments{
+\item{eset}{\code{Biobase::ExpressionSet} with a \code{cell_type} column in \code{pData}.}
+}
 \description{
-make a random bulk sample from a single cell dataset
+make a random bulk sample from a single-cell dataset
 }

@@ -2,10 +2,10 @@
 % Please edit documentation in R/validation_datasets.R
 \name{make_bulk_eset}
 \alias{make_bulk_eset}
-\title{make a random expression set from a single cell dataset}
+\title{make a random expression set from a single-cell dataset}
 \usage{
 make_bulk_eset(eset, n = 100, n_cells = 500)
 }
 \description{
-make a random expression set from a single cell dataset
+make a random expression set from a single-cell dataset
 }

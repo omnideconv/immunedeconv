@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • immunedeconv</title>
+<title>annotate cell types with the cell types available in the dataset — map_results_to_dataset • immunedeconv</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,7 +25,10 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="annotate cell types with the cell types available in the dataset — map_results_to_dataset" />
+
+<meta property="og:description" content="annotate cell types with the cell types available in the dataset" />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -38,7 +41,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -97,112 +100,25 @@
       </header>
 
       <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.0.1</small>
-      </h1>
+    <h1>annotate cell types with the cell types available in the dataset</h1>
+    <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/validation_datasets.R'><code>R/validation_datasets.R</code></a></small>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    
+    <p>annotate cell types with the cell types available in the dataset</p>
+    
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <pre class="usage"><span class='fu'>map_results_to_dataset</span>(<span class='no'>results</span>, <span class='kw'>which_dataset</span> <span class='kw'>=</span> <span class='no'>available_datasets</span>)</pre>
+        
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="available_datasets.html">available_datasets</a></code> </p>
-          </td>
-          <td><p>List of available validation datasets</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="celltype2dataset_mapping.html">celltype2dataset_mapping</a></code> </p>
-          </td>
-          <td><p>a mapping of the various cell_types between the different methods to a common standard</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="celltype2method_mapping.html">celltype2method_mapping</a></code> </p>
-          </td>
-          <td><p>a mapping of the various cell_types between the different methods to a common standard</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="deconvolute.html">deconvolute.default()</a></code> <code><a href="deconvolute.html">deconvolute()</a></code> </p>
-          </td>
-          <td><p>Perform an immune cell deconvolution on a dataset.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="deconvolute_quantiseq.default.html">deconvolute_quantiseq.default()</a></code> </p>
-          </td>
-          <td><p>Use quanTIseq to deconvolute a gene expression matrix.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="deconvolute_xcell.html">deconvolute_xcell()</a></code> </p>
-          </td>
-          <td><p>TODO: documentation</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="deconvolution_methods.html">deconvolution_methods</a></code> </p>
-          </td>
-          <td><p>list of supported immune deconvolution methods</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="immune_deconvolution_methods.html">immune_deconvolution_methods</a></code> </p>
-          </td>
-          <td><p>Collection of immune cell deconvolution methods.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="make_bulk_eset.html">make_bulk_eset()</a></code> </p>
-          </td>
-          <td><p>make a random expression set from a single-cell dataset</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="make_random_bulk.html">make_random_bulk()</a></code> </p>
-          </td>
-          <td><p>make a random bulk sample from a single-cell dataset</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="map_results_to_dataset.html">map_results_to_dataset()</a></code> </p>
-          </td>
-          <td><p>annotate cell types with the cell types available in the dataset</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="xCell.data.html">xCell.data</a></code> </p>
-          </td>
-          <td><p>Data object from xCell.</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
-    </ul>
+                </ul>
+
   </div>
 </div>
 

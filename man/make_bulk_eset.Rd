@@ -4,7 +4,15 @@
 \alias{make_bulk_eset}
 \title{make a random expression set from a single-cell dataset}
 \usage{
-make_bulk_eset(eset, n = 100, n_cells = 500)
+make_bulk_eset(eset, cell_fractions, n_cells = 500)
+}
+\arguments{
+\item{eset}{\code{Biobase::ExpressionSet} with a \code{cell_type} column in \code{pData}.}
+
+\item{cell_fractions}{n x n_cell_types dataframe with the fraction for each
+sample in each row.}
+
+\item{n_cell}{number of single cells to use in each sample}
 }
 \description{
 make a random expression set from a single-cell dataset

@@ -46,6 +46,6 @@ Perform an immune cell deconvolution on a dataset.
 }}
 
 \examples{
-deconvolute(gene_expression_matrix, "xcell")
+# Not run: deconvolute(gene_expression_matrix, "xcell")
 
 }

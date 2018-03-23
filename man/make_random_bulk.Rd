@@ -4,10 +4,13 @@
 \alias{make_random_bulk}
 \title{make a random bulk sample from a single-cell dataset}
 \usage{
-make_random_bulk(eset, n_cells = 500)
+make_random_bulk(eset, cell_fractions, n_cells = 500)
 }
 \arguments{
 \item{eset}{\code{Biobase::ExpressionSet} with a \code{cell_type} column in \code{pData}.}
+
+\item{cell_fractions}{named list indicating the fraction of each cell type
+which will be in the sample.}
 }
 \description{
 make a random bulk sample from a single-cell dataset

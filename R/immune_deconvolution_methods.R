@@ -45,9 +45,52 @@ deconvolute_quantiseq = function(gene_expresssion_matrix) {
     t()
 }
 
+export_for_timer = function(gene_expression_matrix, path=stop("Specify output path. ")) {
+  write_tsv(as_tibble(gene_expression_matrix, rownames="gene_symbol"), path=path)
+}
+
+import_from_timer = function(input_file) {
+  read_csv(input_file) %>% 
+    as.data.frame() %>%
+    column_to_rownames("sampleID") %>%
+    t() %>%
+    as_tibble(rownames="method_cell_type") %>%
+    annotate_cell_type("timer")
+}
+
+deconvolute_cibersort = function(gene_expression_matrix,
+                                 cibersort_r=stop("Specify path to CIBERSORT.R"),
+                                 cibersort_matrix=stop("Specify path to CIBERSORT signature matrix."),
+                                 absolute=FALSE,
+                                 abs_method="sig.score") {
+  source(cibersort_r)
+  tmp_mat = tempfile()
+  write_tsv(as_tibble(eset_mat, rownames="gene_symbol"), path=tmp_mat)
+  res = CIBERSORT(cibersort_matrix, tmp_mat, perm=0, QN=TRUE, absolute=absolute, abs_method=abs_method)
+  
+  res = res %>% 
+    t() %>%
+    as_tibble(rownames="method_cell_type") %>%
+    filter(!method_cell_type %in% c("RMSE", "P-value", "Correlation")) %>%
+    annotate_cell_type("cibersort")
+  
+  return(res)
+}
+
+#' Annotate unified cell_type names 
+#' 
+#' (map the cell_types of the different methods to a common name)
+annotate_cell_type = function(result_table, method) {
+  celltype2method_mapping %>%
+    select(method_cell_type=!!method, cell_type) %>% 
+    inner_join(result_table, by="method_cell_type") %>%
+    select(-method_cell_type)
+}
+
 #' Perform an immune cell deconvolution on a dataset. 
 #' 
-#' @param gene_expression A number.
+#' @param gene_expression A numeric matrix with HGNC gene symbols as rownames and sample identifiers as colnames. 
+#'   Data must be on non-log scale. 
 #' @param method a string specifying the method. Supported methods are `xcell`, `...`
 #' @param ... arguments passed to the respective method
 #' @return `data.frame` with `cell_type` as first column and a column with the 
@@ -65,14 +108,10 @@ deconvolute.default = function(gene_expression, method=deconvolution_methods, ..
          epic = deconvolute_epic(gene_expression),
          quantiseq = deconvolute_quantiseq(gene_expression))
   
-  # convert to tibble
-  res = res %>% as_tibble(rownames="method_cell_type")
-  
-  # annotate unified cell_type names
-  res = celltype2method_mapping %>%
-    select(method_cell_type=!!method, cell_type) %>% 
-    inner_join(res, by="method_cell_type") %>%
-    select(-method_cell_type)
+  # convert to tibble and annotate unified cell_type names
+  res = res %>%
+    as_tibble(rownames="method_cell_type") %>%
+    annotate_cell_type(method=method)
   
   return(res)
 }
@@ -82,6 +121,13 @@ setGeneric("deconvolute", function(gene_expression, method=deconvolution_methods
   standardGeneric("deconvolute")
 })
 
+
+eset_to_matrix = function(eset, column) {
+  expr_mat = exprs(eset)
+  rownames(expr_mat) = fData(eset) %>% pull(!!column)
+  return(expr_mat)
+}
+
 #' @describeIn deconvolute `eset` is a `Biobase::ExpressionSet`. 
 #' `fData` contains a column with HGNC gene symbols (specify column name)
 #' 
@@ -89,9 +135,9 @@ setGeneric("deconvolute", function(gene_expression, method=deconvolution_methods
 #' @param col column name of the `fData` column that contains HGNC gene symbols. 
 setMethod("deconvolute", representation(gene_expression="eSet", method="character"),
           function(gene_expression, method, column="gene_symbol") {
-            expr_mat = exprs(gene_expression)
-            rownames(expr_mat) = fData(gene_expression) %>% pull(!!column)
-            deconvolute.default(expr_mat, method)
+            gene_expression %>%
+              eset_to_matrix(column) %>% 
+              deconvolute.default(method)
           })
 
 #' @describeIn deconvolute `matrix` is matrix with HGNC gene symbols as row names. 

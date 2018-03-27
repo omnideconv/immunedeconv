@@ -143,9 +143,9 @@ deconvolute_quantiseq.default = function(mix.mat,
   # Run deconvolution
   message(paste0("Mixture deconvolution (method: ", method, ")\n"))
   results1<-quanTIseq(sig.mat,
-                     mix.mat,
-                     scaling=mRNA,
-                     method=method)
+                      mix.mat,
+                      scaling=mRNA,
+                      method=method)
   if ("Tregs" %in% colnames(sig.mat) && "T.cells.CD4" %in% colnames(sig.mat) && method %in% c("lsei")) {
   
     minTregs<-0.02

@@ -6,14 +6,17 @@
 #' @import dplyr
 NULL
 
+
 #' list of supported immune deconvolution methods
 #' @export
 deconvolution_methods = c("mcp_counter", "epic", "quantiseq", "xcell")
+
 
 #' a mapping of the various cell_types between the different methods to a common standard
 #' @export
 celltype2method_mapping = readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx", package="immunedeconv", mustWork=TRUE),
                                             sheet="celltype2method")
+
 
 #' Data object from xCell. 
 #' 
@@ -23,19 +26,23 @@ celltype2method_mapping = readxl::read_xlsx(system.file("extdata", "cell_type_ma
 #' @export
 xCell.data = xCell::xCell.data
 
+
 #' TODO: documentation
 deconvolute_xcell = function(gene_expression_matrix, ...) {
   xCell::xCellAnalysis(gene_expression_matrix, ...)
 }
 
+
 deconvolute_mcp_counter = function(gene_expression_matrix, feature_types="HUGO_symbols", ...) {
   MCPcounter::MCPcounter.estimate(gene_expression_matrix, featuresType=feature_types, ...)
 }
+
 
 deconvolute_epic = function(gene_expression_matrix, ...) {
   epic_res_raw = EPIC::EPIC(bulk=gene_expression_matrix, ...)
   t(epic_res_raw$cellFractions)
 }
+
 
 deconvolute_quantiseq = function(gene_expresssion_matrix) {
   deconvolute_quantiseq.default(gene_expresssion_matrix) %>% 
@@ -49,6 +56,7 @@ export_for_timer = function(gene_expression_matrix, path=stop("Specify output pa
   write_tsv(as_tibble(gene_expression_matrix, rownames="gene_symbol"), path=path)
 }
 
+
 import_from_timer = function(input_file) {
   read_csv(input_file) %>% 
     as.data.frame() %>%
@@ -57,6 +65,7 @@ import_from_timer = function(input_file) {
     as_tibble(rownames="method_cell_type") %>%
     annotate_cell_type("timer")
 }
+
 
 deconvolute_cibersort = function(gene_expression_matrix,
                                  cibersort_r=stop("Specify path to CIBERSORT.R"),
@@ -77,6 +86,7 @@ deconvolute_cibersort = function(gene_expression_matrix,
   return(res)
 }
 
+
 #' Annotate unified cell_type names 
 #' 
 #' (map the cell_types of the different methods to a common name)
@@ -86,6 +96,19 @@ annotate_cell_type = function(result_table, method) {
     inner_join(result_table, by="method_cell_type") %>%
     select(-method_cell_type)
 }
+
+
+#' convert an `Biobase::ExpressionSet` to a gene-expression matrix. 
+#' 
+#' @param eset `ExpressionSet`
+#' @param column column name of the `fData()` table, which contains the HGNC gene symbols.  
+#' @return matrix with gene symbols as rownames and sample identifiers as colnames. 
+eset_to_matrix = function(eset, column) {
+  expr_mat = exprs(eset)
+  rownames(expr_mat) = fData(eset) %>% pull(!!column)
+  return(expr_mat)
+}
+
 
 #' Perform an immune cell deconvolution on a dataset. 
 #' 
@@ -116,17 +139,12 @@ deconvolute.default = function(gene_expression, method=deconvolution_methods, ..
   return(res)
 }
 
+
 #' @rdname deconvolute
 setGeneric("deconvolute", function(gene_expression, method=deconvolution_methods, column="gene_symbol") {
   standardGeneric("deconvolute")
 })
 
-
-eset_to_matrix = function(eset, column) {
-  expr_mat = exprs(eset)
-  rownames(expr_mat) = fData(eset) %>% pull(!!column)
-  return(expr_mat)
-}
 
 #' @describeIn deconvolute `eset` is a `Biobase::ExpressionSet`. 
 #' `fData` contains a column with HGNC gene symbols (specify column name)

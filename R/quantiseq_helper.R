@@ -131,7 +131,8 @@ quanTIseq<-function(currsig, currmix, scaling, method) {
 
   }
 
-  if (nrow(results)!=ncol(currmix)) results<-t(results)
+  #if (nrow(results)!=ncol(currmix))
+  results<-t(results)
 
   return(results)
 

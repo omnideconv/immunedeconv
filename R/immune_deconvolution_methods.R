@@ -4,12 +4,13 @@
 #' @name immune_deconvolution_methods
 #' @import methods
 #' @import dplyr
+#' @import testit
 NULL
 
 
 #' list of supported immune deconvolution methods
 #' @export
-deconvolution_methods = c("mcp_counter", "epic", "quantiseq", "xcell")
+deconvolution_methods = c("mcp_counter", "epic", "quantiseq", "xcell", "cibersort", "cibersort_abs")
 
 
 #' a mapping of the various cell_types between the different methods to a common standard
@@ -25,6 +26,20 @@ celltype2method_mapping = readxl::read_xlsx(system.file("extdata", "cell_type_ma
 #' 
 #' @export
 xCell.data = xCell::xCell.data
+
+#' set Path to CIBERSORT R script
+#'
+#' @export
+set_cibersort_binary = function(path) {
+  assign("cibersort_binary", path, envir=config_env)
+}
+
+#' set Path to CIBERSORT matrix file
+#' 
+#' @export
+set_cibersort_mat = function(path) {
+  assign("cibersort_mat", path, envir=config_env)
+}
 
 
 #' TODO: documentation
@@ -52,6 +67,24 @@ deconvolute_quantiseq = function(gene_expresssion_matrix) {
     t()
 }
 
+deconvolute_cibersort = function(gene_expression_matrix,
+                                 absolute=FALSE,
+                                 abs_method="sig.score") {
+  assert("CIBERSORT.R is provided", exists("cibersort_binary", envir=config_env))
+  assert("CIBERSORT signature matrix is provided", exists("cibersort_mat", envir=config_env))
+  source(get("cibersort_binary", envir=config_env))
+  
+  tmp_mat = tempfile()
+  write_tsv(as_tibble(gene_expression_matrix, rownames="gene_symbol"), path=tmp_mat)
+  res = CIBERSORT(get("cibersort_mat", envir=config_env), tmp_mat, perm=0, QN=TRUE, absolute=absolute, abs_method=abs_method)
+  
+  res = res %>% 
+    t() %>%
+    .[!rownames(.) %in% c("RMSE", "P-value", "Correlation"), ]
+  return(res)
+}
+
+
 export_for_timer = function(gene_expression_matrix, path=stop("Specify output path. ")) {
   write_tsv(as_tibble(gene_expression_matrix, rownames="gene_symbol"), path=path)
 }
@@ -65,27 +98,6 @@ import_from_timer = function(input_file) {
     as_tibble(rownames="method_cell_type") %>%
     annotate_cell_type("timer")
 }
-
-
-deconvolute_cibersort = function(gene_expression_matrix,
-                                 cibersort_r=stop("Specify path to CIBERSORT.R"),
-                                 cibersort_matrix=stop("Specify path to CIBERSORT signature matrix."),
-                                 absolute=FALSE,
-                                 abs_method="sig.score") {
-  source(cibersort_r)
-  tmp_mat = tempfile()
-  write_tsv(as_tibble(gene_expression_matrix, rownames="gene_symbol"), path=tmp_mat)
-  res = CIBERSORT(cibersort_matrix, tmp_mat, perm=0, QN=TRUE, absolute=absolute, abs_method=abs_method)
-  
-  res = res %>% 
-    t() %>%
-    as_tibble(rownames="method_cell_type") %>%
-    filter(!method_cell_type %in% c("RMSE", "P-value", "Correlation")) %>%
-    annotate_cell_type("cibersort")
-  
-  return(res)
-}
-
 
 #' Annotate unified cell_type names 
 #' 
@@ -129,7 +141,9 @@ deconvolute.default = function(gene_expression, method=deconvolution_methods, ..
          xcell = deconvolute_xcell(gene_expression),
          mcp_counter = deconvolute_mcp_counter(gene_expression),
          epic = deconvolute_epic(gene_expression),
-         quantiseq = deconvolute_quantiseq(gene_expression))
+         quantiseq = deconvolute_quantiseq(gene_expression),
+         cibersort = deconvolute_cibersort(gene_expression, absolute = FALSE),
+         cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE))
   
   # convert to tibble and annotate unified cell_type names
   res = res %>%

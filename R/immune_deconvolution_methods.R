@@ -4,7 +4,8 @@
 #' @name immune_deconvolution_methods
 #' @import methods
 #' @import dplyr
-#' @import testit
+#' @importFrom testit assert
+#' @import readr
 NULL
 
 

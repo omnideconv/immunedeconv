@@ -7,7 +7,7 @@ Depends: R (>= 3.3.1)
 Imports:
     tidyverse,
     readxl,
-    assertthat
+    testit
 Suggests:
     testthat,
     knitr,

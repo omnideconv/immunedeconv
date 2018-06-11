@@ -22,14 +22,14 @@ test_that("cell_type mapping is NA if no corresponding method_cell_type exists",
   assert("Result is NA", is.na(result))
 })
 
-test_that("cell_type mapping is NA if one of the children is not available.") {
+test_that("cell_type mapping is NA if one of the children is not available.", {
   # gamma delta t cells are not predicted by TIMER
   fractions = list("T_cell.CD8"=.3, "T_cell.CD4"=.5)
   cell_type = "T cell"
   node = node_by_name[[cell_type]]
   result = find_children(node, fractions, "TIMER")
   assert("Result is NA", is.na(result))
-}
+})
 
 test_that("cell_type mapping to multiple sub method_cell_type are calculated correctly (on 2nd level)", {
   fractions = list("Monocytes"=.3, "Macrophages M0"=.1, "Macrophages M1"=.2, "Macrophages M2"=.4, "Plasma cells"=.125)

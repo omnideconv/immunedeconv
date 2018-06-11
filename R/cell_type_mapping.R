@@ -1,43 +1,50 @@
 #' @importFrom testit assert
+#' @importFrom dplyr select
+#' @import magrittr
 NULL
 
-
-celltype_mapping = readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx", package="immunedeconv", mustWork=TRUE), 
-                                     sheet="mapping") %>% select(method_dataset, method_cell_type, cell_type)
-celltype_list =  readxl::read_excel(system.file("extdata", "cell_type_mapping.xlsx", package="immunedeconv", mustWork=TRUE),
-                                    sheet = "controlled_vocabulary") %>% select(parent, cell_type)
-celltype_tree = celltype_list %>% as.data.frame() %>% data.tree::FromDataFrameNetwork()
-
-#' List of available validation datasets
+#' Table mapping the cell types from methods/datasets to a single, controlled vocabulary
 #' 
 #' @export
-available_datasets = colnames(dplyr::select(celltype2dataset_mapping, -cell_type))
+cell_type_mapping = readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx", package="immunedeconv", mustWork=TRUE), 
+                                     sheet="mapping") %>% select(method_dataset, method_cell_type, cell_type)
+
+#' Available methods and datasets
+#' 
+#' @export
+available_datasets = cell_type_mapping %>% pull(method_dataset) %>% unique()
+  
+cell_type_list =  readxl::read_excel(system.file("extdata", "cell_type_mapping.xlsx", package="immunedeconv", mustWork=TRUE),
+                                    sheet = "controlled_vocabulary") %>% select(parent, cell_type)
+
+#' Available cell types in the controlled vocabulary organized as a lineage tree. 
+#' 
+#' @details a `data.tree` object
+#' @export
+cell_type_tree = cell_type_list %>% as.data.frame() %>% data.tree::FromDataFrameNetwork()
 
 
 # Access nodes by name in O(1). Node names are unique in our tree. 
-assert(length(celltype_list$cell_type) == length(unique(celltype_list$cell_type)))
-node_by_name = celltype_tree$Get(function(node){node})
+assert(length(cell_type_list$cell_type) == length(unique(cell_type_list$cell_type)))
+node_by_name = cell_type_tree$Get(function(node){node})
 
 
 #' Use a tree-hierarchy to map cell types among different methods. 
 #' 
-#' @param use_cell_types list of cell types from the controlled vocabulary to map
-#' @param fractions1 named vector or list of cell type fractions. Name corresponds to the cell types
-#' @param fractions2 
-#' @param method1 method or dataset to use for mapping `fractions1`
-#' @param method2
+#' `cell_type`` refers to a cell type from the controlled vocabulary (CV). 
+#' `method_cell_type` refers to a cell type from a method or dataset. 
 #' 
-#' @return named vector. Name of the vector corresponds to the controlled vocabulary cell types. 
-map_cell_types = function(use_cell_types, fractions1, fractions2, method1, method2) { 
-  fractions1 = as.list(fractions1)
-  fractions2 = as.list(fractions2)
-  # build reference
-  ref = lapply(use_cell_types, function(cell_type) {
+#' @param use_cell_types list of cell types from the CV to map to
+#' @param fractions named vector or list of cell type fractions. Names corresponds to the method_cell_types. 
+#' @param method1 method or dataset with which `fractions` was generated
+#' 
+#' @return numeric vector with CV cell types as names
+#' 
+#' @export
+map_cell_types = function(use_cell_types, fractions, method) { 
+  fractions = as.list(fractions)
+  lapply(use_cell_types, function(cell_type) {
     find_children(node_by_name[[cell_type]], fractions1, method1)
-  })
-  # build estimate
-  estimate = lapply(use_cell_types, function(cell_type) {
-    find_children(node_by_name[[cell_type]], fractions2, method2)
   })
 }
 
@@ -53,7 +60,7 @@ map_cell_types = function(use_cell_types, fractions1, fractions2, method1, metho
 #'                  (3) NA, if the mapping cannot be resolved, i.e. at least one of the child nodes is missing. 
 find_children = function(node, fractions, method) {
   cell_type = node$name
-  tmp_method_celltype = celltype_mapping %>% filter(cell_type == !!cell_type, method_dataset == method) %>% pull(method_cell_type)
+  tmp_method_celltype = cell_type_mapping %>% filter(cell_type == !!cell_type, method_dataset == method) %>% pull(method_cell_type)
   assert("Method cell type is uniquely mapped to a cell type", length(tmp_method_celltype) <= 1)
   if(length(tmp_method_celltype) == 1) {
     assert("method_cell_type is available in the given fractions vector", tmp_method_celltype %in% names(fractions))
@@ -70,13 +77,13 @@ find_children = function(node, fractions, method) {
 }
 
 
-#' annotate cell types with the cell types available in the dataset
-#' @export
-map_results_to_dataset = function(results, which_dataset=available_datasets) {
-  assert("the chosen dataset is not available. ", which_dataset %in% available_datasets)
-  celltype2dataset_mapping %>% 
-    select(cell_type, !!which_dataset) %>% 
-    drop_na() %>% 
-    inner_join(results, by=c("cell_type")) %>% 
-    select(-cell_type)
-}
+#' #' annotate cell types with the cell types available in the dataset
+#' #' @export
+#' map_results_to_dataset = function(results, which_dataset=available_datasets) {
+#'   assert("the chosen dataset is not available. ", which_dataset %in% available_datasets)
+#'   celltype2dataset_mapping %>% 
+#'     select(cell_type, !!which_dataset) %>% 
+#'     drop_na() %>% 
+#'     inner_join(results, by=c("cell_type")) %>% 
+#'     select(-cell_type)
+#' }

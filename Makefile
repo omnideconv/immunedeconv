@@ -19,7 +19,7 @@ check:
 	Rscript -e 'devtools::check()'
 
 .PHONY: install
-install: | check roxygenize
+install: | roxygenize
 	R CMD INSTALL .
 
 .PHONY: docs

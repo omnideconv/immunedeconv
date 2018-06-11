@@ -3,36 +3,6 @@
 NULL
 
 
-#' @export
-download_dataset = function(which_dataset=available_datasets) {
-  
-}
-
-
-#' a mapping of the various cell_types between the different methods to a common standard
-#' @export
-celltype2dataset_mapping = readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx", package="immunedeconv", mustWork=TRUE),
-                                             sheet="celltype2dataset")
-
-
-#' List of available validation datasets
-#' 
-#' @export
-available_datasets = colnames(dplyr::select(celltype2dataset_mapping, -cell_type))
-
-
-#' annotate cell types with the cell types available in the dataset
-#' @export
-map_results_to_dataset = function(results, which_dataset=available_datasets) {
-  assert("the chosen dataset is not available. ", which_dataset %in% available_datasets)
-  celltype2dataset_mapping %>% 
-    select(cell_type, !!which_dataset) %>% 
-    drop_na() %>% 
-    inner_join(results, by=c("cell_type")) %>% 
-    select(-cell_type)
-}
-
-
 #' make a random bulk sample from a single-cell dataset
 #' 
 #' @param eset `Biobase::ExpressionSet` with a `cell_type` column in `pData`.

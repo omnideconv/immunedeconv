@@ -24,3 +24,4 @@ builds
 # other files
 *.Rproj
 datasets
+.dev_deps_installed

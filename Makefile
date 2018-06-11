@@ -7,19 +7,21 @@ help:
 	@echo "    deploy_docs       build docs and commit them to the git repository (-> github pages)"
 	@echo "    clean             clean repository (docs, man and all dev files)"
 
+.dev_deps_installed:
+	Rscript -e 'install.packages(c("devtools", "roxygen2", "covr"), repos="https://cran.rstudio.com/")'
+	Rscript -e 'devtools::install_dev_deps()'
+	echo "Success." > $@
+
 .PHONY: roxygenize
-roxygenize:
+roxygenize: .dev_deps_installed
 	Rscript -e "library(methods); library(devtools); document()"
 
 .PHONY: check
-check:
-	Rscript -e 'install.packages(c("devtools", "roxygen2", "covr"), repos="https://cran.rstudio.com/")'
-	Rscript -e 'devtools::install_github("hadley/devtools")'
-	Rscript -e 'devtools::install_dev_deps()'
+check: | roxygenize
 	Rscript -e 'devtools::check()'
 
 .PHONY: install
-install: | roxygenize
+install: | check
 	R CMD INSTALL .
 
 .PHONY: docs

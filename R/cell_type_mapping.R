@@ -77,13 +77,13 @@ find_children = function(node, fractions, method) {
 }
 
 
-#' #' annotate cell types with the cell types available in the dataset
-#' #' @export
-#' map_results_to_dataset = function(results, which_dataset=available_datasets) {
-#'   assert("the chosen dataset is not available. ", which_dataset %in% available_datasets)
-#'   celltype2dataset_mapping %>% 
-#'     select(cell_type, !!which_dataset) %>% 
-#'     drop_na() %>% 
-#'     inner_join(results, by=c("cell_type")) %>% 
-#'     select(-cell_type)
-#' }
+# #' annotate cell types with the cell types available in the dataset
+# #' @export
+# map_results_to_dataset = function(results, which_dataset=available_datasets) {
+#   assert("the chosen dataset is not available. ", which_dataset %in% available_datasets)
+#   celltype2dataset_mapping %>%
+#     select(cell_type, !!which_dataset) %>%
+#     drop_na() %>%
+#     inner_join(results, by=c("cell_type")) %>%
+#     select(-cell_type)
+# }

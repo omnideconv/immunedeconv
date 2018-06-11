@@ -8,6 +8,7 @@ Imports:
     tidyverse,
     readxl,
     testit,
+    methods,
     data.tree
 Suggests:
     testthat,

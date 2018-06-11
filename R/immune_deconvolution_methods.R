@@ -14,12 +14,6 @@ NULL
 deconvolution_methods = c("mcp_counter", "epic", "quantiseq", "xcell", "cibersort", "cibersort_abs")
 
 
-#' a mapping of the various cell_types between the different methods to a common standard
-#' @export
-celltype2method_mapping = readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx", package="immunedeconv", mustWork=TRUE),
-                                            sheet="celltype2method")
-
-
 #' Data object from xCell. 
 #' 
 #' For some reason, this object is not properly exported from the xCell namespace. 
@@ -97,19 +91,19 @@ import_from_timer = function(input_file) {
     as.data.frame() %>%
     column_to_rownames("sampleID") %>%
     t() %>%
-    as_tibble(rownames="method_cell_type") %>%
-    annotate_cell_type("timer")
+    as_tibble(rownames="method_cell_type") # %>%
+    # annotate_cell_type("timer")
 }
 
 #' Annotate unified cell_type names 
 #' 
 #' (map the cell_types of the different methods to a common name)
-annotate_cell_type = function(result_table, method) {
-  celltype2method_mapping %>%
-    select(method_cell_type=!!method, cell_type) %>% 
-    inner_join(result_table, by="method_cell_type") %>%
-    select(-method_cell_type)
-}
+# annotate_cell_type = function(result_table, method) {
+#   celltype2method_mapping %>%
+#     select(method_cell_type=!!method, cell_type) %>% 
+#     inner_join(result_table, by="method_cell_type") %>%
+#     select(-method_cell_type)
+# }
 
 
 #' convert an `Biobase::ExpressionSet` to a gene-expression matrix. 
@@ -149,8 +143,10 @@ deconvolute.default = function(gene_expression, method=deconvolution_methods, ..
   
   # convert to tibble and annotate unified cell_type names
   res = res %>%
-    as_tibble(rownames="method_cell_type") %>%
-    annotate_cell_type(method=method)
+    as_tibble(rownames="method_cell_type") 
+  
+  # %>%
+  #   annotate_cell_type(method=method)
   
   return(res)
 }
@@ -167,7 +163,7 @@ setGeneric("deconvolute", function(gene_expression, method=deconvolution_methods
 #' 
 #' @param eset Expression set 
 #' @param col column name of the `fData` column that contains HGNC gene symbols. 
-setMethod("deconvolute", representation(gene_expression="eSet", method="character"),
+setMethod("deconvolute", methods::representation(gene_expression="eSet", method="character"),
           function(gene_expression, method, column="gene_symbol") {
             gene_expression %>%
               eset_to_matrix(column) %>% 
@@ -175,7 +171,7 @@ setMethod("deconvolute", representation(gene_expression="eSet", method="characte
           })
 
 #' @describeIn deconvolute `matrix` is matrix with HGNC gene symbols as row names. 
-setMethod("deconvolute", representation(gene_expression="matrix", method="character"),
+setMethod("deconvolute", methods::representation(gene_expression="matrix", method="character"),
           function(gene_expression, method) {
             deconvolute.default(gene_expression, method)
           })

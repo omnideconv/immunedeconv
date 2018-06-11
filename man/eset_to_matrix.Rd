@@ -2,7 +2,7 @@
 % Please edit documentation in R/immune_deconvolution_methods.R
 \name{eset_to_matrix}
 \alias{eset_to_matrix}
-\title{convert an \code{Biobase::ExpressionSet} to a gene-expression matrix.}
+\title{Annotate unified cell_type names}
 \usage{
 eset_to_matrix(eset, column)
 }
@@ -15,5 +15,6 @@ eset_to_matrix(eset, column)
 matrix with gene symbols as rownames and sample identifiers as colnames.
 }
 \description{
+(map the cell_types of the different methods to a common name)
 convert an \code{Biobase::ExpressionSet} to a gene-expression matrix.
 }

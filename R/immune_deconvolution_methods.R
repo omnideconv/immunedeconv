@@ -45,7 +45,8 @@ set_cibersort_mat = function(path) {
 
 #' TODO: documentation
 deconvolute_xcell = function(gene_expression_matrix, ...) {
-  xCell::xCellAnalysis(gene_expression_matrix, ...)
+  invisible(capture.output(res <- xCell::xCellAnalysis(gene_expression_matrix, ...)))
+  res
 }
 
 

@@ -4,7 +4,7 @@
 \name{celltype2dataset_mapping}
 \alias{celltype2dataset_mapping}
 \title{a mapping of the various cell_types between the different methods to a common standard}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 17 rows and 2 columns.}
+\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 19 rows and 6 columns.}
 \usage{
 celltype2dataset_mapping
 }

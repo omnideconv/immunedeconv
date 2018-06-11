@@ -4,7 +4,7 @@
 \name{celltype2method_mapping}
 \alias{celltype2method_mapping}
 \title{a mapping of the various cell_types between the different methods to a common standard}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 17 rows and 8 columns.}
+\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 19 rows and 9 columns.}
 \usage{
 celltype2method_mapping
 }

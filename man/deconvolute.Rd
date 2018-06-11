@@ -20,7 +20,8 @@ deconvolute(gene_expression, method = deconvolution_methods,
 \S4method{deconvolute}{matrix,character}(gene_expression, method)
 }
 \arguments{
-\item{gene_expression}{A number.}
+\item{gene_expression}{A numeric matrix with HGNC gene symbols as rownames and sample identifiers as colnames.
+Data must be on non-log scale.}
 
 \item{method}{a string specifying the method. Supported methods are \code{xcell}, \code{...}}
 

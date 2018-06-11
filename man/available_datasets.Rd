@@ -4,7 +4,7 @@
 \name{available_datasets}
 \alias{available_datasets}
 \title{List of available validation datasets}
-\format{An object of class \code{character} of length 1.}
+\format{An object of class \code{character} of length 5.}
 \usage{
 available_datasets
 }

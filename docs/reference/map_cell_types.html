@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>a mapping of the various cell_types between the different methods to a common standard — celltype2method_mapping • immunedeconv</title>
+<title>Use a tree-hierarchy to map cell types among different methods. — map_cell_types • immunedeconv</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="a mapping of the various cell_types between the different methods to a common standard — celltype2method_mapping" />
+<meta property="og:title" content="Use a tree-hierarchy to map cell types among different methods. — map_cell_types" />
 
-<meta property="og:description" content="a mapping of the various cell_types between the different methods to a common standard" />
+<meta property="og:description" content="cell_type`` refers to a cell type from the controlled vocabulary (CV).method_cell_type` refers to a cell type from a method or dataset." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -102,27 +102,45 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>a mapping of the various cell_types between the different methods to a common standard</h1>
-    <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/immune_deconvolution_methods.R'><code>R/immune_deconvolution_methods.R</code></a></small>
+    <h1>Use a tree-hierarchy to map cell types among different methods.</h1>
+    <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/cell_type_mapping.R'><code>R/cell_type_mapping.R</code></a></small>
     </div>
 
     
-    <p>a mapping of the various cell_types between the different methods to a common standard</p>
+    <p><code>cell_type`` refers to a cell type from the controlled vocabulary (CV).</code>method_cell_type` refers to a cell type from a method or dataset.</p>
     
 
-    <pre class="usage"><span class='no'>celltype2method_mapping</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <pre class="usage"><span class='fu'>map_cell_types</span>(<span class='no'>use_cell_types</span>, <span class='no'>fractions</span>, <span class='no'>method</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>use_cell_types</th>
+      <td><p>list of cell types from the CV to map to</p></td>
+    </tr>
+    <tr>
+      <th>fractions</th>
+      <td><p>named vector or list of cell type fractions. Names corresponds to the method_cell_types.</p></td>
+    </tr>
+    <tr>
+      <th>method1</th>
+      <td><p>method or dataset with which <code>fractions</code> was generated</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 17 rows and 8 columns.</p>
+    <p>numeric vector with CV cell types as names</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
+      <li><a href="#value">Value</a></li>
           </ul>
 
   </div>

@@ -94,7 +94,7 @@
 <pre><code>## ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 2.2.1.9000     ✔ purrr   0.2.4     
 ## ✔ tibble  1.4.2          ✔ dplyr   0.7.4     
-## ✔ tidyr   0.8.0          ✔ stringr 1.3.0     
+## ✔ tidyr   0.8.0          ✔ stringr 1.3.1     
 ## ✔ readr   1.1.1          ✔ forcats 0.3.0</code></pre>
 <pre><code>## ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
@@ -133,67 +133,11 @@
 ##     'citation("Biobase")', and for packages 'citation("pkgname")'.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/load_all">load_all</a></span>(<span class="st">"/storage/home/sturm/projects/immune_deconvolution_methods"</span>)</code></pre></div>
 <pre><code>## Loading immunedeconv</code></pre>
-<pre><code>## 
-## Attaching package: 'testthat'</code></pre>
-<pre><code>## The following object is masked from 'package:dplyr':
-## 
-##     matches</code></pre>
-<pre><code>## The following object is masked from 'package:purrr':
-## 
-##     is_null</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"fantom5_expression_set.rda"</span>, <span class="dt">package=</span><span class="st">"immunedeconv"</span>, <span class="dt">mustWork=</span><span class="ot">TRUE</span>))
 
 expr_mat =<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/Biobase/topics/exprs">exprs</a></span>(fantom5_expression_set)
 <span class="kw">rownames</span>(expr_mat) =<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/Biobase/topics/featureData">fData</a></span>(fantom5_expression_set) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(<span class="st">"hgnc_symbol"</span>)
 r =<span class="st"> </span><span class="kw">deconvolute</span>(expr_mat, <span class="st">"xcell"</span>)</code></pre></div>
-<pre><code>## [1] "Num. of genes: 10711"
-## Estimating ssGSEA scores for 489 gene sets.
-## 
-  |                                                                       
-  |                                                                 |   0%Using parallel with 4 cores
-## 
-  |                                                                       
-  |===                                                              |   5%
-  |                                                                       
-  |======                                                           |  10%
-  |                                                                       
-  |=========                                                        |  14%
-  |                                                                       
-  |============                                                     |  19%
-  |                                                                       
-  |===============                                                  |  24%
-  |                                                                       
-  |===================                                              |  29%
-  |                                                                       
-  |======================                                           |  33%
-  |                                                                       
-  |=========================                                        |  38%
-  |                                                                       
-  |============================                                     |  43%
-  |                                                                       
-  |===============================                                  |  48%
-  |                                                                       
-  |==================================                               |  52%
-  |                                                                       
-  |=====================================                            |  57%
-  |                                                                       
-  |========================================                         |  62%
-  |                                                                       
-  |===========================================                      |  67%
-  |                                                                       
-  |==============================================                   |  71%
-  |                                                                       
-  |==================================================               |  76%
-  |                                                                       
-  |=====================================================            |  81%
-  |                                                                       
-  |========================================================         |  86%
-  |                                                                       
-  |===========================================================      |  90%
-  |                                                                       
-  |==============================================================   |  95%
-  |                                                                       
-  |=================================================================| 100%</code></pre>
 <p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
 <p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
 <p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>

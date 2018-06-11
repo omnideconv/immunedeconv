@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>make a random bulk sample from a single-cell dataset — make_random_bulk • immunedeconv</title>
+<title>recursively traverse the cell type tree to resolve the mapping. — find_children • immunedeconv</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="make a random bulk sample from a single-cell dataset — make_random_bulk" />
+<meta property="og:title" content="recursively traverse the cell type tree to resolve the mapping. — find_children" />
 
-<meta property="og:description" content="make a random bulk sample from a single-cell dataset" />
+<meta property="og:description" content="recursively traverse the cell type tree to resolve the mapping." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -102,37 +102,38 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>make a random bulk sample from a single-cell dataset</h1>
-    <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/single_cell_simulation.R'><code>R/single_cell_simulation.R</code></a></small>
+    <h1>recursively traverse the cell type tree to resolve the mapping.</h1>
+    <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/cell_type_mapping.R'><code>R/cell_type_mapping.R</code></a></small>
     </div>
 
     
-    <p>make a random bulk sample from a single-cell dataset</p>
+    <p>recursively traverse the cell type tree to resolve the mapping.</p>
     
 
-    <pre class="usage"><span class='fu'>make_random_bulk</span>(<span class='no'>eset</span>, <span class='no'>cell_fractions</span>, <span class='kw'>n_cells</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>combine</span> <span class='kw'>=</span> <span class='no'>sum</span>)</pre>
+    <pre class="usage"><span class='fu'>find_children</span>(<span class='no'>node</span>, <span class='no'>fractions</span>, <span class='no'>method</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>eset</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/Biobase/topics/class.ExpressionSet'>Biobase::ExpressionSet</a></code> with a <code>cell_type</code> column in <code>pData</code>.</p></td>
+      <th>node</th>
+      <td><p>data.tree::Node corresponding to a controlled vocabulary cell type</p></td>
     </tr>
     <tr>
-      <th>cell_fractions</th>
-      <td><p>named list indicating the fraction of each cell type
-which will be in the sample.</p></td>
+      <th>fractions</th>
+      <td><p>a named list of fractions for each method_cell_type</p></td>
     </tr>
     <tr>
-      <th>n_cells</th>
-      <td><p>number of single cells to integrate into a sample</p></td>
-    </tr>
-    <tr>
-      <th>combine</th>
-      <td><p>callback function used to aggregate the counts.</p></td>
+      <th>method</th>
+      <td><p>character identifing the method in the celltype_mapping</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>numeric Either (1) the value of the method_cell_type mapped to cell_type,
+(2) the sum of all child nodes (recursively) of cell_type
+(3) NA, if the mapping cannot be resolved, i.e. at least one of the child nodes is missing.</p>
     
 
   </div>
@@ -140,7 +141,9 @@ which will be in the sample.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
   </div>
 </div>

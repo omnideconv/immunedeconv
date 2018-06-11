@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>make a random bulk sample from a single-cell dataset — make_random_bulk • immunedeconv</title>
+<title>Available cell types in the controlled vocabulary organized as a lineage tree. — cell_type_tree • immunedeconv</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="make a random bulk sample from a single-cell dataset — make_random_bulk" />
+<meta property="og:title" content="Available cell types in the controlled vocabulary organized as a lineage tree. — cell_type_tree" />
 
-<meta property="og:description" content="make a random bulk sample from a single-cell dataset" />
+<meta property="og:description" content="Available cell types in the controlled vocabulary organized as a lineage tree." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -102,45 +102,34 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>make a random bulk sample from a single-cell dataset</h1>
-    <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/single_cell_simulation.R'><code>R/single_cell_simulation.R</code></a></small>
+    <h1>Available cell types in the controlled vocabulary organized as a lineage tree.</h1>
+    <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/cell_type_mapping.R'><code>R/cell_type_mapping.R</code></a></small>
     </div>
 
     
-    <p>make a random bulk sample from a single-cell dataset</p>
+    <p>Available cell types in the controlled vocabulary organized as a lineage tree.</p>
     
 
-    <pre class="usage"><span class='fu'>make_random_bulk</span>(<span class='no'>eset</span>, <span class='no'>cell_fractions</span>, <span class='kw'>n_cells</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>combine</span> <span class='kw'>=</span> <span class='no'>sum</span>)</pre>
+    <pre class="usage"><span class='no'>cell_type_tree</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>Node</code> (inherits from <code>R6</code>) of length 41.</p>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>eset</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/Biobase/topics/class.ExpressionSet'>Biobase::ExpressionSet</a></code> with a <code>cell_type</code> column in <code>pData</code>.</p></td>
-    </tr>
-    <tr>
-      <th>cell_fractions</th>
-      <td><p>named list indicating the fraction of each cell type
-which will be in the sample.</p></td>
-    </tr>
-    <tr>
-      <th>n_cells</th>
-      <td><p>number of single cells to integrate into a sample</p></td>
-    </tr>
-    <tr>
-      <th>combine</th>
-      <td><p>callback function used to aggregate the counts.</p></td>
-    </tr>
-    </table>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>a <code>data.tree</code> object</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>

@@ -127,7 +127,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gene_expression</th>
-      <td><p>A number.</p></td>
+      <td><p>A numeric matrix with HGNC gene symbols as rownames and sample identifiers as colnames.
+Data must be on non-log scale.</p></td>
     </tr>
     <tr>
       <th>method</th>
@@ -162,7 +163,8 @@ calculated cell fractions for each sample.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>deconvolute</span>(<span class='no'>gene_expression_matrix</span>, <span class='st'>"xcell"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in deconvolute(gene_expression_matrix, "xcell"): object 'gene_expression_matrix' not found</span></div><div class='input'>
+    <pre class="examples"><div class='input'># Not run: deconvolute(gene_expression_matrix, "xcell")
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -91,19 +91,19 @@ import_from_timer = function(input_file) {
     as.data.frame() %>%
     column_to_rownames("sampleID") %>%
     t() %>%
-    as_tibble(rownames="method_cell_type") # %>%
-    # annotate_cell_type("timer")
+    as_tibble(rownames="method_cell_type") %>%
+    annotate_cell_type("timer")
 }
 
 #' Annotate unified cell_type names 
 #' 
 #' (map the cell_types of the different methods to a common name)
-# annotate_cell_type = function(result_table, method) {
-#   celltype2method_mapping %>%
-#     select(method_cell_type=!!method, cell_type) %>% 
-#     inner_join(result_table, by="method_cell_type") %>%
-#     select(-method_cell_type)
-# }
+annotate_cell_type = function(result_table, method) {
+  cell_type_mapping %>%
+    filter(method_dataset == !!method) %>% 
+    inner_join(result_table, by="method_cell_type") %>%
+    select(-method_cell_type, -method_dataset) 
+}
 
 
 #' convert an `Biobase::ExpressionSet` to a gene-expression matrix. 
@@ -132,6 +132,7 @@ eset_to_matrix = function(eset, column) {
 #' 
 #' @name deconvolute
 deconvolute.default = function(gene_expression, method=deconvolution_methods, ...) {
+  message(paste0("\n", ">>> Running ", method))
   # run selected method
   res = switch(method,
          xcell = deconvolute_xcell(gene_expression),
@@ -143,10 +144,8 @@ deconvolute.default = function(gene_expression, method=deconvolution_methods, ..
   
   # convert to tibble and annotate unified cell_type names
   res = res %>%
-    as_tibble(rownames="method_cell_type") 
-  
-  # %>%
-  #   annotate_cell_type(method=method)
+    as_tibble(rownames="method_cell_type") %>%
+    annotate_cell_type(method=method)
   
   return(res)
 }

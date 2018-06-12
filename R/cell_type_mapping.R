@@ -7,7 +7,10 @@ NULL
 #' 
 #' @export
 cell_type_mapping = readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx", package="immunedeconv", mustWork=TRUE), 
-                                     sheet="mapping") %>% select(method_dataset, method_cell_type, cell_type)
+                                     sheet="mapping") %>%
+                          select(method_dataset, method_cell_type, cell_type) %>%
+                          na.omit()
+                          
 
 #' Available methods and datasets
 #' 
@@ -35,17 +38,19 @@ node_by_name = cell_type_tree$Get(function(node){node})
 #' `method_cell_type` refers to a cell type from a method or dataset. 
 #' 
 #' @param use_cell_types list of cell types from the CV to map to
-#' @param fractions named vector or list of cell type fractions. Names corresponds to the method_cell_types. 
-#' @param method1 method or dataset with which `fractions` was generated
+#' @param fractions Dataframe with cell types as rows and samples as columns. Rownames corresponds to the method_cell_types. 
+#'                  A named vector will be coerced into a one-column dataframe. 
+#' @param method_dataset method or dataset with which `fractions` was generated
 #' 
 #' @return numeric vector with CV cell types as names
 #' 
 #' @export
-map_cell_types = function(use_cell_types, fractions, method) { 
-  fractions = as.list(fractions)
-  lapply(use_cell_types, function(cell_type) {
-    find_children(node_by_name[[cell_type]], fractions1, method1)
-  })
+map_cell_types = function(use_cell_types, fractions, method_dataset) { 
+  fractions = as.data.frame(fractions)
+  tmp_res = lapply(use_cell_types, function(cell_type) {
+    find_children(node_by_name[[cell_type]], fractions, method_dataset)
+  }) 
+  do.call("rbind", tmp_res)
 }
 
 
@@ -53,27 +58,47 @@ map_cell_types = function(use_cell_types, fractions, method) {
 #' 
 #' @param node data.tree::Node corresponding to a controlled vocabulary cell type
 #' @param fractions a named list of fractions for each method_cell_type
-#' @param method character identifing the method in the celltype_mapping
+#' @param method_dataset character identifing the method or dataset in the celltype_mapping
 #' 
 #' @return numeric Either (1) the value of the method_cell_type mapped to cell_type, 
 #'                  (2) the sum of all child nodes (recursively) of cell_type
 #'                  (3) NA, if the mapping cannot be resolved, i.e. at least one of the child nodes is missing. 
-find_children = function(node, fractions, method) {
+find_children = function(node, fractions, method_dataset) {
   cell_type = node$name
-  tmp_method_celltype = cell_type_mapping %>% filter(cell_type == !!cell_type, method_dataset == method) %>% pull(method_cell_type)
-  assert("Method cell type is uniquely mapped to a cell type", length(tmp_method_celltype) <= 1)
-  if(length(tmp_method_celltype) == 1) {
-    assert("method_cell_type is available in the given fractions vector", tmp_method_celltype %in% names(fractions))
-    fractions[[tmp_method_celltype]]
+  tmp_cell_type = cell_type_mapping %>% filter(cell_type == !!cell_type, method_dataset == !!method_dataset) %>% pull(cell_type)
+  assert("Method cell type is uniquely mapped to a cell type", length(tmp_cell_type) <= 1)
+  if(length(tmp_cell_type) == 1) {
+    assert("tmp_cell_type is available in the given fractions vector", tmp_cell_type %in% rownames(fractions))
+    fractions[tmp_cell_type,,drop=FALSE]
   } else {
     if(!node$isLeaf) {
-      lapply(node$children, function(child) {
-        find_children(child, fractions, method)
-      }) %>% purrr::reduce(sum)
+      # recursively sum up the child nodes
+      tmp_sum = lapply(node$children, function(child) {
+                  find_children(child, fractions, method_dataset)
+                }) %>%
+                  bind_rows() %>% 
+                  summarise_all(funs(sum))
+      rownames(tmp_sum) = cell_type
+      tmp_sum
     } else {
-      NA
+      # return NA row
+      tmp_na = as.data.frame(matrix(nrow=1, ncol=ncol(fractions)))
+      rownames(tmp_na) = cell_type
+      colnames(tmp_na) = colnames(fractions)
+      tmp_na
     }
   }
+}
+
+
+#' ...
+#' 
+#' @export
+map_result_to_celltypes = function(result, use_cell_types, method) {
+  result_mat = result %>% 
+    as.data.frame() %>%
+    column_to_rownames("cell_type") 
+  map_cell_types(use_cell_types, result_mat, method)
 }
 
 

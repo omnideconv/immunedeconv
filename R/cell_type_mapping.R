@@ -18,7 +18,10 @@ cell_type_mapping = readxl::read_xlsx(system.file("extdata", "cell_type_mapping.
 available_datasets = cell_type_mapping %>% pull(method_dataset) %>% unique()
   
 cell_type_list =  readxl::read_excel(system.file("extdata", "cell_type_mapping.xlsx", package="immunedeconv", mustWork=TRUE),
-                                    sheet = "controlled_vocabulary") %>% select(parent, cell_type)
+                                    sheet = "controlled_vocabulary") %>%
+  select(parent, cell_type, optional) %>% 
+  mutate(optional = optional %in% TRUE)
+  
 
 #' Available cell types in the controlled vocabulary organized as a lineage tree. 
 #' 
@@ -48,6 +51,7 @@ node_by_name = cell_type_tree$Get(function(node){node})
 map_cell_types = function(use_cell_types, fractions, method_dataset) { 
   fractions = as.data.frame(fractions)
   tmp_res = lapply(use_cell_types, function(cell_type) {
+    assert(paste("cell type is in node list:", cell_type), cell_type %in% names(node_by_name))
     find_children(node_by_name[[cell_type]], fractions, method_dataset)
   }) 
   do.call("rbind", tmp_res)
@@ -68,13 +72,17 @@ find_children = function(node, fractions, method_dataset) {
   tmp_cell_type = cell_type_mapping %>% filter(cell_type == !!cell_type, method_dataset == !!method_dataset) %>% pull(cell_type)
   assert("Method cell type is uniquely mapped to a cell type", length(tmp_cell_type) <= 1)
   if(length(tmp_cell_type) == 1) {
-    assert("tmp_cell_type is available in the given fractions vector", tmp_cell_type %in% rownames(fractions))
+    assert(paste("tmp_cell_type is available in the given fractions vector:", tmp_cell_type), tmp_cell_type %in% rownames(fractions))
     fractions[tmp_cell_type,,drop=FALSE]
   } else {
     if(!node$isLeaf) {
       # recursively sum up the child nodes
       tmp_sum = lapply(node$children, function(child) {
-                  find_children(child, fractions, method_dataset)
+                  tmp_row = find_children(child, fractions, method_dataset)
+                  if(child$optional && any(is.na(tmp_row))) {
+                    tmp_row[is.na(tmp_row)] = 0 # ignore row by setting it to 0 instaed of NA
+                  }
+                  tmp_row
                 }) %>%
                   bind_rows() %>% 
                   summarise_all(funs(sum))

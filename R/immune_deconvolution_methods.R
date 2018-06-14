@@ -37,7 +37,13 @@ set_cibersort_mat = function(path) {
 }
 
 
-#' TODO: documentation
+
+###########################################################################
+# Deconvolution functions for consistenctly accessing each method
+# 
+# These functions are called from the generic `deconvolute()` function
+###########################################################################
+
 deconvolute_xcell = function(gene_expression_matrix, ...) {
   invisible(capture.output(res <- xCell::xCellAnalysis(gene_expression_matrix, ...)))
   res
@@ -81,11 +87,29 @@ deconvolute_cibersort = function(gene_expression_matrix,
 }
 
 
+#' Export gene expression matrix in a format that can be read by TIMER
+#' 
+#' TIMER is only available as a web-tool. With this function,
+#' a gene expression matrix can be exported in a format suitable for timer
+#' with the same input gene expression matrix that can be used for the other methods. 
+#' 
+#' @param gene_expression_matrix A numeric matrix with HGNC gene symbols as rownames and sample identifiers as colnames. 
+#' @param path path to write the TIMER-compatible tsv-file to. 
+#' 
+#' @export
 export_for_timer = function(gene_expression_matrix, path=stop("Specify output path. ")) {
   write_tsv(as_tibble(gene_expression_matrix, rownames="gene_symbol"), path=path)
 }
 
 
+#' Import TIMER result 
+#' 
+#' With this function a result table downloaded from timer an be imported and converted
+#' to the unified result format that the other methods are using. 
+#' 
+#' @param input_file path to the input file. 
+#' 
+#' @export
 import_from_timer = function(input_file) {
   read_csv(input_file) %>% 
     as.data.frame() %>%
@@ -94,6 +118,7 @@ import_from_timer = function(input_file) {
     as_tibble(rownames="method_cell_type") %>%
     annotate_cell_type("timer")
 }
+
 
 #' Annotate unified cell_type names 
 #' 
@@ -111,6 +136,8 @@ annotate_cell_type = function(result_table, method) {
 #' @param eset `ExpressionSet`
 #' @param column column name of the `fData()` table, which contains the HGNC gene symbols.  
 #' @return matrix with gene symbols as rownames and sample identifiers as colnames. 
+#' 
+#' @export
 eset_to_matrix = function(eset, column) {
   expr_mat = exprs(eset)
   rownames(expr_mat) = fData(eset) %>% pull(!!column)
@@ -131,6 +158,7 @@ eset_to_matrix = function(eset, column) {
 #' # Not run: deconvolute(gene_expression_matrix, "xcell")
 #' 
 #' @name deconvolute
+#' @export deconvolute
 deconvolute.default = function(gene_expression, method=deconvolution_methods, ...) {
   message(paste0("\n", ">>> Running ", method))
   # run selected method

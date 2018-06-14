@@ -1,3 +1,6 @@
+#' Source code from https://github.com/FFinotello/quanTIseq
+NULL
+
 fixMixture<-function(mix.mat, arrays=FALSE) {
 
   # Map gene names

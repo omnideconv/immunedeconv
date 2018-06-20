@@ -2,17 +2,10 @@
 % Please edit documentation in R/timer.R
 \name{check_cancer_types}
 \alias{check_cancer_types}
-\title{Source code for the TIMER deconvolution method.}
+\title{process batch table and check cancer types.}
 \usage{
 check_cancer_types(args)
 }
 \description{
-This code is adapted from https://github.com/hanfeisun/TIMER, which
-again is an adapted version of the original TIMER source code
-from http://cistrome.org/TIMER/download.html.
-}
-\details{
-The method is described in Li et al. Genome Biology 2016;17(1):174. \link{PMID: 27549193}.
-
 process batch table and check cancer types.
 }

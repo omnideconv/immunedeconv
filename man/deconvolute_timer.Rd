@@ -4,12 +4,16 @@
 \alias{deconvolute_timer}
 \title{Deconvolute using the TIMER technique}
 \usage{
-deconvolute_timer(gene_expression_matrix, indications, ...)
+deconvolute_timer(gene_expression_matrix, indications = NULL)
 }
 \arguments{
 \item{gene_expression_matrix}{a m x n matrix with m genes and n samples}
 
-\item{indications}{a n-vector giving and indication string (e.g. 'brca') for each sample.}
+\item{indications}{a n-vector giving and indication string (e.g. 'brca') for each sample.
+Accepted indications are 'kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
+'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
+'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
+'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol'}
 }
 \description{
 Unlike the other methods, TIMER needs the specification of the

@@ -110,17 +110,28 @@
     <p>Perform an immune cell deconvolution on a dataset.</p>
     
 
-    <pre class="usage"><span class='fu'>deconvolute.default</span>(<span class='no'>gene_expression</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>deconvolute.default</span>(<span class='no'>gene_expression</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>,
+  <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>,
-  <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>)
+  <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>, <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='co'># S4 method for eSet,character</span>
+<span class='co'># S4 method for eSet,character,character,character</span>
 <span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>)
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>,
+  <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='co'># S4 method for matrix,character</span>
-<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>, <span class='no'>method</span>)</pre>
+<span class='co'># S4 method for eSet,character,character,missing</span>
+<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
+  <span class='no'>method</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>)
+
+<span class='co'># S4 method for matrix,character,missing,character</span>
+<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
+  <span class='no'>method</span>, <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='co'># S4 method for matrix,character,missing,missing</span>
+<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
+  <span class='no'>method</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -133,6 +144,10 @@ Data must be on non-log scale.</p></td>
     <tr>
       <th>method</th>
       <td><p>a string specifying the method. Supported methods are <code>xcell</code>, <code>...</code></p></td>
+    </tr>
+    <tr>
+      <th>indications</th>
+      <td><p>a character vector with one indication per sample for TIMER. Argument is ignored for all other methods.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -156,9 +171,11 @@ calculated cell fractions for each sample.</p>
     <h2 class="hasAnchor" id="methods-by-class-"><a class="anchor" href="#methods-by-class-"></a>Methods (by class)</h2>
 
     <ul>
-<li><p><code>gene_expression = eSet,method = character</code>: <code>eset</code> is a <code><a href='http://www.rdocumentation.org/packages/Biobase/topics/class.ExpressionSet'>Biobase::ExpressionSet</a></code>.
+<li><p><code>gene_expression = eSet,method = character,column = character,indications = character</code>: <code>eset</code> is a <code><a href='http://www.rdocumentation.org/packages/Biobase/topics/class.ExpressionSet'>Biobase::ExpressionSet</a></code>.
 <code>fData</code> contains a column with HGNC gene symbols (specify column name)</p></li>
-<li><p><code>gene_expression = matrix,method = character</code>: <code>matrix</code> is matrix with HGNC gene symbols as row names.</p></li>
+<li><p><code>gene_expression = eSet,method = character,column = character,indications = missing</code>: variant where indications are not defined, cannot be used with method == 'timer'</p></li>
+<li><p><code>gene_expression = matrix,method = character,column = missing,indications = character</code>: <code>matrix</code> is matrix with HGNC gene symbols as row names.</p></li>
+<li><p><code>gene_expression = matrix,method = character,column = missing,indications = missing</code>: variant where indications are not defined, cannot be used with method=='timer'</p></li>
 </ul>
     
 

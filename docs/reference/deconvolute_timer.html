@@ -112,7 +112,7 @@ cancer type for each sample." />
 cancer type for each sample.</p>
     
 
-    <pre class="usage"><span class='fu'>deconvolute_timer</span>(<span class='no'>gene_expression_matrix</span>, <span class='no'>indications</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>deconvolute_timer</span>(<span class='no'>gene_expression_matrix</span>, <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -123,7 +123,11 @@ cancer type for each sample.</p>
     </tr>
     <tr>
       <th>indications</th>
-      <td><p>a n-vector giving and indication string (e.g. 'brca') for each sample.</p></td>
+      <td><p>a n-vector giving and indication string (e.g. 'brca') for each sample.
+Accepted indications are 'kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
+'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
+'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
+'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol'</p></td>
     </tr>
     </table>
     

@@ -5,25 +5,38 @@
 \alias{deconvolute}
 \alias{deconvolute.default}
 \alias{deconvolute}
-\alias{deconvolute,eSet,character-method}
-\alias{deconvolute,matrix,character-method}
+\alias{deconvolute,eSet,character,character,character-method}
+\alias{deconvolute,eSet,character,character,missing-method}
+\alias{deconvolute,matrix,character,missing,character-method}
+\alias{deconvolute,matrix,character,missing,missing-method}
 \title{Perform an immune cell deconvolution on a dataset.}
 \usage{
-deconvolute.default(gene_expression, method = deconvolution_methods, ...)
+deconvolute.default(gene_expression, method = deconvolution_methods,
+  indications = NULL)
 
 deconvolute(gene_expression, method = deconvolution_methods,
-  column = "gene_symbol")
+  column = "gene_symbol", indications = NULL)
 
-\S4method{deconvolute}{eSet,character}(gene_expression,
-  method = deconvolution_methods, column = "gene_symbol")
+\S4method{deconvolute}{eSet,character,character,character}(gene_expression,
+  method = deconvolution_methods, column = "gene_symbol",
+  indications = NULL)
 
-\S4method{deconvolute}{matrix,character}(gene_expression, method)
+\S4method{deconvolute}{eSet,character,character,missing}(gene_expression,
+  method, column = "gene_symbol")
+
+\S4method{deconvolute}{matrix,character,missing,character}(gene_expression,
+  method, indications = NULL)
+
+\S4method{deconvolute}{matrix,character,missing,missing}(gene_expression,
+  method)
 }
 \arguments{
 \item{gene_expression}{A numeric matrix with HGNC gene symbols as rownames and sample identifiers as colnames.
 Data must be on non-log scale.}
 
 \item{method}{a string specifying the method. Supported methods are \code{xcell}, \code{...}}
+
+\item{indications}{a character vector with one indication per sample for TIMER. Argument is ignored for all other methods.}
 
 \item{...}{arguments passed to the respective method}
 
@@ -40,10 +53,14 @@ Perform an immune cell deconvolution on a dataset.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{gene_expression = eSet,method = character}: \code{eset} is a \code{Biobase::ExpressionSet}.
+\item \code{gene_expression = eSet,method = character,column = character,indications = character}: \code{eset} is a \code{Biobase::ExpressionSet}.
 \code{fData} contains a column with HGNC gene symbols (specify column name)
 
-\item \code{gene_expression = matrix,method = character}: \code{matrix} is matrix with HGNC gene symbols as row names.
+\item \code{gene_expression = eSet,method = character,column = character,indications = missing}: variant where indications are not defined, cannot be used with method == 'timer'
+
+\item \code{gene_expression = matrix,method = character,column = missing,indications = character}: \code{matrix} is matrix with HGNC gene symbols as row names.
+
+\item \code{gene_expression = matrix,method = character,column = missing,indications = missing}: variant where indications are not defined, cannot be used with method=='timer'
 }}
 
 \examples{

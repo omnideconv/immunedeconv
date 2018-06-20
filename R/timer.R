@@ -18,6 +18,12 @@ TimerINFO('Loading Timer Utilities')
 immuneCuratedData <- system.file("extdata", "timer", "precalculated", "immune.expression.curated.RData",
                                  package="immunedeconv", mustWork = TRUE)
 
+#' TIMER signatures are cancer specific. This is the list of available cancer types. 
+#' @export
+timer_available_cancers <- c('kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
+                         'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
+                         'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
+                         'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol')
 
 LoadImmuneGeneExpression <- function() {
   ## Load gene expression data for immune cells
@@ -100,10 +106,7 @@ RemoveBatchEffect <- function(cancer.exp, immune.exp, immune.cellType) {
 
 #' process batch table and check cancer types.
 check_cancer_types <- function(args) {
-  cancers.available <- c('kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
-                         'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
-                         'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
-                         'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol')
+  
 
   if (length(args$batch) != 0) {
     cat("Enter batch mode\n")

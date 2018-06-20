@@ -53,7 +53,11 @@ set_cibersort_mat = function(path) {
 #' 
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples
 #' @param indications a n-vector giving and indication string (e.g. 'brca') for each sample. 
-deconvolute_timer = function(gene_expression_matrix, indications, ...) {
+#'     Accepted indications are 'kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
+#'     'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
+#'     'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
+#'     'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol'
+deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
   indications = tolower(indications)
   assert("indications fit to mixture matrix", length(indications) == ncol(gene_expression_matrix))
   args = new.env()
@@ -66,7 +70,9 @@ deconvolute_timer = function(gene_expression_matrix, indications, ...) {
     cat(paste0(tmp_file, ",", ind, "\n"), file=args$batch, append=TRUE)
   })
   # reorder results to be consistent with input matrix
-  results = deconvolute_timer.default(args)[, colnames(gene_expression_matrix)]
+  results = deconvolute_timer.default(args)[, make.names(colnames(gene_expression_matrix))]
+  colnames(results) = colnames(gene_expression_matrix)
+  results
 }
 
 
@@ -113,39 +119,6 @@ deconvolute_cibersort = function(gene_expression_matrix,
 }
 
 
-#' Export gene expression matrix in a format that can be read by TIMER
-#' 
-#' TIMER is only available as a web-tool. With this function,
-#' a gene expression matrix can be exported in a format suitable for timer
-#' with the same input gene expression matrix that can be used for the other methods. 
-#' 
-#' @param gene_expression_matrix A numeric matrix with HGNC gene symbols as rownames and sample identifiers as colnames. 
-#' @param path path to write the TIMER-compatible tsv-file to. 
-#' 
-#' @export
-export_for_timer = function(gene_expression_matrix, path=stop("Specify output path. ")) {
-  write_tsv(as_tibble(gene_expression_matrix, rownames="gene_symbol"), path=path)
-}
-
-
-#' Import TIMER result 
-#' 
-#' With this function a result table downloaded from timer an be imported and converted
-#' to the unified result format that the other methods are using. 
-#' 
-#' @param input_file path to the input file. 
-#' 
-#' @export
-import_from_timer = function(input_file) {
-  read_csv(input_file) %>% 
-    as.data.frame() %>%
-    column_to_rownames("sampleID") %>%
-    t() %>%
-    as_tibble(rownames="method_cell_type") %>%
-    annotate_cell_type("timer")
-}
-
-
 #' Annotate unified cell_type names 
 #' 
 #' (map the cell_types of the different methods to a common name)
@@ -176,6 +149,7 @@ eset_to_matrix = function(eset, column) {
 #' @param gene_expression A numeric matrix with HGNC gene symbols as rownames and sample identifiers as colnames. 
 #'   Data must be on non-log scale. 
 #' @param method a string specifying the method. Supported methods are `xcell`, `...`
+#' @param indications a character vector with one indication per sample for TIMER. Argument is ignored for all other methods. 
 #' @param ... arguments passed to the respective method
 #' @return `data.frame` with `cell_type` as first column and a column with the 
 #'     calculated cell fractions for each sample. 
@@ -185,7 +159,7 @@ eset_to_matrix = function(eset, column) {
 #' 
 #' @name deconvolute
 #' @export deconvolute
-deconvolute.default = function(gene_expression, method=deconvolution_methods, ...) {
+deconvolute.default = function(gene_expression, method=deconvolution_methods, indications=NULL) {
   message(paste0("\n", ">>> Running ", method))
   # run selected method
   res = switch(method,
@@ -194,7 +168,8 @@ deconvolute.default = function(gene_expression, method=deconvolution_methods, ..
          epic = deconvolute_epic(gene_expression),
          quantiseq = deconvolute_quantiseq(gene_expression),
          cibersort = deconvolute_cibersort(gene_expression, absolute = FALSE),
-         cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE))
+         cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE),
+         timer = deconvolute_timer(gene_expression, indications=indications))
   
   # convert to tibble and annotate unified cell_type names
   res = res %>%
@@ -206,25 +181,48 @@ deconvolute.default = function(gene_expression, method=deconvolution_methods, ..
 
 
 #' @rdname deconvolute
-setGeneric("deconvolute", function(gene_expression, method=deconvolution_methods, column="gene_symbol") {
+setGeneric("deconvolute", function(gene_expression, method=deconvolution_methods, column="gene_symbol", indications=NULL){
   standardGeneric("deconvolute")
 })
 
 
-#' @describeIn deconvolute `eset` is a `Biobase::ExpressionSet`. 
+#' @describeIn deconvolute
+#' `eset` is a `Biobase::ExpressionSet`. 
 #' `fData` contains a column with HGNC gene symbols (specify column name)
 #' 
 #' @param eset Expression set 
 #' @param col column name of the `fData` column that contains HGNC gene symbols. 
-setMethod("deconvolute", methods::representation(gene_expression="eSet", method="character"),
+setMethod("deconvolute", methods::representation(gene_expression="eSet", method="character", 
+                                                 column="character", indications="character"),
+          function(gene_expression, method, column="gene_symbol", indications=NULL) {
+            gene_expression %>%
+              eset_to_matrix(column) %>% 
+              deconvolute.default(method, indications=indications)
+          })
+
+#' @describeIn deconvolute
+#' variant where indications are not defined, cannot be used with method == 'timer'
+setMethod("deconvolute", methods::representation(gene_expression="eSet", method="character", 
+                                                 column="character", indications="missing"),
           function(gene_expression, method, column="gene_symbol") {
             gene_expression %>%
               eset_to_matrix(column) %>% 
               deconvolute.default(method)
           })
 
-#' @describeIn deconvolute `matrix` is matrix with HGNC gene symbols as row names. 
-setMethod("deconvolute", methods::representation(gene_expression="matrix", method="character"),
+
+#' @describeIn deconvolute 
+#' `matrix` is matrix with HGNC gene symbols as row names. 
+setMethod("deconvolute", methods::representation(gene_expression="matrix", method="character", 
+                                                 column="missing", indications="character"),
+          function(gene_expression, method, indications=NULL) {
+            deconvolute.default(gene_expression, method, indications=indications)
+          })
+
+#' @describeIn deconvolute 
+#' variant where indications are not defined, cannot be used with method=='timer'
+setMethod("deconvolute", methods::representation(gene_expression="matrix", method="character", 
+                                                 column="missing", indications="missing"),
           function(gene_expression, method) {
             deconvolute.default(gene_expression, method)
           })

@@ -1,4 +1,4 @@
-test_mat = read_tsv("bulk_mat.tsv") %>% as.data.frame() %>% column_to_rownames("gene_symbol")
+test_mat = read_tsv("bulk_mat.tsv") %>% as.data.frame() %>% tibble::column_to_rownames("gene_symbol")
 
 test_that("timer works", {
   res = deconvolute_timer(test_mat, indications=rep("brca", ncol(test_mat)))

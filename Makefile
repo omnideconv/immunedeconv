@@ -32,6 +32,10 @@ docs: roxygenize
 deploy_docs: docs
 	git add docs && git commit -m "update docs" && git push
 
+.PHONY: test
+test:
+	Rscript -e 'devtools::test(reporter =c("summary", "fail"))'
+
 .PHONY: clean
 clean:
 	rm -rfv docs/*
@@ -40,3 +44,5 @@ clean:
 	rm -rfv vignettes/*.html
 	find . -type f -name "*~" -exec rm '{}' \;
 	find . -type f -name ".Rhistory" -exec rm '{}' \;
+
+

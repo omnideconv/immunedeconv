@@ -6,6 +6,7 @@
 #' @import dplyr
 #' @importFrom testit assert
 #' @import readr
+#' @importFrom tibble as_tibble
 NULL
 
 
@@ -60,7 +61,7 @@ deconvolute_timer = function(gene_expression_matrix, indications, ...) {
   args$batch = tempfile()
   lapply(unique(indications), function(ind) {
     tmp_file = tempfile()
-    tmp_mat = gene_expression_matrix[, indications == ind, drop=FALSE] %>% as.tibble(rownames = "gene_symbol")
+    tmp_mat = gene_expression_matrix[, indications == ind, drop=FALSE] %>% as_tibble(rownames = "gene_symbol")
     write_tsv(tmp_mat, tmp_file)
     cat(paste0(tmp_file, ",", ind, "\n"), file=args$batch, append=TRUE)
   })

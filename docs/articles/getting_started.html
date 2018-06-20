@@ -133,6 +133,22 @@
 ##     'citation("Biobase")', and for packages 'citation("pkgname")'.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/load_all">load_all</a></span>(<span class="st">"/storage/home/sturm/projects/immune_deconvolution_methods"</span>)</code></pre></div>
 <pre><code>## Loading immunedeconv</code></pre>
+<pre><code>## Loading required package: mgcv</code></pre>
+<pre><code>## Loading required package: nlme</code></pre>
+<pre><code>## 
+## Attaching package: 'nlme'</code></pre>
+<pre><code>## The following object is masked from 'package:dplyr':
+## 
+##     collapse</code></pre>
+<pre><code>## This is mgcv 1.8-23. For overview type 'help("mgcv-package")'.</code></pre>
+<pre><code>## Loading required package: genefilter</code></pre>
+<pre><code>## 
+## Attaching package: 'genefilter'</code></pre>
+<pre><code>## The following object is masked from 'package:readr':
+## 
+##     spec</code></pre>
+<pre><code>## Loading required package: BiocParallel</code></pre>
+<pre><code>## ## Loading Timer Utilities</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"fantom5_expression_set.rda"</span>, <span class="dt">package=</span><span class="st">"immunedeconv"</span>, <span class="dt">mustWork=</span><span class="ot">TRUE</span>))
 
 expr_mat =<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/Biobase/topics/exprs">exprs</a></span>(fantom5_expression_set)

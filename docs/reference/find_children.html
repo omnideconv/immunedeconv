@@ -110,7 +110,7 @@
     <p>recursively traverse the cell type tree to resolve the mapping.</p>
     
 
-    <pre class="usage"><span class='fu'>find_children</span>(<span class='no'>node</span>, <span class='no'>fractions</span>, <span class='no'>method_dataset</span>)</pre>
+    <pre class="usage"><span class='fu'>find_children</span>(<span class='no'>node</span>, <span class='no'>fractions</span>, <span class='kw'>method_dataset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -125,7 +125,8 @@
     </tr>
     <tr>
       <th>method_dataset</th>
-      <td><p>character identifing the method or dataset in the celltype_mapping</p></td>
+      <td><p>character identifing the method or dataset in the celltype_mapping. If NULL, the input
+vector already uses controlled vocabulary.</p></td>
     </tr>
     </table>
     

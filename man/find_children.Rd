@@ -4,14 +4,15 @@
 \alias{find_children}
 \title{recursively traverse the cell type tree to resolve the mapping.}
 \usage{
-find_children(node, fractions, method_dataset)
+find_children(node, fractions, method_dataset = NULL)
 }
 \arguments{
 \item{node}{data.tree::Node corresponding to a controlled vocabulary cell type}
 
 \item{fractions}{a named list of fractions for each method_cell_type}
 
-\item{method_dataset}{character identifing the method or dataset in the celltype_mapping}
+\item{method_dataset}{character identifing the method or dataset in the celltype_mapping. If NULL, the input
+vector already uses controlled vocabulary.}
 }
 \value{
 numeric Either (1) the value of the method_cell_type mapped to cell_type,

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Use a tree-hierarchy to map cell types among different methods. — map_cell_types • immunedeconv</title>
+<title>Source code for the TIMER deconvolution method. — check_cancer_types • immunedeconv</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,11 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Use a tree-hierarchy to map cell types among different methods. — map_cell_types" />
+<meta property="og:title" content="Source code for the TIMER deconvolution method. — check_cancer_types" />
 
-<meta property="og:description" content="cell_type`` refers to a cell type from the controlled vocabulary (CV).method_cell_type` refers to a cell type from a method or dataset." />
+<meta property="og:description" content="This code is adapted from https://github.com/hanfeisun/TIMER, which
+again is an adapted version of the original TIMER source code
+from http://cistrome.org/TIMER/download.html." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -102,46 +104,30 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Use a tree-hierarchy to map cell types among different methods.</h1>
-    <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/cell_type_mapping.R'><code>R/cell_type_mapping.R</code></a></small>
+    <h1>Source code for the TIMER deconvolution method.</h1>
+    <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/timer.R'><code>R/timer.R</code></a></small>
     </div>
 
     
-    <p><code>cell_type`` refers to a cell type from the controlled vocabulary (CV).</code>method_cell_type` refers to a cell type from a method or dataset.</p>
+    <p>This code is adapted from https://github.com/hanfeisun/TIMER, which
+again is an adapted version of the original TIMER source code
+from http://cistrome.org/TIMER/download.html.</p>
     
 
-    <pre class="usage"><span class='fu'>map_cell_types</span>(<span class='no'>use_cell_types</span>, <span class='no'>fractions</span>, <span class='kw'>method_dataset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>use_cell_types</th>
-      <td><p>list of cell types from the CV to map to</p></td>
-    </tr>
-    <tr>
-      <th>fractions</th>
-      <td><p>Dataframe with cell types as rows and samples as columns. Rownames corresponds to the method_cell_types.
-A named vector will be coerced into a one-column dataframe.</p></td>
-    </tr>
-    <tr>
-      <th>method_dataset</th>
-      <td><p>method or dataset with which <code>fractions</code> was generated. If NULL, the input data already uses the CV.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <pre class="usage"><span class='fu'>check_cancer_types</span>(<span class='no'>args</span>)</pre>
+        
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>numeric vector with CV cell types as names</p>
+    <p>The method is described in Li et al. Genome Biology 2016;17(1):174. PMID: 27549193.</p>
+<p>process batch table and check cancer types.</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>

@@ -19,6 +19,7 @@ Remotes:
     bioc::preprocessCore,
     bioc::Biobase,
     bioc::GSVA,
+    bioc::sva,
     bioc::GSEABase,
     Accio/BioQC,
     dviraran/xCell,

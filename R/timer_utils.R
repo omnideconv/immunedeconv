@@ -1,49 +1,48 @@
 library(sva)
-library(crayon)
-library(sqldf)
 
 TimerINFO <- function(string) {
-  cat(green(sprintf('## %s\n', string)))
+  message(sprintf('## %s\n', string))
 }
 
 TimerINFO('Loading Timer Utilities')
 
-immuneCuratedData <- paste(baseDir, '/data/precalculated/immune.expression.curated.RData', sep='')
+immuneCuratedData <- system.file("extdata", "timer", "precalculated", "immune.expression.curated.RData",
+                                 package="immunedeconv", mustWork = TRUE)
 
-ConvertImmuneProbeToRefgene <- function(curated.ref){
-  ##----- function to preprocess the reference dataset, not necessary if the processed data "curated.ref.genes.Rdata" is available -----##
+#ConvertImmuneProbeToRefgene <- function(curated.ref){
+#  ##----- function to preprocess the reference dataset, not necessary if the processed data "curated.ref.genes.Rdata" is available -----##
 
-  tmpDD <- data.frame(curated.ref)
-  tmpDD <- tmpDD[order(rownames(tmpDD)), ]
-  ## sort the immune expression data by rownames
+#  tmpDD <- data.frame(curated.ref)
+#  tmpDD <- tmpDD[order(rownames(tmpDD)), ]
+#  ## sort the immune expression data by rownames
 
-  colnames(tmpDD) <- gsub('\\.', '_', colnames(tmpDD))
-  genes <- sapply(strsplit(rownames(tmpDD), ';'), function(x) x[[1]])
-  ## remove the probe ID, only keep gene names
+#  colnames(tmpDD) <- gsub('\\.', '_', colnames(tmpDD))
+#  genes <- sapply(strsplit(rownames(tmpDD), ';'), function(x) x[[1]])
+#  ## remove the probe ID, only keep gene names
 
-  tmpDD <- cbind(genes, tmpDD)
-  tmpDD <- tmpDD[order(genes), ]
-  ## sort by gene names
+#  tmpDD <- cbind(genes, tmpDD)
+#  tmpDD <- tmpDD[order(genes), ]
+#  ## sort by gene names
 
-  tmp0 <- c()
-  cnt <- 0
+#  tmp0 <- c()
+#  cnt <- 0
 
-  TimerINFO('Aggregating immune expression data')
+#  TimerINFO('Aggregating immune expression data')
 
-  for(i in colnames(tmpDD)[2:ncol(tmpDD)]){
-    ## start from the second column (the first column is gene information)
-    cat(sprintf("(%d of %d) %s\n", cnt, ncol(tmpDD) - 1 ,i))
-    tmp <- sqldf(paste('select max(', i, ') from tmpDD group by genes', sep=''))
-    ## select the maximum probe expression level when a gene has multiple probes
+#  for(i in colnames(tmpDD)[2:ncol(tmpDD)]){
+#    ## start from the second column (the first column is gene information)
+#    cat(sprintf("(%d of %d) %s\n", cnt, ncol(tmpDD) - 1 ,i))
+#    tmp <- sqldf(paste('select max(', i, ') from tmpDD group by genes', sep=''))
+#    ## select the maximum probe expression level when a gene has multiple probes
 
-    if(length(tmp0) == 0) tmp0 <- tmp else tmp0 <- cbind(tmp0, tmp)
-    cnt <- cnt + 1
-  }
-  colnames(tmp0) <- colnames(tmpDD)[2:ncol(tmpDD)]
-  rownames(tmp0) <- unique(tmpDD[, 1])
-  curated.ref.genes <- tmp0
-  return(curated.ref.genes)
-}
+#    if(length(tmp0) == 0) tmp0 <- tmp else tmp0 <- cbind(tmp0, tmp)
+#    cnt <- cnt + 1
+#  }
+#  colnames(tmp0) <- colnames(tmpDD)[2:ncol(tmpDD)]
+#  rownames(tmp0) <- unique(tmpDD[, 1])
+#  curated.ref.genes <- tmp0
+#  return(curated.ref.genes)
+#}
 
 
 LoadImmuneGeneExpression <- function() {
@@ -58,7 +57,7 @@ LoadImmuneGeneExpression <- function() {
     return(curated.data)
   }
 
-  exp <- get(load(paste(baseDir,'/data/immune_datasets/HPCTimmune.Rdata',sep='')))
+  exp <- get(load(system.file("extdata", "timer", "immune_datasets", "HPCTimmune.Rdata")))
 
   ##----- Select single reference samples of pre-selected immune cell types -----##
   B_cell <- 362:385

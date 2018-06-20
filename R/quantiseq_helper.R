@@ -34,7 +34,7 @@ makeQN<-function(mix.mat) {
 
 mapGenes<-function(mydata) {
 
-  HGNC<-read.csv(system.file("extdata", "quantiseq", "HGNC_genenames_20170418.txt", package="immunedeconv", mustWork=TURE),
+  HGNC<-read.csv(system.file("extdata", "quantiseq", "HGNC_genenames_20170418.txt", package="immunedeconv", mustWork=TRUE),
                  header=TRUE, sep="\t")
 
   curgenes<-rownames(mydata)

@@ -1,42 +1,14 @@
-#!/usr/bin/env Rscript
+#' Source code for the TIMER deconvolution method.
+#'
+#' This code is adapted from https://github.com/hanfeisun/TIMER, which
+#' again is an adapted version of the original TIMER source code
+#' from http://cistrome.org/TIMER/download.html.
+#'
+#' The method is described in Li et al. Genome Biology 2016;17(1):174. [PMID: 27549193].
+#'
 
-
-baseDir <- (function() {
-  args <- commandArgs(trailingOnly = FALSE)
-  file.arg.name <- "--file="
-  script.name <- sub(file.arg.name, "", args[grep(file.arg.name, args)])
-  script.basename <- dirname(script.name)
-  return(script.basename)
-})()
-
-ParseArgs <- function() {
-  args <- commandArgs(trailingOnly = TRUE)
-  print(args)
-  # read in args, if exists --batch_input, the script will ignore other input args.
-  tmp <- grepl("--batch-input=", args)
-  batch.file <- gsub("--batch-input=", "", args[tmp])
-  print(batch.file)
-  tmp <- grepl("--outdir=", args)
-  outdir <- gsub("--outdir=", "", args[tmp])
-  if (length(outdir) == 0) {
-    outdir = baseDir
-  }
-  print(outdir)
-
-  if (length(batch.file) == 0) {
-    cancer.expression <- args[1]
-    cancer.category <- args[2]
-  } else {
-    cancer.expression <- NULL
-    cancer.category <- NULL
-  }
-  return(list(outdir = outdir, batch = batch.file, expression = cancer.expression, category = cancer.category))
-}
-
-
-## Evaluate the code immediately so that error can be detected as early as possible
-cancers <- (function() {
-  args <- ParseArgs()
+#' process batch table and check cancer types.
+check_cancer_types <- function(args) {
   cancers.available <- c('kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
                          'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
                          'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
@@ -57,10 +29,10 @@ cancers <- (function() {
     }
   }
   return(cancers)
-})()
+}
 
 
-##----- Constrained regression method implemented in Abbas et al., 2009 -----##
+#' Constrained regression method implemented in Abbas et al., 2009
 GetFractions.Abbas <- function(XX, YY, w=NA){
   ## XX is immune expression data
   ## YY is cancer expression data
@@ -146,14 +118,8 @@ GetOutlierGenes <- function (cancers) {
   return(unique(outlier.total))
 }
 
-main <- function() {
-
-#   help_msg = 'Usage：
-#   For single run: Rscript regression.R expFile cancer_catlog
-#   For batch run: Rscript regression.R --batch_input=table.txt
-# '
-  # cat(help_msg)
-  args <- ParseArgs()
+deconvolute_timer.default = function(args) {
+  cancers = check_cancer_types(args)
 
   TimerINFO('Loading immune gene expression')
   immune <- LoadImmuneGeneExpression()
@@ -172,9 +138,8 @@ main <- function() {
   for (i in 1:nrow(cancers)) {
     cancer.expFile <- cancers[i, 1]
     cancer.category <- cancers[i, 2]
-    gene.selected.marker.path <- paste(baseDir,
-                                       '/data/precalculated/genes_', cancer.category, '.RData',
-                                       sep='')
+    gene.selected.marker.path <- system.file("extdata", "timer", "precalculated", paste0("genes_", cancer.category, ".RData"),
+                                             package = "immunedeconv", mustWork = TRUE)
     cancer.expression <- ParseInputExpression(cancer.expFile)
     index <- !(row.names(cancer.expression) %in% outlier.genes)
     cancer.expression <- cancer.expression[index, , drop=FALSE]
@@ -218,8 +183,6 @@ main <- function() {
   write.table(abundance.score.matrix, paste(args$outdir, '/results/score_matrix.txt', sep=''),
       sep="\t", quote=FALSE, row.names=TRUE, col.names=NA)
 
-
+  return(abundance.score.matrix)
 }
-
-main()
 

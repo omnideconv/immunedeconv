@@ -11,7 +11,7 @@ NULL
 
 #' list of supported immune deconvolution methods
 #' @export
-deconvolution_methods = c("mcp_counter", "epic", "quantiseq", "xcell", "cibersort", "cibersort_abs")
+deconvolution_methods = c("mcp_counter", "epic", "quantiseq", "xcell", "cibersort", "cibersort_abs", "timer")
 
 
 #' Data object from xCell. 
@@ -43,6 +43,31 @@ set_cibersort_mat = function(path) {
 # 
 # These functions are called from the generic `deconvolute()` function
 ###########################################################################
+
+
+#' Deconvolute using the TIMER technique
+#' 
+#' Unlike the other methods, TIMER needs the specification of the 
+#' cancer type for each sample. 
+#' 
+#' @param gene_expression_matrix a m x n matrix with m genes and n samples
+#' @param indications a n-vector giving and indication string (e.g. 'brca') for each sample. 
+deconvolute_timer = function(gene_expression_matrix, indications, ...) {
+  indications = tolower(indications)
+  assert("indications fit to mixture matrix", length(indications) == ncol(gene_expression_matrix))
+  args = new.env()
+  args$outdir = tempdir()
+  args$batch = tempfile()
+  lapply(unique(indications), function(ind) {
+    tmp_file = tempfile()
+    tmp_mat = gene_expression_matrix[, indications == ind, drop=FALSE] %>% as.tibble(rownames = "gene_symbol")
+    write_tsv(tmp_mat, tmp_file)
+    cat(paste0(tmp_file, ",", ind, "\n"), file=args$batch, append=TRUE)
+  })
+  # reorder results to be consistent with input matrix
+  results = deconvolute_timer.default(args)[, colnames(gene_expression_matrix)]
+}
+
 
 deconvolute_xcell = function(gene_expression_matrix, ...) {
   invisible(capture.output(res <- xCell::xCellAnalysis(gene_expression_matrix, ...)))

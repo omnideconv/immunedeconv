@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>convert an <code>Biobase::ExpressionSet</code> to a gene-expression matrix. — eset_to_matrix • immunedeconv</title>
+<title>Import TIMER result — import_from_timer • immunedeconv</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,10 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="convert an <code>Biobase::ExpressionSet</code> to a gene-expression matrix. — eset_to_matrix" />
+<meta property="og:title" content="Import TIMER result — import_from_timer" />
 
-<meta property="og:description" content="convert an Biobase::ExpressionSet to a gene-expression matrix." />
+<meta property="og:description" content="With this function a result table downloaded from timer an be imported and converted
+to the unified result format that the other methods are using." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -102,32 +103,25 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>convert an <code>Biobase::ExpressionSet</code> to a gene-expression matrix.</h1>
+    <h1>Import TIMER result</h1>
     <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/immune_deconvolution_methods.R'><code>R/immune_deconvolution_methods.R</code></a></small>
     </div>
 
     
-    <p>convert an <code><a href='http://www.rdocumentation.org/packages/Biobase/topics/class.ExpressionSet'>Biobase::ExpressionSet</a></code> to a gene-expression matrix.</p>
+    <p>With this function a result table downloaded from timer an be imported and converted
+to the unified result format that the other methods are using.</p>
     
 
-    <pre class="usage"><span class='fu'>eset_to_matrix</span>(<span class='no'>eset</span>, <span class='no'>column</span>)</pre>
+    <pre class="usage"><span class='fu'>import_from_timer</span>(<span class='no'>input_file</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>eset</th>
-      <td><p><code>ExpressionSet</code></p></td>
-    </tr>
-    <tr>
-      <th>column</th>
-      <td><p>column name of the <code>fData()</code> table, which contains the HGNC gene symbols.</p></td>
+      <th>input_file</th>
+      <td><p>path to the input file.</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>matrix with gene symbols as rownames and sample identifiers as colnames.</p>
     
 
   </div>
@@ -135,9 +129,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>

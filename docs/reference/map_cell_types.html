@@ -110,7 +110,7 @@
     <p><code>cell_type`` refers to a cell type from the controlled vocabulary (CV).</code>method_cell_type` refers to a cell type from a method or dataset.</p>
     
 
-    <pre class="usage"><span class='fu'>map_cell_types</span>(<span class='no'>use_cell_types</span>, <span class='no'>fractions</span>, <span class='no'>method</span>)</pre>
+    <pre class="usage"><span class='fu'>map_cell_types</span>(<span class='no'>use_cell_types</span>, <span class='no'>fractions</span>, <span class='no'>method_dataset</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -121,10 +121,11 @@
     </tr>
     <tr>
       <th>fractions</th>
-      <td><p>named vector or list of cell type fractions. Names corresponds to the method_cell_types.</p></td>
+      <td><p>Dataframe with cell types as rows and samples as columns. Rownames corresponds to the method_cell_types.
+A named vector will be coerced into a one-column dataframe.</p></td>
     </tr>
     <tr>
-      <th>method1</th>
+      <th>method_dataset</th>
       <td><p>method or dataset with which <code>fractions</code> was generated</p></td>
     </tr>
     </table>

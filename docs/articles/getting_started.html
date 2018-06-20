@@ -138,6 +138,8 @@
 expr_mat =<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/Biobase/topics/exprs">exprs</a></span>(fantom5_expression_set)
 <span class="kw">rownames</span>(expr_mat) =<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/Biobase/topics/featureData">fData</a></span>(fantom5_expression_set) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(<span class="st">"hgnc_symbol"</span>)
 r =<span class="st"> </span><span class="kw">deconvolute</span>(expr_mat, <span class="st">"xcell"</span>)</code></pre></div>
+<pre><code>## 
+## &gt;&gt;&gt; Running xcell</code></pre>
 <p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
 <p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
 <p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>

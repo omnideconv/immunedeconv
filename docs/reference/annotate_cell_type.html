@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>convert an <code>Biobase::ExpressionSet</code> to a gene-expression matrix. — eset_to_matrix • immunedeconv</title>
+<title>Annotate unified cell_type names — annotate_cell_type • immunedeconv</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="convert an <code>Biobase::ExpressionSet</code> to a gene-expression matrix. — eset_to_matrix" />
+<meta property="og:title" content="Annotate unified cell_type names — annotate_cell_type" />
 
-<meta property="og:description" content="convert an Biobase::ExpressionSet to a gene-expression matrix." />
+<meta property="og:description" content="(map the cell_types of the different methods to a common name)" />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -102,42 +102,22 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>convert an <code>Biobase::ExpressionSet</code> to a gene-expression matrix.</h1>
+    <h1>Annotate unified cell_type names</h1>
     <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/immune_deconvolution_methods.R'><code>R/immune_deconvolution_methods.R</code></a></small>
     </div>
 
     
-    <p>convert an <code><a href='http://www.rdocumentation.org/packages/Biobase/topics/class.ExpressionSet'>Biobase::ExpressionSet</a></code> to a gene-expression matrix.</p>
+    <p>(map the cell_types of the different methods to a common name)</p>
     
 
-    <pre class="usage"><span class='fu'>eset_to_matrix</span>(<span class='no'>eset</span>, <span class='no'>column</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>eset</th>
-      <td><p><code>ExpressionSet</code></p></td>
-    </tr>
-    <tr>
-      <th>column</th>
-      <td><p>column name of the <code>fData()</code> table, which contains the HGNC gene symbols.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>matrix with gene symbols as rownames and sample identifiers as colnames.</p>
-    
+    <pre class="usage"><span class='fu'>annotate_cell_type</span>(<span class='no'>result_table</span>, <span class='no'>method</span>)</pre>
+        
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>

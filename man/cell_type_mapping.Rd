@@ -4,7 +4,7 @@
 \name{cell_type_mapping}
 \alias{cell_type_mapping}
 \title{Table mapping the cell types from methods/datasets to a single, controlled vocabulary}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 145 rows and 3 columns.}
+\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 126 rows and 3 columns.}
 \usage{
 cell_type_mapping
 }

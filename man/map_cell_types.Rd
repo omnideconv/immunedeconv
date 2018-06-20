@@ -4,14 +4,15 @@
 \alias{map_cell_types}
 \title{Use a tree-hierarchy to map cell types among different methods.}
 \usage{
-map_cell_types(use_cell_types, fractions, method)
+map_cell_types(use_cell_types, fractions, method_dataset)
 }
 \arguments{
 \item{use_cell_types}{list of cell types from the CV to map to}
 
-\item{fractions}{named vector or list of cell type fractions. Names corresponds to the method_cell_types.}
+\item{fractions}{Dataframe with cell types as rows and samples as columns. Rownames corresponds to the method_cell_types.
+A named vector will be coerced into a one-column dataframe.}
 
-\item{method1}{method or dataset with which \code{fractions} was generated}
+\item{method_dataset}{method or dataset with which \code{fractions} was generated}
 }
 \value{
 numeric vector with CV cell types as names

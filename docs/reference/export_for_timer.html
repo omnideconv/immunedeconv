@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>convert an <code>Biobase::ExpressionSet</code> to a gene-expression matrix. — eset_to_matrix • immunedeconv</title>
+<title>Export gene expression matrix in a format that can be read by TIMER — export_for_timer • immunedeconv</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,11 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="convert an <code>Biobase::ExpressionSet</code> to a gene-expression matrix. — eset_to_matrix" />
+<meta property="og:title" content="Export gene expression matrix in a format that can be read by TIMER — export_for_timer" />
 
-<meta property="og:description" content="convert an Biobase::ExpressionSet to a gene-expression matrix." />
+<meta property="og:description" content="TIMER is only available as a web-tool. With this function,
+a gene expression matrix can be exported in a format suitable for timer
+with the same input gene expression matrix that can be used for the other methods." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -102,32 +104,30 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>convert an <code>Biobase::ExpressionSet</code> to a gene-expression matrix.</h1>
+    <h1>Export gene expression matrix in a format that can be read by TIMER</h1>
     <small>Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/immune_deconvolution_methods.R'><code>R/immune_deconvolution_methods.R</code></a></small>
     </div>
 
     
-    <p>convert an <code><a href='http://www.rdocumentation.org/packages/Biobase/topics/class.ExpressionSet'>Biobase::ExpressionSet</a></code> to a gene-expression matrix.</p>
+    <p>TIMER is only available as a web-tool. With this function,
+a gene expression matrix can be exported in a format suitable for timer
+with the same input gene expression matrix that can be used for the other methods.</p>
     
 
-    <pre class="usage"><span class='fu'>eset_to_matrix</span>(<span class='no'>eset</span>, <span class='no'>column</span>)</pre>
+    <pre class="usage"><span class='fu'>export_for_timer</span>(<span class='no'>gene_expression_matrix</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>stop</span>(<span class='st'>"Specify output path. "</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>eset</th>
-      <td><p><code>ExpressionSet</code></p></td>
+      <th>gene_expression_matrix</th>
+      <td><p>A numeric matrix with HGNC gene symbols as rownames and sample identifiers as colnames.</p></td>
     </tr>
     <tr>
-      <th>column</th>
-      <td><p>column name of the <code>fData()</code> table, which contains the HGNC gene symbols.</p></td>
+      <th>path</th>
+      <td><p>path to write the TIMER-compatible tsv-file to.</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>matrix with gene symbols as rownames and sample identifiers as colnames.</p>
     
 
   </div>
@@ -135,9 +135,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>

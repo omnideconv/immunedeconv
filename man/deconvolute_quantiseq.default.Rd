@@ -37,6 +37,9 @@ Default: FALSE}
 \item{rmgenes}{Default: "default" for RNAseq, "none" for microArray data}
 }
 \description{
+Source code from https://github.com/FFinotello/quanTIseq
+}
+\details{
 F. Finotello, C. Mayer, C. Plattner, G. Laschober, D. Rieder,
 H. Hackl, A. Krogsdam, W. Posch, D. Wilflingseder, S. Sopper, M. Jsselsteijn,
 D. Johnsons, Y. Xu, Y. Wang, M. E. Sanders, M. V. Estrada, P. Ericsson-Gonzalez,

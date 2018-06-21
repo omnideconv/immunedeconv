@@ -9,7 +9,9 @@ Imports:
     readxl,
     testit,
     methods,
-    data.tree
+    data.tree,
+    limSolve,
+    e1071
 Suggests:
     testthat,
     knitr,

@@ -84,7 +84,7 @@ RemoveBatchEffect <- function(cancer.exp, immune.exp, immune.cellType) {
   ## remove batch effects
   N2 <- ncol(immune.exp)
   tmp.batch <- c(rep(1, N1), rep(2, N2))
-  tmp.dd0 <- ComBat(tmp.dd, tmp.batch, c())
+  tmp.dd0 <- ComBat(tmp.dd, tmp.batch, c(), BPPARAM = BiocParallel::bpparam("SerialParam"))
 
   ## separate cancer and immune expression data after batch effect removing
   dd.br <- tmp.dd0[, 1:N1]
@@ -106,19 +106,17 @@ RemoveBatchEffect <- function(cancer.exp, immune.exp, immune.cellType) {
 
 #' process batch table and check cancer types.
 check_cancer_types <- function(args) {
-  
-
   if (length(args$batch) != 0) {
-    cat("Enter batch mode\n")
+    TimerINFO("Enter batch mode\n")
     cancers <- as.matrix(read.table(args$batch, sep=","))
   } else {
     cancers<- c(args$expression, args$category)
     dim(cancers) <- c(1, 2)
   }
-  print(cancers)
+  # print(cancers)
   for (i in seq(nrow(cancers))) {
     cancer.category <- cancers[i, 2]
-    if (!(cancer.category %in% cancers.available)) {
+    if (!(cancer.category %in% timer_available_cancers)) {
       stop(paste('unknown cancers:', cancer.category))
     }
   }
@@ -261,8 +259,8 @@ deconvolute_timer.default = function(args) {
 
     for (j in 1:length(cancer.colnames)) {
       fractions <- GetFractions.Abbas(XX, YY[,j])
-      print (paste("Fractions for", cancer.expFile, cancer.colnames[j]))
-      print (fractions)
+      # print (paste("Fractions for", cancer.expFile, cancer.colnames[j]))
+      # print (fractions)
       barplot(fractions, cex.names=0.8, names.arg=names(fractions), xlab="cell type", ylab="abundance",
           main=paste("Abundance estimation for", cancer.colnames[j]))
       box()

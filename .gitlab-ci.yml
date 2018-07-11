@@ -8,7 +8,7 @@ before_script:
   - export _R_CHECK_CRAN_INCOMING_=FALSE
   - export _R_CHECK_FORCE_SUGGESTS_=TRUE
 
-r-base:3.4.1
+r-base:3.4.1:
   stage: test
   image: r-base:3.4.1
   script:

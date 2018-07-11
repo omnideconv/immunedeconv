@@ -8,9 +8,9 @@ before_script:
   - export _R_CHECK_CRAN_INCOMING_=FALSE
   - export _R_CHECK_FORCE_SUGGESTS_=TRUE
 
-r-base:
+r-base:3.4.1
   stage: test
-  image: r-base:latest
+  image: r-base:3.4.1
   script:
     - Rscript -e 'source("https://bioconductor.org/biocLite.R"); biocLite("BiocInstaller")'
     - Rscript -e 'install.packages(c("devtools", "roxygen2", "covr"))'

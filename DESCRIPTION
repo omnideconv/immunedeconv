@@ -1,11 +1,13 @@
 Package: immunedeconv
-Title: Collection of Methods for immune cell deconvolution from bulk RNAseq
-Version: 0.0.1
-Description: What the package does (one paragraph).
+Title: Methods for immune cell deconvolution
+Description: Collection of methods for immune cell deconvolution from bulk RNA-seq samples
+Version: 0.1
 Authors@R: person("Gregor", "Sturm", role=c("aut", "cre"), email="mail@gregor-sturm.de")
-Depends: R (>= 3.3.1)
+Depends: R (>= 3.4)
 Imports:
-    tidyverse,
+    dplyr,
+    magrittr,
+    readr,
     readxl,
     testit,
     methods,
@@ -23,7 +25,6 @@ Remotes:
     bioc::GSVA,
     bioc::sva,
     bioc::GSEABase,
-    Accio/BioQC,
     dviraran/xCell,
     GfellerLab/EPIC,
     ebecht/MCPcounter/Source

@@ -1,5 +1,13 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: R
+language: r
+r:
+  - bioc-3.7
+  - bioc-3.6
+  - bioc-3.5
+r_github_packages:
+  - dviraran/xCell
+  - GfellerLab/EPIC
+  - ebecht/MCPcounter/Source
 sudo: false
 cache: packages

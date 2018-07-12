@@ -2,9 +2,8 @@
 
 language: r
 r:
-  - bioc-3.7
-  - bioc-3.6
-  - bioc-3.5
+  - bioc-devel
+  - bioc-release
 r_github_packages:
   - dviraran/xCell
   - GfellerLab/EPIC

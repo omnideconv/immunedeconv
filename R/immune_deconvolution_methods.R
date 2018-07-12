@@ -110,7 +110,7 @@ deconvolute_cibersort = function(gene_expression_matrix,
   
   tmp_mat = tempfile()
   write_tsv(as_tibble(gene_expression_matrix, rownames="gene_symbol"), path=tmp_mat)
-  res = CIBERSORT(get("cibersort_mat", envir=config_env), tmp_mat, perm=0, QN=TRUE, absolute=absolute, abs_method=abs_method)
+  res = CIBERSORT(get("cibersort_mat", envir=config_env), tmp_mat, perm=0, QN=FALSE, absolute=absolute, abs_method=abs_method)
   
   res = res %>% 
     t() %>%

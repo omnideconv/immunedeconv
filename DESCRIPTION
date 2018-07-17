@@ -16,7 +16,13 @@ Imports:
     limSolve (>= 1.5.5.1),
     e1071 (>= 1.6),
     preprocessCore,
-    sva
+    Biobase,
+    GSVA,
+    sva,
+    GSEABase,
+    xCell,
+    EPIC,
+    MCPcounter
 Suggests:
     testthat,
     knitr,

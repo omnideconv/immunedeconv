@@ -24,6 +24,7 @@ install:
   - conda info -a
 
   # Install dependencies for default R packages
+  - R -e "install.packages('devtools')"
   - R -e "devtools::install_deps(dep=TRUE)"
 
 script:

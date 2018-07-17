@@ -10,6 +10,7 @@ r_github_packages:
   - ebecht/MCPcounter/Source
   - bmbolstad/preprocessCore
 install:
+  # Install dependencies for Conda
   - sudo apt-get update
   - sudo apt-get install python3
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
@@ -18,11 +19,21 @@ install:
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
+  - conda install conda-build
   # Useful for debugging any issues with conda
   - conda info -a
 
-  # Replace dep1 dep2 ... with your dependencies
-  - conda build .
+  # Install dependencies for default R packages
+  - R -e "devtools::install_deps(dep=TRUE)"
+
+script:
+  # Test regular R package
+  - which R
+  - R CMD build .
+  - R CMD check *tar.gz
+
+  # Test conda package
+  - conda build
   - conda install --use-local r-immunedeconv
 
 sudo: false

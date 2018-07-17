@@ -6,6 +6,7 @@ help:
 	@echo "    docs              build docs with pkgdown"
 	@echo "    deploy_docs       build docs and commit them to the git repository (-> github pages)"
 	@echo "    clean             clean repository (docs, man and all dev files)"
+	@echo "    conda						 build anaconda package"
 
 .dev_deps_installed:
 	Rscript -e 'install.packages(c("devtools", "roxygen2", "covr"), repos="https://cran.rstudio.com/")'
@@ -45,4 +46,6 @@ clean:
 	find . -type f -name "*~" -exec rm '{}' \;
 	find . -type f -name ".Rhistory" -exec rm '{}' \;
 
-
+.PHONY: conda
+conda:
+	conda build .

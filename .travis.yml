@@ -8,5 +8,6 @@ r_github_packages:
   - dviraran/xCell
   - GfellerLab/EPIC
   - ebecht/MCPcounter/Source
+  - bmbolstad/preprocessCore
 sudo: false
 cache: packages

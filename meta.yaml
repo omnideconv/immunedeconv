@@ -40,6 +40,7 @@ requirements:
     - r-r.methodss3 =1.7
     - r-data.tree =0.7
     - r-e1071 =1.6
+    - bioconductor-biocinstaller =1.28.0
     - bioconductor-biobase =2.38
     - bioconductor-preprocesscore =1.40
     - bioconductor-gsva =1.26
@@ -64,6 +65,7 @@ requirements:
     - r-r.methodss3 >=1.7
     - r-data.tree >=0.7
     - r-e1071 >=1.6
+    - bioconductor-biocinstaller >=1.28.0
     - bioconductor-biobase >=2.38
     - bioconductor-preprocesscore >=1.40
     - bioconductor-gsva >=1.26

@@ -28,7 +28,6 @@ Suggests:
     knitr,
     rmarkdown
 Remotes:
-    bioc::BiocInstaller,
     bioc::preprocessCore,
     bioc::Biobase,
     bioc::GSVA,

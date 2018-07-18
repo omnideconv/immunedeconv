@@ -4,15 +4,15 @@ language: r
 r:
   - bioc-devel
   - bioc-release
+
 r_github_packages:
   - dviraran/xCell
   - GfellerLab/EPIC
   - ebecht/MCPcounter/Source
   - bmbolstad/preprocessCore
+
 install:
   # Install dependencies for Conda
-  - sudo apt-get update
-  - sudo apt-get install python3
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"

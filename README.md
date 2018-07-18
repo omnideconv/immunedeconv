@@ -1,7 +1,7 @@
 # `immunedeconv` - an R package for unified access to computational methods for estimating immune cell fractions from bulk RNA sequencing data.
 
 
-## Basic usage:
+## Basic usage
 ```R
 immunedeconv::deconvolute(gene_expression_matrix, "quantiseq")
 ```
@@ -92,15 +92,6 @@ Finally, install the `immunedeconv` package itself by running
 ```R
 devtools::install_github('grst/immune_deconvolution_methods')
 ```
-
-## Usage
-
-
-## Developing
-* add your own method
-
-## Benchmark
-see immune_deconvolution_benchmarks
 
 ## Citation
 If you use this package, please cite

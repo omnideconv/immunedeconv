@@ -11,7 +11,7 @@ Imports:
     readxl (>= 1.0),
     testit (>= 0.7),
     tibble (>= 1.4.2),
-    methods (>= 3.4.3),
+    methods (>= 3.4),
     data.tree (>= 0.7),
     limSolve (>= 1.5.5.1),
     e1071 (>= 1.6),

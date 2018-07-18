@@ -49,6 +49,7 @@ requirements:
     - r-epic
     - r-mcpcounter
     - r-roxygen2 >=6.0.1
+    - r-limsolve >=1.5.5.3
     - posix               # [win]
     - {{native}}toolchain # [win]
       #    - gcc                 # [not win]
@@ -72,12 +73,13 @@ requirements:
     - r-epic
     - r-mcpcounter
     - r-roxygen2 >=6.0.1
+    - r-limsolve >=1.5.5.3
 
 test:
   commands:
     # You can put additional test commands to be run here.
-    - $R -e "library('modules')" # [not win]
-    - "\"%R%\" -e \"library('modules')\"" # [win]
+    - $R -e "library('immunedeconv')" # [not win]
+    - "\"%R%\" -e \"library('immunedeconv')\"" # [win]
 
 about:
   home: https://github.com/grst/immune_deconvolution_methods

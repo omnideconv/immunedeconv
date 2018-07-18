@@ -4,10 +4,6 @@
 mv DESCRIPTION DESCRIPTION.old
 grep -v '^Priority: ' DESCRIPTION.old > DESCRIPTION
 
-$R -e "library(methods); library(devtools); document()"
-
-$R -e "pkgdown::build_site()"
-
 $R CMD INSTALL --build .
 
 # Add more build steps here, if they are necessary.

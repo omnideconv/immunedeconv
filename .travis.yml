@@ -29,6 +29,7 @@ install:
 
   # Install dependencies for default R packages
   - R -e "install.packages('devtools')"
+  - R -e "install.packages('pkgdown')"
   - R -e "devtools::install_deps(dep=TRUE)"
 
 script:
@@ -40,6 +41,17 @@ script:
   # Test conda package
   - conda build .
   - conda install --use-local r-immunedeconv
+
+after_success:
+  - Rscript -e "pkgdown::build_site()"
+
+deploy:
+  - provider: pages
+  - github-token: $GITHUB_PAT
+  - keep-history: true
+  - local-dir: docs
+  - on:
+      branch: master
 
 sudo: false
 cache: packages

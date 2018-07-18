@@ -34,7 +34,7 @@ script:
   - R CMD check *tar.gz
 
   # Test conda package
-  - conda build
+  - conda build .
   - conda install --use-local r-immunedeconv
 
 sudo: false

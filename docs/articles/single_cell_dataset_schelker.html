@@ -90,34 +90,34 @@
 <div class="contents">
 <p>This is an <a href="http://rmarkdown.rstudio.com">R Markdown</a> Notebook. When you execute code within the notebook, the results appear beneath the code.</p>
 <p>Try executing this chunk by clicking the <em>Run</em> button within the chunk or by placing your cursor inside it and pressing <em>Ctrl+Shift+Enter</em>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sc_normalized =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"../data/single_cell_benchmark_publication_data/export/sc_data_normalized.csv"</span>)
-
-sample_id =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"../data/single_cell_benchmark_publication_data/export/sample_id.csv"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">separate</span>(<span class="st">"Var1"</span>, <span class="dt">into=</span><span class="kw">c</span>(<span class="st">"source"</span>, <span class="st">"donor"</span>))
-
-tsne =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"../data/single_cell_benchmark_publication_data/export/tsne_merged.csv"</span>)
-
-cell_names =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"../data/single_cell_benchmark_publication_data/export/cellnames.txt"</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">rename</span>(<span class="dt">cell_type=</span>Var1) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cell_id=</span><span class="kw">as.integer</span>(<span class="kw">row_number</span>()<span class="op">-</span><span class="dv">1</span>))
-
-cell_types =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"../data/single_cell_benchmark_publication_data/export/classified_data_donor_abc_12k_merged_tcell_celltype.csv"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">rename</span>(<span class="dt">cell_id=</span>Var1) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">inner_join</span>(cell_names)
-
-expr =<span class="st"> </span>sc_normalized <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Row) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()
-pdata =<span class="st"> </span><span class="kw">cbind</span>(sample_id, tsne, cell_types) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sample=</span><span class="kw">colnames</span>(expr)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">column_to_rownames</span>(<span class="dt">var=</span><span class="st">"sample"</span>)
-fdata =<span class="st"> </span>sc_normalized <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Row) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">gene_symbol=</span>Row)
-<span class="kw">rownames</span>(fdata) =<span class="st"> </span>fdata<span class="op">$</span>gene_symbol
-<span class="kw">rownames</span>(expr) =<span class="st"> </span>fdata<span class="op">$</span>gene_symbol
-
-sc_eset =<span class="st"> </span><span class="kw">ExpressionSet</span>(expr,
-                        <span class="dt">phenoData =</span> <span class="kw">new</span>(<span class="st">"AnnotatedDataFrame"</span>, <span class="dt">data=</span>pdata),
-                        <span class="dt">featureData =</span> <span class="kw">new</span>(<span class="st">"AnnotatedDataFrame"</span>, <span class="dt">data=</span>fdata))
-
-<span class="kw">save</span>(sc_eset, <span class="dt">file=</span><span class="st">"/storage/home/sturm/projects/immune_deconvolution_methods/single_cell_schelker.rda"</span>, <span class="dt">compress =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">sc_normalized =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"../data/single_cell_benchmark_publication_data/export/sc_data_normalized.csv"</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">sample_id =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"../data/single_cell_benchmark_publication_data/export/sample_id.csv"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="st">  </span><span class="kw">separate</span>(<span class="st">"Var1"</span>, <span class="dt">into=</span><span class="kw">c</span>(<span class="st">"source"</span>, <span class="st">"donor"</span>))</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">tsne =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"../data/single_cell_benchmark_publication_data/export/tsne_merged.csv"</span>)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">cell_names =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"../data/single_cell_benchmark_publication_data/export/cellnames.txt"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">cell_type=</span>Var1) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cell_id=</span><span class="kw">as.integer</span>(<span class="kw">row_number</span>()<span class="op">-</span><span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">cell_types =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"../data/single_cell_benchmark_publication_data/export/classified_data_donor_abc_12k_merged_tcell_celltype.csv"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">cell_id=</span>Var1) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="st">  </span><span class="kw">inner_join</span>(cell_names)</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">expr =<span class="st"> </span>sc_normalized <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Row) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">pdata =<span class="st"> </span><span class="kw">cbind</span>(sample_id, tsne, cell_types) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sample=</span><span class="kw">colnames</span>(expr)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="st">  </span><span class="kw">column_to_rownames</span>(<span class="dt">var=</span><span class="st">"sample"</span>)</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">fdata =<span class="st"> </span>sc_normalized <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Row) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">gene_symbol=</span>Row)</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="kw">rownames</span>(fdata) =<span class="st"> </span>fdata<span class="op">$</span>gene_symbol</a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="kw">rownames</span>(expr) =<span class="st"> </span>fdata<span class="op">$</span>gene_symbol</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">sc_eset =<span class="st"> </span><span class="kw">ExpressionSet</span>(expr,</a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">                        <span class="dt">phenoData =</span> <span class="kw">new</span>(<span class="st">"AnnotatedDataFrame"</span>, <span class="dt">data=</span>pdata),</a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">                        <span class="dt">featureData =</span> <span class="kw">new</span>(<span class="st">"AnnotatedDataFrame"</span>, <span class="dt">data=</span>fdata))</a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="kw">save</span>(sc_eset, <span class="dt">file=</span><span class="st">"/storage/home/sturm/projects/immune_deconvolution_methods/single_cell_schelker.rda"</span>, <span class="dt">compress =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
 <p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
 <p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>

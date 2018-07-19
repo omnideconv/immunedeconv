@@ -32,7 +32,7 @@ requirements:
   build:
     - r-devtools =1.13
     - r-base =3.4.1
-    - r-dplyr =0.7
+    - r-dplyr =0.7.4
     - r-magrittr =1.5
     - r-readr =1.1
     - r-readxl =1.0
@@ -57,7 +57,7 @@ requirements:
 
   run:
     - r-base >=3.4
-    - r-dplyr >=0.7
+    - r-dplyr >=0.7.4
     - r-magrittr >=1.5
     - r-readr >=1.1
     - r-readxl >=1.0

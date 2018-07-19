@@ -56,7 +56,7 @@ requirements:
       #    - gcc                 # [not win]
 
   run:
-    - r-base >=3.4
+    - r-base >=3.4.1
     - r-dplyr >=0.7
     - r-magrittr >=1.5
     - r-readr >=1.1

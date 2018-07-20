@@ -53,10 +53,9 @@ requirements:
     - r-limsolve =1.5.5.3
     - posix               # [win]
     - {{native}}toolchain # [win]
-      #    - gcc                 # [not win]
 
   run:
-    - r-base >=3.4
+    - r-base >=3.4.1
     - r-dplyr >=0.7.4
     - r-magrittr >=1.5
     - r-readr >=1.1
@@ -79,9 +78,9 @@ requirements:
 
 test:
   commands:
-    # You can put additional test commands to be run here.
+    # force conda not to use system library
+    - echo ".libPaths(.Library)" > .Rprofile
     - $R -e "library('immunedeconv')" # [not win]
-    - "\"%R%\" -e \"library('immunedeconv')\"" # [win]
 
 about:
   home: https://github.com/grst/immune_deconvolution_methods

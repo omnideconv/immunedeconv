@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>make a random expression set from a single-cell dataset — make_bulk_eset • immunedeconv</title>
+<title>scale sample to TPM — scale_to_million • immunedeconv</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="make a random expression set from a single-cell dataset — make_bulk_eset" />
+<meta property="og:title" content="scale sample to TPM — scale_to_million" />
 
-<meta property="og:description" content="make a random expression set from a single-cell dataset" />
+<meta property="og:description" content="an TPM sample always sums to 1,000,000." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,38 +100,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>make a random expression set from a single-cell dataset</h1>
+    <h1>scale sample to TPM</h1>
     <small class="dont-index">Source: <a href='https://github.com/grst/immune_deconvolution_methods/blob/master/R/single_cell_simulation.R'><code>R/single_cell_simulation.R</code></a></small>
-    <div class="hidden name"><code>make_bulk_eset.Rd</code></div>
+    <div class="hidden name"><code>scale_to_million.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>make a random expression set from a single-cell dataset</p>
+    <p>an TPM sample always sums to 1,000,000.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>make_bulk_eset</span>(<span class='no'>eset</span>, <span class='no'>cell_fractions</span>, <span class='kw'>n_cells</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>combine</span> <span class='kw'>=</span> <span class='no'>mean</span>)</pre>
+    <pre class="usage"><span class='fu'>scale_to_million</span>(<span class='no'>sample</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>eset</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/Biobase/topics/class.ExpressionSet'>Biobase::ExpressionSet</a></code> with a <code>cell_type</code> column in <code>pData</code>.</p></td>
-    </tr>
-    <tr>
-      <th>cell_fractions</th>
-      <td><p>n x n_cell_types dataframe with the fraction for each
-sample in each row.</p></td>
-    </tr>
-    <tr>
-      <th>combine</th>
-      <td><p>callback function used to aggregate the counts.</p></td>
-    </tr>
-    <tr>
-      <th>n_cell</th>
-      <td><p>number of single cells to use in each sample</p></td>
+      <th>sample</th>
+      <td><p>numeric vector of gene expression values</p></td>
     </tr>
     </table>
     

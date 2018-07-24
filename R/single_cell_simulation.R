@@ -5,6 +5,17 @@
 NULL
 
 
+#' scale sample to TPM
+#' 
+#' an TPM sample always sums to 1,000,000. 
+#' 
+#' @param sample numeric vector of gene expression values
+#' 
+#' @export
+scale_to_million = function(sample) {
+  (sample/sum(sample)) * 1e6
+}
+
 #' make a random bulk sample from a single-cell dataset
 #'
 #' @param eset `Biobase::ExpressionSet` with a `cell_type` column in `pData`.
@@ -33,7 +44,9 @@ make_random_bulk = function(eset, cell_fractions, n_cells=500, combine=mean) {
   reduced_eset = eset[,cell_ids]
 
   # simulated bulk tissue as mean of all selected single cells
-  expr = apply(exprs(reduced_eset), 1, combine) %>% as_tibble()
+  expr = apply(exprs(reduced_eset), 1, combine) %>%
+    scale_to_million() %>%
+    as_tibble()
 
   return(expr)
 }

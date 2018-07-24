@@ -14,7 +14,7 @@ NULL
 #' @param combine callback function used to aggregate the counts.
 #'
 #' @export
-make_random_bulk = function(eset, cell_fractions, n_cells=500, combine=sum) {
+make_random_bulk = function(eset, cell_fractions, n_cells=500, combine=mean) {
   cell_numbers = round(cell_fractions * n_cells)
 
   # sample n cells from each cell type as specified in `cell_numbers`
@@ -32,7 +32,7 @@ make_random_bulk = function(eset, cell_fractions, n_cells=500, combine=sum) {
   # create random subsample of available cells
   reduced_eset = eset[,cell_ids]
 
-  # simulated bulk tissue as sum of all selected single cells
+  # simulated bulk tissue as mean of all selected single cells
   expr = apply(exprs(reduced_eset), 1, combine) %>% as_tibble()
 
   return(expr)
@@ -48,7 +48,7 @@ make_random_bulk = function(eset, cell_fractions, n_cells=500, combine=sum) {
 #' @param combine callback function used to aggregate the counts.
 #'
 #' @export
-make_bulk_eset = function(eset, cell_fractions, n_cells=500, combine=sum) {
+make_bulk_eset = function(eset, cell_fractions, n_cells=500, combine=mean) {
   expr = lapply(1:nrow(cell_fractions), function(i) {
     make_random_bulk(eset, cell_fractions[i,], n_cells=n_cells, combine=combine)
   }) %>%

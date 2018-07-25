@@ -4,7 +4,7 @@
 \alias{make_bulk_eset}
 \title{make a random expression set from a single-cell dataset}
 \usage{
-make_bulk_eset(eset, cell_fractions, n_cells = 500, combine = sum)
+make_bulk_eset(eset, cell_fractions, n_cells = 500, combine = mean)
 }
 \arguments{
 \item{eset}{\code{Biobase::ExpressionSet} with a \code{cell_type} column in \code{pData}.}

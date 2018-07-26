@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>R Notebook • immunedeconv</title>
+<title>Getting started with <code>immunedeconv</code> • immunedeconv</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="R Notebook">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Getting started with &lt;code&gt;immunedeconv&lt;/code&gt;">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -67,7 +67,8 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>R Notebook</h1>
+      <h1>Getting started with <code>immunedeconv</code>
+</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/grst/immune_deconvolution_methods/blob/master/vignettes/immunedeconv.Rmd"><code>vignettes/immunedeconv.Rmd</code></a></small>
@@ -77,10 +78,382 @@
 
     
     
-
+<div id="introduction" class="section level1">
+<h1 class="hasAnchor">
+<a href="#introduction" class="anchor"></a>Introduction</h1>
+<p>Methods like fluorescence activated cell sorting (FACS) or Immunohistochemistry (IHC)-staining have been used as a gold standard to estimate the immune cell content within a sample, however these methods are limited in their scalability and by the availability of good antibodies against the cell type markers. High throughput transcriptomic methods allow to get a transcriptional landscape in the sample with a relatively small amount of material that can be extremely limited in clinical settings (e.g. tumor biopsies), which led to high utility of methods like RNA-seq and microarrays to characterize patient tumor samples. However, RNA-seq does not provide a detailed information on a cellular composition of a sample, which then has to be inferred using computational techniques.</p>
+<p>Such methods can, in general, be classified in two categories: Marker gene-based approaches and deconvolution-based approaches. The marker gene based approaches are based on a list of genes, referred to as signature, that are characteristic for a cell type. These signatures are usually derived from targeted transcriptomic studies characterizing each immune cell type or/and comprehensive literature search and experimental validation. By looking at the expression values of signature genes, every cell type is quantified independently, either using the gene expression values directly <span class="citation">(Becht et al. <a href="#ref-Becht2016">2016</a>)</span> or by performing a statistical test for enrichment of the signatures <span class="citation">(Aran, Hu, and Butte <a href="#ref-XCELL2017">2017</a>)</span>. Deconvolution methods, on the other hand, formulate the problem as a system of equations that describe the gene expression of a sample as the weighted sum of the contributions of the different cell types. By solving the inverse problem, cell type fractions can be inferred given a signature matrix and the mixed gene expression. In practice, this problem is solved using <span class="math inline">\(\nu\)</span>-Support Vector Regression (SVR) <span class="citation">(Aaron M. Newman, Chih Long Liu, Michael R. Green, Andrew J. Gentles, Weiguo Feng, Yue Xu, Chuong D. Hoang, Maximilian Diehn, A., and Alizadeh <a href="#ref-CIBERSORT2016">2016</a>)</span>, constrained least square regression <span class="citation">(Finotello et al. <a href="#ref-quantiseq2017">2017</a>; Racle et al. <a href="#ref-EPIC2017">2017</a>)</span> or linear least square regression <span class="citation">(Li et al. <a href="#ref-TIMER2016">2016</a>)</span> (reviewed in <span class="citation">Finotello and Trajanoski (<a href="#ref-Finotello2018">2018</a>)</span>).</p>
+</div>
+<div id="deconvolution" class="section level1">
+<h1 class="hasAnchor">
+<a href="#deconvolution" class="anchor"></a>Deconvolution</h1>
+<p>This package gives you easy access to these methods. To run a method with default options, simply invoke</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">immunedeconv<span class="op">::</span><span class="kw">deconvolute</span>(gene_expression_matrix, method)</a></code></pre></div>
+<p>where <code>gene_expression_matrix</code> is a matrix with genes in rows and samples in columns. The rownames must be HGNC symbols and the colnames must be sample names. The method can be one of</p>
+<pre><code>quantiseq
+timer
+cibersort
+cibersort_abs
+mcp_counter
+xcell
+epic</code></pre>
+<div id="example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example" class="anchor"></a>Example</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">res =<span class="st"> </span><span class="kw">deconvolute</span>(immunedeconv<span class="op">::</span>example_gene_expression_matrix, <span class="st">"quantiseq"</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(res, <span class="dt">digits=</span><span class="dv">2</span>)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">cell_type</th>
+<th align="right">CD4-positive T Cells, donor1</th>
+<th align="right">CD4-positive T Cells, donor2</th>
+<th align="right">CD4-positive T Cells, donor3</th>
+<th align="right">CD8-positive T Cells (pluriselect), donor090309, donation1</th>
+<th align="right">CD8-positive T Cells (pluriselect), donor090309, donation2</th>
+<th align="right">CD8-positive T Cells (pluriselect), donor090309, donation3</th>
+<th align="right">CD8-positive T Cells (pluriselect), donor1, rep1</th>
+<th align="right">CD8-positive T Cells (pluriselect), donor1,rep2</th>
+<th align="right">CD8-positive T Cells (pluriselect), donor090612, donation1</th>
+<th align="right">CD8-positive T Cells (pluriselect), donor090612, donation2</th>
+<th align="right">CD8-positive T Cells (pluriselect), donor090612, donation3</th>
+<th align="right">CD8-positive T Cells, donor1</th>
+<th align="right">CD8-positive T Cells, donor2</th>
+<th align="right">CD8-positive T Cells, donor3</th>
+<th align="right">Dendritic Cells - monocyte immature derived, donor1, rep1</th>
+<th align="right">Dendritic Cells - monocyte immature derived, donor1, rep1.1</th>
+<th align="right">Dendritic Cells - monocyte immature derived, donor2</th>
+<th align="right">Dendritic Cells - monocyte immature derived, donor3</th>
+<th align="right">Natural Killer Cells, donor1</th>
+<th align="right">Natural Killer Cells, donor2</th>
+<th align="right">Natural Killer Cells, donor3</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">B cell</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Macrophage M1</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.01</td>
+<td align="right">0</td>
+<td align="right">0.05</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Macrophage M2</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">1</td>
+<td align="right">0.99</td>
+<td align="right">1</td>
+<td align="right">0.95</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Monocyte</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Neutrophil</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">NK cell</td>
+<td align="right">0.01</td>
+<td align="right">0.05</td>
+<td align="right">0</td>
+<td align="right">0.10</td>
+<td align="right">0.16</td>
+<td align="right">0.16</td>
+<td align="right">0.17</td>
+<td align="right">0.19</td>
+<td align="right">0.20</td>
+<td align="right">0.19</td>
+<td align="right">0.18</td>
+<td align="right">0.16</td>
+<td align="right">0.15</td>
+<td align="right">0.08</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.49</td>
+<td align="right">0.43</td>
+<td align="right">0.53</td>
+</tr>
+<tr class="odd">
+<td align="left">T cell CD4+ (non-regulatory)</td>
+<td align="right">0.17</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.31</td>
+<td align="right">0.02</td>
+<td align="right">0.00</td>
+<td align="right">0.26</td>
+<td align="right">0.16</td>
+<td align="right">0.00</td>
+<td align="right">0.09</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">T cell CD8+</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.45</td>
+<td align="right">0.72</td>
+<td align="right">0.80</td>
+<td align="right">0.40</td>
+<td align="right">0.46</td>
+<td align="right">0.60</td>
+<td align="right">0.53</td>
+<td align="right">0.82</td>
+<td align="right">0.68</td>
+<td align="right">0.79</td>
+<td align="right">0.69</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.22</td>
+<td align="right">0.07</td>
+<td align="right">0.03</td>
+</tr>
+<tr class="odd">
+<td align="left">T cell regulatory (Tregs)</td>
+<td align="right">0.82</td>
+<td align="right">0.95</td>
+<td align="right">1</td>
+<td align="right">0.14</td>
+<td align="right">0.10</td>
+<td align="right">0.04</td>
+<td align="right">0.17</td>
+<td align="right">0.19</td>
+<td align="right">0.21</td>
+<td align="right">0.18</td>
+<td align="right">0.00</td>
+<td align="right">0.16</td>
+<td align="right">0.06</td>
+<td align="right">0.23</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.29</td>
+<td align="right">0.50</td>
+<td align="right">0.44</td>
+</tr>
+<tr class="even">
+<td align="left">Dendritic cell</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cibersort" class="section level2">
+<h2 class="hasAnchor">
+<a href="#cibersort" class="anchor"></a>CIBERSORT</h2>
+<p>CIBERSORT is only freely available for academic users and could not be directly included in this package. To use CIBERSORT with this package, you need to register on the <a href="https://cibersort.stanford.edu/">cibersort website</a>, obtain a license, and download the CIBERSORT source code.</p>
+<p>The source code package contains two files, that are required:</p>
+<pre><code>CIBERSORT.R
+LM22.txt</code></pre>
+<p>Note the storage location of these files. When using <code>immunedeconv</code>, you need to tell the package where it can find those files:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(immunedeconv)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/immunedeconv/topics/set_cibersort_binary">set_cibersort_binary</a></span>(<span class="st">"/path/to/CIBERSORT.R"</span>)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/immunedeconv/topics/set_cibersort_mat">set_cibersort_mat</a></span>(<span class="st">"/path/to/LM22.txt"</span>)</a></code></pre></div>
+<p>Afterwards, you can call</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">deconvolute</span>(your_mixture_matrix, <span class="st">"cibersort"</span>)   <span class="co"># or 'cibersort_abs'</span></a></code></pre></div>
+<p>as for any other method.</p>
+</div>
+<div id="timer" class="section level2">
+<h2 class="hasAnchor">
+<a href="#timer" class="anchor"></a>TIMER</h2>
+<p>TIMER uses indication-specific reference profiles. Therefore, you <em>must</em> specify the tumor type when running TIMER:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">deconvolute</span>(your_mixture_matrix, <span class="st">"timer"</span>,</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">            <span class="dt">indications=</span><span class="kw">c</span>(<span class="st">"SKCM"</span>, <span class="st">"SKCM"</span>, <span class="st">"BLCA"</span>))</a></code></pre></div>
+<p><code>indications</code> needs to be a vector that specifies an indication for each sample (=column) in the mixture matrix. The indications supported by TIMER are</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">immunedeconv<span class="op">::</span>timer_available_cancers</a></code></pre></div>
+<pre><code>##  [1] "kich" "blca" "brca" "cesc" "gbm"  "hnsc" "kirp" "lgg"  "lihc" "luad"
+## [11] "lusc" "prad" "sarc" "pcpg" "paad" "tgct" "ucec" "ov"   "skcm" "dlbc"
+## [21] "kirc" "acc"  "meso" "thca" "uvm"  "ucs"  "thym" "esca" "stad" "read"
+## [31] "coad" "chol"</code></pre>
+<p>What the abbreviations stand for is documented on the <a href="https://gdc.cancer.gov/resources-tcga-users/tcga-code-tables/tcga-study-abbreviations">TCGA wiki</a>.</p>
+</div>
+<div id="using-expressionsets" class="section level2">
+<h2 class="hasAnchor">
+<a href="#using-expressionsets" class="anchor"></a>Using ExpressionSets</h2>
+<p>The <a href="https://bioconductor.org/">Bioconductor</a> <a href="https://www.rdocumentation.org/packages/Biobase/versions/2.32.0/topics/ExpressionSet">ExpressionSet</a> is a convenient way to store a gene expression matrix with metadata for both samples and genes in a single object.</p>
+<p><code>immunedeconv</code> supports the use of an ExpressionSet instead of a gene expression matrix. In that case, <code>pData</code> requires a column that contains gene symbols. Which one needs to be specified in the <code>deconvolute()</code> call:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">deconvolute</span>(my_expression_set, <span class="st">"quantiseq"</span>, <span class="dt">column =</span> <span class="st">"&lt;column name&gt;"</span>)</a></code></pre></div>
+</div>
+</div>
+<div id="refernces" class="section level1 unnumbered">
+<h1 class="hasAnchor">
+<a href="#refernces" class="anchor"></a>Refernces</h1>
+<div id="refs" class="references">
+<div id="ref-CIBERSORT2016">
+<p>Aaron M. Newman, Chih Long Liu, Michael R. Green, Andrew J. Gentles, Weiguo Feng, Yue Xu, Chuong D. Hoang, Maximilian Diehn, Ash A., and Alizadeh. 2016. “Robust enumeration of cell subsets from tissue expression profiles.” <em>Nat Methods.</em> 21 (3): 193–201. <a href="https://doi.org/10.1016/j.molmed.2014.11.008.Mitochondria" class="uri">https://doi.org/10.1016/j.molmed.2014.11.008.Mitochondria</a>.</p>
+</div>
+<div id="ref-XCELL2017">
+<p>Aran, Dvir, Zicheng Hu, and Atul J Butte. 2017. “xCell: digitally portraying the tissue cellular heterogeneity landscape.” <em>Genome Biology</em> 18 (1): 220. <a href="https://doi.org/10.1186/s13059-017-1349-1" class="uri">https://doi.org/10.1186/s13059-017-1349-1</a>.</p>
+</div>
+<div id="ref-Becht2016">
+<p>Becht, Etienne, Nicolas A. Giraldo, Laetitia Lacroix, Bénédicte Buttard, Nabila Elarouci, Florent Petitprez, Janick Selves, et al. 2016. “Estimating the population abundance of tissue-infiltrating immune and stromal cell populations using gene expression.” <em>Genome Biology</em> 17 (1). Genome Biology: 218. <a href="https://doi.org/10.1186/s13059-016-1070-5" class="uri">https://doi.org/10.1186/s13059-016-1070-5</a>.</p>
+</div>
+<div id="ref-quantiseq2017">
+<p>Finotello, Francesca, Clemens Mayer, Christina Plattner, Gerhard Laschober, Dietmar Rieder, Hubert Hackl, Anne Krogsdam, et al. 2017. “quanTIseq: quantifying immune contexture of human tumors.” <em>bioRxiv</em>, November. Cold Spring Harbor Laboratory, 223180. <a href="https://doi.org/10.1101/223180" class="uri">https://doi.org/10.1101/223180</a>.</p>
+</div>
+<div id="ref-Finotello2018">
+<p>Finotello, Francesca, and Zlatko Trajanoski. 2018. “Quantifying tumor-infiltrating immune cells from transcriptomics data.” <em>Cancer Immunology, Immunotherapy</em> 0. <a href="https://doi.org/10.1007/s00262-018-2150-z" class="uri">https://doi.org/10.1007/s00262-018-2150-z</a>.</p>
+</div>
+<div id="ref-TIMER2016">
+<p>Li, Bo, Eric Severson, Jean-Christophe Pignon, Haoquan Zhao, Taiwen Li, Jesse Novak, Peng Jiang, et al. 2016. “Comprehensive analyses of tumor immunity: implications for cancer immunotherapy.” <em>Genome Biology</em> 17 (1): 174. <a href="https://doi.org/10.1186/s13059-016-1028-7" class="uri">https://doi.org/10.1186/s13059-016-1028-7</a>.</p>
+</div>
+<div id="ref-EPIC2017">
+<p>Racle, Julien, Kaat de Jonge, Petra Baumgaertner, Daniel E Speiser, and David Gfeller. 2017. “Simultaneous enumeration of cancer and immune cell types from bulk tumor gene expression data.” <em>eLife</em> 6 (November). eLife Sciences Publications Limited: e26476. <a href="https://doi.org/10.7554/eLife.26476" class="uri">https://doi.org/10.7554/eLife.26476</a>.</p>
+</div>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#introduction">Introduction</a></li>
+      <li>
+<a href="#deconvolution">Deconvolution</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#example">Example</a></li>
+      <li><a href="#cibersort">CIBERSORT</a></li>
+      <li><a href="#timer">TIMER</a></li>
+      <li><a href="#using-expressionsets">Using ExpressionSets</a></li>
+      </ul>
+</li>
+      <li><a href="#refernces">Refernces</a></li>
+      </ul>
+</div>
       </div>
 
 </div>

@@ -32,7 +32,8 @@
 
 <meta property="og:title" content="Make a random bulk sample from a single-cell dataset — make_random_bulk" />
 
-<meta property="og:description" content="Make a random bulk sample from a single-cell dataset" />
+<meta property="og:description" content="Take random single cells from the input expression set, given
+the cell_fractions vector and combine them by taking the mean." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -107,7 +108,8 @@
 
     <div class="ref-description">
     
-    <p>Make a random bulk sample from a single-cell dataset</p>
+    <p>Take random single cells from the input expression set, given
+the cell_fractions vector and combine them by taking the mean.</p>
     
     </div>
 
@@ -118,12 +120,16 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>eset</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/Biobase/topics/class.ExpressionSet'>Biobase::ExpressionSet</a></code> with a <code>cell_type</code> column in <code>pData</code>.</p></td>
+      <td><p><code><a href='http://www.rdocumentation.org/packages/Biobase/topics/class.ExpressionSet'>Biobase::ExpressionSet</a></code> with a <code>cell_type</code> column in <code>pData</code>.
+Each sample is the gene expression of a single cell. The cell
+type of each cell needs to be denoted in the pData table in the
+<code>cell_type</code> column.</p></td>
     </tr>
     <tr>
       <th>cell_fractions</th>
       <td><p>named list indicating the fraction of each cell type
-which will be in the sample.</p></td>
+which will be in the sample. The names of the list need to correspond
+to the <code>cell_type</code> column in the ExpressionSet.</p></td>
     </tr>
     <tr>
       <th>n_cells</th>

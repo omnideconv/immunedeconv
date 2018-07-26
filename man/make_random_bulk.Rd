@@ -7,15 +7,20 @@
 make_random_bulk(eset, cell_fractions, n_cells = 500, combine = mean)
 }
 \arguments{
-\item{eset}{\code{Biobase::ExpressionSet} with a \code{cell_type} column in \code{pData}.}
+\item{eset}{\code{Biobase::ExpressionSet} with a \code{cell_type} column in \code{pData}.
+Each sample is the gene expression of a single cell. The cell
+type of each cell needs to be denoted in the pData table in the
+\code{cell_type} column.}
 
 \item{cell_fractions}{named list indicating the fraction of each cell type
-which will be in the sample.}
+which will be in the sample. The names of the list need to correspond
+to the \code{cell_type} column in the ExpressionSet.}
 
 \item{n_cells}{number of single cells to integrate into a sample}
 
 \item{combine}{callback function used to aggregate the counts.}
 }
 \description{
-Make a random bulk sample from a single-cell dataset
+Take random single cells from the input expression set, given
+the cell_fractions vector and combine them by taking the mean.
 }

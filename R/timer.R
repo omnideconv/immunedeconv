@@ -21,6 +21,7 @@ immuneCuratedData <- system.file("extdata", "timer", "precalculated", "immune.ex
                                  package="immunedeconv", mustWork = TRUE)
 
 #' TIMER signatures are cancer specific. This is the list of available cancer types.
+#'
 #' @export
 timer_available_cancers <- c('kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
                          'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',

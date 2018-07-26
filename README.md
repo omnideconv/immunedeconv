@@ -18,7 +18,8 @@ xcell
 epic
 ```
 
-For more detailed usage instructions, see the [Documentation](https://grst.github.io/immune_deconvolution_methods).
+For more detailed usage instructions, see the
+[Documentation](https://grst.github.io/immune_deconvolution_methods/articles/immunedeconv.html).
 
 
 ## Available methods

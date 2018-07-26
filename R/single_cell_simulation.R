@@ -23,9 +23,16 @@ scale_to_million = function(sample) {
 
 #' Make a random bulk sample from a single-cell dataset
 #'
+#' Take random single cells from the input expression set, given
+#' the cell_fractions vector and combine them by taking the mean.
+#'
 #' @param eset `Biobase::ExpressionSet` with a `cell_type` column in `pData`.
+#'    Each sample is the gene expression of a single cell. The cell
+#'    type of each cell needs to be denoted in the pData table in the
+#'    `cell_type` column.
 #' @param cell_fractions named list indicating the fraction of each cell type
-#'    which will be in the sample.
+#'    which will be in the sample. The names of the list need to correspond
+#'    to the `cell_type` column in the ExpressionSet.
 #' @param n_cells number of single cells to integrate into a sample
 #' @param combine callback function used to aggregate the counts.
 #'
@@ -64,6 +71,8 @@ make_random_bulk = function(eset, cell_fractions, n_cells=500, combine=mean) {
 #'     sample in each row.
 #' @param n_cell number of single cells to use in each sample
 #' @param combine callback function used to aggregate the counts.
+#'
+#' @seealso make_random_bulk
 #'
 #' @export
 make_bulk_eset = function(eset, cell_fractions, n_cells=500, combine=mean) {

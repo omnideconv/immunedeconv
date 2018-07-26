@@ -19,3 +19,6 @@ sample in each row.}
 \description{
 Make a random expression set from a single-cell dataset
 }
+\seealso{
+make_random_bulk
+}

@@ -45,5 +45,5 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 LazyData: true
 URL: https://github.com/grst/immune_deconvolution_methods
-BugRepots: https://github.com/grst/immune_deconvolution_methods/issues
+BugReports: https://github.com/grst/immune_deconvolution_methods/issues
 RoxygenNote: 6.0.1

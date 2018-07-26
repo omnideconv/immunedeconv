@@ -1,4 +1,138 @@
 ---
-title: "R Notebook"
-output: html_notebook
+title: "Getting started with `immunedeconv`"
+output: html_document
+bibliography: references.bib
+biblio-style: apalike
+link-citations: yes
+colorlinks: yes
 ---
+
+```{r setup, include=FALSE}
+devtools::load_all(".")
+```
+
+# Introduction
+Methods like fluorescence activated cell sorting (FACS) or Immunohistochemistry
+(IHC)-staining have been used as a gold standard to estimate the immune cell
+content within a sample, however these methods are limited in their scalability
+and by the availability of good antibodies against the cell type markers. High
+throughput transcriptomic methods allow to get a transcriptional landscape in
+the sample with a relatively small amount of material that can be extremely
+limited in clinical settings (e.g. tumor biopsies), which led to high utility
+of methods like RNA-seq and microarrays to characterize patient tumor samples.
+However, RNA-seq does not provide a detailed information on a cellular
+composition of a sample, which then has to be inferred using computational
+techniques.
+
+Such methods can, in general, be classified in two categories:
+Marker gene-based approaches and deconvolution-based approaches. The marker
+gene based approaches are based on a list of genes, referred to as signature,
+that are characteristic for a cell type. These signatures are usually derived
+from targeted transcriptomic studies characterizing each immune cell type
+or/and comprehensive literature search and experimental validation. By looking
+at the expression values of signature genes, every cell type is quantified
+independently, either using the gene expression values directly
+[@Becht2016] or by performing a statistical test for enrichment of the
+signatures [@XCELL2017]. Deconvolution methods, on the other hand, formulate
+the problem as a system of equations that describe the gene expression of
+a sample as the weighted sum of the contributions of the different cell types.
+By solving the inverse problem, cell type fractions can be inferred given
+a signature matrix and the mixed gene expression. In practice, this problem is
+solved using $\nu$-Support Vector Regression (SVR) [@CIBERSORT2016],
+constrained least square regression [@quantiseq2017; @EPIC2017] or linear least
+square regression [@TIMER2016] (reviewed in @Finotello2018).
+
+
+# Deconvolution
+This package gives you easy access to these methods.
+To run a method with default options, simply invoke
+
+```r
+immunedeconv::deconvolute(gene_expression_matrix, method)
+```
+
+where `gene_expression_matrix` is a matrix with genes in rows and samples in
+columns. The rownames must be HGNC symbols and the colnames must be sample
+names. The method can be one of
+
+```
+quantiseq
+timer
+cibersort
+cibersort_abs
+mcp_counter
+xcell
+epic
+```
+
+## Example
+```{r, message=FALSE}
+res = deconvolute(immunedeconv::example_gene_expression_matrix, "quantiseq")
+knitr::kable(res, digits=2)
+```
+
+## CIBERSORT
+CIBERSORT is only freely available for academic users and could not be
+directly included in this package. To use CIBERSORT with this package,
+you need to register on the
+[cibersort website](https://cibersort.stanford.edu/), obtain a license,
+and download the CIBERSORT source code.
+
+The source code package contains two files, that are required:
+
+```
+CIBERSORT.R
+LM22.txt
+```
+
+Note the storage location of these files. When using `immunedeconv`, you need
+to tell the package where it can find those files:
+
+```r
+library(immunedeconv)
+set_cibersort_binary("/path/to/CIBERSORT.R")
+set_cibersort_mat("/path/to/LM22.txt")
+```
+
+Afterwards, you can call
+
+```r
+deconvolute(your_mixture_matrix, "cibersort")   # or 'cibersort_abs'
+```
+
+as for any other method.
+
+
+## TIMER
+TIMER uses indication-specific reference profiles. Therefore, you *must*
+specify the tumor type when running TIMER:
+
+```r
+deconvolute(your_mixture_matrix, "timer",
+            indications=c("SKCM", "SKCM", "BLCA"))
+```
+
+`indications` needs to be a vector that specifies an indication for each sample
+(=column) in the mixture matrix. The indications supported by TIMER are
+
+```{r}
+immunedeconv::timer_available_cancers
+```
+
+What the abbreviations stand for is documented on the [TCGA wiki](https://gdc.cancer.gov/resources-tcga-users/tcga-code-tables/tcga-study-abbreviations).
+
+## Using ExpressionSets
+The [Bioconductor](https://bioconductor.org/)
+[ExpressionSet](https://www.rdocumentation.org/packages/Biobase/versions/2.32.0/topics/ExpressionSet)
+is a convenient way to store a gene expression matrix with metadata for both
+samples and genes in a single object.
+
+`immunedeconv` supports the use of an ExpressionSet instead of a gene
+expression matrix. In that case, `pData` requires a column that contains gene
+symbols. Which one needs to be specified in the `deconvolute()` call:
+
+```r
+deconvolute(my_expression_set, "quantiseq", column = "<column name>")
+```
+
+# Refernces

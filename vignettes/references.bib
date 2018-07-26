@@ -1,0 +1,336 @@
+@article{Schelker2017,
+abstract = {As interactions between the immune system and tumour cells are governed by a complex network of cell–cell interactions, knowing the specific immune cell composition of a solid tumour may be essential to predict a patient's response to immunotherapy. Here, we analyse in depth how to derive the cellular composition of a solid tumour from bulk gene expression data by mathematical deconvolution, using indication-specific and cell type-specific reference gene expression profiles (RGEPs) from tumour-derived single-cell RNA sequencing data. We demonstrate that tumour-derived RGEPs are essential for the successful deconvolution and that RGEPs from peripheral blood are insufficient. We distinguish nine major cell types, as well as three T cell subtypes. Using the tumour-derived RGEPs, we can estimate the content of many tumours associated immune and stromal cell types, their therapeutically relevant ratios, as well as an improved gene expression profile of the malignant cells.-3 | www.nature.com/naturecommunications 1 1234567890 E nhancing a patient's immune response to cancer using immune checkpoint inhibitors is arguably the most exciting advance in the treatment of cancer in the past decade 1,2 . Unfortunately, only a subset of patients (typically {\~{}}20{\%}) show long-lasting responses post checkpoint blockade 3 . Combining prospective patient selection based on predictive response biomarkers (=precision medicine) and immunotherapy has the potential to further transform patient care. To date, it has been shown that location and abundance of immune cells are prognostic for predicting patient outcome on standard therapy 4,5 . In addition, for checkpoint inhibitors-like anti-PD1, anti-PDL1, and anti-CTLA4 agents, the presence of relevant T cell populations correlates with treatment efficacy 6 . Thus, it is likely that the key to predicting response to immunotherapy lies in the patient-specific immune cell composition at the site of the tumour lesion. In theory, it is possible to infer the immune, tumour, and stroma cell content of a solid tumour from its bulk gene expression profile if reference gene expression profiles (RGEPs) can be established for each tumour-associated cell type. Mathe-matically, this class of inverse problems is known as deconvolution 7 . To date, deconvolution of bulk gene expression has been described and validated for haematological malignancies 8,9 , where RGEPs can be established from peripheral blood mononuclear cells (PBMCs). This approach has been applied theoretically to solid tumours 10 , but until recently it has been impossible to validate this extrapolation experimentally. It has been difficult to obtain RGEPs for cell types that are not available in the peripheral blood, such as endothelial cells (ECs) and cancer-associated fibroblasts (CAFs) and it remains unclear to which extent the gene expression profile of an immune cell changes upon tumour infiltration. With the advent of the single-cell RNA sequencing (scRNA-seq) technology, however, it is now possible to determine gene expression profiles for tumour-infiltrating immune cells, tumour-associated non-malignant cells, and individual tumour cells from the same solid tumour biopsy. We collected and investigated RNA-seq gene expression profiles of more than 11,000 single cells from three distinct primary human tissue sources: To characterise cells associated with the tumour microenvironment we accessed data from 19 melanoma patients 11 , to characterise the baseline immune cell gene expression we accessed data from PBMCs originating from four healthy subjects 12 and last, we generated immune and tumour cell gene expression profiles from four ovarian cancer ascites samples in-house. In the following, we show that gene expression profiles from tumour-associated immune cells and from PBMCs differ substantially. Therefore, reference profiles obtained from PBMCs are insufficient to deconvolve the bulk profile of a melanoma tumour sample. We find that indication-specific immune cell RNA-seq profiles from different patients are sufficiently similar to each other to define a consensus profile for each cell type, and that these consensus profiles enable accurate deconvolution of bulk tumour profiles. Our results show that the generation of specific RGEPs is both necessary and sufficient to enable reliable estimation of tumour composition from bulk gene expression data. Our approach resolves tumour-associated cell types that cannot be estimated by RGEPs derived from PBMCs. We can identify nine different cell types including immune cells, CAFs, ECs, ovarian carcinoma cells and melanoma cells. In addition, RGEPs for immune cells can be used to estimate the unknown gene expression profiles of tumour cells from bulk gene expression data patient specifically. Our work emphasises the importance of generating RGEPs specific to each indication of interest. Results Gene expression of cells in the tumour microenvironment. First, to investigate the extent to which gene expression profiles change as immune cells move from peripheral blood to the tumour microenvironment, we compared immune cell scRNA-seq profiles across three human data-sets: (1) data-set of 4000 single cells derived from peripheral blood of four healthy subjects 12 ; (2) data-set of 4645 tumour-derived single cells from 19 melanoma patient samples 11 and an unpublished data-set of 3114 single cells from four ovarian cancer ascites samples. Single-cell RNA-seq data requires careful data processing and normalisation particularly when comparing data originating from different sources and sequencing technologies. To char-acterise the single cells and to illustrate genome wide similarities and differences in their gene expression profiles, we applied the dimensionality reduction technique t-distributed stochastic neighbour embedding (t-SNE) 13 . This is an unsupervised machine learning algorithm that places each single cell into a two-dimensional plane. Cells with gene expression profiles that are similar are placed close to each other and farther apart if they are more different. Figure 1a shows that clusters associated with specific cell types and from different data sources emerge spontaneously. The t-SNE map with data source-specific colour coding is shown in Supplementary Fig. 1 to visualise the cell-specific rather than data source-specific clustering. Using the aggregated single-cell data-set, we developed a classification approach that can identify cell types irrespective of the data source. We can identify and classify nine major cell types: T cells, B cells, macrophages/monocytes, natural killer (NK) cells, dendritic cells (DCs), CAFs, ECs, ovarian carcinoma cells, and melanoma cells. All remaining cells that fail to pass the classification threshold for any specific cell type are assigned as " unknown " . Interestingly, the " unknown " cells are mostly located in the T cell clusters, suggesting that some T cells are more dif-ficult to classify than cells from other cell types. However, the percentage of " unknown " cells per sample is generally very low ({\textless}0.03{\%}). Further, we could classify T cells into three subtypes: CD4+, CD8+, and regulatory T cells (Treg). The ratios of CD4+ or CD8+ T cells and immune suppressive Tregs were suggested as markers for immunologically active vs. inactive tumours 6 . Although our methods can easily be extended to include addi-tional cells and further subdivisions, we limited ourselves to the nine major cell types to benchmark our classification algorithm. As previously reported 11 and shown in Supplementary Fig. 2, malignant tumour cells and associated fibroblasts cluster by patient and non-malignant cells cluster by cell type. Tumour biopsies should contain immune cells from tumour blood vessels and from recently extravasated immune cells. Therefore, a partial overlap between PBMC and tumour-associated immune cells is expected. We analysed pair-wise similarities between the averaged gene expression profiles of each identified cluster. This analysis is more quantitative and robust to noise as the single cell comparisons. The results shown in Fig. 1b indicate that most clusters, while distinct, are most closely associated with clusters from the same cell types. This is an important quality control step that confirms that potential batch effects are successfully alle-viated by the data processing and normalisation strategy (see " Methods " section). Tregs seem to be most distinct across the three different data-sets potentially indicating different context-dependent subsets 14 . However, the microenvironment has a clear and quantifiable impact on gene expression. In the following, we will address the question if gene expression profiles based on PBMCs are good approximations for what is observed in the tumour microenvironment and how the PBMC-derived gene expression profiles impact the quality of deconvolution of bulk expression data.},
+author = {Schelker, Max and Feau, Sonia and Du, Jinyan and Ranu, Nav and Klipp, Edda and MacBeath, Gavin and Schoeberl, Birgit and Raue, Andreas},
+doi = {10.1038/s41467-017-02289-3},
+file = {:C$\backslash$:/Users/sturm/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Schelker et al. - Unknown - Estimation of immune cell content in tumour tissue using single-cell RNA-seq data.pdf:pdf},
+issn = {2041-1723},
+journal = {Nature Communications},
+mendeley-groups = {work/pieris/deconvolution,work/pieris/deconvolution/single-cell},
+month = {dec},
+number = {1},
+pages = {2032},
+title = {{Estimation of immune cell content in tumour tissue using single-cell RNA-seq data}},
+url = {https://www.nature.com/articles/s41467-017-02289-3.pdf http://www.nature.com/articles/s41467-017-02289-3},
+volume = {8},
+year = {2017}
+}
+
+@article{CIBERSORT2016,
+abstract = {We introduce CIBERSORT, a method for characterizing cell composition of complex tissues from their gene expression profiles. When applied to enumeration of hematopoietic subsets in RNA mixtures from fresh, frozen, and fixed tissues, including solid tumors, CIBERSORT outperformed other methods with respect to noise, unknown mixture content, and closely related cell types. CIBERSORT should enable large-scale analysis of RNA mixtures for cellular biomarkers and therapeutic targets (http://cibersort.stanford.edu). Users},
+archivePrefix = {arXiv},
+arxivId = {15334406},
+author = {{Aaron M. Newman, Chih Long Liu, Michael R. Green, Andrew J. Gentles, Weiguo Feng, Yue Xu, Chuong D. Hoang, Maximilian Diehn}, and Ash A. and Alizadeh},
+doi = {10.1016/j.molmed.2014.11.008.Mitochondria},
+eprint = {15334406},
+file = {:C$\backslash$:/Users/sturm/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Aaron M. Newman, Chih Long Liu, Michael R. Green, Andrew J. Gentles, Weiguo Feng, Yue Xu, Chuong D. Hoang, Maximilian Diehn, Alizadeh -.pdf:pdf},
+isbn = {0000000000000},
+issn = {1527-5418},
+journal = {Nat Methods.},
+keywords = {historical perspective on the,in cells were the,in the early 1960s,inflammasome,it was proposed that,metabolic disease,mitochondria,nlrp3,origin and importance of,result,the presence of mitochondria},
+mendeley-groups = {work/roche/cell-deconvolution},
+number = {3},
+pages = {193--201},
+pmid = {24655651},
+title = {{Robust enumeration of cell subsets from tissue expression profiles}},
+volume = {21},
+year = {2016}
+}
+
+@article{TIMER2016,
+abstract = {Background: Understanding the interactions between tumor and the host immune system is critical to finding prognostic biomarkers, reducing drug resistance, and developing new therapies. Novel computational methods are needed to estimate tumor-infiltrating immune cells and understand tumor–immune interactions in cancers. Results: We analyze tumor-infiltrating immune cells in over 10,000 RNA-seq samples across 23 cancer types from The Cancer Genome Atlas (TCGA). Our computationally inferred immune infiltrates associate much more strongly with patient clinical features, viral infection status, and cancer genetic alterations than other computational approaches. Analysis of cancer/testis antigen expression and CD8 T-cell abundance suggests that MAGEA3 is a potential immune target in melanoma, but not in non-small cell lung cancer, and implicates SPAG5 as an alternative cancer vaccine target in multiple cancers. We find that melanomas expressing high levels of CTLA4 separate into two distinct groups with respect to CD8 T-cell infiltration, which might influence clinical responses to anti-CTLA4 agents. We observe similar dichotomy of TIM3 expression with respect to CD8 T cells in kidney cancer and validate it experimentally. The abundance of immune infiltration, together with our downstream analyses and findings, are accessible through TIMER, a public resource at http://cistrome.org/TIMER. Conclusions: We develop a computational approach to study tumor-infiltrating immune cells and their interactions with cancer cells. Our resource of immune-infiltrate levels, clinical associations, as well as predicted therapeutic markers may inform effective cancer vaccine and checkpoint blockade therapies.},
+author = {Li, Bo and Severson, Eric and Pignon, Jean-Christophe and Zhao, Haoquan and Li, Taiwen and Novak, Jesse and Jiang, Peng and Shen, Hui and Aster, Jon C and Rodig, Scott and Signoretti, Sabina and Liu, Jun Shirley and Liu, X Shirley},
+doi = {10.1186/s13059-016-1028-7},
+file = {:C$\backslash$:/Users/sturm/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Li et al. - Unknown - Comprehensive analyses of tumor immunity implications for cancer immunotherapy.pdf:pdf},
+issn = {1474-760X},
+journal = {Genome Biology},
+keywords = {Cancer immunity,Cancer immunotherapies,Cancer vaccine,Checkpoint blockade Background,Tumor immune infiltration},
+mendeley-groups = {work/pieris/deconvolution},
+month = {dec},
+number = {1},
+pages = {174},
+title = {{Comprehensive analyses of tumor immunity: implications for cancer immunotherapy}},
+url = {https://genomebiology.biomedcentral.com/track/pdf/10.1186/s13059-016-1028-7?site=genomebiology.biomedcentral.com http://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-1028-7},
+volume = {17},
+year = {2016}
+}
+
+
+@article{Zheng,
+abstract = {Benchmarking is an essential step in the development of computational tools. We take this opportunity to pitch in our opinions on tool benchmarking, in light of two correspondence articles published in Genome Biology.},
+author = {Zheng, Siyuan},
+doi = {10.1186/s13059-017-1258-3},
+file = {:C$\backslash$:/Users/sturm/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Zheng - Unknown - Benchmarking contexts and details matter.pdf:pdf},
+issn = {1474-760X},
+journal = {Genome Biology},
+mendeley-groups = {work/pieris/deconvolution},
+month = {dec},
+number = {1},
+pages = {129},
+title = {{Benchmarking: contexts and details matter}},
+url = {https://genomebiology.biomedcentral.com/track/pdf/10.1186/s13059-017-1258-3?site=genomebiology.biomedcentral.com http://genomebiology.biomedcentral.com/articles/10.1186/s13059-017-1258-3},
+volume = {18},
+year = {2017}
+}
+@article{Li,
+abstract = {We have recently published a statistical deconvolution method to study infiltrating immune cells using tumor RNA-seq data [1]. One of the goals in that work was to understand how proportions of different cell types co-vary across different cancer tissues. To this end, we esti-mated the abundance of six cell types over 9000 tumor samples across 23 cancer types, and then assessed the correlations of these estimated proportions across the different samples within a cancer type. In particular we compared our method (TIMER) with CIBERSORT [2], a previously published deconvolution approach, for their ability to assess such correlations. To our surprise, we found many non-biological negative correlations be-tween CIBERSORT estimates, and we believed that this artifact was, to a large extent, due to the incorporation of highly similar features in the linear model, or statis-tical collinearity. Newman et al., the authors of CIBER-SORT, have raised concerns that these correlations were due to data normalization, instead of collinearity [3]. While we agree with Newman and coauthors that the forced normalization indeed introduces unwanted nega-tive correlations, we will show in this response that the inclusion of highly similar features contributes as signifi-cantly as normalization, if not more, to the observed artificial negative correlations among the estimates obtained by CIBERSORT. Highly correlated features (covariates) in linear regres-sion models can lead to many technical difficulties, such as high estimation variances, non-robustness, and non-identifiability. Furthermore, it is often misleading to interpret their coefficients at their face value. For example, it is very easy to create examples where when only one of the two highly similar features is included in a regression model, its coefficient is highly significant and positive; whereas when both are included, none of the coefficients is significant or one is positively significant and the other is negative. This issue is a fundamental statistical problem due to lack of information and is unlikely to be solved simply by regularization employed by the CIBERSORT method. To evaluate how CIBERSORT estimations are affected by the incorporation of similar features, we conducted two in silico experiments. In the first one, we selected two unrelated cell types, CD8 T cells and neutrophils, from the CIBERSORT feature set, LM22 matrix. The Pearson correlation of the expression levels of the two cell types is 0.009. We generated 500 mixtures by randomly apportioning the population consisting of these two cell types only: Y = Y i , i = 1,2,{\ldots}500, where: Y i ¼ f 1 ; i {\^{A}} X1 þ f 2 ; i {\^{A}} X2 þ $\epsilon$i},
+author = {Li, Bo and Liu, Jun Shirley and Liu, X Shirley},
+doi = {10.1186/s13059-017-1256-5},
+file = {:C$\backslash$:/Users/sturm/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Li, Liu, Liu - Unknown - Revisit linear regression-based deconvolution methods for tumor gene expression data.pdf:pdf},
+issn = {1474-760X},
+journal = {Genome Biology},
+mendeley-groups = {work/pieris/deconvolution},
+month = {dec},
+number = {1},
+pages = {127},
+title = {{Revisit linear regression-based deconvolution methods for tumor gene expression data}},
+url = {https://genomebiology.biomedcentral.com/track/pdf/10.1186/s13059-017-1256-5?site=genomebiology.biomedcentral.com http://genomebiology.biomedcentral.com/articles/10.1186/s13059-017-1256-5},
+volume = {18},
+year = {2017}
+}
+@article{Newman,
+abstract = {In a recently published article in Genome Biology, Li and colleagues introduced TIMER, a gene expression deconvolution approach for studying tumor-infiltrating leukocytes (TILs) in 23 cancer types profiled by The Cancer Genome Atlas. Methods to characterize TIL biology are increasingly important, and the authors offer several arguments in favor of their strategy. Several of these claims warrant further discussion and highlight the critical importance of data normalization in gene expression deconvolution applications. Computational approaches for enumerating cell subsets from bulk tissue expression profiles have significant potential for studying tumor cellular ecosystems, includ-ing tumor-infiltrating leukocytes (TILs) [1–3]. We there-fore read with interest the recent Genome Biology article by Li and colleagues in which they introduce TIMER, an in silico method for TIL deconvolution [4]. TIMER relies on prior knowledge of immune signature genes as input and consists of three major steps: (1) gene expression normalization across platforms and sample types; (2) selection of immune signature genes that are negatively correlated with tumor purity; and (3) deconvolution of RNA admixtures using a previously described technique for iterative linear least squares regression (LLSR) [5]. They apply TIMER to the inference of six distinct immune subsets (B cells, CD4 T cells, CD8 T cells, neutrophils, macrophages, and dendritic cells) in The Cancer Genome Atlas (TCGA) bulk tumor expression profiles and investigate links between TIL heterogeneity, tumor genomic features, and survival in 23 cancer types. Several groups, including ours, have also proposed methods for gene expression deconvolution [1, 3, 5, 6]. We recently described CIBERSORT, an in silico tissue dis-section approach that is robust to noise, unknown mixture content, and closely related cell types (collinearity) [6].},
+author = {Li, Bo and Liu, Jun S. and Liu, X. Shirley},
+doi = {10.1186/s13059-017-1256-5},
+file = {:C$\backslash$:/Users/sturm/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Newman et al. - Unknown - Data normalization considerations for digital tumor dissection.pdf:pdf},
+issn = {1474-760X},
+journal = {Genome Biology},
+mendeley-groups = {work/pieris/deconvolution},
+month = {dec},
+number = {1},
+pages = {127},
+title = {{Revisit linear regression-based deconvolution methods for tumor gene expression data}},
+url = {www.dx.doi.org/10.1186/s13059-017-1256-5 www.dx.doi.org/10.1186/s13059-017-1258-3 http://genomebiology.biomedcentral.com/articles/10.1186/s13059-017-1256-5},
+volume = {18},
+year = {2017}
+}
+
+
+@article{Finotello2018,
+abstract = {By exerting pro-and anti-tumorigenic actions, tumor-infiltrating immune cells can profoundly influence tumor progression, as well as the success of anti-cancer therapies. Therefore, the quantification of tumor-infiltrating immune cells holds the promise to unveil the multi-faceted role of the immune system in human cancers and its involvement in tumor escape mechanisms and response to therapy. Tumor-infiltrating immune cells can be quantified from RNA sequencing data of human tumors using bioinformatics approaches. In this review, we describe state-of-the-art computational methods for the quantification of immune cells from transcriptomics data and discuss the open challenges that must be addressed to accurately quantify immune infiltrates from RNA sequencing data of human bulk tumors.},
+author = {Finotello, Francesca and Trajanoski, Zlatko},
+doi = {10.1007/s00262-018-2150-z},
+file = {:C$\backslash$:/Users/sturm/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Finotello, Trajanoski - 123 - Quantifying tumor-infiltrating immune cells from transcriptomics data.pdf:pdf},
+journal = {Cancer Immunology, Immunotherapy},
+keywords = {Deconvolution,Gene expression,NGS,Next-generation sequencing,RNA-seq,TILs},
+mendeley-groups = {work/pieris/immuno-onc,work/pieris/deconvolution},
+title = {{Quantifying tumor-infiltrating immune cells from transcriptomics data}},
+url = {https://doi.org/10.1007/s00262-018-2150-z},
+volume = {0},
+year = {2018}
+}
+
+@article{AvilaCobos2018,
+abstract = {Gene expression analyses of bulk tissues often ignore cell type composition as an important confounding factor, resulting in a loss of signal from lowly abundant cell types. In this review, we highlight the importance and value of computational deconvolution methods to infer the abundance of different cell types and/or cell type-specific expression profiles in heterogeneous samples without performing physical cell sorting. We also explain the various decon-volution scenarios, the mathematical approaches used to solve them and the effect of data processing and different confounding factors on the accuracy of the deconvolution results.},
+author = {{Avila Cobos}, Francisco and Vandesompele, Jo and Mestdagh, Pieter and {De Preter}, Katleen},
+doi = {10.1093/bioinformatics/bty019},
+file = {:C$\backslash$:/Users/sturm/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Avila Cobos et al. - Unknown - Computational deconvolution of transcriptomics data from mixed cell populations.pdf:pdf},
+issn = {1367-4803},
+journal = {Bioinformatics},
+mendeley-groups = {work/pieris/deconvolution},
+month = {jan},
+title = {{Computational deconvolution of transcriptomics data from mixed cell populations}},
+url = {https://watermark.silverchair.com/bty019.pdf?token=AQECAHi208BE49Ooan9kkhW{\_}Ercy7Dm3ZL{\_}9Cf3qfKAc485ysgAAAgEwggH9BgkqhkiG9w0BBwagggHuMIIB6gIBADCCAeMGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMBCAOljVqlClNIoksAgEQgIIBtKK8ad{\_}L{\_}9OMyaLWSBM8kQbq{\_}QMHEYy10ldM0T8PmBhy{\_}9lS},
+year = {2018}
+}
+
+@article{Becht2016,
+author = {Becht, Etienne and Giraldo, Nicolas A. and Lacroix, Laetitia and Buttard, B{\'{e}}n{\'{e}}dicte and Elarouci, Nabila and Petitprez, Florent and Selves, Janick and Laurent-Puig, Pierre and Saut{\`{e}}s-Fridman, Catherine and Fridman, Wolf H. and de Reyni{\`{e}}s, Aur{\'{e}}lien},
+doi = {10.1186/s13059-016-1070-5},
+file = {:C$\backslash$:/Users/sturm/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Becht et al. - 2016 - Estimating the population abundance of tissue-infiltrating immune and stromal cell populations using gene expressi.pdf:pdf},
+issn = {1474-760X},
+journal = {Genome Biology},
+keywords = {Transcriptomic markers,Gene signatures,Deconvoluti,deconvolution,gene signatures,transcriptomic markers,tumor microenvironment},
+mendeley-groups = {work/roche/cell-deconvolution,work/pieris/deconvolution},
+number = {1},
+pages = {218},
+publisher = {Genome Biology},
+title = {{Estimating the population abundance of tissue-infiltrating immune and stromal cell populations using gene expression}},
+url = {http://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-1070-5},
+volume = {17},
+year = {2016}
+}
+
+@article{XCELL2017,
+abstract = {Tissues are complex milieus consisting of numerous cell types. Several recent methods have attempted to enumerate cell subsets from transcriptomes. However, the available methods have used limited sources for training and give only a partial portrayal of the full cellular landscape. Here we present xCell, a novel gene signature-based method, and use it to infer 64 immune and stromal cell types. We harmonized 1822 pure human cell type transcriptomes from various sources and employed a curve fitting approach for linear comparison of cell types and introduced a novel spillover compensation technique for separating them. Using extensive in silico analyses and comparison to cytometry immunophenotyping, we show that xCell outperforms other methods.},
+author = {Aran, Dvir and Hu, Zicheng and Butte, Atul J},
+doi = {10.1186/s13059-017-1349-1},
+file = {:C$\backslash$:/Users/sturm/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Aran, Hu, Butte - Unknown - xCell digitally portraying the tissue cellular heterogeneity landscape(3).pdf:pdf},
+issn = {1474-760X},
+journal = {Genome Biology},
+mendeley-groups = {work/pieris/deconvolution},
+month = {dec},
+number = {1},
+pages = {220},
+title = {{xCell: digitally portraying the tissue cellular heterogeneity landscape}},
+url = {http://xcell.ucsf.edu/. https://genomebiology.biomedcentral.com/articles/10.1186/s13059-017-1349-1},
+volume = {18},
+year = {2017}
+}
+
+@article{Newman2016,
+abstract = {Tumors are complex ecosystems comprised of diverse cell types including malignant cells, mesenchymal cells, and tumor-infiltrating leukocytes (TILs). While TILs are well known to play important roles in many aspects of cancer biology, recent developments in immuno-oncology have spurred considerable interest in TILs, particularly in relation to their optimal engagement by emerging immunotherapies. Traditionally, the enumeration of TIL phenotypic diversity and composition in solid tumors has relied on resolving single cells by flow cytometry and immunohistochemical methods. However, advances in genome-wide technologies and computational methods are now allowing TILs to be profiled with increasingly high resolution and accuracy directly from RNA mixtures of bulk tumor samples. In this review, we highlight recent progress in the development of in silico tumor dissection methods, and illustrate examples of how these strategies can be applied to characterize TILs in human tumors to facilitate personalized cancer therapy.},
+author = {Newman, Aaron M. and Alizadeh, Ash A.},
+doi = {10.1016/j.coi.2016.06.006},
+file = {:C$\backslash$:/Users/sturm/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Newman, Alizadeh - 2016 - High-throughput genomic profiling of tumor-infiltrating leukocytes.pdf:pdf},
+issn = {09527915},
+journal = {Current Opinion in Immunology},
+mendeley-groups = {work/pieris/deconvolution},
+month = {aug},
+pages = {77--84},
+pmid = {27372732},
+publisher = {Elsevier Ltd},
+title = {{High-throughput genomic profiling of tumor-infiltrating leukocytes}},
+url = {http://dx.doi.org/10.1016/j.coi.2016.06.006 http://linkinghub.elsevier.com/retrieve/pii/S0952791516300620},
+volume = {41},
+year = {2016}
+}
+
+
+@article{EPIC2017,
+abstract = {Immune cells infiltrating tumors can have important impact on tumor progression and response to therapy. We present an efficient algorithm to simultaneously estimate the fraction of cancer and immune cell types from bulk tumor gene expression data. Our method integrates novel gene expression profiles from each major non-malignant cell type found in tumors, renormalization based on cell-type-specific mRNA content, and the ability to consider uncharacterized and possibly highly variable cell types. Feasibility is demonstrated by validation with flow cytometry, immunohistochemistry and single-cell RNA-Seq analyses of human melanoma and colorectal tumor specimens. Altogether, our work not only improves accuracy but also broadens the scope of absolute cell fraction predictions from tumor gene expression data, and provides a unique novel experimental benchmark for immunogenomics analyses in cancer research (http://epic.gfellerlab.org).},
+author = {Racle, Julien and de Jonge, Kaat and Baumgaertner, Petra and Speiser, Daniel E and Gfeller, David},
+doi = {10.7554/eLife.26476},
+file = {:C$\backslash$:/Users/sturm/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Racle et al. - 2017 - Simultaneous enumeration of cancer and immune cell types from bulk tumor gene expression data.pdf:pdf},
+issn = {2050-084X},
+journal = {eLife},
+keywords = {cell fraction predictions,computational biology,gene expression,tumor immune microenvironment},
+mendeley-groups = {work/pieris/deconvolution},
+month = {nov},
+pages = {e26476},
+publisher = {eLife Sciences Publications Limited},
+title = {{Simultaneous enumeration of cancer and immune cell types from bulk tumor gene expression data}},
+url = {https://elifesciences.org/articles/26476},
+volume = {6},
+year = {2017}
+}
+
+
+@article{quantiseq2017,
+abstract = {We introduce quanTIseq, a method to quantify the tumor immune contexture, determined by the type and density of tumor-infiltrating immune cells. quanTIseq is based on a novel deconvolution algorithm for RNA sequencing data that was validated with independent data sets. Complementing the deconvolution output with image data from tissue slides enables in silico multiplexed immunodetection and provides an efficient method for the immunophenotyping of a large number of tumor samples.},
+author = {Finotello, Francesca and Mayer, Clemens and Plattner, Christina and Laschober, Gerhard and Rieder, Dietmar and Hackl, Hubert and Krogsdam, Anne and Posch, Wilfried and Wilflingseder, Doris and Sopper, Sieghart and Jsselsteijn, Marieke and Johnsons, Douglas and Xu, Yaomin and Wang, Yu and Sanders, Melinda E and Estrada, Monica V and Ericsson-Gonzalez, Paula and Balko, Justin and de Miranda, Noel F and Trajanoski, Zlatko},
+doi = {10.1101/223180},
+file = {:C$\backslash$:/Users/sturm/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Finotello et al. - 2017 - quanTIseq quantifying immune contexture of human tumors.pdf:pdf;:C$\backslash$:/Users/sturm/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Finotello et al. - 2017 - quanTIseq quantifying immune contexture of human tumors(2).pdf:pdf},
+journal = {bioRxiv},
+mendeley-groups = {work/pieris,work/pieris/deconvolution},
+month = {nov},
+pages = {223180},
+publisher = {Cold Spring Harbor Laboratory},
+title = {{quanTIseq: quantifying immune contexture of human tumors}},
+url = {https://www.biorxiv.org/content/early/2017/11/22/223180},
+year = {2017}
+}
+
+@Manual{bookdown,
+    title = {bookdown: Authoring Books and Technical Documents with R Markdown},
+    author = {Yihui Xie},
+    year = {2018},
+    note = {R package version 0.7},
+    url = {https://github.com/rstudio/bookdown},
+  }
+
+@article{Hoek2015,
+abstract = {Systems biology is an approach to comprehensively study complex interactions within a bi-ological system. Most published systems vaccinology studies have utilized whole blood or peripheral blood mononuclear cells (PBMC) to monitor the immune response after vaccina-tion. Because human blood is comprised of multiple hematopoietic cell types, the potential for masking responses of under-represented cell populations is increased when analyzing whole blood or PBMC. To investigate the contribution of individual cell types to the immune response after vaccination, we established a rapid and efficient method to purify human T and B cells, natural killer (NK) cells, myeloid dendritic cells (mDC), monocytes, and neutro-phils from fresh venous blood. Purified cells were fractionated and processed in a single day. RNA-Seq and quantitative shotgun proteomics were performed to determine expres-sion profiles for each cell type prior to and after inactivated seasonal influenza vaccination. Our results show that transcriptomic and proteomic profiles generated from purified immune cells differ significantly from PBMC. Differential expression analysis for each immune cell type also shows unique transcriptomic and proteomic expression profiles as well as chang-ing biological networks at early time points after vaccination. This cell type-specific informa-tion provides a more comprehensive approach to monitor vaccine responses.},
+author = {Hoek, Kristen L and Samir, Parimal and Howard, Leigh M and Niu, Xinnan and Prasad, Nripesh and Galassie, Allison and Liu, Qi and Allos, Tara M and Floyd, Kyle A and Guo, Yan and Shyr, Yu and Levy, Shawn E and Joyce, Sebastian and Edwards, Kathryn M and Link, Andrew J},
+doi = {10.1371/journal.pone.0118528},
+file = {:C$\backslash$:/Users/sturm/Documents/Mendeley Desktop/Hoek et al. - Unknown - A Cell-Based Systems Biology Assessment of Human Blood to Monitor Immune Responses after Influenza Vaccination.pdf:pdf},
+mendeley-groups = {work/pieris/deconvolution/benchmark/benchmark-datasets},
+title = {{A Cell-Based Systems Biology Assessment of Human Blood to Monitor Immune Responses after Influenza Vaccination}},
+url = {http://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0118528{\&}type=printable},
+year = {2015}
+}
+
+@article{Collin2013,
+abstract = {Dendritic cells are highly adapted to their role of presenting antigen and directing immune responses. Developmental studies indicate that DCs ori-ginate independently from monocytes and tissue macrophages. Emerging evidence also suggests that distinct subsets of DCs have intrinsic differ-ences that lead to functional specialisation in the generation of immu-nity. Comparative studies are now allowing many of these properties to be more fully understood in the context of human immunology.},
+author = {Collin, Matthew and McGovern, Naomi and Haniffa, Muzlifah},
+doi = {10.1111/imm.12117},
+file = {:C$\backslash$:/Users/sturm/Documents/Mendeley Desktop/Collin, Mcgovern, Haniffa - Unknown - Human dendritic cell subsets.pdf:pdf},
+issn = {00192805},
+journal = {Immunology},
+keywords = {dendritic cells,haematology,therapy/immunotherapy},
+mendeley-groups = {histology/dendritic-cells},
+month = {sep},
+number = {1},
+pages = {22--30},
+title = {{Human dendritic cell subsets}},
+url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3809702/pdf/imm0140-0022.pdf http://doi.wiley.com/10.1111/imm.12117},
+volume = {140},
+year = {2013}
+}
+
+@article{RSEM2011,
+abstract = {Background: RNA-Seq is revolutionizing the way transcript abundances are measured. A key challenge in transcript quantification from RNA-Seq data is the handling of reads that map to multiple genes or isoforms. This issue is particularly important for quantification with de novo transcriptome assemblies in the absence of sequenced genomes, as it is difficult to determine which transcripts are isoforms of the same gene. A second significant issue is the design of RNA-Seq experiments, in terms of the number of reads, read length, and whether reads come from one or both ends of cDNA fragments. Results: We present RSEM, an user-friendly software package for quantifying gene and isoform abundances from single-end or paired-end RNA-Seq data. RSEM outputs abundance estimates, 95{\%} credibility intervals, and visualization files and can also simulate RNA-Seq data. In contrast to other existing tools, the software does not require a reference genome. Thus, in combination with a de novo transcriptome assembler, RSEM enables accurate transcript quantification for species without sequenced genomes. On simulated and real data sets, RSEM has superior or comparable performance to quantification methods that rely on a reference genome. Taking advantage of RSEM's ability to effectively use ambiguously-mapping reads, we show that accurate gene-level abundance estimates are best obtained with large numbers of short single-end reads. On the other hand, estimates of the relative frequencies of isoforms within single genes may be improved through the use of paired-end reads, depending on the number of possible splice forms for each gene. Conclusions: RSEM is an accurate and user-friendly software tool for quantifying transcript abundances from RNA-Seq data. As it does not rely on the existence of a reference genome, it is particularly useful for quantification with de novo transcriptome assemblies. In addition, RSEM has enabled valuable guidance for cost-efficient design of quantification experiments with RNA-Seq, which is currently relatively expensive. Background},
+author = {Li, Bo and Dewey, Colin N},
+doi = {10.1186/1471-2105-12-323},
+file = {:C$\backslash$:/Users/sturm/Documents/Mendeley Desktop/Li, Dewey - 2011 - RSEM accurate transcript quantification from RNA-Seq data with or without a reference genome.pdf:pdf},
+issn = {1471-2105},
+journal = {BMC Bioinformatics},
+mendeley-groups = {work/pieris,work/pieris/tcga/icgc},
+number = {1},
+pages = {323},
+title = {{RSEM: accurate transcript quantification from RNA-Seq data with or without a reference genome}},
+url = {https://bmcbioinformatics.biomedcentral.com/track/pdf/10.1186/1471-2105-12-323?site=bmcbioinformatics.biomedcentral.com http://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-323},
+volume = {12},
+year = {2011}
+}
+
+@article{STAR2013,
+abstract = {Motivation: Accurate alignment of high-throughput RNA-seq data is a challenging and yet unsolved problem because of the non-contiguous transcript structure, relatively short read lengths and constantly increasing throughput of the sequencing technologies. Currently avail-able RNA-seq aligners suffer from high mapping error rates, low map-ping speed, read length limitation and mapping biases. Results: To align our large (480 billon reads) ENCODE Transcriptome RNA-seq dataset, we developed the Spliced Transcripts Alignment to a Reference (STAR) software based on a previously undescribed RNA-seq alignment algorithm that uses sequential maximum map-pable seed search in uncompressed suffix arrays followed by seed clustering and stitching procedure. STAR outperforms other aligners by a factor of 450 in mapping speed, aligning to the human genome 550 million 2 {\^{A}} 76 bp paired-end reads per hour on a modest 12-core server, while at the same time improving alignment sensitivity and precision. In addition to unbiased de novo detection of canonical junc-tions, STAR can discover non-canonical splices and chimeric (fusion) transcripts, and is also capable of mapping full-length RNA se-quences. Using Roche 454 sequencing of reverse transcription poly-merase chain reaction amplicons, we experimentally validated 1960 novel intergenic splice junctions with an 80–90{\%} success rate, corro-borating the high precision of the STAR mapping strategy.},
+author = {Dobin, Alexander and Davis, Carrie A and Schlesinger, Felix and Drenkow, Jorg and Zaleski, Chris and Jha, Sonali and Batut, Philippe and Chaisson, Mark and Gingeras, Thomas R},
+doi = {10.1093/bioinformatics/bts635},
+file = {:C$\backslash$:/Users/sturm/Documents/Mendeley Desktop/Dobin et al. - 2013 - STAR ultrafast universal RNA-seq aligner.pdf:pdf},
+issn = {1460-2059},
+journal = {Bioinformatics},
+mendeley-groups = {algorithmics},
+month = {jan},
+number = {1},
+pages = {15--21},
+title = {{STAR: ultrafast universal RNA-seq aligner}},
+url = {https://watermark.silverchair.com/bts635.pdf?token=AQECAHi208BE49Ooan9kkhW{\_}Ercy7Dm3ZL{\_}9Cf3qfKAc485ysgAAAbwwggG4BgkqhkiG9w0BBwagggGpMIIBpQIBADCCAZ4GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMx53W-CFW6uglMgUaAgEQgIIBb3mlJLh-1tAMpROoEwmW2byub0Si8AdcQQhhhzXtJySnlHOt42e0M3zEO36cFucb7iJVN{\_}dftvSfLEq56U-09ZB{\_}zKUMqX8DnnQoKIEM8bS7iPJPjMWqO4GuDtFlv4kM6-RuYJo55wQDVJdYIs5t9zb8CVgIDxVJwEuiDk2Ra0KNRstdcJcacuP0NCiRu6OeMY5vLMUprV49Grg37QvLl95CcIit1nPu5FRx16BDjfoJj2pRMUY2Xw97oVcEPBqxcGpezTVvW9-9ckhPSAQYtRff-fQD64HXc-Qd0fm{\_}cEwQjhnGoQlelI8uy6zARkb{\_}dg2jb2BaGFuTeRGS2h4VLUubqiifE6hFOTYUuzyD{\_}HV-P98Gu{\_}3bR5lBJsFPaCzJS15OchbPQhrBaJc9HQMSaEVtOZ9U9PeUiHTxz{\_}45ASSU-1DpoikVQjbsL4gWfwzoLPIG9a848MSvKW9fa8rn3t8mu5qZONHeoRSj7Dv2OaM https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/bts635},
+volume = {29},
+year = {2013}
+}
+
+@article{circlize2014,
+  doi = {10.1093/bioinformatics/btu393},
+  url = {https://doi.org/10.1093/bioinformatics/btu393},
+  year  = {2014},
+  month = {jun},
+  publisher = {Oxford University Press ({OUP})},
+  volume = {30},
+  number = {19},
+  pages = {2811--2812},
+  author = {Zuguang Gu and Lei Gu and Roland Eils and Matthias Schlesner and Benedikt Brors},
+  title = {circlize implements and enhances circular visualization in R},
+  journal = {Bioinformatics}
+}
+
+@article{Johnson2006,
+  doi = {10.1093/biostatistics/kxj037},
+  url = {https://doi.org/10.1093/biostatistics/kxj037},
+  year  = {2006},
+  month = {apr},
+  publisher = {Oxford University Press ({OUP})},
+  volume = {8},
+  number = {1},
+  pages = {118--127},
+  author = {W. E. Johnson and C. Li and A. Rabinovic},
+  title = {Adjusting batch effects in microarray expression data using empirical Bayes methods},
+  journal = {Biostatistics}
+}
+
+@article{TCGA2013,
+  doi = {10.1038/ng.2764},
+  url = {https://doi.org/10.1038/ng.2764},
+  year  = {2013},
+  month = {oct},
+  publisher = {Springer Nature},
+  volume = {45},
+  number = {10},
+  pages = {1113--1120},
+  author = {John N Weinstein and   and Eric A Collisson and Gordon B Mills and Kenna R Mills Shaw and Brad A Ozenberger and Kyle Ellrott and Ilya Shmulevich and Chris Sander and Joshua M Stuart},
+  title = {The Cancer Genome Atlas Pan-Cancer analysis project},
+  journal = {Nature Genetics}
+}
+
+
+

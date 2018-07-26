@@ -134,7 +134,7 @@ deconvolute_cibersort = function(gene_expression_matrix,
 #'
 #' (map the cell_types of the different methods to a common name)
 annotate_cell_type = function(result_table, method) {
-  cell_type_mapping %>%
+  cell_type_map %>%
     filter(method_dataset == !!method) %>%
     inner_join(result_table, by="method_cell_type") %>%
     select(-method_cell_type, -method_dataset)

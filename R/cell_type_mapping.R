@@ -1,28 +1,39 @@
 #' Functions for mapping cell types between deconvolution methods and datasets.
 #'
-#' makes use of the manually curated mapping in "cell_type_mapping.xlsx".
+#' makes use of the manually curated mapping in `inst/extdata/cell_type_mapping.xlsx`.
 #'
 #' @importFrom testit assert
 #' @importFrom dplyr select
 #' @import magrittr
+#'
+#' @name cell_type_mapping
 NULL
 
-#' Table mapping the cell types from methods/datasets to a single, controlled vocabulary
+#' Table mapping the cell types from methods/datasets to a single, controlled vocabulary.
+#'
+#' Columns: `method_dataset`, `method_cell_type`, `cell_type`.
+#'
+#' See `inst/extdata/cell_type_mapping.xlsx` for more details.
 #'
 #' @export
-cell_type_mapping = readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx", package="immunedeconv", mustWork=TRUE),
-                                     sheet="mapping") %>%
+cell_type_map = readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx",
+                                                  package="immunedeconv", mustWork=TRUE),
+                                      sheet="mapping") %>%
                           select(method_dataset, method_cell_type, cell_type) %>%
                           na.omit()
 
 
-#' Available methods and datasets
+#' Available methods and datasets.
+#'
+#' A list of all methods (e.g. `cibersort`) and datasets (e.g. `schelker_ovarian`) for
+#' which the cell types are mapped to the controlled vocabulary.
 #'
 #' @export
-available_datasets = cell_type_mapping %>% pull(method_dataset) %>% unique()
+available_datasets = cell_type_map %>% pull(method_dataset) %>% unique()
 
-cell_type_list =  readxl::read_excel(system.file("extdata", "cell_type_mapping.xlsx", package="immunedeconv", mustWork=TRUE),
-                                    sheet = "controlled_vocabulary") %>%
+cell_type_list =  readxl::read_excel(system.file("extdata", "cell_type_mapping.xlsx",
+                                                 package="immunedeconv", mustWork=TRUE),
+                                     sheet = "controlled_vocabulary") %>%
   select(parent, cell_type, optional) %>%
   mutate(optional = optional %in% TRUE)
 
@@ -41,13 +52,13 @@ node_by_name = cell_type_tree$Get(function(node){node})
 
 #' Use a tree-hierarchy to map cell types among different methods.
 #'
-#' `cell_type`` refers to a cell type from the controlled vocabulary (CV).
+#' `cell_type` refers to a cell type from the controlled vocabulary (CV).
 #' `method_cell_type` refers to a cell type from a method or dataset.
 #'
 #' @param use_cell_types list of cell types from the CV to map to
 #' @param fractions Dataframe with cell types as rows and samples as columns. Rownames corresponds to the method_cell_types.
 #'                  A named vector will be coerced into a one-column dataframe.
-#' @param method_dataset method or dataset with which `fractions` was generated. If NULL, the input data already uses the CV. 
+#' @param method_dataset method or dataset with which `fractions` was generated. If NULL, the input data already uses the CV.
 #'
 #' @return numeric vector with CV cell types as names
 #'
@@ -67,7 +78,7 @@ map_cell_types = function(use_cell_types, fractions, method_dataset=NULL) {
 #' @param node data.tree::Node corresponding to a controlled vocabulary cell type
 #' @param fractions a named list of fractions for each method_cell_type
 #' @param method_dataset character identifing the method or dataset in the celltype_mapping. If NULL, the input
-#'                         vector already uses controlled vocabulary. 
+#'                         vector already uses controlled vocabulary.
 #'
 #' @return numeric Either (1) the value of the method_cell_type mapped to cell_type,
 #'                  (2) the sum of all child nodes (recursively) of cell_type
@@ -77,7 +88,7 @@ find_children = function(node, fractions, method_dataset=NULL) {
   if(is.null(method_dataset)) {
     tmp_cell_type = rownames(fractions)[rownames(fractions) == cell_type]
   } else {
-    tmp_cell_type = cell_type_mapping %>% filter(cell_type == !!cell_type, method_dataset == !!method_dataset) %>% pull(cell_type)
+    tmp_cell_type = cell_type_map %>% filter(cell_type == !!cell_type, method_dataset == !!method_dataset) %>% pull(cell_type)
   }
   assert("Method cell type is uniquely mapped to a cell type", length(tmp_cell_type) <= 1)
   if(length(tmp_cell_type) == 1) {

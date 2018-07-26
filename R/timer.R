@@ -7,6 +7,8 @@
 #' The method is described in Li et al. Genome Biology 2016;17(1):174. [PMID: 27549193].
 #'
 #' @import sva
+#'
+#' @name timer
 NULL
 
 TimerINFO <- function(string) {
@@ -18,7 +20,7 @@ TimerINFO('Loading Timer Utilities')
 immuneCuratedData <- system.file("extdata", "timer", "precalculated", "immune.expression.curated.RData",
                                  package="immunedeconv", mustWork = TRUE)
 
-#' TIMER signatures are cancer specific. This is the list of available cancer types. 
+#' TIMER signatures are cancer specific. This is the list of available cancer types.
 #' @export
 timer_available_cancers <- c('kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
                          'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',

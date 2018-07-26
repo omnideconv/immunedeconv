@@ -3,12 +3,13 @@
 \docType{data}
 \name{deconvolution_methods}
 \alias{deconvolution_methods}
-\title{list of supported immune deconvolution methods}
+\title{List of supported immune deconvolution methods}
 \format{An object of class \code{character} of length 7.}
 \usage{
 deconvolution_methods
 }
 \description{
-list of supported immune deconvolution methods
+The methods currently supported are
+\code{mcp_counter}, \code{epic}, \code{quantiseq}, \code{xcell}, \code{cibersort}, \code{cibersort_abs}, \code{timer}
 }
 \keyword{datasets}

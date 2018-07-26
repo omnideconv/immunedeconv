@@ -14,7 +14,7 @@ help:
 	echo "Success." > $@
 
 .PHONY: roxygenize
-roxygenize: .dev_deps_installed
+roxygenize: | .dev_deps_installed
 	Rscript -e "library(methods); library(devtools); document()"
 
 .PHONY: check

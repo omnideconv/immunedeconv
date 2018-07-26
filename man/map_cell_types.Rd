@@ -18,5 +18,6 @@ A named vector will be coerced into a one-column dataframe.}
 numeric vector with CV cell types as names
 }
 \description{
-\code{cell_type`` refers to a cell type from the controlled vocabulary (CV).}method_cell_type` refers to a cell type from a method or dataset.
+\code{cell_type} refers to a cell type from the controlled vocabulary (CV).
+\code{method_cell_type} refers to a cell type from a method or dataset.
 }

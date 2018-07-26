@@ -1,0 +1,36 @@
+reference:
+  - title: Deconvolution
+    desc: Use the package to estimate immune cell fractions from bulk RNA-seq samples.
+    contents:
+      - deconvolution_methods
+      - deconvolute
+      - set_cibersort_binary
+      - set_cibersort_mat
+      - eset_to_matrix
+  - title: Cell type mapping
+    desc: Map cell types and datasets to a controlled vocabulary.
+    contents:
+      - cell_type_map
+      - cell_type_tree
+      - available_datasets
+      - map_cell_types
+      - map_result_to_celltypes
+  - title: Simulation of bulk samples
+    desc: Use this package to simulate bulk RNA-seq samples from single cell RNA-seq data.
+    contents:
+      - scale_to_million
+      - make_random_bulk
+      - make_bulk_eset
+  - title: Datasets
+    desc: List of datasets provided by the package
+    contents:
+      - example_gene_expression_matrix
+  - title: TIMER
+    desc: functions and objects related to the TIMER method
+    contents:
+      - timer_available_cancers
+      - deconvolute_timer
+  - title: quanTIseq
+    desc: functions and objects related to the quanTIseq method
+    contents:
+     - deconvolute_quantiseq.default

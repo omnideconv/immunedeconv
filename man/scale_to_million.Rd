@@ -2,7 +2,7 @@
 % Please edit documentation in R/single_cell_simulation.R
 \name{scale_to_million}
 \alias{scale_to_million}
-\title{scale sample to TPM}
+\title{Scale sample to TPM}
 \usage{
 scale_to_million(sample)
 }
@@ -10,5 +10,9 @@ scale_to_million(sample)
 \item{sample}{numeric vector of gene expression values}
 }
 \description{
-an TPM sample always sums to 1,000,000.
+a TPM sample always sums to 1,000,000.
+}
+\details{
+This function takes an input vector and
+rescales it, so that the sum of the vector equals 1e6.
 }

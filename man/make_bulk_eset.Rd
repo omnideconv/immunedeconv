@@ -2,7 +2,7 @@
 % Please edit documentation in R/single_cell_simulation.R
 \name{make_bulk_eset}
 \alias{make_bulk_eset}
-\title{make a random expression set from a single-cell dataset}
+\title{Make a random expression set from a single-cell dataset}
 \usage{
 make_bulk_eset(eset, cell_fractions, n_cells = 500, combine = mean)
 }
@@ -17,5 +17,5 @@ sample in each row.}
 \item{n_cell}{number of single cells to use in each sample}
 }
 \description{
-make a random expression set from a single-cell dataset
+Make a random expression set from a single-cell dataset
 }

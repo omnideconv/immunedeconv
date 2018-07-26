@@ -2,21 +2,26 @@
 #'
 #' @importFrom testit assert
 #' @import dplyr
+#'
+#' @name single_cell_simulation
 NULL
 
 
-#' scale sample to TPM
-#' 
-#' an TPM sample always sums to 1,000,000. 
-#' 
+#' Scale sample to TPM
+#'
+#' a TPM sample always sums to 1,000,000.
+#'
+#' This function takes an input vector and
+#' rescales it, so that the sum of the vector equals 1e6.
+#'
 #' @param sample numeric vector of gene expression values
-#' 
+#'
 #' @export
 scale_to_million = function(sample) {
   (sample/sum(sample)) * 1e6
 }
 
-#' make a random bulk sample from a single-cell dataset
+#' Make a random bulk sample from a single-cell dataset
 #'
 #' @param eset `Biobase::ExpressionSet` with a `cell_type` column in `pData`.
 #' @param cell_fractions named list indicating the fraction of each cell type
@@ -52,7 +57,7 @@ make_random_bulk = function(eset, cell_fractions, n_cells=500, combine=mean) {
 }
 
 
-#' make a random expression set from a single-cell dataset
+#' Make a random expression set from a single-cell dataset
 #'
 #' @param eset `Biobase::ExpressionSet` with a `cell_type` column in `pData`.
 #' @param cell_fractions n x n_cell_types dataframe with the fraction for each

@@ -2,10 +2,11 @@
 % Please edit documentation in R/immune_deconvolution_methods.R
 \name{set_cibersort_mat}
 \alias{set_cibersort_mat}
-\title{set Path to CIBERSORT matrix file}
+\title{Set Path to CIBERSORT matrix file (\code{LM22.txt})}
 \usage{
 set_cibersort_mat(path)
 }
 \description{
-set Path to CIBERSORT matrix file
+CIBERSORT is only freely available to academic users.
+A license an the binary can be obtained from https://cibersort.stanford.edu.
 }

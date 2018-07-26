@@ -1,4 +1,4 @@
-#' Collection of immune cell deconvolution methods. 
+#' Collection of immune cell deconvolution methods.
 #'
 #' @docType package
 #' @name immune_deconvolution_methods
@@ -10,28 +10,39 @@
 NULL
 
 
-#' list of supported immune deconvolution methods
+#' List of supported immune deconvolution methods
+#'
+#' The methods currently supported are
+#' `mcp_counter`, `epic`, `quantiseq`, `xcell`, `cibersort`, `cibersort_abs`, `timer`
+#'
 #' @export
-deconvolution_methods = c("mcp_counter", "epic", "quantiseq", "xcell", "cibersort", "cibersort_abs", "timer")
+deconvolution_methods = c("mcp_counter", "epic", "quantiseq", "xcell",
+                          "cibersort", "cibersort_abs", "timer")
 
 
-#' Data object from xCell. 
-#' 
-#' For some reason, this object is not properly exported from the xCell namespace. 
-#' This is a workaround, that `xCellAnalysis` can be properly called from this package. 
-#' 
+#' Data object from xCell.
+#'
+#' For some reason, this object is not properly exported from the xCell namespace.
+#' This is a workaround, that `xCellAnalysis` can be properly called from this package.
+#'
 #' @export
 xCell.data = xCell::xCell.data
 
-#' set Path to CIBERSORT R script
+#' Set Path to CIBERSORT R script (`CIBERSORT.R`)
+#'
+#' CIBERSORT is only freely available to academic users.
+#' A license an the binary can be obtained from https://cibersort.stanford.edu.
 #'
 #' @export
 set_cibersort_binary = function(path) {
   assign("cibersort_binary", path, envir=config_env)
 }
 
-#' set Path to CIBERSORT matrix file
-#' 
+#' Set Path to CIBERSORT matrix file (`LM22.txt`)
+#'
+#' CIBERSORT is only freely available to academic users.
+#' A license an the binary can be obtained from https://cibersort.stanford.edu.
+#'
 #' @export
 set_cibersort_mat = function(path) {
   assign("cibersort_mat", path, envir=config_env)
@@ -41,18 +52,18 @@ set_cibersort_mat = function(path) {
 
 ###########################################################################
 # Deconvolution functions for consistenctly accessing each method
-# 
+#
 # These functions are called from the generic `deconvolute()` function
 ###########################################################################
 
 
 #' Deconvolute using the TIMER technique
-#' 
-#' Unlike the other methods, TIMER needs the specification of the 
-#' cancer type for each sample. 
-#' 
+#'
+#' Unlike the other methods, TIMER needs the specification of the
+#' cancer type for each sample.
+#'
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples
-#' @param indications a n-vector giving and indication string (e.g. 'brca') for each sample. 
+#' @param indications a n-vector giving and indication string (e.g. 'brca') for each sample.
 #'     Accepted indications are 'kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
 #'     'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
 #'     'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
@@ -94,7 +105,7 @@ deconvolute_epic = function(gene_expression_matrix, ...) {
 
 
 deconvolute_quantiseq = function(gene_expresssion_matrix) {
-  deconvolute_quantiseq.default(gene_expresssion_matrix) %>% 
+  deconvolute_quantiseq.default(gene_expresssion_matrix) %>%
     as_tibble() %>%
     select(-Sample) %>%
     as.matrix() %>%
@@ -107,35 +118,35 @@ deconvolute_cibersort = function(gene_expression_matrix,
   assert("CIBERSORT.R is provided", exists("cibersort_binary", envir=config_env))
   assert("CIBERSORT signature matrix is provided", exists("cibersort_mat", envir=config_env))
   source(get("cibersort_binary", envir=config_env))
-  
+
   tmp_mat = tempfile()
   write_tsv(as_tibble(gene_expression_matrix, rownames="gene_symbol"), path=tmp_mat)
   res = CIBERSORT(get("cibersort_mat", envir=config_env), tmp_mat, perm=0, QN=FALSE, absolute=absolute, abs_method=abs_method)
-  
-  res = res %>% 
+
+  res = res %>%
     t() %>%
     .[!rownames(.) %in% c("RMSE", "P-value", "Correlation"), ]
   return(res)
 }
 
 
-#' Annotate unified cell_type names 
-#' 
+#' Annotate unified cell_type names
+#'
 #' (map the cell_types of the different methods to a common name)
 annotate_cell_type = function(result_table, method) {
   cell_type_mapping %>%
-    filter(method_dataset == !!method) %>% 
+    filter(method_dataset == !!method) %>%
     inner_join(result_table, by="method_cell_type") %>%
-    select(-method_cell_type, -method_dataset) 
+    select(-method_cell_type, -method_dataset)
 }
 
 
-#' convert an `Biobase::ExpressionSet` to a gene-expression matrix. 
-#' 
+#' Convert a `Biobase::ExpressionSet` to a gene-expression matrix.
+#'
 #' @param eset `ExpressionSet`
-#' @param column column name of the `fData()` table, which contains the HGNC gene symbols.  
-#' @return matrix with gene symbols as rownames and sample identifiers as colnames. 
-#' 
+#' @param column column name of the `fData()` table, which contains the HGNC gene symbols.
+#' @return matrix with gene symbols as rownames and sample identifiers as colnames.
+#'
 #' @export
 eset_to_matrix = function(eset, column) {
   expr_mat = exprs(eset)
@@ -144,19 +155,19 @@ eset_to_matrix = function(eset, column) {
 }
 
 
-#' Perform an immune cell deconvolution on a dataset. 
-#' 
-#' @param gene_expression A numeric matrix with HGNC gene symbols as rownames and sample identifiers as colnames. 
-#'   Data must be on non-log scale. 
+#' Perform an immune cell deconvolution on a dataset.
+#'
+#' @param gene_expression A numeric matrix with HGNC gene symbols as rownames and sample identifiers as colnames.
+#'   Data must be on non-log scale.
 #' @param method a string specifying the method. Supported methods are `xcell`, `...`
-#' @param indications a character vector with one indication per sample for TIMER. Argument is ignored for all other methods. 
+#' @param indications a character vector with one indication per sample for TIMER. Argument is ignored for all other methods.
 #' @param ... arguments passed to the respective method
-#' @return `data.frame` with `cell_type` as first column and a column with the 
-#'     calculated cell fractions for each sample. 
-#'     
+#' @return `data.frame` with `cell_type` as first column and a column with the
+#'     calculated cell fractions for each sample.
+#'
 #' @examples
 #' # Not run: deconvolute(gene_expression_matrix, "xcell")
-#' 
+#'
 #' @name deconvolute
 #' @export deconvolute
 deconvolute.default = function(gene_expression, method=deconvolution_methods, indications=NULL) {
@@ -170,12 +181,12 @@ deconvolute.default = function(gene_expression, method=deconvolution_methods, in
          cibersort = deconvolute_cibersort(gene_expression, absolute = FALSE),
          cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE),
          timer = deconvolute_timer(gene_expression, indications=indications))
-  
+
   # convert to tibble and annotate unified cell_type names
   res = res %>%
     as_tibble(rownames="method_cell_type") %>%
     annotate_cell_type(method=method)
-  
+
   return(res)
 }
 
@@ -187,41 +198,41 @@ setGeneric("deconvolute", function(gene_expression, method=deconvolution_methods
 
 
 #' @describeIn deconvolute
-#' `eset` is a `Biobase::ExpressionSet`. 
+#' `eset` is a `Biobase::ExpressionSet`.
 #' `fData` contains a column with HGNC gene symbols (specify column name)
-#' 
-#' @param eset Expression set 
-#' @param col column name of the `fData` column that contains HGNC gene symbols. 
-setMethod("deconvolute", methods::representation(gene_expression="eSet", method="character", 
+#'
+#' @param eset Expression set
+#' @param col column name of the `fData` column that contains HGNC gene symbols.
+setMethod("deconvolute", methods::representation(gene_expression="eSet", method="character",
                                                  column="character", indications="character"),
           function(gene_expression, method, column="gene_symbol", indications=NULL) {
             gene_expression %>%
-              eset_to_matrix(column) %>% 
+              eset_to_matrix(column) %>%
               deconvolute.default(method, indications=indications)
           })
 
 #' @describeIn deconvolute
 #' variant where indications are not defined, cannot be used with method == 'timer'
-setMethod("deconvolute", methods::representation(gene_expression="eSet", method="character", 
+setMethod("deconvolute", methods::representation(gene_expression="eSet", method="character",
                                                  column="character", indications="missing"),
           function(gene_expression, method, column="gene_symbol") {
             gene_expression %>%
-              eset_to_matrix(column) %>% 
+              eset_to_matrix(column) %>%
               deconvolute.default(method)
           })
 
 
-#' @describeIn deconvolute 
-#' `matrix` is matrix with HGNC gene symbols as row names. 
-setMethod("deconvolute", methods::representation(gene_expression="matrix", method="character", 
+#' @describeIn deconvolute
+#' `matrix` is matrix with HGNC gene symbols as row names.
+setMethod("deconvolute", methods::representation(gene_expression="matrix", method="character",
                                                  column="missing", indications="character"),
           function(gene_expression, method, indications=NULL) {
             deconvolute.default(gene_expression, method, indications=indications)
           })
 
-#' @describeIn deconvolute 
+#' @describeIn deconvolute
 #' variant where indications are not defined, cannot be used with method=='timer'
-setMethod("deconvolute", methods::representation(gene_expression="matrix", method="character", 
+setMethod("deconvolute", methods::representation(gene_expression="matrix", method="character",
                                                  column="missing", indications="missing"),
           function(gene_expression, method) {
             deconvolute.default(gene_expression, method)

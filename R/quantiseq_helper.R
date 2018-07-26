@@ -1,4 +1,8 @@
+#' Helper functions for quanTIseq
+#'
 #' Source code from https://github.com/FFinotello/quanTIseq
+#'
+#' @name quantiseq_helper
 NULL
 
 fixMixture<-function(mix.mat, arrays=FALSE) {

@@ -2,7 +2,7 @@
 % Please edit documentation in R/single_cell_simulation.R
 \name{make_random_bulk}
 \alias{make_random_bulk}
-\title{make a random bulk sample from a single-cell dataset}
+\title{Make a random bulk sample from a single-cell dataset}
 \usage{
 make_random_bulk(eset, cell_fractions, n_cells = 500, combine = mean)
 }
@@ -17,5 +17,5 @@ which will be in the sample.}
 \item{combine}{callback function used to aggregate the counts.}
 }
 \description{
-make a random bulk sample from a single-cell dataset
+Make a random bulk sample from a single-cell dataset
 }

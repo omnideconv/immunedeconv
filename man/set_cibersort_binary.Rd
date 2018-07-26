@@ -2,10 +2,11 @@
 % Please edit documentation in R/immune_deconvolution_methods.R
 \name{set_cibersort_binary}
 \alias{set_cibersort_binary}
-\title{set Path to CIBERSORT R script}
+\title{Set Path to CIBERSORT R script (\code{CIBERSORT.R})}
 \usage{
 set_cibersort_binary(path)
 }
 \description{
-set Path to CIBERSORT R script
+CIBERSORT is only freely available to academic users.
+A license an the binary can be obtained from https://cibersort.stanford.edu.
 }

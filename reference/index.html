@@ -111,46 +111,16 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-deconvolution" class="hasAnchor"><a href="#section-deconvolution" class="anchor"></a>Deconvolution</h2>
+          <p class="section-desc"><p>Use the package to estimate immune cell fractions from bulk RNA-seq samples.</p></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="GetFractions.Abbas.html">GetFractions.Abbas()</a></code> </p>
+          <p><code><a href="deconvolution_methods.html">deconvolution_methods</a></code> </p>
         </td>
-        <td><p>Constrained regression method implemented in Abbas et al., 2009</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="annotate_cell_type.html">annotate_cell_type()</a></code> </p>
-        </td>
-        <td><p>Annotate unified cell_type names</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="available_datasets.html">available_datasets</a></code> </p>
-        </td>
-        <td><p>Available methods and datasets</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="cell_type_mapping.html">cell_type_mapping</a></code> </p>
-        </td>
-        <td><p>Table mapping the cell types from methods/datasets to a single, controlled vocabulary</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="cell_type_tree.html">cell_type_tree</a></code> </p>
-        </td>
-        <td><p>Available cell types in the controlled vocabulary organized as a lineage tree.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_cancer_types.html">check_cancer_types()</a></code> </p>
-        </td>
-        <td><p>process batch table and check cancer types.</p></td>
+        <td><p>List of supported immune deconvolution methods</p></td>
       </tr><tr>
         
         <td>
@@ -160,57 +130,47 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="deconvolute_quantiseq.default.html">deconvolute_quantiseq.default()</a></code> </p>
+          <p><code><a href="set_cibersort_binary.html">set_cibersort_binary()</a></code> </p>
         </td>
-        <td><p>Use quanTIseq to deconvolute a gene expression matrix.</p></td>
+        <td><p>Set Path to CIBERSORT R script (<code>CIBERSORT.R</code>)</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="deconvolute_timer.html">deconvolute_timer()</a></code> </p>
+          <p><code><a href="set_cibersort_mat.html">set_cibersort_mat()</a></code> </p>
         </td>
-        <td><p>Deconvolute using the TIMER technique</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="deconvolution_methods.html">deconvolution_methods</a></code> </p>
-        </td>
-        <td><p>list of supported immune deconvolution methods</p></td>
+        <td><p>Set Path to CIBERSORT matrix file (<code>LM22.txt</code>)</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="eset_to_matrix.html">eset_to_matrix()</a></code> </p>
         </td>
-        <td><p>convert an <code>Biobase::ExpressionSet</code> to a gene-expression matrix.</p></td>
+        <td><p>Convert a <code>Biobase::ExpressionSet</code> to a gene-expression matrix.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-cell-type-mapping" class="hasAnchor"><a href="#section-cell-type-mapping" class="anchor"></a>Cell type mapping</h2>
+          <p class="section-desc"><p>Map cell types and datasets to a controlled vocabulary.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="cell_type_map.html">cell_type_map</a></code> </p>
+        </td>
+        <td><p>Table mapping the cell types from methods/datasets to a single, controlled vocabulary.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="example_gene_expression_matrix.html">example_gene_expression_matrix</a></code> </p>
+          <p><code><a href="cell_type_tree.html">cell_type_tree</a></code> </p>
         </td>
-        <td><p>example gene expression dataset</p></td>
+        <td><p>Available cell types in the controlled vocabulary organized as a lineage tree.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="find_children.html">find_children()</a></code> </p>
+          <p><code><a href="available_datasets.html">available_datasets</a></code> </p>
         </td>
-        <td><p>recursively traverse the cell type tree to resolve the mapping.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="immune_deconvolution_methods.html">immune_deconvolution_methods</a></code> </p>
-        </td>
-        <td><p>Collection of immune cell deconvolution methods.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make_bulk_eset.html">make_bulk_eset()</a></code> </p>
-        </td>
-        <td><p>make a random expression set from a single-cell dataset</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make_random_bulk.html">make_random_bulk()</a></code> </p>
-        </td>
-        <td><p>make a random bulk sample from a single-cell dataset</p></td>
+        <td><p>Available methods and datasets.</p></td>
       </tr><tr>
         
         <td>
@@ -223,25 +183,55 @@
           <p><code><a href="map_result_to_celltypes.html">map_result_to_celltypes()</a></code> </p>
         </td>
         <td><p>Map a result table as generated by <code>deconvolute</code> to a user-defined list of cell types.</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-simulation-of-bulk-samples" class="hasAnchor"><a href="#section-simulation-of-bulk-samples" class="anchor"></a>Simulation of bulk samples</h2>
+          <p class="section-desc"><p>Use this package to simulate bulk RNA-seq samples from single cell RNA-seq data.</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="scale_to_million.html">scale_to_million()</a></code> </p>
         </td>
-        <td><p>scale sample to TPM</p></td>
+        <td><p>Scale sample to TPM</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="set_cibersort_binary.html">set_cibersort_binary()</a></code> </p>
+          <p><code><a href="make_random_bulk.html">make_random_bulk()</a></code> </p>
         </td>
-        <td><p>set Path to CIBERSORT R script</p></td>
+        <td><p>Make a random bulk sample from a single-cell dataset</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="set_cibersort_mat.html">set_cibersort_mat()</a></code> </p>
+          <p><code><a href="make_bulk_eset.html">make_bulk_eset()</a></code> </p>
         </td>
-        <td><p>set Path to CIBERSORT matrix file</p></td>
-      </tr><tr>
+        <td><p>Make a random expression set from a single-cell dataset</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-datasets" class="hasAnchor"><a href="#section-datasets" class="anchor"></a>Datasets</h2>
+          <p class="section-desc"><p>List of datasets provided by the package</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="example_gene_expression_matrix.html">example_gene_expression_matrix</a></code> </p>
+        </td>
+        <td><p>example gene expression dataset</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-timer" class="hasAnchor"><a href="#section-timer" class="anchor"></a>TIMER</h2>
+          <p class="section-desc"><p>functions and objects related to the TIMER method</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="timer_available_cancers.html">timer_available_cancers</a></code> </p>
@@ -250,9 +240,23 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="xCell.data.html">xCell.data</a></code> </p>
+          <p><code><a href="deconvolute_timer.html">deconvolute_timer()</a></code> </p>
         </td>
-        <td><p>Data object from xCell.</p></td>
+        <td><p>Deconvolute using the TIMER technique</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-quantiseq" class="hasAnchor"><a href="#section-quantiseq" class="anchor"></a>quanTIseq</h2>
+          <p class="section-desc"><p>functions and objects related to the quanTIseq method</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="deconvolute_quantiseq.default.html">deconvolute_quantiseq.default()</a></code> </p>
+        </td>
+        <td><p>Use quanTIseq to deconvolute a gene expression matrix.</p></td>
       </tr>
     </tbody>
     </table>
@@ -261,7 +265,12 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-deconvolution">Deconvolution</a></li>
+      <li><a href="#section-cell-type-mapping">Cell type mapping</a></li>
+      <li><a href="#section-simulation-of-bulk-samples">Simulation of bulk samples</a></li>
+      <li><a href="#section-datasets">Datasets</a></li>
+      <li><a href="#section-timer">TIMER</a></li>
+      <li><a href="#section-quantiseq">quanTIseq</a></li>
     </ul>
   </div>
 </div>

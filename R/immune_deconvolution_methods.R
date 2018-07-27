@@ -15,9 +15,18 @@ NULL
 #' The methods currently supported are
 #' `mcp_counter`, `epic`, `quantiseq`, `xcell`, `cibersort`, `cibersort_abs`, `timer`
 #'
+#' The object is a named vector. The names correspond to the display name of the method,
+#' the values to the internal name.
+#'
 #' @export
-deconvolution_methods = c("mcp_counter", "epic", "quantiseq", "xcell",
-                          "cibersort", "cibersort_abs", "timer", "random")
+deconvolution_methods = c("MCPcounter"="mcp_counter",
+                          "EPIC"="epic",
+                          "quanTIseq"="quantiseq",
+                          "xCell"="xcell",
+                          "CIBERSORT"="cibersort",
+                          "CIBERSORT (abs.)"="cibersort_abs",
+                          "TIMER"="timer",
+                          "random pred."="random")
 
 
 #' Data object from xCell.

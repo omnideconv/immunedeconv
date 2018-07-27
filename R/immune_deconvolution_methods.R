@@ -17,7 +17,7 @@ NULL
 #'
 #' @export
 deconvolution_methods = c("mcp_counter", "epic", "quantiseq", "xcell",
-                          "cibersort", "cibersort_abs", "timer")
+                          "cibersort", "cibersort_abs", "timer", "random")
 
 
 #' Data object from xCell.
@@ -55,7 +55,7 @@ set_cibersort_mat = function(path) {
 #
 # These functions are called from the generic `deconvolute()` function
 ###########################################################################
-
+                          
 
 #' Deconvolute using the TIMER technique
 #'
@@ -86,6 +86,25 @@ deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
   results
 }
 
+
+#' Deconvolute using the awseome RANDOM technique
+#' 
+#' Here is a good place to add some documentation.
+deconvolute_random = function(gene_expression_matrix) {
+  # list of the cell types we want to 'predict'
+  cell_types = c("CD4+ Tcell", "CD8+ Tcell", "NK cell", "Macrophage",
+                 "Monocyte")
+  n_samples = ncol(gene_expression_matrix)
+  
+  # generate random values
+  results = matrix(runif(length(cell_types) * n_samples), ncol=n_samples)
+  
+  # rescale the values to sum to 1 for each sample
+  results = apply(results, 2, function(x) {x/sum(x)})
+  rownames(results) = cell_types
+  
+  results
+}
 
 deconvolute_xcell = function(gene_expression_matrix, ...) {
   invisible(capture.output(res <- xCell::xCellAnalysis(gene_expression_matrix, ...)))
@@ -180,7 +199,9 @@ deconvolute.default = function(gene_expression, method=deconvolution_methods, in
          quantiseq = deconvolute_quantiseq(gene_expression),
          cibersort = deconvolute_cibersort(gene_expression, absolute = FALSE),
          cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE),
-         timer = deconvolute_timer(gene_expression, indications=indications))
+         timer = deconvolute_timer(gene_expression, indications=indications),
+         random = deconvolute_random(gene_expression)
+         )
 
   # convert to tibble and annotate unified cell_type names
   res = res %>%
@@ -238,6 +259,22 @@ setMethod("deconvolute", methods::representation(gene_expression="matrix", metho
             deconvolute.default(gene_expression, method)
           })
 
+
+#' @describeIn deconvolute
+#' `matrix` is data frame with HGNC gene symbols as row names.
+setMethod("deconvolute", methods::representation(gene_expression="data.frame", method="character",
+                                                 column="missing", indications="character"),
+          function(gene_expression, method, indications=NULL) {
+            deconvolute.default(gene_expression, method, indications=indications)
+          })
+
+#' @describeIn deconvolute
+#' variant where indications are not defined, cannot be used with method=='timer'
+setMethod("deconvolute", methods::representation(gene_expression="data.frame", method="character",
+                                                 column="missing", indications="missing"),
+          function(gene_expression, method) {
+            deconvolute.default(gene_expression, method)
+          })
 
 
 

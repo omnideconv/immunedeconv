@@ -36,3 +36,15 @@ test_that("xcell works", {
   res = deconvolute_xcell(test_mat)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
 })
+
+test_that("generic deconvolution works for all methods", {
+  lapply(deconvolution_methods, function(method) {
+    # cibersort requires the binary path to be set, n/a in unittest.
+    if(!method %in% c("cibersort", "cibersort_abs")) {
+      res = deconvolute(test_mat, method, indications=rep("brca", ncol(test_mat)))
+      # matrix has the 'cell type' column -> +1
+      assert("matrix dimensions consistent", ncol(res) == ncol(test_mat) + 1)
+      assert("cell type column exists", colnames(res)[1] == "cell_type")
+    }
+  })
+})

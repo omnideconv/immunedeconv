@@ -25,9 +25,7 @@ deconvolution_methods = c("MCPcounter"="mcp_counter",
                           "xCell"="xcell",
                           "CIBERSORT"="cibersort",
                           "CIBERSORT (abs.)"="cibersort_abs",
-                          "TIMER"="timer",
-                          "random pred."="random")
-
+                          "TIMER"="timer")
 
 #' Data object from xCell.
 #'
@@ -95,26 +93,6 @@ deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
   results
 }
 
-
-#' Deconvolute using the awseome RANDOM technique
-#'
-#' Here is a good place to add some documentation.
-deconvolute_random = function(gene_expression_matrix) {
-  # list of the cell types we want to 'predict'
-  cell_types = c("CD4+ Tcell", "CD8+ Tcell", "NK cell", "Macrophage",
-                 "Monocyte")
-  n_samples = ncol(gene_expression_matrix)
-
-  # generate random values
-  results = matrix(runif(length(cell_types) * n_samples), ncol=n_samples)
-
-  # rescale the values to sum to 1 for each sample
-  results = apply(results, 2, function(x) {x/sum(x)})
-  rownames(results) = cell_types
-  colnames(results) = colnames(gene_expression_matrix)
-
-  results
-}
 
 deconvolute_xcell = function(gene_expression_matrix, ...) {
   invisible(capture.output(res <- xCell::xCellAnalysis(gene_expression_matrix, ...)))
@@ -209,8 +187,7 @@ deconvolute.default = function(gene_expression, method=deconvolution_methods, in
          quantiseq = deconvolute_quantiseq(gene_expression),
          cibersort = deconvolute_cibersort(gene_expression, absolute = FALSE),
          cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE),
-         timer = deconvolute_timer(gene_expression, indications=indications),
-         random = deconvolute_random(gene_expression)
+         timer = deconvolute_timer(gene_expression, indications=indications)
          )
 
   # convert to tibble and annotate unified cell_type names

@@ -55,7 +55,7 @@ set_cibersort_mat = function(path) {
 #
 # These functions are called from the generic `deconvolute()` function
 ###########################################################################
-                          
+
 
 #' Deconvolute using the TIMER technique
 #'
@@ -88,21 +88,22 @@ deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
 
 
 #' Deconvolute using the awseome RANDOM technique
-#' 
+#'
 #' Here is a good place to add some documentation.
 deconvolute_random = function(gene_expression_matrix) {
   # list of the cell types we want to 'predict'
   cell_types = c("CD4+ Tcell", "CD8+ Tcell", "NK cell", "Macrophage",
                  "Monocyte")
   n_samples = ncol(gene_expression_matrix)
-  
+
   # generate random values
   results = matrix(runif(length(cell_types) * n_samples), ncol=n_samples)
-  
+
   # rescale the values to sum to 1 for each sample
   results = apply(results, 2, function(x) {x/sum(x)})
   rownames(results) = cell_types
-  
+  colnames(results) = colnames(gene_expression_matrix)
+
   results
 }
 

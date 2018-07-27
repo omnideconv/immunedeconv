@@ -45,6 +45,7 @@ test_that("generic deconvolution works for all methods", {
       # matrix has the 'cell type' column -> +1
       assert("matrix dimensions consistent", ncol(res) == ncol(test_mat) + 1)
       assert("cell type column exists", colnames(res)[1] == "cell_type")
+      assert("sample names consistent with input", colnames(res)[-1] == colnames(test_mat))
     }
   })
 })

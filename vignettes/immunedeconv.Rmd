@@ -135,4 +135,4 @@ symbols. Which one needs to be specified in the `deconvolute()` call:
 deconvolute(my_expression_set, "quantiseq", column = "<column name>")
 ```
 
-# Refernces
+# References

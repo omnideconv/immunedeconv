@@ -52,9 +52,10 @@ The easiest way to retrieve this package and all its dependencies is to use [Ana
 
 4. Add additional Anaconda channels:
 ```
-conda config --add channels grst
-conda config --add channels bioconda
 conda config --add channels r
+conda config --add channels bioconda
+conda config --add channels conda-forge
+conda config --add channels grst
 ```
 
 5. Install the `immunedeconv` package

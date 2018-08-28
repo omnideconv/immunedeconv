@@ -15,10 +15,17 @@ NULL
 #' The methods currently supported are
 #' `mcp_counter`, `epic`, `quantiseq`, `xcell`, `cibersort`, `cibersort_abs`, `timer`
 #'
+#' The object is a named vector. The names correspond to the display name of the method,
+#' the values to the internal name.
+#'
 #' @export
-deconvolution_methods = c("mcp_counter", "epic", "quantiseq", "xcell",
-                          "cibersort", "cibersort_abs", "timer")
-
+deconvolution_methods = c("MCPcounter"="mcp_counter",
+                          "EPIC"="epic",
+                          "quanTIseq"="quantiseq",
+                          "xCell"="xcell",
+                          "CIBERSORT"="cibersort",
+                          "CIBERSORT (abs.)"="cibersort_abs",
+                          "TIMER"="timer")
 
 #' Data object from xCell.
 #'
@@ -256,6 +263,22 @@ setMethod("deconvolute", methods::representation(gene_expression="matrix", metho
             deconvolute.default(gene_expression, method)
           })
 
+
+#' @describeIn deconvolute
+#' `matrix` is data frame with HGNC gene symbols as row names.
+setMethod("deconvolute", methods::representation(gene_expression="data.frame", method="character",
+                                                 column="missing", indications="character"),
+          function(gene_expression, method, indications=NULL) {
+            deconvolute.default(gene_expression, method, indications=indications)
+          })
+
+#' @describeIn deconvolute
+#' variant where indications are not defined, cannot be used with method=='timer'
+setMethod("deconvolute", methods::representation(gene_expression="data.frame", method="character",
+                                                 column="missing", indications="missing"),
+          function(gene_expression, method) {
+            deconvolute.default(gene_expression, method)
+          })
 
 
 

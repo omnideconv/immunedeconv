@@ -3,7 +3,9 @@ Title: Methods for immune cell deconvolution
 Description: Collection of methods for immune cell deconvolution from bulk RNA-seq samples
 Version: 0.1
 Authors@R: person("Gregor", "Sturm", role=c("aut", "cre"), email="mail@gregor-sturm.de")
-Depends: R (>= 3.4)
+Depends:
+    R (>= 3.4),
+    EPIC
 Imports:
     dplyr (>= 0.7),
     magrittr (>= 1.5),
@@ -22,7 +24,6 @@ Imports:
     sva,
     GSEABase,
     xCell,
-    EPIC,
     MCPcounter
 Suggests:
     testthat,

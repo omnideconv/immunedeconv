@@ -12,4 +12,8 @@ deconvolution_methods
 The methods currently supported are
 \code{mcp_counter}, \code{epic}, \code{quantiseq}, \code{xcell}, \code{cibersort}, \code{cibersort_abs}, \code{timer}
 }
+\details{
+The object is a named vector. The names correspond to the display name of the method,
+the values to the internal name.
+}
 \keyword{datasets}

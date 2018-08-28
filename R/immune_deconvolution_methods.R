@@ -108,9 +108,9 @@ deconvolute_mcp_counter = function(gene_expression_matrix, feature_types="HUGO_s
 
 
 deconvolute_epic = function(gene_expression_matrix, tumor, ...) {
-  reference = ifelse(tumor,"TRef","BRef")
+  ref = ifelse(tumor, "TRef", "BRef")
   epic_res_raw = EPIC::EPIC(bulk=gene_expression_matrix,
-                            reference=reference, ...)
+                            reference=ref, ...)
   t(epic_res_raw$cellFractions)
 }
 

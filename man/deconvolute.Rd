@@ -9,6 +9,8 @@
 \alias{deconvolute,eSet,character,character,missing-method}
 \alias{deconvolute,matrix,character,missing,character-method}
 \alias{deconvolute,matrix,character,missing,missing-method}
+\alias{deconvolute,data.frame,character,missing,character-method}
+\alias{deconvolute,data.frame,character,missing,missing-method}
 \title{Perform an immune cell deconvolution on a dataset.}
 \usage{
 deconvolute.default(gene_expression, method = deconvolution_methods,
@@ -28,6 +30,12 @@ deconvolute(gene_expression, method = deconvolution_methods,
   method, indications = NULL)
 
 \S4method{deconvolute}{matrix,character,missing,missing}(gene_expression,
+  method)
+
+\S4method{deconvolute}{data.frame,character,missing,character}(gene_expression,
+  method, indications = NULL)
+
+\S4method{deconvolute}{data.frame,character,missing,missing}(gene_expression,
   method)
 }
 \arguments{
@@ -69,6 +77,10 @@ Perform an immune cell deconvolution on a dataset.
 \item \code{gene_expression = matrix,method = character,column = missing,indications = character}: \code{matrix} is matrix with HGNC gene symbols as row names.
 
 \item \code{gene_expression = matrix,method = character,column = missing,indications = missing}: variant where indications are not defined, cannot be used with method=='timer'
+
+\item \code{gene_expression = data.frame,method = character,column = missing,indications = character}: \code{matrix} is data frame with HGNC gene symbols as row names.
+
+\item \code{gene_expression = data.frame,method = character,column = missing,indications = missing}: variant where indications are not defined, cannot be used with method=='timer'
 }}
 
 \examples{

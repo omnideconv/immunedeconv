@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">immunedeconv</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.1</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>deconvolute.default</span>(<span class='no'>gene_expression</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>,
-  <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+  <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tumor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>arrays</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>,
   <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>, <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
@@ -132,6 +132,14 @@
 
 <span class='co'># S4 method for matrix,character,missing,missing</span>
 <span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
+  <span class='no'>method</span>)
+
+<span class='co'># S4 method for data.frame,character,missing,character</span>
+<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
+  <span class='no'>method</span>, <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='co'># S4 method for data.frame,character,missing,missing</span>
+<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
   <span class='no'>method</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -144,11 +152,23 @@ Data must be on non-log scale.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>a string specifying the method. Supported methods are <code>xcell</code>, <code>...</code></p></td>
+      <td><p>a string specifying the method.
+Supported methods are <code>xcell</code>, <code>...</code></p></td>
     </tr>
     <tr>
       <th>indications</th>
-      <td><p>a character vector with one indication per sample for TIMER. Argument is ignored for all other methods.</p></td>
+      <td><p>a character vector with one indication per
+sample for TIMER. Argument is ignored for all other methods.</p></td>
+    </tr>
+    <tr>
+      <th>tumor</th>
+      <td><p>use a signature matrix/procedure optimized for tumor samples,
+if supported by the method. Currently affects EPIC and quanTIseq.</p></td>
+    </tr>
+    <tr>
+      <th>arrays</th>
+      <td><p>Runs methods in a mode optimized for microarray data.
+Currently affects quanTIseq and CIBERSORT.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -177,6 +197,8 @@ calculated cell fractions for each sample.</p>
 <li><p><code>gene_expression = eSet,method = character,column = character,indications = missing</code>: variant where indications are not defined, cannot be used with method == 'timer'</p></li>
 <li><p><code>gene_expression = matrix,method = character,column = missing,indications = character</code>: <code>matrix</code> is matrix with HGNC gene symbols as row names.</p></li>
 <li><p><code>gene_expression = matrix,method = character,column = missing,indications = missing</code>: variant where indications are not defined, cannot be used with method=='timer'</p></li>
+<li><p><code>gene_expression = data.frame,method = character,column = missing,indications = character</code>: <code>matrix</code> is data frame with HGNC gene symbols as row names.</p></li>
+<li><p><code>gene_expression = data.frame,method = character,column = missing,indications = missing</code>: variant where indications are not defined, cannot be used with method=='timer'</p></li>
 </ul>
     
 

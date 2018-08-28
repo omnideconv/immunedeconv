@@ -23,12 +23,16 @@ test_that("mcp_counter works", {
 })
 
 test_that("epic works", {
-  res = deconvolute_epic(test_mat)
+  res = deconvolute_epic(test_mat, tumor=TRUE)
+  assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+  res = deconvolute_epic(test_mat, tumor=FALSE)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
 })
 
 test_that("quantiseq works", {
-  res = deconvolute_quantiseq(test_mat)
+  res = deconvolute_quantiseq(test_mat, tumor=TRUE, arrays=FALSE)
+  assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+  res = deconvolute_quantiseq(test_mat, tumor=FALSE, arrays=TRUE)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
 })
 

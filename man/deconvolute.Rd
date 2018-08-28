@@ -12,7 +12,7 @@
 \title{Perform an immune cell deconvolution on a dataset.}
 \usage{
 deconvolute.default(gene_expression, method = deconvolution_methods,
-  indications = NULL)
+  indications = NULL, tumor = TRUE, arrays = FALSE)
 
 deconvolute(gene_expression, method = deconvolution_methods,
   column = "gene_symbol", indications = NULL)
@@ -34,9 +34,17 @@ deconvolute(gene_expression, method = deconvolution_methods,
 \item{gene_expression}{A numeric matrix with HGNC gene symbols as rownames and sample identifiers as colnames.
 Data must be on non-log scale.}
 
-\item{method}{a string specifying the method. Supported methods are \code{xcell}, \code{...}}
+\item{method}{a string specifying the method.
+Supported methods are \code{xcell}, \code{...}}
 
-\item{indications}{a character vector with one indication per sample for TIMER. Argument is ignored for all other methods.}
+\item{indications}{a character vector with one indication per
+sample for TIMER. Argument is ignored for all other methods.}
+
+\item{tumor}{use a signature matrix/procedure optimized for tumor samples,
+if supported by the method. Currently affects EPIC and quanTIseq.}
+
+\item{arrays}{Runs methods in a mode optimized for microarray data.
+Currently affects quanTIseq and CIBERSORT.}
 
 \item{...}{arguments passed to the respective method}
 

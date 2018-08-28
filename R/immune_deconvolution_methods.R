@@ -68,6 +68,8 @@ set_cibersort_mat = function(path) {
 #'     'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
 #'     'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
 #'     'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol'
+#' @param tumor ignored for this method
+#' @param arrays ignored for this method
 deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
   indications = tolower(indications)
   assert("indications fit to mixture matrix", length(indications) == ncol(gene_expression_matrix))
@@ -98,14 +100,16 @@ deconvolute_mcp_counter = function(gene_expression_matrix, feature_types="HUGO_s
 }
 
 
-deconvolute_epic = function(gene_expression_matrix, ...) {
-  epic_res_raw = EPIC::EPIC(bulk=gene_expression_matrix, ...)
+deconvolute_epic = function(gene_expression_matrix, tumor, ...) {
+  reference = ifelse(tumor,"TRef","BRef")
+  epic_res_raw = EPIC::EPIC(bulk=gene_expression_matrix,
+                            reference=reference, ...)
   t(epic_res_raw$cellFractions)
 }
 
 
-deconvolute_quantiseq = function(gene_expresssion_matrix) {
-  deconvolute_quantiseq.default(gene_expresssion_matrix) %>%
+deconvolute_quantiseq = function(gene_expresssion_matrix, tumor, arrays) {
+  deconvolute_quantiseq.default(gene_expresssion_matrix, tumor=tumor, arrays=arrays) %>%
     as_tibble() %>%
     select(-Sample) %>%
     as.matrix() %>%
@@ -113,15 +117,20 @@ deconvolute_quantiseq = function(gene_expresssion_matrix) {
 }
 
 deconvolute_cibersort = function(gene_expression_matrix,
+                                 arrays,
                                  absolute=FALSE,
                                  abs_method="sig.score") {
+  # the authors reccomend to disable quantile normalizeation for RNA seq.
+  # (see CIBERSORT website).
+  quantile_norm = arrays
   assert("CIBERSORT.R is provided", exists("cibersort_binary", envir=config_env))
   assert("CIBERSORT signature matrix is provided", exists("cibersort_mat", envir=config_env))
   source(get("cibersort_binary", envir=config_env))
 
   tmp_mat = tempfile()
   write_tsv(as_tibble(gene_expression_matrix, rownames="gene_symbol"), path=tmp_mat)
-  res = CIBERSORT(get("cibersort_mat", envir=config_env), tmp_mat, perm=0, QN=FALSE, absolute=absolute, abs_method=abs_method)
+  res = CIBERSORT(get("cibersort_mat", envir=config_env), tmp_mat, perm=0,
+                  QN=quantile_norm, absolute=absolute, abs_method=abs_method)
 
   res = res %>%
     t() %>%
@@ -159,8 +168,14 @@ eset_to_matrix = function(eset, column) {
 #'
 #' @param gene_expression A numeric matrix with HGNC gene symbols as rownames and sample identifiers as colnames.
 #'   Data must be on non-log scale.
-#' @param method a string specifying the method. Supported methods are `xcell`, `...`
-#' @param indications a character vector with one indication per sample for TIMER. Argument is ignored for all other methods.
+#' @param method a string specifying the method.
+#'   Supported methods are `xcell`, `...`
+#' @param indications a character vector with one indication per
+#'   sample for TIMER. Argument is ignored for all other methods.
+#' @param tumor use a signature matrix/procedure optimized for tumor samples,
+#'   if supported by the method. Currently affects EPIC and quanTIseq.
+#' @param arrays Runs methods in a mode optimized for microarray data.
+#'   Currently affects quanTIseq and CIBERSORT.
 #' @param ... arguments passed to the respective method
 #' @return `data.frame` with `cell_type` as first column and a column with the
 #'     calculated cell fractions for each sample.
@@ -170,16 +185,19 @@ eset_to_matrix = function(eset, column) {
 #'
 #' @name deconvolute
 #' @export deconvolute
-deconvolute.default = function(gene_expression, method=deconvolution_methods, indications=NULL) {
+deconvolute.default = function(gene_expression, method=deconvolution_methods, indications=NULL, tumor=TRUE, arrays=FALSE) {
   message(paste0("\n", ">>> Running ", method))
   # run selected method
   res = switch(method,
          xcell = deconvolute_xcell(gene_expression),
          mcp_counter = deconvolute_mcp_counter(gene_expression),
-         epic = deconvolute_epic(gene_expression),
-         quantiseq = deconvolute_quantiseq(gene_expression),
-         cibersort = deconvolute_cibersort(gene_expression, absolute = FALSE),
-         cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE),
+         epic = deconvolute_epic(gene_expression, tumor=tumor),
+         quantiseq = deconvolute_quantiseq(gene_expression,
+                                           tumor=tumor, arrays=arrays),
+         cibersort = deconvolute_cibersort(gene_expression, absolute = FALSE,
+                                           arrays=arrays),
+         cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE,
+                                               arrays=arrays),
          timer = deconvolute_timer(gene_expression, indications=indications))
 
   # convert to tibble and annotate unified cell_type names

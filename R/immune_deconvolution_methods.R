@@ -217,7 +217,8 @@ deconvolute.default = function(gene_expression, method=deconvolution_methods, in
 
 
 #' @rdname deconvolute
-setGeneric("deconvolute", function(gene_expression, method=deconvolution_methods, column="gene_symbol", indications=NULL){
+setGeneric("deconvolute", function(gene_expression, method=deconvolution_methods, column="gene_symbol",
+                                   indications=NULL, tumor=NULL, arrays=NULL){
   standardGeneric("deconvolute")
 })
 

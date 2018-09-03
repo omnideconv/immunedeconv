@@ -173,8 +173,12 @@ eset_to_matrix = function(eset, column) {
 
 #' Perform an immune cell deconvolution on a dataset.
 #'
-#' @param gene_expression A numeric matrix with HGNC gene symbols as rownames and sample identifiers as colnames.
-#'   Data must be on non-log scale.
+#' @param gene_expression A gene expression matrix or a Biobase ExpressionSet.
+#'   Either: A numeric matrix or data.frame with HGNC gene symbols as rownames and sample identifiers as colnames.
+#'   Or: A Biobase ExpressionSet with HGNC symbols in an fData column (see `column` parameter)
+#'   In both cases, data must be on non-log scale.
+#' @param column Only releveant if `gene_expression` is an ExpressionSet. Defines in which column
+#'   of fData the HGNC symbol can be found.
 #' @param method a string specifying the method.
 #'   Supported methods are `xcell`, `...`
 #' @param indications a character vector with one indication per
@@ -192,8 +196,14 @@ eset_to_matrix = function(eset, column) {
 #'
 #' @name deconvolute
 #' @export deconvolute
-deconvolute.default = function(gene_expression, method=deconvolution_methods, indications=NULL, tumor=TRUE, arrays=FALSE) {
+deconvolute = function(gene_expression, method=deconvolution_methods, indications=NULL, tumor=TRUE, arrays=FALSE, column="gene_symbol") {
   message(paste0("\n", ">>> Running ", method))
+
+  # convert expression set to matrix, if required.
+  if(is(gene_expression, "ExpressionSet")) {
+    gene_expression = gene_expression %>% eset_to_matrix(column)
+  }
+
   # run selected method
   res = switch(method,
          xcell = deconvolute_xcell(gene_expression),
@@ -214,72 +224,4 @@ deconvolute.default = function(gene_expression, method=deconvolution_methods, in
 
   return(res)
 }
-
-
-#' @rdname deconvolute
-setGeneric("deconvolute", function(gene_expression, method=deconvolution_methods, column="gene_symbol",
-                                   indications=NULL, tumor=NULL, arrays=NULL){
-  standardGeneric("deconvolute")
-})
-
-
-#' @describeIn deconvolute
-#' `eset` is a `Biobase::ExpressionSet`.
-#' `fData` contains a column with HGNC gene symbols (specify column name)
-#'
-#' @param eset Expression set
-#' @param col column name of the `fData` column that contains HGNC gene symbols.
-setMethod("deconvolute", methods::representation(gene_expression="eSet", method="character",
-                                                 column="character", indications="character"),
-          function(gene_expression, method, column="gene_symbol", indications=NULL) {
-            gene_expression %>%
-              eset_to_matrix(column) %>%
-              deconvolute.default(method, indications=indications)
-          })
-
-#' @describeIn deconvolute
-#' variant where indications are not defined, cannot be used with method == 'timer'
-setMethod("deconvolute", methods::representation(gene_expression="eSet", method="character",
-                                                 column="character", indications="missing"),
-          function(gene_expression, method, column="gene_symbol") {
-            gene_expression %>%
-              eset_to_matrix(column) %>%
-              deconvolute.default(method)
-          })
-
-
-#' @describeIn deconvolute
-#' `matrix` is matrix with HGNC gene symbols as row names.
-setMethod("deconvolute", methods::representation(gene_expression="matrix", method="character",
-                                                 column="missing", indications="character"),
-          function(gene_expression, method, indications=NULL) {
-            deconvolute.default(gene_expression, method, indications=indications)
-          })
-
-#' @describeIn deconvolute
-#' variant where indications are not defined, cannot be used with method=='timer'
-setMethod("deconvolute", methods::representation(gene_expression="matrix", method="character",
-                                                 column="missing", indications="missing"),
-          function(gene_expression, method) {
-            deconvolute.default(gene_expression, method)
-          })
-
-
-#' @describeIn deconvolute
-#' `matrix` is data frame with HGNC gene symbols as row names.
-setMethod("deconvolute", methods::representation(gene_expression="data.frame", method="character",
-                                                 column="missing", indications="character"),
-          function(gene_expression, method, indications=NULL) {
-            deconvolute.default(gene_expression, method, indications=indications)
-          })
-
-#' @describeIn deconvolute
-#' variant where indications are not defined, cannot be used with method=='timer'
-setMethod("deconvolute", methods::representation(gene_expression="data.frame", method="character",
-                                                 column="missing", indications="missing"),
-          function(gene_expression, method) {
-            deconvolute.default(gene_expression, method)
-          })
-
-
 

@@ -91,8 +91,8 @@ find_children = function(node, fractions, method_dataset=NULL) {
     tmp_cell_type = cell_type_map %>% filter(cell_type == !!cell_type, method_dataset == !!method_dataset) %>% pull(cell_type)
   }
   assert("Method cell type is uniquely mapped to a cell type", length(tmp_cell_type) <= 1)
-  if(length(tmp_cell_type) == 1) {
-    assert(paste("tmp_cell_type is available in the given fractions vector:", tmp_cell_type), tmp_cell_type %in% rownames(fractions))
+  if(length(tmp_cell_type) == 1 && tmp_cell_type %in% rownames(fractions)) {
+    # assert(paste("tmp_cell_type is available in the given fractions vector:", tmp_cell_type), tmp_cell_type %in% rownames(fractions))
     fractions[tmp_cell_type,,drop=FALSE]
   } else {
     if(!node$isLeaf) {

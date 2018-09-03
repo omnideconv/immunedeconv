@@ -88,7 +88,7 @@
 <h1 class="hasAnchor">
 <a href="#deconvolution" class="anchor"></a>Deconvolution</h1>
 <p>This package gives you easy access to these methods. To run a method with default options, simply invoke</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">immunedeconv<span class="op">::</span><span class="kw">deconvolute</span>(gene_expression_matrix, method)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">immunedeconv<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/immunedeconv/topics/deconvolute">deconvolute</a></span>(gene_expression_matrix, method)</a></code></pre></div>
 <p>where <code>gene_expression_matrix</code> is a matrix with genes in rows and samples in columns. The rownames must be HGNC symbols and the colnames must be sample names. The method can be one of</p>
 <pre><code>quantiseq
 timer
@@ -383,14 +383,14 @@ LM22.txt</code></pre>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/immunedeconv/topics/set_cibersort_binary">set_cibersort_binary</a></span>(<span class="st">"/path/to/CIBERSORT.R"</span>)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/immunedeconv/topics/set_cibersort_mat">set_cibersort_mat</a></span>(<span class="st">"/path/to/LM22.txt"</span>)</a></code></pre></div>
 <p>Afterwards, you can call</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">deconvolute</span>(your_mixture_matrix, <span class="st">"cibersort"</span>)   <span class="co"># or 'cibersort_abs'</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/immunedeconv/topics/deconvolute">deconvolute</a></span>(your_mixture_matrix, <span class="st">"cibersort"</span>)   <span class="co"># or 'cibersort_abs'</span></a></code></pre></div>
 <p>as for any other method.</p>
 </div>
 <div id="timer" class="section level2">
 <h2 class="hasAnchor">
 <a href="#timer" class="anchor"></a>TIMER</h2>
 <p>TIMER uses indication-specific reference profiles. Therefore, you <em>must</em> specify the tumor type when running TIMER:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">deconvolute</span>(your_mixture_matrix, <span class="st">"timer"</span>,</a>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/immunedeconv/topics/deconvolute">deconvolute</a></span>(your_mixture_matrix, <span class="st">"timer"</span>,</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">            <span class="dt">indications=</span><span class="kw">c</span>(<span class="st">"SKCM"</span>, <span class="st">"SKCM"</span>, <span class="st">"BLCA"</span>))</a></code></pre></div>
 <p><code>indications</code> needs to be a vector that specifies an indication for each sample (=column) in the mixture matrix. The indications supported by TIMER are</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">immunedeconv<span class="op">::</span>timer_available_cancers</a></code></pre></div>
@@ -404,8 +404,8 @@ LM22.txt</code></pre>
 <h2 class="hasAnchor">
 <a href="#using-expressionsets" class="anchor"></a>Using ExpressionSets</h2>
 <p>The <a href="https://bioconductor.org/">Bioconductor</a> <a href="https://www.rdocumentation.org/packages/Biobase/versions/2.32.0/topics/ExpressionSet">ExpressionSet</a> is a convenient way to store a gene expression matrix with metadata for both samples and genes in a single object.</p>
-<p><code>immunedeconv</code> supports the use of an ExpressionSet instead of a gene expression matrix. In that case, <code>pData</code> requires a column that contains gene symbols. Which one needs to be specified in the <code>deconvolute()</code> call:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">deconvolute</span>(my_expression_set, <span class="st">"quantiseq"</span>, <span class="dt">column =</span> <span class="st">"&lt;column name&gt;"</span>)</a></code></pre></div>
+<p><code>immunedeconv</code> supports the use of an ExpressionSet instead of a gene expression matrix. In that case, <code>pData</code> requires a column that contains gene symbols. Which one needs to be specified in the <code><a href="http://www.rdocumentation.org/packages/immunedeconv/topics/deconvolute">deconvolute()</a></code> call:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/immunedeconv/topics/deconvolute">deconvolute</a></span>(my_expression_set, <span class="st">"quantiseq"</span>, <span class="dt">column =</span> <span class="st">"&lt;column name&gt;"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">

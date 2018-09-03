@@ -111,44 +111,24 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>deconvolute.default</span>(<span class='no'>gene_expression</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>,
-  <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tumor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>arrays</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>,
-  <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>, <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S4 method for eSet,character,character,character</span>
-<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>,
-  <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S4 method for eSet,character,character,missing</span>
-<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
-  <span class='no'>method</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>)
-
-<span class='co'># S4 method for matrix,character,missing,character</span>
-<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
-  <span class='no'>method</span>, <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S4 method for matrix,character,missing,missing</span>
-<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
-  <span class='no'>method</span>)
-
-<span class='co'># S4 method for data.frame,character,missing,character</span>
-<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
-  <span class='no'>method</span>, <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='co'># S4 method for data.frame,character,missing,missing</span>
-<span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>,
-  <span class='no'>method</span>)</pre>
+    <pre class="usage"><span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>, <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tumor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>arrays</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gene_expression</th>
-      <td><p>A numeric matrix with HGNC gene symbols as rownames and sample identifiers as colnames.
-Data must be on non-log scale.</p></td>
+      <td><p>A gene expression matrix or a Biobase ExpressionSet.
+Either: A numeric matrix or data.frame with HGNC gene symbols as rownames and sample identifiers as colnames.
+Or: A Biobase ExpressionSet with HGNC symbols in an fData column (see <code>column</code> parameter)
+In both cases, data must be on non-log scale.</p></td>
+    </tr>
+    <tr>
+      <th>column</th>
+      <td><p>Only releveant if <code>gene_expression</code> is an ExpressionSet. Defines in which column
+of fData the HGNC symbol can be found.</p></td>
     </tr>
     <tr>
       <th>method</th>
@@ -174,32 +154,12 @@ Currently affects quanTIseq and CIBERSORT.</p></td>
       <th>...</th>
       <td><p>arguments passed to the respective method</p></td>
     </tr>
-    <tr>
-      <th>eset</th>
-      <td><p>Expression set</p></td>
-    </tr>
-    <tr>
-      <th>col</th>
-      <td><p>column name of the <code>fData</code> column that contains HGNC gene symbols.</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>data.frame</code> with <code>cell_type</code> as first column and a column with the
 calculated cell fractions for each sample.</p>
-    
-    <h2 class="hasAnchor" id="methods-by-class-"><a class="anchor" href="#methods-by-class-"></a>Methods (by class)</h2>
-
-    <ul>
-<li><p><code>gene_expression = eSet,method = character,column = character,indications = character</code>: <code>eset</code> is a <code><a href='http://www.rdocumentation.org/packages/Biobase/topics/class.ExpressionSet'>Biobase::ExpressionSet</a></code>.
-<code>fData</code> contains a column with HGNC gene symbols (specify column name)</p></li>
-<li><p><code>gene_expression = eSet,method = character,column = character,indications = missing</code>: variant where indications are not defined, cannot be used with method == 'timer'</p></li>
-<li><p><code>gene_expression = matrix,method = character,column = missing,indications = character</code>: <code>matrix</code> is matrix with HGNC gene symbols as row names.</p></li>
-<li><p><code>gene_expression = matrix,method = character,column = missing,indications = missing</code>: variant where indications are not defined, cannot be used with method=='timer'</p></li>
-<li><p><code>gene_expression = data.frame,method = character,column = missing,indications = character</code>: <code>matrix</code> is data frame with HGNC gene symbols as row names.</p></li>
-<li><p><code>gene_expression = data.frame,method = character,column = missing,indications = missing</code>: variant where indications are not defined, cannot be used with method=='timer'</p></li>
-</ul>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -213,8 +173,6 @@ calculated cell fractions for each sample.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#methods-by-class-">Methods (by class)</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

@@ -96,8 +96,9 @@ deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
 }
 
 
-deconvolute_xcell = function(gene_expression_matrix, ...) {
-  invisible(capture.output(res <- xCell::xCellAnalysis(gene_expression_matrix, ...)))
+deconvolute_xcell = function(gene_expression_matrix, arrays, ...) {
+  rnaseq = !arrays
+  invisible(capture.output(res <- xCell::xCellAnalysis(gene_expression_matrix, rnaseq=rnaseq, ...)))
   res
 }
 

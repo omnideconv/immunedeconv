@@ -111,9 +111,9 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>, <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tumor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>arrays</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>,
+  <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tumor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>arrays</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -124,11 +124,6 @@
 Either: A numeric matrix or data.frame with HGNC gene symbols as rownames and sample identifiers as colnames.
 Or: A Biobase ExpressionSet with HGNC symbols in an fData column (see <code>column</code> parameter)
 In both cases, data must be on non-log scale.</p></td>
-    </tr>
-    <tr>
-      <th>column</th>
-      <td><p>Only releveant if <code>gene_expression</code> is an ExpressionSet. Defines in which column
-of fData the HGNC symbol can be found.</p></td>
     </tr>
     <tr>
       <th>method</th>
@@ -149,6 +144,11 @@ if supported by the method. Currently affects EPIC and quanTIseq.</p></td>
       <th>arrays</th>
       <td><p>Runs methods in a mode optimized for microarray data.
 Currently affects quanTIseq and CIBERSORT.</p></td>
+    </tr>
+    <tr>
+      <th>column</th>
+      <td><p>Only releveant if <code>gene_expression</code> is an ExpressionSet. Defines in which column
+of fData the HGNC symbol can be found.</p></td>
     </tr>
     <tr>
       <th>...</th>

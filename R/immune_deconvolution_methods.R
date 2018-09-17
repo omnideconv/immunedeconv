@@ -207,7 +207,7 @@ deconvolute = function(gene_expression, method=deconvolution_methods, indication
 
   # run selected method
   res = switch(method,
-         xcell = deconvolute_xcell(gene_expression),
+         xcell = deconvolute_xcell(gene_expression, arrays=arrays),
          mcp_counter = deconvolute_mcp_counter(gene_expression),
          epic = deconvolute_epic(gene_expression, tumor=tumor),
          quantiseq = deconvolute_quantiseq(gene_expression,

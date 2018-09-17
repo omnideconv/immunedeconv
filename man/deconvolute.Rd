@@ -4,18 +4,15 @@
 \alias{deconvolute}
 \title{Perform an immune cell deconvolution on a dataset.}
 \usage{
-deconvolute(gene_expression, column = "gene_symbol",
-  method = deconvolution_methods, indications = NULL, tumor = TRUE,
-  arrays = FALSE)
+deconvolute(gene_expression, method = deconvolution_methods,
+  indications = NULL, tumor = TRUE, arrays = FALSE,
+  column = "gene_symbol", ...)
 }
 \arguments{
 \item{gene_expression}{A gene expression matrix or a Biobase ExpressionSet.
 Either: A numeric matrix or data.frame with HGNC gene symbols as rownames and sample identifiers as colnames.
 Or: A Biobase ExpressionSet with HGNC symbols in an fData column (see \code{column} parameter)
 In both cases, data must be on non-log scale.}
-
-\item{column}{Only releveant if \code{gene_expression} is an ExpressionSet. Defines in which column
-of fData the HGNC symbol can be found.}
 
 \item{method}{a string specifying the method.
 Supported methods are \code{xcell}, \code{...}}
@@ -28,6 +25,9 @@ if supported by the method. Currently affects EPIC and quanTIseq.}
 
 \item{arrays}{Runs methods in a mode optimized for microarray data.
 Currently affects quanTIseq and CIBERSORT.}
+
+\item{column}{Only releveant if \code{gene_expression} is an ExpressionSet. Defines in which column
+of fData the HGNC symbol can be found.}
 
 \item{...}{arguments passed to the respective method}
 }

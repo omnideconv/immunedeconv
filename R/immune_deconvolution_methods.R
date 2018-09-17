@@ -197,7 +197,10 @@ eset_to_matrix = function(eset, column) {
 #'
 #' @name deconvolute
 #' @export deconvolute
-deconvolute = function(gene_expression, method=deconvolution_methods, indications=NULL, tumor=TRUE, arrays=FALSE, column="gene_symbol") {
+deconvolute = function(gene_expression, method=deconvolution_methods,
+                       indications=NULL, tumor=TRUE,
+                       arrays=FALSE, column="gene_symbol",
+                       ...) {
   message(paste0("\n", ">>> Running ", method))
 
   # convert expression set to matrix, if required.
@@ -207,16 +210,16 @@ deconvolute = function(gene_expression, method=deconvolution_methods, indication
 
   # run selected method
   res = switch(method,
-         xcell = deconvolute_xcell(gene_expression, arrays=arrays),
-         mcp_counter = deconvolute_mcp_counter(gene_expression),
-         epic = deconvolute_epic(gene_expression, tumor=tumor),
+         xcell = deconvolute_xcell(gene_expression, arrays=arrays, ...),
+         mcp_counter = deconvolute_mcp_counter(gene_expression, ...),
+         epic = deconvolute_epic(gene_expression, tumor=tumor, ...),
          quantiseq = deconvolute_quantiseq(gene_expression,
-                                           tumor=tumor, arrays=arrays),
+                                           tumor=tumor, arrays=arrays, ...),
          cibersort = deconvolute_cibersort(gene_expression, absolute = FALSE,
-                                           arrays=arrays),
+                                           arrays=arrays, ...),
          cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE,
-                                               arrays=arrays),
-         timer = deconvolute_timer(gene_expression, indications=indications))
+                                               arrays=arrays, ...),
+         timer = deconvolute_timer(gene_expression, indications=indications, ...))
 
   # convert to tibble and annotate unified cell_type names
   res = res %>%

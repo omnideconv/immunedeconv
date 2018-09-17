@@ -37,7 +37,9 @@ test_that("quantiseq works", {
 })
 
 test_that("xcell works", {
-  res = deconvolute_xcell(test_mat)
+  res = deconvolute_xcell(test_mat, arrays=FALSE)
+  assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+  res = deconvolute_xcell(test_mat, arrays=TRUE)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
 })
 

@@ -2,6 +2,7 @@
 #'
 #' @importFrom testit assert
 #' @import dplyr
+#' @importFrom tibble rowid_to_column
 #'
 #' @name single_cell_simulation
 NULL

@@ -47,7 +47,8 @@ test_that("generic deconvolution works for all methods", {
   lapply(deconvolution_methods, function(method) {
     # cibersort requires the binary path to be set, n/a in unittest.
     if(!method %in% c("cibersort", "cibersort_abs")) {
-      res = deconvolute(test_mat, method, indications=rep("brca", ncol(test_mat)), tumor=TRUE, arrays=FALSE)
+      res = deconvolute(test_mat, method, indications=rep("brca", ncol(test_mat)),
+                        tumor=TRUE, arrays=FALSE, rmgenes=c("ALB", "ERBB2"))
       # matrix has the 'cell type' column -> +1
       assert("matrix dimensions consistent", ncol(res) == ncol(test_mat) + 1)
       assert("cell type column exists", colnames(res)[1] == "cell_type")

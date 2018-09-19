@@ -188,6 +188,8 @@ eset_to_matrix = function(eset, column) {
 #'   if supported by the method. Currently affects EPIC and quanTIseq.
 #' @param arrays Runs methods in a mode optimized for microarray data.
 #'   Currently affects quanTIseq and CIBERSORT.
+#' @param rmgenes a character vector of gene symbols. Exclude these genes from the analysis.
+#'   Use this to exclude e.g. noisy genes.  
 #' @param ... arguments passed to the respective method
 #' @return `data.frame` with `cell_type` as first column and a column with the
 #'     calculated cell fractions for each sample.
@@ -200,12 +202,17 @@ eset_to_matrix = function(eset, column) {
 deconvolute = function(gene_expression, method=deconvolution_methods,
                        indications=NULL, tumor=TRUE,
                        arrays=FALSE, column="gene_symbol",
+                       rmgenes=NULL, 
                        ...) {
   message(paste0("\n", ">>> Running ", method))
 
   # convert expression set to matrix, if required.
   if(is(gene_expression, "ExpressionSet")) {
     gene_expression = gene_expression %>% eset_to_matrix(column)
+  }
+  
+  if(!is.null(rmgenes)) {
+    gene_expression = gene_expression[!rownames(gene_expression) %in% rmgenes,]
   }
 
   # run selected method

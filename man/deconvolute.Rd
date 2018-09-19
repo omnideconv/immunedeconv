@@ -6,7 +6,7 @@
 \usage{
 deconvolute(gene_expression, method = deconvolution_methods,
   indications = NULL, tumor = TRUE, arrays = FALSE,
-  column = "gene_symbol", ...)
+  column = "gene_symbol", rmgenes = NULL, ...)
 }
 \arguments{
 \item{gene_expression}{A gene expression matrix or a Biobase ExpressionSet.
@@ -28,6 +28,9 @@ Currently affects quanTIseq and CIBERSORT.}
 
 \item{column}{Only releveant if \code{gene_expression} is an ExpressionSet. Defines in which column
 of fData the HGNC symbol can be found.}
+
+\item{rmgenes}{a character vector of gene symbols. Exclude these genes from the analysis.
+Use this to exclude e.g. noisy genes.}
 
 \item{...}{arguments passed to the respective method}
 }

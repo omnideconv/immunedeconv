@@ -113,7 +113,7 @@
 
     <pre class="usage"><span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>,
   <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tumor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>arrays</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>, <span class='kw'>rmgenes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>, <span class='kw'>rmgenes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_mrna</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,6 +154,11 @@ of fData the HGNC symbol can be found.</p></td>
       <th>rmgenes</th>
       <td><p>a character vector of gene symbols. Exclude these genes from the analysis.
 Use this to exclude e.g. noisy genes.</p></td>
+    </tr>
+    <tr>
+      <th>scale_mrna</th>
+      <td><p>logical. If FALSE, disable correction for mRNA content of different cell types.
+This is supported by methods that compute an absolute score (EPIC and quanTIseq)</p></td>
     </tr>
     <tr>
       <th>...</th>

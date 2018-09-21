@@ -23,16 +23,16 @@ test_that("mcp_counter works", {
 })
 
 test_that("epic works", {
-  res = deconvolute_epic(test_mat, tumor=TRUE)
+  res = deconvolute_epic(test_mat, tumor=TRUE, scale_mrna=TRUE)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
-  res = deconvolute_epic(test_mat, tumor=FALSE)
+  res = deconvolute_epic(test_mat, tumor=FALSE, scale_mrna=FALSE)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
 })
 
 test_that("quantiseq works", {
-  res = deconvolute_quantiseq(test_mat, tumor=TRUE, arrays=FALSE)
+  res = deconvolute_quantiseq(test_mat, tumor=TRUE, arrays=FALSE, scale_mrna=TRUE)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
-  res = deconvolute_quantiseq(test_mat, tumor=FALSE, arrays=TRUE)
+  res = deconvolute_quantiseq(test_mat, tumor=FALSE, arrays=TRUE, scale_mrna=FALSE)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
 })
 
@@ -48,7 +48,8 @@ test_that("generic deconvolution works for all methods", {
     # cibersort requires the binary path to be set, n/a in unittest.
     if(!method %in% c("cibersort", "cibersort_abs")) {
       res = deconvolute(test_mat, method, indications=rep("brca", ncol(test_mat)),
-                        tumor=TRUE, arrays=FALSE, rmgenes=c("ALB", "ERBB2"))
+                        tumor=TRUE, arrays=FALSE, rmgenes=c("ALB", "ERBB2"),
+                        scale_mrna=FALSE)
       # matrix has the 'cell type' column -> +1
       assert("matrix dimensions consistent", ncol(res) == ncol(test_mat) + 1)
       assert("cell type column exists", colnames(res)[1] == "cell_type")

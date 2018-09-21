@@ -6,7 +6,7 @@
 \usage{
 deconvolute(gene_expression, method = deconvolution_methods,
   indications = NULL, tumor = TRUE, arrays = FALSE,
-  column = "gene_symbol", rmgenes = NULL, ...)
+  column = "gene_symbol", rmgenes = NULL, scale_mrna = TRUE, ...)
 }
 \arguments{
 \item{gene_expression}{A gene expression matrix or a Biobase ExpressionSet.
@@ -31,6 +31,9 @@ of fData the HGNC symbol can be found.}
 
 \item{rmgenes}{a character vector of gene symbols. Exclude these genes from the analysis.
 Use this to exclude e.g. noisy genes.}
+
+\item{scale_mrna}{logical. If FALSE, disable correction for mRNA content of different cell types.
+This is supported by methods that compute an absolute score (EPIC and quanTIseq)}
 
 \item{...}{arguments passed to the respective method}
 }

@@ -108,16 +108,16 @@ deconvolute_mcp_counter = function(gene_expression_matrix, feature_types="HUGO_s
 }
 
 
-deconvolute_epic = function(gene_expression_matrix, tumor, ...) {
+deconvolute_epic = function(gene_expression_matrix, tumor, scale_mrna, ...) {
   ref = ifelse(tumor, "TRef", "BRef")
   epic_res_raw = EPIC::EPIC(bulk=gene_expression_matrix,
-                            reference=ref, ...)
+                            reference=ref, scaleExprs = scale_mrna, ...)
   t(epic_res_raw$cellFractions)
 }
 
 
-deconvolute_quantiseq = function(gene_expresssion_matrix, tumor, arrays) {
-  deconvolute_quantiseq.default(gene_expresssion_matrix, tumor=tumor, arrays=arrays) %>%
+deconvolute_quantiseq = function(gene_expresssion_matrix, tumor, arrays, scale_mrna) {
+  deconvolute_quantiseq.default(gene_expresssion_matrix, tumor=tumor, arrays=arrays, mRNAscale = scale_mrna) %>%
     as_tibble() %>%
     select(-Sample) %>%
     as.matrix() %>%
@@ -189,7 +189,9 @@ eset_to_matrix = function(eset, column) {
 #' @param arrays Runs methods in a mode optimized for microarray data.
 #'   Currently affects quanTIseq and CIBERSORT.
 #' @param rmgenes a character vector of gene symbols. Exclude these genes from the analysis.
-#'   Use this to exclude e.g. noisy genes.  
+#'   Use this to exclude e.g. noisy genes. 
+#' @param scale_mrna logical. If FALSE, disable correction for mRNA content of different cell types. 
+#'   This is supported by methods that compute an absolute score (EPIC and quanTIseq)
 #' @param ... arguments passed to the respective method
 #' @return `data.frame` with `cell_type` as first column and a column with the
 #'     calculated cell fractions for each sample.
@@ -202,7 +204,7 @@ eset_to_matrix = function(eset, column) {
 deconvolute = function(gene_expression, method=deconvolution_methods,
                        indications=NULL, tumor=TRUE,
                        arrays=FALSE, column="gene_symbol",
-                       rmgenes=NULL, 
+                       rmgenes=NULL, scale_mrna=TRUE,
                        ...) {
   message(paste0("\n", ">>> Running ", method))
 
@@ -219,9 +221,9 @@ deconvolute = function(gene_expression, method=deconvolution_methods,
   res = switch(method,
          xcell = deconvolute_xcell(gene_expression, arrays=arrays, ...),
          mcp_counter = deconvolute_mcp_counter(gene_expression, ...),
-         epic = deconvolute_epic(gene_expression, tumor=tumor, ...),
+         epic = deconvolute_epic(gene_expression, tumor=tumor, scale_mrna=scale_mrna, ...),
          quantiseq = deconvolute_quantiseq(gene_expression,
-                                           tumor=tumor, arrays=arrays, ...),
+                                           tumor=tumor, arrays=arrays, scale_mrna=scale_mrna, ...),
          cibersort = deconvolute_cibersort(gene_expression, absolute = FALSE,
                                            arrays=arrays, ...),
          cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE,

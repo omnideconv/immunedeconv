@@ -34,7 +34,7 @@ deploy_docs: docs
 	git add docs && git commit -m "update docs" && git push
 
 .PHONY: test
-test:
+test: | roxygenize
 	Rscript -e 'devtools::test(reporter =c("summary", "fail"))'
 
 .PHONY: clean

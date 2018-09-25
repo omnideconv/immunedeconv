@@ -110,9 +110,10 @@ deconvolute_mcp_counter = function(gene_expression_matrix, feature_types="HUGO_s
 
 deconvolute_epic = function(gene_expression_matrix, tumor, scale_mrna, ...) {
   ref = ifelse(tumor, "TRef", "BRef")
-  mRNA_cell = ifelse(scale_mrna, NULL, c("default"=1.0))
+  mRNA_cell = NULL
+  if(!scale_mrna) mRNA_cell = c("default"=1.)
   epic_res_raw = EPIC::EPIC(bulk=gene_expression_matrix,
-                            reference=ref, mRNA_cell = scale_mrna, ...)
+                            reference=ref, mRNA_cell = mRNA_cell, ...)
   t(epic_res_raw$cellFractions)
 }
 

@@ -67,3 +67,9 @@ test_that("all children are taken into account despite being optional ", {
   result = map_cell_types(c("Macrophage"), fractions, "cibersort")
   assert(result[,1] == 1.)
 })
+
+test_that("if no children are available, NA is returned instead of 0", {
+  fractions = c("T cell"=.5)
+  result = map_cell_types(c("Macrophage/Monocyte"), fractions, "racle")
+  assert(is.na(result[,1]))
+})

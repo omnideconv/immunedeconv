@@ -72,6 +72,29 @@ map_cell_types = function(use_cell_types, fractions, method_dataset=NULL) {
   do.call("rbind", tmp_res)
 }
 
+#' sum up the fraction of all child nodes to a single value. 
+#' Take into account which cell types are optional. 
+#' 
+#' @param df with samples in columns and cell types in rows. Contains a logical columnn `optional` which states which 
+#'   cell type may be missing
+summarise_children = function(df) {
+  # store the 'optional' column in a vector and remove it from the dataframe. 
+  optional = df$optional
+  df$optional = NULL
+  
+  # generate a vector which indicates samples which have *only* NA cell types. 
+  # we do not want to set them to zero, despite all cell types being optional
+  all_na = apply(is.na(df), 2, all)
+  
+  # create a mask which cell types we set to zero.
+  # -> we want to set all NAs to zero that are optional, unless there are only NAs
+  set_to_zero = (optional %*% t(!all_na)) & is.na(df)
+  df[set_to_zero] = 0 
+  
+  # finally, sum up the children. 
+  df_sum = summarise_all(df, funs(sum))
+  df_sum
+}
 
 #' recursively traverse the cell type tree to resolve the mapping.
 #'
@@ -99,13 +122,11 @@ find_children = function(node, fractions, method_dataset=NULL) {
       # recursively sum up the child nodes
       tmp_sum = lapply(node$children, function(child) {
                   tmp_row = find_children(child, fractions, method_dataset)
-                  if(child$optional && any(is.na(tmp_row))) {
-                    tmp_row[is.na(tmp_row)] = 0 # ignore row by setting it to 0 instaed of NA
-                  }
+                  tmp_row$optional = child$optional
                   tmp_row
                 }) %>%
                   bind_rows() %>%
-                  summarise_all(funs(sum))
+                  summarise_children()
       rownames(tmp_sum) = cell_type
       tmp_sum
     } else {

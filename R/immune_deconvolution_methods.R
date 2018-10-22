@@ -25,7 +25,30 @@ deconvolution_methods = c("MCPcounter"="mcp_counter",
                           "xCell"="xcell",
                           "CIBERSORT"="cibersort",
                           "CIBERSORT (abs.)"="cibersort_abs",
-                          "TIMER"="timer")
+                          "TIMER"="timer",
+                          "random pred."="random")
+
+#' Deconvolute using the awseome RANDOM technique
+#'
+#' Here is a good place to add some documentation.
+deconvolute_random = function(gene_expression_matrix) {
+  # list of the cell types we want to 'predict'
+  cell_types = c("CD4+ Tcell", "CD8+ Tcell", "NK cell", "Macrophage",
+                 "Monocyte")
+  n_samples = ncol(gene_expression_matrix)
+
+  # generate random values
+  results = matrix(runif(length(cell_types) * n_samples), ncol=n_samples)
+
+  # rescale the values to sum to 1 for each sample
+  results = apply(results, 2, function(x) {x/sum(x)})
+  rownames(results) = cell_types
+  colnames(results) = colnames(gene_expression_matrix)
+
+  results
+}
+
+
 
 #' Data object from xCell.
 #'
@@ -191,8 +214,8 @@ eset_to_matrix = function(eset, column) {
 #' @param arrays Runs methods in a mode optimized for microarray data.
 #'   Currently affects quanTIseq and CIBERSORT.
 #' @param rmgenes a character vector of gene symbols. Exclude these genes from the analysis.
-#'   Use this to exclude e.g. noisy genes. 
-#' @param scale_mrna logical. If FALSE, disable correction for mRNA content of different cell types. 
+#'   Use this to exclude e.g. noisy genes.
+#' @param scale_mrna logical. If FALSE, disable correction for mRNA content of different cell types.
 #'   This is supported by methods that compute an absolute score (EPIC and quanTIseq)
 #' @param ... arguments passed to the respective method
 #' @return `data.frame` with `cell_type` as first column and a column with the
@@ -214,7 +237,7 @@ deconvolute = function(gene_expression, method=deconvolution_methods,
   if(is(gene_expression, "ExpressionSet")) {
     gene_expression = gene_expression %>% eset_to_matrix(column)
   }
-  
+
   if(!is.null(rmgenes)) {
     gene_expression = gene_expression[!rownames(gene_expression) %in% rmgenes,]
   }
@@ -230,7 +253,8 @@ deconvolute = function(gene_expression, method=deconvolution_methods,
                                            arrays=arrays, ...),
          cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE,
                                                arrays=arrays, ...),
-         timer = deconvolute_timer(gene_expression, indications=indications, ...))
+         timer = deconvolute_timer(gene_expression, indications=indications, ...),
+				 random = deconvolute_random(gene_expression))
 
   # convert to tibble and annotate unified cell_type names
   res = res %>%

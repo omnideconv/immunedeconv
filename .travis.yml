@@ -2,9 +2,8 @@
 
 language: r
 r:
-  - 3.5
-  - 3.4
-  - 3.3
+  - bioqc-devel
+  - bioqc-release
 
 r_github_packages:
   - dviraran/xCell

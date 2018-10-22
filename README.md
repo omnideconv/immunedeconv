@@ -101,4 +101,4 @@ devtools::install_github('grst/immune_deconvolution_methods')
 If you use this package, please cite
 
 Sturm, G., Finotello F. et al. "A quantitative comparison of cell-type deconvolution methods for immuno-oncology",
-*manuscript in preparation*
+*manuscript in preparation* 

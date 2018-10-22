@@ -98,5 +98,5 @@ devtools::install_github('grst/immune_deconvolution_methods')
 ## Citation
 If you use this package, please cite
 
-Sturm, G. and Aneichyk, T. "Benchmarking methods for estimating immune cell abundance from bulk RNA-sequencing data",
+Sturm, G., Finotello F. et al. "A quantitative comparison of cell-type deconvolution methods for immuno-oncology",
 *manuscript in preparation*

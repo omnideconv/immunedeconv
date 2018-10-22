@@ -68,7 +68,9 @@ You can then open an `R` instance within the environment and use the package.
 
 
 ### Standard R Package
-You can also install `immunedeconv` as a regular R package in your default R installation.
+We highly recommend using `conda`, as it will avoid incompatibilities between
+different package versions. That being said, you can also install `immunedeconv`
+as a regular R package in your default R installation.
 You need install the following non-CRAN dependencies. If you use a very recent version of
 [devtools](https://github.com/r-lib/devtools), it will also resolve these dependencies automatically.
 

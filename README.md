@@ -46,21 +46,15 @@ The easiest way to retrieve this package and all its dependencies is to use [Ana
 
 1. Download [Miniconda](https://conda.io/miniconda.html), if you don't have a conda installation already.
 
-2. Create an environment for deconvolution: `conda create -n deconvolution`
-
-3. Activate the environment `conda activate deconvolution`
-
-4. Add additional Anaconda channels:
+2. (Optional) create and activate an environment for deconvolution: 
 ```
-conda config --add channels r
-conda config --add channels bioconda
-conda config --add channels conda-forge
-conda config --add channels grst
+conda create -n deconvolution
+conda activate deconvolution
 ```
 
-5. Install the `immunedeconv` package
+3. Install the `immunedeconv` package
 ```
-conda install -c grst r-immunedeconv
+conda install -c grst,bioconda,conda-forge r-immunedeconv
 ```
 
 `conda` will automatically install the package and all dependencies.

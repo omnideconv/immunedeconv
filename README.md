@@ -19,7 +19,7 @@ epic
 ```
 
 For more detailed usage instructions, see the
-[Documentation](https://grst.github.io/immune_deconvolution_methods/articles/immunedeconv.html).
+[Documentation](https://grst.github.io/immunedeconv/articles/immunedeconv.html).
 
 
 ## Available methods
@@ -37,7 +37,7 @@ For more detailed usage instructions, see the
 ### Comparison of the methods
 For a benchmark comparison of the methods, please see our [publication](TODO).
 If you would like to benchmark additional methods, please see our [benchmark
-pipeline](https://github.com/grst/immune_deconvolution_benchmark).
+pipeline](https://github.com/grst/immunedeconv).
 
 
 ## Installation

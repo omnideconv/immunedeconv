@@ -46,21 +46,15 @@ The easiest way to retrieve this package and all its dependencies is to use [Ana
 
 1. Download [Miniconda](https://conda.io/miniconda.html), if you don't have a conda installation already.
 
-2. Create an environment for deconvolution: `conda create -n deconvolution`
-
-3. Activate the environment `conda activate deconvolution`
-
-4. Add additional Anaconda channels:
+2. (Optional) create and activate an environment for deconvolution: 
 ```
-conda config --add channels r
-conda config --add channels bioconda
-conda config --add channels conda-forge
-conda config --add channels grst
+conda create -n deconvolution
+conda activate deconvolution
 ```
 
-5. Install the `immunedeconv` package
+3. Install the `immunedeconv` package
 ```
-conda install -c grst r-immunedeconv
+conda install -c grst,bioconda,conda-forge r-immunedeconv
 ```
 
 `conda` will automatically install the package and all dependencies.
@@ -68,7 +62,9 @@ You can then open an `R` instance within the environment and use the package.
 
 
 ### Standard R Package
-You can also install `immunedeconv` as a regular R package in your default R installation.
+We highly recommend using `conda`, as it will avoid incompatibilities between
+different package versions. That being said, you can also install `immunedeconv`
+as a regular R package in your default R installation.
 You need install the following non-CRAN dependencies. If you use a very recent version of
 [devtools](https://github.com/r-lib/devtools), it will also resolve these dependencies automatically.
 
@@ -98,5 +94,5 @@ devtools::install_github('grst/immune_deconvolution_methods')
 ## Citation
 If you use this package, please cite
 
-Sturm, G. and Aneichyk, T. "Benchmarking methods for estimating immune cell abundance from bulk RNA-sequencing data",
-*manuscript in preparation*
+Sturm, G., Finotello F. et al. "A quantitative comparison of cell-type deconvolution methods for immuno-oncology",
+*manuscript in preparation* 

@@ -35,9 +35,9 @@ For more detailed usage instructions, see the
 
 
 ### Comparison of the methods
-For a benchmark comparison of the methods, please see our [publication](TODO).
+For a benchmark comparison of the methods, please see our [publication](https://doi.org/10.1101/463828).
 If you would like to benchmark additional methods, please see our [benchmark
-pipeline](https://github.com/grst/immunedeconv).
+pipeline](https://github.com/grst/immune_deconvolution_benchmark).
 
 
 ## Installation
@@ -94,5 +94,5 @@ devtools::install_github('grst/immune_deconvolution_methods')
 ## Citation
 If you use this package, please cite
 
-Sturm, G., Finotello F. et al. "A quantitative comparison of cell-type deconvolution methods for immuno-oncology",
-*manuscript in preparation* 
+Sturm, G., Finotello F. et al. "Comprehensive evaluation of cell-type quantification methods for immuno-oncology",
+bioRxiv, https://doi.org/10.1101/463828

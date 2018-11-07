@@ -31,7 +31,7 @@ docs: roxygenize
 
 .PHONY: deploy_docs
 deploy_docs: docs
-	git add docs && git commit -m "update docs" && git push
+	cd docs && git add -A . && git commit -m "update docs" && git push origin gh-pages
 
 .PHONY: test
 test: | roxygenize

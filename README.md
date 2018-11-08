@@ -46,7 +46,7 @@ The easiest way to retrieve this package and all its dependencies is to use [Ana
 
 1. Download [Miniconda](https://conda.io/miniconda.html), if you don't have a conda installation already.
 
-2. (Optional) create and activate an environment for deconvolution: 
+2. (Optional) create and activate an environment for deconvolution:
 ```
 conda create -n deconvolution
 conda activate deconvolution
@@ -81,7 +81,7 @@ biocLite("GSEABase")
 **GitHub**
 ```R
 library(devtools)
-install_github('dviranran/xCell')
+install_github('dviraran/xCell')
 install_github('GfellerLab/EPIC')
 install_github('ebecht/MCPcounter/Source')
 ```

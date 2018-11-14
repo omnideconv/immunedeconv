@@ -45,6 +45,7 @@ System requirements: linux and R >= 3.4.1. The package has been tested on CentOS
 
 ### Conda
 The easiest way to retrieve this package and all its dependencies is to use [Anaconda](https://conda.io/miniconda.html).
+Install typically completes within minutes. 
 
 1. Download [Miniconda](https://conda.io/miniconda.html), if you don't have a conda installation already.
 
@@ -66,7 +67,9 @@ You can then open an `R` instance within the environment and use the package.
 ### Standard R Package
 We highly recommend using `conda`, as it will avoid incompatibilities between
 different package versions. That being said, you can also install `immunedeconv`
-as a regular R package in your default R installation.
+as a regular R package in your default R installation. Installation typically completes within 30 minutes, depending 
+on how many dependency packages need to be compiled. 
+
 You need install the following non-CRAN dependencies. If you use a very recent version of
 [devtools](https://github.com/r-lib/devtools), it will also resolve these dependencies automatically.
 

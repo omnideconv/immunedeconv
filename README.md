@@ -93,7 +93,7 @@ install_github('ebecht/MCPcounter/Source')
 
 Finally, install the `immunedeconv` package itself by running
 ```R
-devtools::install_github('grst/immune_deconvolution_methods')
+devtools::install_github('grst/immunedeconv')
 ```
 
 ## Citation

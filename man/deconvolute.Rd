@@ -6,7 +6,8 @@
 \usage{
 deconvolute(gene_expression, method = deconvolution_methods,
   indications = NULL, tumor = TRUE, arrays = FALSE,
-  column = "gene_symbol", rmgenes = NULL, scale_mrna = TRUE, ...)
+  column = "gene_symbol", rmgenes = NULL, scale_mrna = TRUE,
+  expected_cell_types = NULL, ...)
 }
 \arguments{
 \item{gene_expression}{A gene expression matrix or a Biobase ExpressionSet.
@@ -36,6 +37,10 @@ Use this to exclude e.g. noisy genes.}
 This is supported by methods that compute an absolute score (EPIC and quanTIseq)}
 
 \item{...}{arguments passed to the respective method}
+
+\item{expected_cell_types.}{Limit the anlysis to the cell types given in this list. If the cell
+types present in the sample are known \emph{a priori}, setting this can improve results for
+xCell (see https://github.com/grst/immunedeconv/issues/1).}
 }
 \value{
 \code{data.frame} with \code{cell_type} as first column and a column with the

@@ -72,31 +72,33 @@ map_cell_types = function(use_cell_types, fractions, method_dataset=NULL) {
   do.call("rbind", tmp_res)
 }
 
-#' sum up the fraction of all child nodes to a single value. 
-#' Take into account which cell types are optional. 
-#' 
-#' @param df with samples in columns and cell types in rows. Contains a logical columnn `optional` which states which 
+#' sum up the fraction of all child nodes to a single value.
+#' Take into account which cell types are optional.
+#'
+#' @param df with samples in columns and cell types in rows. Contains a logical columnn `optional` which states which
 #'   cell type may be missing
 summarise_children = function(df) {
-  # store the 'optional' column in a vector and remove it from the dataframe. 
+  # store the 'optional' column in a vector and remove it from the dataframe.
   optional = df$optional
   df$optional = NULL
-  
-  # generate a vector which indicates samples which have *only* NA cell types. 
+
+  # generate a vector which indicates samples which have *only* NA cell types.
   # we do not want to set them to zero, despite all cell types being optional
   all_na = apply(is.na(df), 2, all)
-  
+
   # create a mask which cell types we set to zero.
   # -> we want to set all NAs to zero that are optional, unless there are only NAs
   set_to_zero = (optional %*% t(!all_na)) & is.na(df)
-  df[set_to_zero] = 0 
-  
-  # finally, sum up the children. 
+  df[set_to_zero] = 0
+
+  # finally, sum up the children.
   df_sum = summarise_all(df, funs(sum))
   df_sum
 }
 
-#' recursively traverse the cell type tree to resolve the mapping.
+#' Recursive helper function for map_cell_types.
+#'
+#' Traverses the cell type hierchy, summing up cell type fractions when necessary.
 #'
 #' @param node data.tree::Node corresponding to a controlled vocabulary cell type
 #' @param fractions a named list of fractions for each method_cell_type
@@ -155,3 +157,49 @@ map_result_to_celltypes = function(result, use_cell_types, method=NULL) {
     column_to_rownames("cell_type")
   map_cell_types(use_cell_types, result_mat, method)
 }
+
+
+#' Get all children of a certain cell type.
+#'
+#' If method is NULL, this function will return ALL children of the given
+#' cell type in the cell type hierarchy.
+#'
+#' If a method is given, this function will return the cell type names
+#' as used by `method` and stop as soon as a cell type maps to a cell type
+#' provided by `method`.
+#'
+#' @param cell_type cell type name that appears in the cell type hierarchy.
+#' @param method method or dataset from the cell type mapping.
+#'
+#' @return character vector of cell type names.
+#'
+#' @export
+get_all_children = function(cell_type, method=NULL) {
+  if(is.null(method)) {
+    names(node_by_name[[cell_type]]$Get('name'))
+  } else {
+    .get_all_children(node_by_name[[cell_type]], method)
+  }
+}
+
+#' Recursive helper function for get_all_children.
+#'
+#' @param node Node in the cell type hierarchy. Will look for children of this node.
+#' @param method method or dataset from the cell type mapping.
+.get_all_children = function(node, method) {
+  tmp_method_cell_type = cell_type_map %>%
+    filter(method_dataset == method, cell_type == node$name) %>%
+    pull(method_cell_type)
+  assert("Method cell type is uniquely mapped to a cell type", length(tmp_method_cell_type) <= 1)
+  if(length(tmp_method_cell_type) == 1) {
+    # stop at the highest level the cell type is mapped to a method
+    return(tmp_method_cell_type)
+  } else if(!node$isLeaf) {
+    # otherwise, continue searching children
+    lapply(node$children, function(child) {
+      .get_all_children(child, method)
+    }) %>% unlist() %>% unname()
+  }
+}
+
+

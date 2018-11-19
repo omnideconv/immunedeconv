@@ -96,9 +96,19 @@ deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
 }
 
 
-deconvolute_xcell = function(gene_expression_matrix, arrays, ...) {
+deconvolute_xcell = function(gene_expression_matrix, arrays, expected_cell_types=NULL, ...) {
   rnaseq = !arrays
-  invisible(capture.output(res <- xCell::xCellAnalysis(gene_expression_matrix, rnaseq=rnaseq, ...)))
+
+  # map the 'expected cell types' to their xCell counterpart.
+  if(!is.null(expected_cell_types)) {
+    get_children_xcell = function(cell_type) get_all_children(cell_type, "xcell")
+    cell_types_xcell = lapply(expected_cell_types, get_children_xcell) %>% unlist()
+  } else {
+    cell_types_xcell = NULL
+  }
+
+  invisible(capture.output(res <- xCell::xCellAnalysis(gene_expression_matrix, rnaseq=rnaseq,
+                                                       cell.types.use=cell_types_xcell, ...)))
   res
 }
 
@@ -191,9 +201,12 @@ eset_to_matrix = function(eset, column) {
 #' @param arrays Runs methods in a mode optimized for microarray data.
 #'   Currently affects quanTIseq and CIBERSORT.
 #' @param rmgenes a character vector of gene symbols. Exclude these genes from the analysis.
-#'   Use this to exclude e.g. noisy genes. 
-#' @param scale_mrna logical. If FALSE, disable correction for mRNA content of different cell types. 
+#'   Use this to exclude e.g. noisy genes.
+#' @param scale_mrna logical. If FALSE, disable correction for mRNA content of different cell types.
 #'   This is supported by methods that compute an absolute score (EPIC and quanTIseq)
+#' @param expected_cell_types. Limit the anlysis to the cell types given in this list. If the cell
+#'   types present in the sample are known *a priori*, setting this can improve results for
+#'   xCell (see https://github.com/grst/immunedeconv/issues/1).
 #' @param ... arguments passed to the respective method
 #' @return `data.frame` with `cell_type` as first column and a column with the
 #'     calculated cell fractions for each sample.
@@ -207,6 +220,7 @@ deconvolute = function(gene_expression, method=deconvolution_methods,
                        indications=NULL, tumor=TRUE,
                        arrays=FALSE, column="gene_symbol",
                        rmgenes=NULL, scale_mrna=TRUE,
+                       expected_cell_types=NULL,
                        ...) {
   message(paste0("\n", ">>> Running ", method))
 
@@ -214,14 +228,14 @@ deconvolute = function(gene_expression, method=deconvolution_methods,
   if(is(gene_expression, "ExpressionSet")) {
     gene_expression = gene_expression %>% eset_to_matrix(column)
   }
-  
+
   if(!is.null(rmgenes)) {
     gene_expression = gene_expression[!rownames(gene_expression) %in% rmgenes,]
   }
 
   # run selected method
   res = switch(method,
-         xcell = deconvolute_xcell(gene_expression, arrays=arrays, ...),
+         xcell = deconvolute_xcell(gene_expression, arrays=arrays, expected_cell_types=expected_cell_types, ...),
          mcp_counter = deconvolute_mcp_counter(gene_expression, ...),
          epic = deconvolute_epic(gene_expression, tumor=tumor, scale_mrna=scale_mrna, ...),
          quantiseq = deconvolute_quantiseq(gene_expression,

@@ -73,3 +73,31 @@ test_that("if no children are available, NA is returned instead of 0", {
   result = map_cell_types(c("Macrophage/Monocyte"), fractions, "racle")
   assert(is.na(result[,1]))
 })
+
+test_that("get_all_children works without specifying a method", {
+  cell_type = "Dendritic cell"
+  assert(all(sort(get_all_children(cell_type)) ==
+             sort(c("Dendritic cell resting", "Dendritic cell activated", "Dendritic cell"))))
+
+  cell_type = "T cell CD4+"
+  assert(all(sort(get_all_children(cell_type)) ==
+             sort(c("T cell CD4+", "T cell CD4+ (non-regulatory)", "T cell CD4+ naive", "T cell CD4+ memory",
+                    "T cell CD4+ memory resting" , "T cell CD4+ memory activated", "T cell follicular helper",
+                    "T cell regulatory (Tregs)"))))
+})
+
+test_that("get_all_children works with a method specified", {
+  # unlike before, subsequent children should not be returned if the parent
+  # is already mapped to a cell type.
+  cell_type = "Dendritic cell"
+  method = "xcell"
+  assert(all(sort(get_all_children(cell_type, method)) == c("DC")))
+
+  cell_type = "Macrophage"
+  method = "xcell"
+  assert(all(sort(get_all_children(cell_type, method)) == c("Macrophages")))
+
+  cell_type = "Macrophage/Monocyte"
+  method = "quantiseq"
+  assert(all(sort(get_all_children(cell_type, method)) == c("Macrophages.M1", "Macrophages.M2", "Monocytes")))
+})

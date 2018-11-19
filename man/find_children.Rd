@@ -2,7 +2,7 @@
 % Please edit documentation in R/cell_type_mapping.R
 \name{find_children}
 \alias{find_children}
-\title{recursively traverse the cell type tree to resolve the mapping.}
+\title{Recursive helper function for map_cell_types.}
 \usage{
 find_children(node, fractions, method_dataset = NULL)
 }
@@ -20,5 +20,5 @@ numeric Either (1) the value of the method_cell_type mapped to cell_type,
 (3) NA, if the mapping cannot be resolved, i.e. at least one of the child nodes is missing.
 }
 \description{
-recursively traverse the cell type tree to resolve the mapping.
+Traverses the cell type hierchy, summing up cell type fractions when necessary.
 }

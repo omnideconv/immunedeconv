@@ -98,6 +98,7 @@ deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
 
 deconvolute_xcell = function(gene_expression_matrix, arrays, ...) {
   rnaseq = !arrays
+  warning(paste("USING PARALLEL WITH CORES: ", config_env$xcell_cores))
   invisible(capture.output(res <- xCell::xCellAnalysis(gene_expression_matrix, rnaseq=rnaseq,
                                                        parallel.sz=config_env$xcell_cores, ...)))
   res

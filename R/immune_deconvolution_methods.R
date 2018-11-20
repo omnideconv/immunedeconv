@@ -102,7 +102,7 @@ deconvolute_xcell = function(gene_expression_matrix, arrays, expected_cell_types
   # map the 'expected cell types' to their xCell counterpart.
   if(!is.null(expected_cell_types)) {
     get_children_xcell = function(cell_type) get_all_children(cell_type, "xcell")
-    cell_types_xcell = lapply(expected_cell_types, get_children_xcell) %>% unlist()
+    cell_types_xcell = lapply(expected_cell_types, get_children_xcell) %>% unlist() %>% unique()
   } else {
     cell_types_xcell = NULL
   }

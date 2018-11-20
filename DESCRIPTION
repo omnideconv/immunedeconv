@@ -19,6 +19,7 @@ Imports:
     e1071 (>= 1.6),
     parallel (>= 3.4),
     BiocInstaller,
+    BiocParallel,
     preprocessCore,
     Biobase,
     GSVA,
@@ -33,6 +34,7 @@ Suggests:
     pkgdown
 Remotes:
     bioc::BiocInstaller,
+    bioc::BiocParallel,
     bioc::preprocessCore,
     bioc::Biobase,
     bioc::GSVA,

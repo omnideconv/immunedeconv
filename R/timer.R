@@ -4,9 +4,10 @@
 #' again is an adapted version of the original TIMER source code
 #' from http://cistrome.org/TIMER/download.html.
 #'
-#' The method is described in Li et al. Genome Biology 2016;17(1):174. [PMID 27549193].
+#' The method is described in Li et al. Genome Biology 2016;17(1):174., PMID 27549193.
 #'
 #' @import sva
+#' @importFrom BiocParallel bpparam
 #'
 #' @name timer
 NULL
@@ -108,6 +109,8 @@ RemoveBatchEffect <- function(cancer.exp, immune.exp, immune.cellType) {
 
 
 #' process batch table and check cancer types.
+#'
+#' @param args environment
 check_cancer_types <- function(args) {
   if (length(args$batch) != 0) {
     TimerINFO("Enter batch mode\n")
@@ -128,9 +131,11 @@ check_cancer_types <- function(args) {
 
 
 #' Constrained regression method implemented in Abbas et al., 2009
+#'
+#' @param XX immume expression data
+#' @param YY cancer expression data
+#' @param w ?
 GetFractions.Abbas <- function(XX, YY, w=NA){
-  ## XX is immune expression data
-  ## YY is cancer expression data
   ss.remove=c()
   ss.names=colnames(XX)
   while(T){

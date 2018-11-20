@@ -6,6 +6,9 @@
 \usage{
 set_cibersort_mat(path)
 }
+\arguments{
+\item{path}{path to cibersort matrix.}
+}
 \description{
 CIBERSORT is only freely available to academic users.
 A license an the binary can be obtained from https://cibersort.stanford.edu.

@@ -6,6 +6,11 @@
 \usage{
 annotate_cell_type(result_table, method)
 }
+\arguments{
+\item{result_table}{output of \code{deconvolute}}
+
+\item{method}{one of \code{immune_deconvolution_methods}.}
+}
 \description{
-(map the cell_types of the different methods to a common name)
+map the cell_types of the different methods to a common name
 }

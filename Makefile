@@ -18,7 +18,7 @@ roxygenize: | .dev_deps_installed
 	Rscript -e "library(methods); library(devtools); document()"
 
 .PHONY: check
-check: | roxygenize
+check: | roxygenize docs
 	Rscript -e 'devtools::check()'
 
 .PHONY: install

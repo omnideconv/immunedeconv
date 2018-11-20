@@ -4,7 +4,7 @@
 #' again is an adapted version of the original TIMER source code
 #' from http://cistrome.org/TIMER/download.html.
 #'
-#' The method is described in Li et al. Genome Biology 2016;17(1):174. [PMID: 27549193].
+#' The method is described in Li et al. Genome Biology 2016;17(1):174. [PMID 27549193].
 #'
 #' @import sva
 #'

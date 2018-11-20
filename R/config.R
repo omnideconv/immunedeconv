@@ -1,3 +1,5 @@
 # Configuration file. All configuration options are stored in an environment.
 config_env = new.env()
-config_env$xcell_cores = 4
+
+# xCell will fail if ran with more cores than available.
+config_env$xcell_cores = min(4, detectCores())

@@ -1,6 +1,3 @@
-# travis only has one core. xCell will fail when more cores are used then specified.
-immunedeconv::config_env$xcell_cores = 1
-
 test_mat = read_tsv("bulk_mat.tsv") %>% as.data.frame() %>% tibble::column_to_rownames("gene_symbol")
 
 test_that("timer works", {
@@ -40,9 +37,9 @@ test_that("quantiseq works", {
 })
 
 test_that("xcell works", {
-  res = deconvolute_xcell(test_mat, arrays=FALSE, parallel.sz=1)
+  res = deconvolute_xcell(test_mat, arrays=FALSE)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
-  res = deconvolute_xcell(test_mat, arrays=TRUE, parallel.sz=1)
+  res = deconvolute_xcell(test_mat, arrays=TRUE)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
 })
 

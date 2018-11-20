@@ -18,7 +18,7 @@ If TRUE, the "--rmgenes" parameter is set to "none".}
 \item{signame}{name of the signature matrix. Currently only \code{TIL10} is available.}
 
 \item{tumor}{specifies whether expression data are from tumor samples. If TRUE, signature genes
-with high expression in tumor samples are removed (see \link{1}).
+with high expression in tumor samples are removed.
 Default: FALSE.}
 
 \item{mRNAscale}{specifies whether cell fractions must be scaled to account for cell-type-specific

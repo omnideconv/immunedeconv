@@ -3,6 +3,8 @@
 #' Source code from https://github.com/FFinotello/quanTIseq
 #'
 #' @name quantiseq_helper
+#'
+#' @import limSolve
 NULL
 
 fixMixture<-function(mix.mat, arrays=FALSE) {
@@ -146,9 +148,6 @@ quanTIseq<-function(currsig, currmix, scaling, method) {
 }
 
 DClsei<-function(b,A,G,H,scaling) {
-
-  library(limSolve)
-
   sc<-norm(A,"2")
   A<-A/sc
   b<-b/sc

@@ -14,10 +14,6 @@ Accepted indications are 'kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 
 'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
 'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
 'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol'}
-
-\item{tumor}{ignored for this method}
-
-\item{arrays}{ignored for this method}
 }
 \description{
 Unlike the other methods, TIMER needs the specification of the

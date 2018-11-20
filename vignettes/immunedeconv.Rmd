@@ -1,10 +1,14 @@
 ---
 title: "Getting started with `immunedeconv`"
-output: html_document
 bibliography: references.bib
 biblio-style: apalike
 link-citations: yes
 colorlinks: yes
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE}

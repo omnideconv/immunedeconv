@@ -98,7 +98,8 @@ deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
 
 deconvolute_xcell = function(gene_expression_matrix, arrays, ...) {
   rnaseq = !arrays
-  invisible(capture.output(res <- xCell::xCellAnalysis(gene_expression_matrix, rnaseq=rnaseq, ...)))
+  invisible(capture.output(res <- xCell::xCellAnalysis(gene_expression_matrix, rnaseq=rnaseq,
+                                                       sz.parallel=config_env$xcell_cores, ...)))
   res
 }
 
@@ -191,8 +192,8 @@ eset_to_matrix = function(eset, column) {
 #' @param arrays Runs methods in a mode optimized for microarray data.
 #'   Currently affects quanTIseq and CIBERSORT.
 #' @param rmgenes a character vector of gene symbols. Exclude these genes from the analysis.
-#'   Use this to exclude e.g. noisy genes. 
-#' @param scale_mrna logical. If FALSE, disable correction for mRNA content of different cell types. 
+#'   Use this to exclude e.g. noisy genes.
+#' @param scale_mrna logical. If FALSE, disable correction for mRNA content of different cell types.
 #'   This is supported by methods that compute an absolute score (EPIC and quanTIseq)
 #' @param ... arguments passed to the respective method
 #' @return `data.frame` with `cell_type` as first column and a column with the
@@ -214,7 +215,7 @@ deconvolute = function(gene_expression, method=deconvolution_methods,
   if(is(gene_expression, "ExpressionSet")) {
     gene_expression = gene_expression %>% eset_to_matrix(column)
   }
-  
+
   if(!is.null(rmgenes)) {
     gene_expression = gene_expression[!rownames(gene_expression) %in% rmgenes,]
   }

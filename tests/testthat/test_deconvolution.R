@@ -1,3 +1,6 @@
+# travis only has one core. xCell will fail when more cores are used then specified.
+immunedeconv::config_env$xcell_cores = 1
+
 test_mat = read_tsv("bulk_mat.tsv") %>% as.data.frame() %>% tibble::column_to_rownames("gene_symbol")
 
 test_that("timer works", {

@@ -31,7 +31,8 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
-    pkgdown
+    pkgdown,
+    devtools
 Remotes:
     bioc::BiocInstaller,
     bioc::BiocParallel,

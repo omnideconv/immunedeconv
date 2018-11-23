@@ -77,7 +77,7 @@ You need install the following non-CRAN dependencies. If you use a very recent v
 **Bioconductor**
 ```R
 source("https://bioconductor.org/biocLite.R")
-biocLite("proprocessCore")
+biocLite("preprocessCore")
 biocLite("Biobase")
 biocLite("GSVA")
 biocLite("sva")

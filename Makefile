@@ -35,7 +35,7 @@ deploy_docs: docs
 
 .PHONY: test
 test: | roxygenize
-	Rscript -e 'devtools::test(reporter =c("summary", "fail"))'
+	_R_CHECK_TESTS_NLINES_=0 Rscript -e 'devtools::check()'
 
 .PHONY: clean
 clean:

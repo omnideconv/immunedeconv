@@ -19,6 +19,7 @@ Imports:
     e1071 (>= 1.6),
     parallel (>= 3.4),
     BiocInstaller,
+    BiocGenerics,
     BiocParallel,
     preprocessCore,
     Biobase,
@@ -35,6 +36,7 @@ Suggests:
     devtools
 Remotes:
     bioc::BiocInstaller,
+    bioc::BiocGenerics,
     bioc::BiocParallel,
     bioc::preprocessCore,
     bioc::Biobase,

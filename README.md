@@ -1,5 +1,6 @@
 # `immunedeconv` - an R package for unified access to computational methods for estimating immune cell fractions from bulk RNA sequencing data.
 
+![travis](https://travis-ci.com/grst/immunedeconv.svg?branch=master) ![license](https://img.shields.io/badge/license-BSD-green.svg) [![docs](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://grst.github.io/immunedeconv)
 
 ## Basic usage
 ```R
@@ -76,7 +77,7 @@ You need install the following non-CRAN dependencies. If you use a very recent v
 **Bioconductor**
 ```R
 source("https://bioconductor.org/biocLite.R")
-biocLite("proprocessCore")
+biocLite("preprocessCore")
 biocLite("Biobase")
 biocLite("GSVA")
 biocLite("sva")
@@ -93,7 +94,7 @@ install_github('ebecht/MCPcounter/Source')
 
 Finally, install the `immunedeconv` package itself by running
 ```R
-devtools::install_github('grst/immune_deconvolution_methods')
+devtools::install_github('grst/immunedeconv')
 ```
 
 ## Citation

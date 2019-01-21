@@ -6,6 +6,13 @@
 \usage{
 GetFractions.Abbas(XX, YY, w = NA)
 }
+\arguments{
+\item{XX}{immume expression data}
+
+\item{YY}{cancer expression data}
+
+\item{w}{?}
+}
 \description{
 Constrained regression method implemented in Abbas et al., 2009
 }

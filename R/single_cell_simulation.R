@@ -70,7 +70,7 @@ make_random_bulk = function(eset, cell_fractions, n_cells=500, combine=mean) {
 #' @param eset `Biobase::ExpressionSet` with a `cell_type` column in `pData`.
 #' @param cell_fractions n x n_cell_types dataframe with the fraction for each
 #'     sample in each row.
-#' @param n_cell number of single cells to use in each sample
+#' @param n_cells number of single cells to use in each sample
 #' @param combine callback function used to aggregate the counts.
 #'
 #' @seealso make_random_bulk

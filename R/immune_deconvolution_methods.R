@@ -7,6 +7,7 @@
 #' @importFrom testit assert
 #' @import readr
 #' @importFrom tibble as_tibble
+#' @importFrom EPIC EPIC
 NULL
 
 
@@ -40,6 +41,8 @@ xCell.data = xCell::xCell.data
 #' CIBERSORT is only freely available to academic users.
 #' A license an the binary can be obtained from https://cibersort.stanford.edu.
 #'
+#' @param path path to cibersort R script.
+#'
 #' @export
 set_cibersort_binary = function(path) {
   assign("cibersort_binary", path, envir=config_env)
@@ -49,6 +52,8 @@ set_cibersort_binary = function(path) {
 #'
 #' CIBERSORT is only freely available to academic users.
 #' A license an the binary can be obtained from https://cibersort.stanford.edu.
+#'
+#' @param path path to cibersort matrix.
 #'
 #' @export
 set_cibersort_mat = function(path) {
@@ -75,8 +80,6 @@ set_cibersort_mat = function(path) {
 #'     'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
 #'     'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
 #'     'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol'
-#' @param tumor ignored for this method
-#' @param arrays ignored for this method
 deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
   indications = tolower(indications)
   assert("indications fit to mixture matrix", length(indications) == ncol(gene_expression_matrix))
@@ -108,7 +111,9 @@ deconvolute_xcell = function(gene_expression_matrix, arrays, expected_cell_types
   }
 
   invisible(capture.output(res <- xCell::xCellAnalysis(gene_expression_matrix, rnaseq=rnaseq,
-                                                       cell.types.use=cell_types_xcell, ...)))
+                                                       cell.types.use=cell_types_xcell,
+                                                       parallel.sz=config_env$xcell_cores, ...)))
+
   res
 }
 
@@ -161,7 +166,10 @@ deconvolute_cibersort = function(gene_expression_matrix,
 
 #' Annotate unified cell_type names
 #'
-#' (map the cell_types of the different methods to a common name)
+#' map the cell_types of the different methods to a common name
+#'
+#' @param result_table output of `deconvolute`
+#' @param method one of `immune_deconvolution_methods`.
 annotate_cell_type = function(result_table, method) {
   cell_type_map %>%
     filter(method_dataset == !!method) %>%

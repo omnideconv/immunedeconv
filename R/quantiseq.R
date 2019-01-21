@@ -14,7 +14,7 @@
 #'     If TRUE, the "--rmgenes" parameter is set to "none".
 #' @param signame name of the signature matrix. Currently only `TIL10` is available.
 #' @param tumor 	specifies whether expression data are from tumor samples. If TRUE, signature genes
-#'     with high expression in tumor samples are removed (see [1]).
+#'     with high expression in tumor samples are removed.
 #'     Default: FALSE.
 #' @param mRNAscale specifies whether cell fractions must be scaled to account for cell-type-specific
 #'     mRNA content.

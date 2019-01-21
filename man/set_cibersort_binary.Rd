@@ -6,6 +6,9 @@
 \usage{
 set_cibersort_binary(path)
 }
+\arguments{
+\item{path}{path to cibersort R script.}
+}
 \description{
 CIBERSORT is only freely available to academic users.
 A license an the binary can be obtained from https://cibersort.stanford.edu.

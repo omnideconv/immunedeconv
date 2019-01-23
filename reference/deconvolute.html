@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">immunedeconv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -115,7 +115,8 @@
 
     <pre class="usage"><span class='fu'>deconvolute</span>(<span class='no'>gene_expression</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='no'>deconvolution_methods</span>,
   <span class='kw'>indications</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tumor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>arrays</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>, <span class='kw'>rmgenes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_mrna</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"gene_symbol"</span>, <span class='kw'>rmgenes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_mrna</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>expected_cell_types</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,6 +164,12 @@ Use this to exclude e.g. noisy genes.</p></td>
 This is supported by methods that compute an absolute score (EPIC and quanTIseq)</p></td>
     </tr>
     <tr>
+      <th>expected_cell_types</th>
+      <td><p>Limit the anlysis to the cell types given in this list. If the cell
+types present in the sample are known <em>a priori</em>, setting this can improve results for
+xCell (see https://github.com/grst/immunedeconv/issues/1).</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>arguments passed to the respective method</p></td>
     </tr>
@@ -198,7 +205,7 @@ calculated cell fractions for each sample.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

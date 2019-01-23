@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Recursive helper function for map_cell_types. — find_children • immunedeconv</title>
+<title>Get all children of a certain cell type. — get_all_children • immunedeconv</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Recursive helper function for map_cell_types. — find_children" />
+<meta property="og:title" content="Get all children of a certain cell type. — get_all_children" />
 
-<meta property="og:description" content="Traverses the cell type hierchy, summing up cell type fractions when necessary." />
+<meta property="og:description" content="If method is NULL, this function will return ALL children of the given
+cell type in the cell type hierarchy." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -102,42 +103,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Recursive helper function for map_cell_types.</h1>
+    <h1>Get all children of a certain cell type.</h1>
     <small class="dont-index">Source: <a href='https://github.com/grst/immunedeconv/blob/master/R/cell_type_mapping.R'><code>R/cell_type_mapping.R</code></a></small>
-    <div class="hidden name"><code>find_children.Rd</code></div>
+    <div class="hidden name"><code>get_all_children.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Traverses the cell type hierchy, summing up cell type fractions when necessary.</p>
+    <p>If method is NULL, this function will return ALL children of the given
+cell type in the cell type hierarchy.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>find_children</span>(<span class='no'>node</span>, <span class='no'>fractions</span>, <span class='kw'>method_dataset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>get_all_children</span>(<span class='no'>cell_type</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>node</th>
-      <td><p>data.tree::Node corresponding to a controlled vocabulary cell type</p></td>
+      <th>cell_type</th>
+      <td><p>cell type name that appears in the cell type hierarchy.</p></td>
     </tr>
     <tr>
-      <th>fractions</th>
-      <td><p>a named list of fractions for each method_cell_type</p></td>
-    </tr>
-    <tr>
-      <th>method_dataset</th>
-      <td><p>character identifing the method or dataset in the celltype_mapping. If NULL, the input
-vector already uses controlled vocabulary.</p></td>
+      <th>method</th>
+      <td><p>method or dataset from the cell type mapping.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>numeric Either (1) the value of the method_cell_type mapped to cell_type,
-(2) the sum of all child nodes (recursively) of cell_type
-(3) NA, if the mapping cannot be resolved, i.e. at least one of the child nodes is missing.</p>
+    <p>character vector of cell type names.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>If a method is given, this function will return the cell type names
+as used by <code>method</code> and stop as soon as a cell type maps to a cell type
+provided by <code>method</code>.</p>
     
 
   </div>
@@ -147,6 +148,8 @@ vector already uses controlled vocabulary.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>

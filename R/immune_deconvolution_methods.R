@@ -134,11 +134,15 @@ deconvolute_epic = function(gene_expression_matrix, tumor, scale_mrna, ...) {
 
 
 deconvolute_quantiseq = function(gene_expresssion_matrix, tumor, arrays, scale_mrna) {
-  deconvolute_quantiseq.default(gene_expresssion_matrix, tumor=tumor, arrays=arrays, mRNAscale = scale_mrna) %>%
+  res = deconvolute_quantiseq.default(gene_expresssion_matrix, tumor=tumor, arrays=arrays, mRNAscale = scale_mrna) 
+  sample_names = res$Sample
+  res_mat = res %>%
     as_tibble() %>%
     select(-Sample) %>%
-    as.matrix() %>%
-    t()
+    as.matrix()
+  rownames(res_mat) = sample_names
+  
+  t(res_mat)
 }
 
 deconvolute_cibersort = function(gene_expression_matrix,

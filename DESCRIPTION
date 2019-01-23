@@ -53,4 +53,4 @@ Roxygen: list(markdown = TRUE)
 LazyData: true
 URL: https://github.com/grst/immunedeconv
 BugReports: https://github.com/grst/immunedeconv/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1

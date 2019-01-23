@@ -134,11 +134,15 @@ deconvolute_epic = function(gene_expression_matrix, tumor, scale_mrna, ...) {
 
 
 deconvolute_quantiseq = function(gene_expresssion_matrix, tumor, arrays, scale_mrna) {
-  deconvolute_quantiseq.default(gene_expresssion_matrix, tumor=tumor, arrays=arrays, mRNAscale = scale_mrna) %>%
+  res = deconvolute_quantiseq.default(gene_expresssion_matrix, tumor=tumor, arrays=arrays, mRNAscale = scale_mrna)
+  sample_names = res$Sample
+  res_mat = res %>%
     as_tibble() %>%
     select(-Sample) %>%
-    as.matrix() %>%
-    t()
+    as.matrix()
+  rownames(res_mat) = sample_names
+
+  t(res_mat)
 }
 
 deconvolute_cibersort = function(gene_expression_matrix,
@@ -212,7 +216,7 @@ eset_to_matrix = function(eset, column) {
 #'   Use this to exclude e.g. noisy genes.
 #' @param scale_mrna logical. If FALSE, disable correction for mRNA content of different cell types.
 #'   This is supported by methods that compute an absolute score (EPIC and quanTIseq)
-#' @param expected_cell_types. Limit the anlysis to the cell types given in this list. If the cell
+#' @param expected_cell_types Limit the anlysis to the cell types given in this list. If the cell
 #'   types present in the sample are known *a priori*, setting this can improve results for
 #'   xCell (see https://github.com/grst/immunedeconv/issues/1).
 #' @param ... arguments passed to the respective method

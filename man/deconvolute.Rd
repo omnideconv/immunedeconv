@@ -36,11 +36,11 @@ Use this to exclude e.g. noisy genes.}
 \item{scale_mrna}{logical. If FALSE, disable correction for mRNA content of different cell types.
 This is supported by methods that compute an absolute score (EPIC and quanTIseq)}
 
-\item{...}{arguments passed to the respective method}
-
-\item{expected_cell_types.}{Limit the anlysis to the cell types given in this list. If the cell
+\item{expected_cell_types}{Limit the anlysis to the cell types given in this list. If the cell
 types present in the sample are known \emph{a priori}, setting this can improve results for
 xCell (see https://github.com/grst/immunedeconv/issues/1).}
+
+\item{...}{arguments passed to the respective method}
 }
 \value{
 \code{data.frame} with \code{cell_type} as first column and a column with the

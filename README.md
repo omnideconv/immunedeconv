@@ -58,7 +58,7 @@ conda activate deconvolution
 
 3. Install the `immunedeconv` package
 ```
-conda install -c grst,bioconda,conda-forge r-immunedeconv
+conda install -c grst -c bioconda -c conda-forge r-immunedeconv
 ```
 
 `conda` will automatically install the package and all dependencies.

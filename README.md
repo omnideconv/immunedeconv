@@ -76,12 +76,12 @@ You need install the following non-CRAN dependencies. If you use a very recent v
 
 **Bioconductor**
 ```R
-source("https://bioconductor.org/biocLite.R")
-biocLite("preprocessCore")
-biocLite("Biobase")
-biocLite("GSVA")
-biocLite("sva")
-biocLite("GSEABase")
+install.packages("BiocManager")
+BiocManager::install("preprocessCore")
+BiocManager::install("Biobase")
+BiocManager::install("GSVA")
+BiocManager::install("sva")
+BiocManager::install("GSEABase")
 ```
 
 **GitHub**

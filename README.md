@@ -58,8 +58,10 @@ conda activate deconvolution
 
 3. Install the `immunedeconv` package
 ```
-conda install -c grst -c bioconda -c conda-forge r-immunedeconv
+conda install --override -c grst -c bioconda -c conda-forge/label/cf201901 r-immunedeconv
 ```
+**Note:** due to a recent [conda compiler update](https://github.com/conda/conda/issues/8413), immunedeconv needs
+to be installed using the `cf201901` label of conda-forge. I'm working on making it work with the default version...
 
 `conda` will automatically install the package and all dependencies.
 You can then open an `R` instance within the environment and use the package.

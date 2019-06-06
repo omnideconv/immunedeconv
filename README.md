@@ -1,6 +1,6 @@
 # `immunedeconv` - an R package for unified access to computational methods for estimating immune cell fractions from bulk RNA sequencing data.
 
-![travis](https://travis-ci.com/grst/immunedeconv.svg?branch=master) ![license](https://img.shields.io/badge/license-BSD-green.svg) [![docs](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://grst.github.io/immunedeconv)
+[![travis](https://travis-ci.com/grst/immunedeconv.svg?branch=master)](https://travis-ci.com/grst/immunedeconv) ![license](https://img.shields.io/badge/license-BSD-green.svg) [![docs](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://grst.github.io/immunedeconv)
 
 ## Basic usage
 ```R

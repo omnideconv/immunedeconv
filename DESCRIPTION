@@ -45,7 +45,7 @@ Remotes:
     GfellerLab/EPIC,
     ebecht/MCPcounter/Source
 VignetteBuilder: knitr
-License: CC-BY-4.0
+License: BSD_3_clause + file LICENSE.md
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 LazyData: true

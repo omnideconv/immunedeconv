@@ -18,8 +18,11 @@ TimerINFO <- function(string) {
 
 TimerINFO('Loading Timer Utilities')
 
-immuneCuratedData <- system.file("extdata", "timer", "precalculated", "immune.expression.curated.RData",
-                                 package="immunedeconv", mustWork = TRUE)
+get_immune_curated_data_path = function() {
+    system.file("extdata", "timer", "precalculated",
+                "immune.expression.curated.RData",
+                package="immunedeconv", mustWork = TRUE)
+}
 
 #' TIMER signatures are cancer specific. This is the list of available cancer types.
 #'
@@ -35,9 +38,9 @@ LoadImmuneGeneExpression <- function() {
   ## Returns:
   ##   A data frame of expression data for immune cells
   ##   (cols for immune cell sample, rows for "gene name;probe ID")
-  if (file.exists(immuneCuratedData)) {
+  if (file.exists(get_immune_curated_data_path())) {
     ## See below: list(genes=curated.ref.genes, celltypes=curated.cell.types)
-    curated.data <- get(load(immuneCuratedData))
+    curated.data <- get(load(get_immune_curated_data_path()))
     return(curated.data)
   }
 
@@ -65,7 +68,7 @@ LoadImmuneGeneExpression <- function() {
                                  rep('DC', length(DC)))
   curated.ref.genes <- ConvertImmuneProbeToRefgene(curated.ref)
   ret <- list(genes=curated.ref.genes, celltypes=curated.cell.types)
-  save(ret,file=immuneCuratedData)
+  save(ret,file=get_immune_curated_data_path())
   return(ret)
 }
 

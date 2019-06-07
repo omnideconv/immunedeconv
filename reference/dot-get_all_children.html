@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Table mapping the cell types from methods/datasets to a single, controlled vocabulary. — cell_type_map • immunedeconv</title>
+<title>Recursive helper function for get_all_children. — .get_all_children • immunedeconv</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Table mapping the cell types from methods/datasets to a single, controlled vocabulary. — cell_type_map" />
+<meta property="og:title" content="Recursive helper function for get_all_children. — .get_all_children" />
 
-<meta property="og:description" content="Columns: method_dataset, method_cell_type, cell_type." />
+<meta property="og:description" content="Recursive helper function for get_all_children." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -102,30 +102,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Table mapping the cell types from methods/datasets to a single, controlled vocabulary.</h1>
+    <h1>Recursive helper function for get_all_children.</h1>
     <small class="dont-index">Source: <a href='https://github.com/grst/immunedeconv/blob/master/R/cell_type_mapping.R'><code>R/cell_type_mapping.R</code></a></small>
-    <div class="hidden name"><code>cell_type_map.Rd</code></div>
+    <div class="hidden name"><code>dot-get_all_children.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Columns: <code>method_dataset</code>, <code>method_cell_type</code>, <code>cell_type</code>.</p>
+    <p>Recursive helper function for get_all_children.</p>
     
     </div>
 
-        
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>See <code>inst/extdata/cell_type_mapping.xlsx</code> for more details.</p>
+    <pre class="usage"><span class='fu'>.get_all_children</span>(<span class='no'>node</span>, <span class='no'>method</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>node</th>
+      <td><p>Node in the cell type hierarchy. Will look for children of this node.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>method or dataset from the cell type mapping.</p></td>
+    </tr>
+    </table>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#details">Details</a></li>
-          </ul>
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
 
   </div>
 </div>

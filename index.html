@@ -70,7 +70,7 @@
 <div id="immunedeconv---an-r-package-for-unified-access-to-computational-methods-for-estimating-immune-cell-fractions-from-bulk-rna-sequencing-data-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#immunedeconv---an-r-package-for-unified-access-to-computational-methods-for-estimating-immune-cell-fractions-from-bulk-rna-sequencing-data-" class="anchor"></a><code>immunedeconv</code> - an R package for unified access to computational methods for estimating immune cell fractions from bulk RNA sequencing data.</h1></div>
-<p><img src="https://travis-ci.com/grst/immunedeconv.svg?branch=master" alt="travis"><img src="https://img.shields.io/badge/license-BSD-green.svg" alt="license"><a href="https://grst.github.io/immunedeconv"><img src="https://img.shields.io/badge/docs-pkgdown-blue.svg" alt="docs"></a></p>
+<p><a href="https://travis-ci.com/grst/immunedeconv"><img src="https://travis-ci.com/grst/immunedeconv.svg?branch=master" alt="travis"></a> <img src="https://img.shields.io/badge/license-BSD-green.svg" alt="license"><a href="https://grst.github.io/immunedeconv"><img src="https://img.shields.io/badge/docs-pkgdown-blue.svg" alt="docs"></a></p>
 <div id="basic-usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#basic-usage" class="anchor"></a>Basic usage</h2>
@@ -153,7 +153,8 @@ conda activate deconvolution</code></pre>
 <ol>
 <li>Install the <code>immunedeconv</code> package</li>
 </ol>
-<pre><code>conda install -c grst -c bioconda -c conda-forge r-immunedeconv</code></pre>
+<pre><code>conda install --override -c grst -c bioconda -c conda-forge/label/cf201901 r-immunedeconv</code></pre>
+<p><strong>Note:</strong> due to a recent <a href="https://github.com/conda/conda/issues/8413">conda compiler update</a>, immunedeconv needs to be installed using the <code>cf201901</code> label of conda-forge. I’m working on making it work with the default version…</p>
 <p><code>conda</code> will automatically install the package and all dependencies. You can then open an <code>R</code> instance within the environment and use the package.</p>
 </div>
 <div id="standard-r-package" class="section level3">
@@ -162,12 +163,12 @@ conda activate deconvolution</code></pre>
 <p>We highly recommend using <code>conda</code>, as it will avoid incompatibilities between different package versions. That being said, you can also install <code>immunedeconv</code> as a regular R package in your default R installation. Installation typically completes within 30 minutes, depending on how many dependency packages need to be compiled.</p>
 <p>You need install the following non-CRAN dependencies. If you use a very recent version of <a href="https://github.com/r-lib/devtools">devtools</a>, it will also resolve these dependencies automatically.</p>
 <p><strong>Bioconductor</strong></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/source">source</a></span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">biocLite</span>(<span class="st">"preprocessCore"</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">biocLite</span>(<span class="st">"Biobase"</span>)</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw">biocLite</span>(<span class="st">"GSVA"</span>)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="kw">biocLite</span>(<span class="st">"sva"</span>)</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw">biocLite</span>(<span class="st">"GSEABase"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"BiocManager"</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"preprocessCore"</span>)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"Biobase"</span>)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"GSVA"</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"sva"</span>)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"GSEABase"</span>)</a></code></pre></div>
 <p><strong>GitHub</strong></p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(devtools)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">'dviraran/xCell'</span>)</a>
@@ -200,7 +201,7 @@ conda activate deconvolution</code></pre>
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small>CC-BY-4.0</small></li>
+<li><small><a href="https://opensource.org/licenses/BSD-3-Clause">BSD_3_clause</a> + file <a href="LICENSE-text.html">LICENSE</a>.md</small></li>
 </ul>
 </div>
 <div class="developers">

@@ -73,30 +73,11 @@ different package versions. That being said, you can also install `immunedeconv`
 as a regular R package in your default R installation. Installation typically completes within 30 minutes, depending 
 on how many dependency packages need to be compiled. 
 
-You need install the following non-CRAN dependencies. If you use a very recent version of
-[devtools](https://github.com/r-lib/devtools), it will also resolve these dependencies automatically.
+The easiest way to do so is to use the `remotes` package, which will automatically download all CRAN, Bioconductor and GitHub dependencies:
 
-**Bioconductor**
 ```R
-install.packages("BiocManager")
-BiocManager::install("preprocessCore")
-BiocManager::install("Biobase")
-BiocManager::install("GSVA")
-BiocManager::install("sva")
-BiocManager::install("GSEABase")
-```
-
-**GitHub**
-```R
-library(devtools)
-install_github('dviraran/xCell')
-install_github('GfellerLab/EPIC')
-install_github('ebecht/MCPcounter/Source')
-```
-
-Finally, install the `immunedeconv` package itself by running
-```R
-devtools::install_github('grst/immunedeconv')
+install.packages("remotes")
+remotes::install_github("grst/immunedeconv")
 ```
 
 ## Citation

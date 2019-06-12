@@ -161,21 +161,9 @@ conda activate deconvolution</code></pre>
 <h3 class="hasAnchor">
 <a href="#standard-r-package" class="anchor"></a>Standard R Package</h3>
 <p>We highly recommend using <code>conda</code>, as it will avoid incompatibilities between different package versions. That being said, you can also install <code>immunedeconv</code> as a regular R package in your default R installation. Installation typically completes within 30 minutes, depending on how many dependency packages need to be compiled.</p>
-<p>You need install the following non-CRAN dependencies. If you use a very recent version of <a href="https://github.com/r-lib/devtools">devtools</a>, it will also resolve these dependencies automatically.</p>
-<p><strong>Bioconductor</strong></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"BiocManager"</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"preprocessCore"</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"Biobase"</span>)</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"GSVA"</span>)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"sva"</span>)</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"GSEABase"</span>)</a></code></pre></div>
-<p><strong>GitHub</strong></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(devtools)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">'dviraran/xCell'</span>)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">'GfellerLab/EPIC'</span>)</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">'ebecht/MCPcounter/Source'</span>)</a></code></pre></div>
-<p>Finally, install the <code>immunedeconv</code> package itself by running</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">'grst/immunedeconv'</span>)</a></code></pre></div>
+<p>The easiest way to do so is to use the <code>remotes</code> package, which will automatically download all CRAN, Bioconductor and GitHub dependencies:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"remotes"</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"grst/immunedeconv"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="citation" class="section level2">

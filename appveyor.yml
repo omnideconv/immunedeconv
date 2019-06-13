@@ -64,8 +64,10 @@ environment:
   - R_VERSION: 3.5.1
     R_ARCH: x64
 
-  - R_VERSION: 3.4.1
-    R_ARCH: x64
+# XML package does not compile on appveyor, remotes does not use (a little older) binary version. 
+# Disable R 3.4.1 until this is fixed. 
+#  - R_VERSION: 3.4.1
+#    R_ARCH: x64
 
 matrix:
   fast_finish: true

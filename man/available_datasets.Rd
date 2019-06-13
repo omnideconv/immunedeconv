@@ -5,5 +5,5 @@
 \title{Available methods and datasets.}
 \description{
 A list of all methods (e.g. \code{cibersort}) and datasets (e.g. \code{schelker_ovarian}) for
-which the cell types are mapped to the controlled vocabulary.
+that the cell types are mapped to the controlled vocabulary.
 }

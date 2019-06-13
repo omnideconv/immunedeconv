@@ -1,7 +1,7 @@
 #' Collection of immune cell deconvolution methods.
 #'
 #' @docType package
-#' @name immune_deconvolution_methods
+#' @name immunedeconv
 #' @import methods
 #' @import dplyr
 #' @importFrom testit assert

@@ -17,7 +17,6 @@ NULL
 #'
 #' See `inst/extdata/cell_type_mapping.xlsx` for more details.
 #'
-#' @export
 #' @name cell_type_map
 NULL
 .get_cell_type_map = function() {
@@ -34,7 +33,6 @@ NULL
 #' A list of all methods (e.g. `cibersort`) and datasets (e.g. `schelker_ovarian`) for
 #' that the cell types are mapped to the controlled vocabulary.
 #'
-#' @export
 #' @name available_datasets
 NULL
 .get_available_datasets = function() {
@@ -56,7 +54,6 @@ NULL
 #' Available cell types in the controlled vocabulary organized as a lineage tree.
 #'
 #' @details a `data.tree` object
-#' @export
 #' @name cell_type_tree
 NULL
 .get_cell_type_tree = function() {

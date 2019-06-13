@@ -53,7 +53,7 @@ environment:
     USE_RTOOLS: true
     R_REMOTES_STANDALONE: true
     platform: x64
-    PKGTYPE: win.binary
+    PKGTYPE: "win.binary"
     GITHUB_PAT:
       secure: Xl3cNXsF+tbyVRLHb28x2q3KmLnrZx1sXRZV5LAJ7uye1ymXhbMQYNuTses3GB0N
 

@@ -1,21 +1,23 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: r
-r:
- - release
- - 3.5.1
- - 3.4.1
 sudo: false
 cache: packages
 
-after_success:
-  - Rscript -e "pkgdown::build_site()"
+matrix:
+  include:
+    - r: release
+      after_success:
+      - Rscript -e "pkgdown::build_site()"
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        github-token: $GITHUB_PAT
+        keep-history: true
+        local-dir: docs
+        on:
+          branch: master
+   - r: 3.5.1
+   - r: 3.4.1
 
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_PAT
-  keep-history: true
-  local-dir: docs
-  on:
-    branch: master
+

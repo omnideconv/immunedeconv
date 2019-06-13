@@ -44,7 +44,7 @@ pipeline](https://github.com/grst/immune_deconvolution_benchmark).
 
 
 ## Installation
-System requirements: linux and R >= 3.4.1. The package has been tested on CentOS Linux 7.5 with R 3.4.1. 
+System requirements: R >= 3.4.1. Only linux is officially supported, but Mac/Windows should work, too. 
 
 ### Conda
 The easiest way to retrieve this package and all its dependencies is to use [Anaconda](https://conda.io/miniconda.html).

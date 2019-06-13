@@ -6,18 +6,18 @@ cache: packages
 
 matrix:
   include:
-    - r: release
-      after_success:
-      - Rscript -e "pkgdown::build_site()"
-      deploy:
-        provider: pages
-        skip-cleanup: true
-        github-token: $GITHUB_PAT
-        keep-history: true
-        local-dir: docs
-        on:
-          branch: master
-   - r: 3.5.1
-   - r: 3.4.1
+  - r: release
+    after_success:
+    - Rscript -e "pkgdown::build_site()"
+    deploy:
+      provider: pages
+      skip-cleanup: true
+      github-token: $GITHUB_PAT
+      keep-history: true
+      local-dir: docs
+      on:
+        branch: master
+  - r: 3.5.1
+  - r: 3.4.1
 
 

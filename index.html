@@ -97,46 +97,58 @@ xcell
 epic</code></pre>
 <p>For more detailed usage instructions, see the <a href="https://grst.github.io/immunedeconv/articles/immunedeconv.html">Documentation</a>.</p>
 </div>
-<div id="available-methods" class="section level2">
+<div id="available-methods-licenses-citations" class="section level2">
 <h2 class="hasAnchor">
-<a href="#available-methods" class="anchor"></a>Available methods</h2>
+<a href="#available-methods-licenses-citations" class="anchor"></a>Available methods, Licenses, Citations</h2>
+<p>Note that, while <em>immunedeconv</em> itself is free (<a href="https://github.com/grst/immunedeconv/blob/master/LICENSE.md">BSD</a>), you may need to obtain a license to use the individual methods. See the table below for more information. If you use this package in your work, please cite both our package and the methods(s) you are using.</p>
+<blockquote>
+<p>Sturm, G., Finotello, F., Petitprez, F., Zhang, J. D., Baumbach, J., Fridman, W. H., …, List, M., Aneichyk, T. (2019). Comprehensive evaluation of transcriptome-based cell-type quantification methods for immuno-oncology. Bioinformatics, 35(14), i436-i445. <a href="https://doi.org/10.1093/bioinformatics/btz363" class="uri">https://doi.org/10.1093/bioinformatics/btz363</a></p>
+</blockquote>
 <table class="table">
 <colgroup>
-<col width="44%">
-<col width="55%">
+<col width="29%">
+<col width="33%">
+<col width="37%">
 </colgroup>
 <thead><tr class="header">
 <th>method</th>
+<th>license</th>
 <th>citation</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td><a href="http://icbi.at/software/quantiseq/doc/index.html">quanTIseq</a></td>
-<td>Finotello, F., Mayer, C., Plattner, C., Laschober, G., Rieder, D., Hackl, H., … Trajanoski, Z. (2017). quanTIseq: quantifying immune contexture of human tumors. BioRxiv, 223180. <a href="https://doi.org/10.1101/223180" class="uri">https://doi.org/10.1101/223180</a>
+<td>free (<a href="https://github.com/grst/immunedeconv/blob/master/LICENSE.md">BSD</a>)</td>
+<td>Finotello, F., Mayer, C., Plattner, C., Laschober, G., Rieder, D., Hackl, H., …, Sopper, S. (2019). Molecular and pharmacological modulators of the tumor immune contexture revealed by deconvolution of RNA-seq data. Genome medicine, 11(1), 34. <a href="https://doi.org/10.1186/s13073-019-0638-6" class="uri">https://doi.org/10.1186/s13073-019-0638-6</a>
 </td>
 </tr>
 <tr class="even">
 <td><a href="http://cistrome.org/TIMER/">TIMER</a></td>
+<td>free (<a href="http://cistrome.org/TIMER/download.html">GPL 2.0</a>)</td>
 <td>Li, B., Severson, E., Pignon, J.-C., Zhao, H., Li, T., Novak, J., … Liu, X. S. (2016). Comprehensive analyses of tumor immunity: implications for cancer immunotherapy. Genome Biology, 17(1), 174. <a href="https://doi.org/10.1186/s13059-016-1028-7" class="uri">https://doi.org/10.1186/s13059-016-1028-7</a>
 </td>
 </tr>
 <tr class="odd">
 <td><a href="https://cibersort.stanford.edu/">CIBERSORT</a></td>
+<td>free for non-commerical use only</td>
 <td>Newman, A. M., Liu, C. L., Green, M. R., Gentles, A. J., Feng, W., Xu, Y., … Alizadeh, A. A. (2015). Robust enumeration of cell subsets from tissue expression profiles. Nature Methods, 12(5), 453–457. <a href="https://doi.org/10.1038/nmeth.3337" class="uri">https://doi.org/10.1038/nmeth.3337</a>
 </td>
 </tr>
 <tr class="even">
 <td><a href="https://github.com/ebecht/MCPcounter">MCPCounter</a></td>
+<td>free (<a href="https://github.com/ebecht/MCPcounter/blob/master/Source/License">GPL 3.0</a>)</td>
 <td>Becht, E., Giraldo, N. A., Lacroix, L., Buttard, B., Elarouci, N., Petitprez, F., … de Reyniès, A. (2016). Estimating the population abundance of tissue-infiltrating immune and stromal cell populations using gene expression. Genome Biology, 17(1), 218. <a href="https://doi.org/10.1186/s13059-016-1070-5" class="uri">https://doi.org/10.1186/s13059-016-1070-5</a>
 </td>
 </tr>
 <tr class="odd">
 <td><a href="http://xcell.ucsf.edu/">xCell</a></td>
+<td>free (<a href="https://github.com/dviraran/xCell/blob/master/DESCRIPTION">GPL 3.0</a>)</td>
 <td>Aran, D., Hu, Z., &amp; Butte, A. J. (2017). xCell: digitally portraying the tissue cellular heterogeneity landscape. Genome Biology, 18(1), 220. <a href="https://doi.org/10.1186/s13059-017-1349-1" class="uri">https://doi.org/10.1186/s13059-017-1349-1</a>
 </td>
 </tr>
 <tr class="even">
 <td><a href="https://gfellerlab.shinyapps.io/EPIC_1-1/">EPIC</a></td>
+<td>free for non-commercial use only (<a href="https://github.com/GfellerLab/EPIC/blob/master/LICENSE">Academic License</a>)</td>
 <td>Racle, J., de Jonge, K., Baumgaertner, P., Speiser, D. E., &amp; Gfeller, D. (2017). Simultaneous enumeration of cancer and immune cell types from bulk tumor gene expression data. ELife, 6, e26476. <a href="https://doi.org/10.7554/eLife.26476" class="uri">https://doi.org/10.7554/eLife.26476</a>
 </td>
 </tr>
@@ -177,12 +189,6 @@ conda activate deconvolution</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"remotes"</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"grst/immunedeconv"</span>)</a></code></pre></div>
 </div>
-</div>
-<div id="citation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#citation" class="anchor"></a>Citation</h2>
-<p>If you use this package, please cite</p>
-<p>Sturm, G., Finotello F. et al. “Comprehensive evaluation of cell-type quantification methods for immuno-oncology”, bioRxiv, <a href="https://doi.org/10.1101/463828" class="uri">https://doi.org/10.1101/463828</a></p>
 </div>
 </div>
   </div>

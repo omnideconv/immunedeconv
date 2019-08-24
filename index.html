@@ -82,7 +82,7 @@
 <div id="immunedeconv---an-r-package-for-unified-access-to-computational-methods-for-estimating-immune-cell-fractions-from-bulk-rna-sequencing-data-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#immunedeconv---an-r-package-for-unified-access-to-computational-methods-for-estimating-immune-cell-fractions-from-bulk-rna-sequencing-data-" class="anchor"></a><code>immunedeconv</code> - an R package for unified access to computational methods for estimating immune cell fractions from bulk RNA sequencing data.</h1></div>
-<p><a href="https://travis-ci.com/grst/immunedeconv"><img src="https://travis-ci.com/grst/immunedeconv.svg?branch=master" alt="travis"></a> <a href="https://ci.appveyor.com/project/grst/immunedeconv/branch/master"><img src="https://ci.appveyor.com/api/projects/status/j2fb3fd097kqahg5/branch/master?svg=true" alt="appveyor"></a> <img src="https://img.shields.io/badge/license-BSD-green.svg" alt="license"><a href="https://grst.github.io/immunedeconv"><img src="https://img.shields.io/badge/docs-pkgdown-blue.svg" alt="docs"></a></p>
+<p><a href="https://travis-ci.com/grst/immunedeconv"><img src="https://travis-ci.com/grst/immunedeconv.svg?branch=master" alt="travis"></a> <a href="https://ci.appveyor.com/project/grst/immunedeconv/branch/master"><img src="https://ci.appveyor.com/api/projects/status/j2fb3fd097kqahg5/branch/master?svg=true" alt="appveyor"></a> <a href="http://bioconda.github.io/recipes/r-immunedeconv/README.html"><img src="https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat" alt="install with bioconda"></a> <img src="https://img.shields.io/badge/license-BSD-green.svg" alt="license"><a href="https://grst.github.io/immunedeconv"><img src="https://img.shields.io/badge/docs-pkgdown-blue.svg" alt="docs"></a></p>
 <div id="basic-usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#basic-usage" class="anchor"></a>Basic usage</h2>
@@ -100,7 +100,7 @@ epic</code></pre>
 <div id="available-methods-licenses-citations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#available-methods-licenses-citations" class="anchor"></a>Available methods, Licenses, Citations</h2>
-<p>Note that, while <em>immunedeconv</em> itself is free (<a href="https://github.com/grst/immunedeconv/blob/master/LICENSE.md">BSD</a>), you may need to obtain a license to use the individual methods. See the table below for more information. If you use this package in your work, please cite both our package and the methods(s) you are using.</p>
+<p>Note that, while <em>immunedeconv</em> itself is free (<a href="https://github.com/grst/immunedeconv/blob/master/LICENSE.md">BSD</a>), you may need to obtain a license to use the individual methods. See the table below for more information. If you use this package in your work, please cite both our package and the method(s) you are using.</p>
 <blockquote>
 <p>Sturm, G., Finotello, F., Petitprez, F., Zhang, J. D., Baumbach, J., Fridman, W. H., …, List, M., Aneichyk, T. (2019). Comprehensive evaluation of transcriptome-based cell-type quantification methods for immuno-oncology. Bioinformatics, 35(14), i436-i445. <a href="https://doi.org/10.1093/bioinformatics/btz363" class="uri">https://doi.org/10.1093/bioinformatics/btz363</a></p>
 </blockquote>
@@ -164,9 +164,9 @@ epic</code></pre>
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>System requirements: R &gt;= 3.4.1. Only linux is officially supported, but Mac/Windows should work, too.</p>
-<div id="conda" class="section level3">
+<div id="bioconda-linuxmacos-only" class="section level3">
 <h3 class="hasAnchor">
-<a href="#conda" class="anchor"></a>Conda</h3>
+<a href="#bioconda-linuxmacos-only" class="anchor"></a>Bioconda (Linux/MacOS only)</h3>
 <p>The easiest way to retrieve this package and all its dependencies is to use <a href="https://conda.io/miniconda.html">Anaconda</a>. Install typically completes within minutes.</p>
 <ol>
 <li><p>Download <a href="https://conda.io/miniconda.html">Miniconda</a>, if you don’t have a conda installation already.</p></li>
@@ -177,8 +177,7 @@ conda activate deconvolution</code></pre>
 <ol>
 <li>Install the <code>immunedeconv</code> package</li>
 </ol>
-<pre><code>conda install --override -c grst -c bioconda -c conda-forge/label/cf201901 r-immunedeconv</code></pre>
-<p><strong>Note:</strong> due to a recent <a href="https://github.com/conda/conda/issues/8413">conda compiler update</a>, immunedeconv needs to be installed using the <code>cf201901</code> label of conda-forge. I’m working on making it work with the default version…</p>
+<pre><code>conda install -c bioconda -c conda-forge r-immunedeconv</code></pre>
 <p><code>conda</code> will automatically install the package and all dependencies. You can then open an <code>R</code> instance within the environment and use the package.</p>
 </div>
 <div id="standard-r-package" class="section level3">

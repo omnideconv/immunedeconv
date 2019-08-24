@@ -1,6 +1,7 @@
 # `immunedeconv` - an R package for unified access to computational methods for estimating immune cell fractions from bulk RNA sequencing data.
 [![travis](https://travis-ci.com/grst/immunedeconv.svg?branch=master)](https://travis-ci.com/grst/immunedeconv) 
 [![appveyor](https://ci.appveyor.com/api/projects/status/j2fb3fd097kqahg5/branch/master?svg=true)](https://ci.appveyor.com/project/grst/immunedeconv/branch/master)
+[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/r-immunedeconv/README.html)
 ![license](https://img.shields.io/badge/license-BSD-green.svg) 
 [![docs](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://grst.github.io/immunedeconv)
 
@@ -26,7 +27,7 @@ For more detailed usage instructions, see the
 
 
 ## Available methods, Licenses, Citations
-Note that, while *immunedeconv* itself is free ([BSD](https://github.com/grst/immunedeconv/blob/master/LICENSE.md)), you may need to obtain a license to use the individual methods. See the table below for more information. If you use this package in your work, please cite both our package and the methods(s) you are using. 
+Note that, while *immunedeconv* itself is free ([BSD](https://github.com/grst/immunedeconv/blob/master/LICENSE.md)), you may need to obtain a license to use the individual methods. See the table below for more information. If you use this package in your work, please cite both our package and the method(s) you are using. 
 
 > Sturm, G., Finotello, F., Petitprez, F., Zhang, J. D., Baumbach, J., Fridman, W. H., ..., List, M., Aneichyk, T. (2019). Comprehensive evaluation of transcriptome-based cell-type quantification methods for immuno-oncology. Bioinformatics, 35(14), i436-i445. https://doi.org/10.1093/bioinformatics/btz363  
 
@@ -51,7 +52,7 @@ pipeline](https://github.com/grst/immune_deconvolution_benchmark).
 ## Installation
 System requirements: R >= 3.4.1. Only linux is officially supported, but Mac/Windows should work, too. 
 
-### Conda
+### Bioconda (Linux/MacOS only)
 The easiest way to retrieve this package and all its dependencies is to use [Anaconda](https://conda.io/miniconda.html).
 Install typically completes within minutes. 
 
@@ -65,10 +66,8 @@ conda activate deconvolution
 
 3. Install the `immunedeconv` package
 ```
-conda install --override -c grst -c bioconda -c conda-forge/label/cf201901 r-immunedeconv
+conda install -c bioconda -c conda-forge r-immunedeconv
 ```
-**Note:** due to a recent [conda compiler update](https://github.com/conda/conda/issues/8413), immunedeconv needs
-to be installed using the `cf201901` label of conda-forge. I'm working on making it work with the default version...
 
 `conda` will automatically install the package and all dependencies.
 You can then open an `R` instance within the environment and use the package.

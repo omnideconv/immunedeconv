@@ -11,5 +11,4 @@
   assign('cell_type_list', .get_cell_type_list(), envir=.GlobalEnv)
   assign('cell_type_tree', .get_cell_type_tree(), envir=.GlobalEnv)
   assign('node_by_name', .get_node_by_name(), envir=.GlobalEnv)
-
 }

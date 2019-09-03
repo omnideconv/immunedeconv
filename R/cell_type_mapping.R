@@ -19,6 +19,7 @@ NULL
 #'
 #' @name cell_type_map
 NULL
+# gets attached on .onLoad, see zzz.R
 .get_cell_type_map = function() {
   readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx",
                                 package="immunedeconv", mustWork=TRUE),
@@ -35,6 +36,7 @@ NULL
 #'
 #' @name available_datasets
 NULL
+# gets attached on .onLoad, see zzz.R
 .get_available_datasets = function() {
   cell_type_map %>% pull(method_dataset) %>% unique()
 }
@@ -56,12 +58,14 @@ NULL
 #' @details a `data.tree` object
 #' @name cell_type_tree
 NULL
+# gets attached on .onLoad, see zzz.R
 .get_cell_type_tree = function() {
   cell_type_list %>% as.data.frame() %>% data.tree::FromDataFrameNetwork()
 }
 
 
 # Access nodes by name in O(1). Node names are unique in our tree.
+# gets attached on .onLoad, see zzz.R
 .get_node_by_name = function() {
   cell_type_tree$Get(function(node){node})
 }
@@ -192,6 +196,9 @@ map_result_to_celltypes = function(result, use_cell_types, method=NULL) {
 #'
 #' @export
 get_all_children = function(cell_type, method=NULL) {
+  if(!cell_type %in% names(node_by_name)) {
+    stop(sprintf("unknown cell type: %s", cell_type))
+  }
   if(is.null(method)) {
     names(node_by_name[[cell_type]]$Get('name'))
   } else {

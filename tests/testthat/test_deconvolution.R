@@ -81,3 +81,12 @@ test_that("generic deconvolution works for all methods, without extra arguments"
     }
   })
 })
+
+test_that("cell-types are mapped correctely in a method that has different cell-types in different expression matrices", {
+  res_tref = deconvolute(test_mat, "epic", tumor=TRUE)
+  res_bref = deconvolute(test_mat, "epic", tumor=FALSE)
+  assert("CAF in TRef", "Cancer associated fibroblast" %in% res_tref$cell_type)
+  assert("CAF not in BRef", !("Cancer associated fibroblast" %in% res_bref$cell_type))
+  assert("Neutrophil in BRef", "Neutrophil" %in% res_bref$cell_type)
+  assert("Neutrophil not in TRef", !("Neutrophil" %in% res_tref$cell_type))
+})

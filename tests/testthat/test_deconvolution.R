@@ -44,7 +44,7 @@ test_that("xcell works", {
 })
 
 test_that("xcell works with reduced set of expected cell types", {
-  expected_cell_types = c("T cell CD4+", "T cell CD8+", "Dendritic cell", "Macrophage M1", "Macrophage M2")
+  expected_cell_types = c("T cell CD4+", "T cell CD8+", "Myeloid dendritic cell", "Macrophage M1", "Macrophage M2")
   res = deconvolute_xcell(test_mat, arrays=FALSE, expected_cell_types)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
   res = deconvolute_xcell(test_mat, arrays=TRUE, expected_cell_types)

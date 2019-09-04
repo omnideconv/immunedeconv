@@ -1,3 +1,5 @@
+url: https://grst.github.io/immunedeconv
+
 reference:
   - title: Deconvolution
     desc: Use the package to estimate immune cell fractions from bulk RNA-seq samples.

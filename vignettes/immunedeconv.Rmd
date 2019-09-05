@@ -1,5 +1,5 @@
 ---
-title: "Getting started with `immunedeconv`"
+title: "Getting started with immunedeconv"
 bibliography: references.bib
 biblio-style: apalike
 link-citations: yes
@@ -17,6 +17,7 @@ library(immunedeconv)
 library(data.tree)
 library(tidyr)
 library(tibble)
+library(dplyr)
 ```
 
 # Introduction
@@ -61,6 +62,7 @@ matrix. In general values should be
 For xCell and MCP-counter this is not so important. xCell works on the ranks of
 the gene expression only and MCP-counter sums up the gene expression values.
 
+Rownames are expected to be HGNC gene symbols.
 Instead of a matrix, *immunedeconv* also supports ExpressionSets ([see
 below](#using-expressionsets)).
 
@@ -178,17 +180,39 @@ If you are curious, it's all defined in [this excel
 sheet](https://github.com/grst/immunedeconv/blob/master/inst/extdata/cell_type_mapping.xlsx).
 
 This tree can be used to summarize scores along the tree. For instance,
-quanTIseq provides scores for CD4+ and CD8+ T cells independently, but you are
-interested in the fraction of overall T cells. In that case you can use
+quanTIseq provides scores for regulatory and non-regulatory CD4+ T cells independently, but you are
+interested in the fraction of overall CD4+ T cells. In that case you can use
 `map_result_to_celltypes` to sum up the scores:
 
 ```{r, message=FALSE}
 res = deconvolute(immunedeconv::example_gene_expression_matrix, "quantiseq") %>%
-  map_result_to_celltypes(c("T cell"), "quantiseq")
+  map_result_to_celltypes(c("T cell CD4+"), "quantiseq")
 knitr::kable(res, digits=2)
 ```
 
 The algorithm is explained in detail in the methods section of @sturm2019.
+
+# Absolute scores and unknown cell types
+EPIC and quanTIseq are currently the only methods providing an absolute score,
+i.e. a score that can be interpreted as a cell fraction. These methods
+also provide an estimate for the amount of unknown cells, i.e. cells for
+that no signature exists.
+
+In *immunedeconv* this estimate is implicitly available as $1 - \text{SUM(scores)}$.
+
+It can be easily computed using the following snippet:
+```{r, message=FALSE}
+res = deconvolute(immunedeconv::example_gene_expression_matrix, "quantiseq", tumor=TRUE)
+other_cells = res %>% select(-cell_type) %>% summarise_all(function(x) {1-sum(x)})
+knitr::kable(other_cells, digits=2)
+```
+
+If desired, the estimate can be added to the result table:
+```{r, message=FALSE}
+res2 = bind_rows(res,
+                other_cells %>% add_column(cell_type="other cells", .before=0))
+knitr::kable(res2, digits=2)
+```
 
 
 # FAQs
@@ -200,6 +224,18 @@ genes to estimate the inter-sample variance while quanTIseq uses marker genes
 only. This is also being discussed in
 [#15](https://github.com/grst/immunedeconv/issues/15).
 
-You can, however, provide custom signatures for most individual methods.
+You can, however, provide custom signatures for most individual methods (see
+next question).
+
+### I want to use a special feature of a method, but I cannot access it through the `deconvolute` function.
+You can access each method individually through the `deconvolute_xxx` function.
+Through these functions you can access all native features. See the [function
+  reference](../reference/) for details.
+
+If you believe that the feature is available across multiple methods and
+should be added to the `deconvolute` interface, feel free to open an
+[issue](https://github.com/grst/immunedeconv/issues) or pull request.
+
+
 
 # References

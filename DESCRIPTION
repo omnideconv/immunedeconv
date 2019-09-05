@@ -20,6 +20,7 @@ Imports:
     e1071 (>= 1.6),
     parallel (>= 3.4),
     BiocGenerics,
+    rlang,
     BiocParallel,
     preprocessCore,
     Biobase,

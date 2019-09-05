@@ -9,6 +9,15 @@ reference:
       - set_cibersort_binary
       - set_cibersort_mat
       - eset_to_matrix
+  - title: Deconvolution methods
+    desc: Direct access to the individual deconvolution methods to access special features that are not available through `deconvolute()`.
+    contents:
+      - deconvolute_cibersort
+      - deconvolute_epic
+      - deconvolute_mcp_counter
+      - deconvolute_quantiseq
+      - deconvolute_timer
+      - deconvolute_xcell
   - title: Cell type mapping
     desc: Map cell types and datasets to a controlled vocabulary.
     contents:

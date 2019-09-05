@@ -22,8 +22,9 @@ xcell
 epic
 ```
 
-For more detailed usage instructions, see the
-[Documentation](https://grst.github.io/immunedeconv/articles/immunedeconv.html).
+For more detailed usage instructions, see the Documentation:
+* [Getting started](https://grst.github.io/immunedeconv/articles/immunedeconv.html).
+* [Detailed example](https://grst.github.io/immunedeconv/articles/detailed_example.html).
 
 
 ## Available methods, Licenses, Citations

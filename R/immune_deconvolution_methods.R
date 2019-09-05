@@ -8,6 +8,7 @@
 #' @import readr
 #' @importFrom tibble as_tibble
 #' @importFrom EPIC EPIC
+#' @importFrom rlang dots_list
 NULL
 
 
@@ -65,11 +66,13 @@ set_cibersort_mat = function(path) {
 ###########################################################################
 # Deconvolution functions for consistenctly accessing each method
 #
-# These functions are called from the generic `deconvolute()` function
+# These functions are called from the generic `deconvolute()` function.
+# They can also be used by the end-user to access method-specific
+# arguments.
 ###########################################################################
 
 
-#' Deconvolute using the TIMER technique
+#' Deconvolute using TIMER
 #'
 #' Unlike the other methods, TIMER needs the specification of the
 #' cancer type for each sample.
@@ -80,6 +83,7 @@ set_cibersort_mat = function(path) {
 #'     'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
 #'     'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
 #'     'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol'
+#' @export
 deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
   indications = tolower(indications)
   assert("indications fit to mixture matrix", length(indications) == ncol(gene_expression_matrix))
@@ -99,6 +103,21 @@ deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
 }
 
 
+#' Deconvolute using xCell
+#'
+#' @param gene_expression_matrix a m x n matrix with m genes and n samples
+#' @param arrays Set to TRUE if microarray data, to FALSE for RNASeq (`rnaseq` parameter in xCell)
+#' @param expected_cell_types a character list of the cell types to use
+#'   in the analysis. If NULL runs xCell with all cell types.
+#'   The spillover compensation step may over compensate, thus it is always better
+#'   to run xCell with a list of cell types that are expected to be in the mixture.
+#'   The names of cell types in this list must be a subset of the cell types that are inferred by xCell.
+#'   (`cell.types.use` parameter in xCell)
+#'  @param ... Passed through to original xCell function. A native argument takes precedence
+#'   over an immunedeconv argument (e.g. `rnaseq` takes precedence over `arrays`)
+#'   See [xCellAnalysis](https://rdrr.io/github/dviraran/xCell/man/xCellAnalysis.html)
+#'
+#' @export
 deconvolute_xcell = function(gene_expression_matrix, arrays, expected_cell_types=NULL, ...) {
   rnaseq = !arrays
 
@@ -110,31 +129,77 @@ deconvolute_xcell = function(gene_expression_matrix, arrays, expected_cell_types
     cell_types_xcell = NULL
   }
 
-  invisible(capture.output(res <- xCell::xCellAnalysis(gene_expression_matrix, rnaseq=rnaseq,
-                                                       cell.types.use=cell_types_xcell,
-                                                       parallel.sz=config_env$xcell_cores, ...)))
+  arguments = dots_list(gene_expression_matrix, rnaseq=rnaseq,
+                        cell.types.use=cell_types_xcell,
+                        parallel.sz=config_env$xcell_cores, ..., .homonyms="last")
+  call = rlang::call2(xCell::xCellAnalysis, !!!arguments)
+  invisible(capture.output(res <- eval(call)))
 
   res
 }
 
 
+#' Deconvolute using MCP-counter
+#'
+#' @param gene_expression_matrix a m x n matrix with m genes and n samples
+#' @param feature_types type of identifiers used for expression features. May be
+#'  one of `"affy133P2_probesets","HUGO_symbols","ENTREZ_ID"`
+#' @param ... pased through to original MCP-counter function. A native argument takes precedence
+#'   over an immunedeconv argument (e.g. `featureType` takes precedence over `feature_types`)
+#'  See [MCPcounter.estimate](https://github.com/ebecht/MCPcounter/blob/master/Source/R/MCPcounter.R#L19).
+#'
+#' @export
 deconvolute_mcp_counter = function(gene_expression_matrix, feature_types="HUGO_symbols", ...) {
-  MCPcounter::MCPcounter.estimate(gene_expression_matrix, featuresType=feature_types, ...)
+  arguments = dots_list(gene_expression_matrix, featuresType=feature_types, ..., .homonyms="last")
+  call = rlang::call2(MCPcounter::MCPcounter.estimate, !!!arguments)
+  eval(call)
 }
 
 
+#' Deconvolute using EPIC
+#'
+#' @param gene_expression_matrix a m x n matrix with m genes and n samples
+#' @param tumor Set to TRUE if working with tumor data. Will choose the `TRef`
+#'  signature matrix in that case, `BRef` otherwise (through EPIC's `reference` parameter)
+#' @param scale_mrna Set to FALSE to disable correction for cell type-specific differences
+#'  in mRNA content (through EPIC's `mRNA_cell` parameter)
+#' @param ... passed through to EPIC. A native argument takes precedence
+#'   over an immunedeconv argument (e.g. `ref` takes precedence over `tumor`)
+#'  See [EPIC](https://rdrr.io/github/GfellerLab/EPIC/man/EPIC.html)
+#'
+#' @export
 deconvolute_epic = function(gene_expression_matrix, tumor, scale_mrna, ...) {
   ref = ifelse(tumor, "TRef", "BRef")
   mRNA_cell = NULL
   if(!scale_mrna) mRNA_cell = c("default"=1.)
-  epic_res_raw = EPIC::EPIC(bulk=gene_expression_matrix,
-                            reference=ref, mRNA_cell = mRNA_cell, ...)
+  
+  arguments = dots_list(bulk=gene_expression_matrix,
+                        reference=ref, mRNA_cell = mRNA_cell, ..., .homonyms="last")
+  call = rlang::call2(EPIC::EPIC, !!!arguments)
+  epic_res_raw = eval(call)
+  
   t(epic_res_raw$cellFractions)
 }
 
 
-deconvolute_quantiseq = function(gene_expresssion_matrix, tumor, arrays, scale_mrna) {
-  res = deconvolute_quantiseq.default(gene_expresssion_matrix, tumor=tumor, arrays=arrays, mRNAscale = scale_mrna)
+#' Deconvolute using quanTIseq
+#'
+#' @param gene_expression_matrix a m x n matrix with m genes and n samples
+#' @param tumor Set to TRUE if dealing with a tumor samples. if TRUE, signature genes with
+#'   high expressin in tumor samles are removed.
+#' @param arrays Set to TRUE if working with Microarray data instead of RNA-seq
+#' @param scale_mrna Set to FALSE to disable correction for cell type-specific differences
+#'  in mRNA content
+#' @param ... passed through to original quantiseq method. A native argument takes precedence
+#'   over an immunedeconv argument (e.g. `mRNAscale` takes precedence over `scale_mrna`)
+#'   See `deconvolute_quantiseq.default()`.
+#'
+#' @export
+deconvolute_quantiseq = function(gene_expresssion_matrix, tumor, arrays, scale_mrna, ...) {
+  arguments = dots_list(gene_expresssion_matrix, tumor=tumor, arrays=arrays, mRNAscale = scale_mrna, ..., .homonyms="last")
+  call = rlang::call2(deconvolute_quantiseq.default, !!!arguments)
+  res = eval(call)
+  
   sample_names = res$Sample
   res_mat = res %>%
     as_tibble() %>%
@@ -145,10 +210,25 @@ deconvolute_quantiseq = function(gene_expresssion_matrix, tumor, arrays, scale_m
   t(res_mat)
 }
 
+
+#' Deconvolute using CIBERSORT or CIBERSORT abs.
+#'
+#' @param gene_expression_matrix a m x n matrix with m genes and n samples
+#' @param arrays Set to TRUE if working with Microarray data instead of RNA-seq.
+#'   As recommended by the authors, quantile normalization will be enabled
+#'   for Microarrays and disabled for RNAseq.
+#' @param absolute Set to TRUE for CIBERSORT absolute mode.
+#' @param abs_method Choose method to compute absolute score (only if `absolute=TRUE`).
+#' @param ... passed through to the original CIBERSORT function. A native argument takes precedence
+#'   over an immunedeconv argument (e.g. `QN` takes precedence over `arrays`). Documentation
+#'   is not publicly available. Log in to the CIBERSORT website for details.
+#'
+#' @export
 deconvolute_cibersort = function(gene_expression_matrix,
                                  arrays,
                                  absolute=FALSE,
-                                 abs_method="sig.score") {
+                                 abs_method="sig.score",
+                                 ...) {
   # the authors reccomend to disable quantile normalizeation for RNA seq.
   # (see CIBERSORT website).
   quantile_norm = arrays
@@ -158,8 +238,11 @@ deconvolute_cibersort = function(gene_expression_matrix,
 
   tmp_mat = tempfile()
   write_tsv(as_tibble(gene_expression_matrix, rownames="gene_symbol"), path=tmp_mat)
-  res = CIBERSORT(get("cibersort_mat", envir=config_env), tmp_mat, perm=0,
-                  QN=quantile_norm, absolute=absolute, abs_method=abs_method)
+  
+  arguments = dots_list(get("cibersort_mat", envir=config_env), tmp_mat, perm=0,
+                        QN=quantile_norm, absolute=absolute, abs_method=abs_method, ..., .homonyms="last")
+  call = rlang::call2(CIBERSORT, !!!arguments)
+  res = eval(call)
 
   res = res %>%
     t() %>%

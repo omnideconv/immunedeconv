@@ -2,7 +2,7 @@
 % Please edit documentation in R/immune_deconvolution_methods.R
 \name{deconvolute_timer}
 \alias{deconvolute_timer}
-\title{Deconvolute using the TIMER technique}
+\title{Deconvolute using TIMER}
 \usage{
 deconvolute_timer(gene_expression_matrix, indications = NULL)
 }

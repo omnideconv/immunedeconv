@@ -2,7 +2,7 @@
 title: "Detailed Usage Example"
 output: rmarkdown::html_vignette
 vignette: >
-   %\VignetteIndexEntry{Vignette Title}
+   %\VignetteIndexEntry{Detailed Exampe}
    %\VignetteEngine{knitr::rmarkdown}
    \usepackage[utf8]{inputenc}
 ---

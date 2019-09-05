@@ -17,8 +17,9 @@ in the analysis. If NULL runs xCell with all cell types.
 The spillover compensation step may over compensate, thus it is always better
 to run xCell with a list of cell types that are expected to be in the mixture.
 The names of cell types in this list must be a subset of the cell types that are inferred by xCell.
-(\code{cell.types.use} parameter in xCell)
-@param ... Passed through to original xCell function. A native argument takes precedence
+(\code{cell.types.use} parameter in xCell)}
+
+\item{...}{Passed through to original xCell function. A native argument takes precedence
 over an immunedeconv argument (e.g. \code{rnaseq} takes precedence over \code{arrays})
 See \href{https://rdrr.io/github/dviraran/xCell/man/xCellAnalysis.html}{xCellAnalysis}}
 }

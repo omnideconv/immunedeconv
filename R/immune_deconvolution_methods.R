@@ -172,12 +172,12 @@ deconvolute_epic = function(gene_expression_matrix, tumor, scale_mrna, ...) {
   ref = ifelse(tumor, "TRef", "BRef")
   mRNA_cell = NULL
   if(!scale_mrna) mRNA_cell = c("default"=1.)
-  
+
   arguments = dots_list(bulk=gene_expression_matrix,
                         reference=ref, mRNA_cell = mRNA_cell, ..., .homonyms="last")
   call = rlang::call2(EPIC::EPIC, !!!arguments)
   epic_res_raw = eval(call)
-  
+
   t(epic_res_raw$cellFractions)
 }
 
@@ -195,11 +195,11 @@ deconvolute_epic = function(gene_expression_matrix, tumor, scale_mrna, ...) {
 #'   See `deconvolute_quantiseq.default()`.
 #'
 #' @export
-deconvolute_quantiseq = function(gene_expresssion_matrix, tumor, arrays, scale_mrna, ...) {
-  arguments = dots_list(gene_expresssion_matrix, tumor=tumor, arrays=arrays, mRNAscale = scale_mrna, ..., .homonyms="last")
+deconvolute_quantiseq = function(gene_expression_matrix, tumor, arrays, scale_mrna, ...) {
+  arguments = dots_list(gene_expression_matrix, tumor=tumor, arrays=arrays, mRNAscale = scale_mrna, ..., .homonyms="last")
   call = rlang::call2(deconvolute_quantiseq.default, !!!arguments)
   res = eval(call)
-  
+
   sample_names = res$Sample
   res_mat = res %>%
     as_tibble() %>%
@@ -238,7 +238,7 @@ deconvolute_cibersort = function(gene_expression_matrix,
 
   tmp_mat = tempfile()
   write_tsv(as_tibble(gene_expression_matrix, rownames="gene_symbol"), path=tmp_mat)
-  
+
   arguments = dots_list(get("cibersort_mat", envir=config_env), tmp_mat, perm=0,
                         QN=quantile_norm, absolute=absolute, abs_method=abs_method, ..., .homonyms="last")
   call = rlang::call2(CIBERSORT, !!!arguments)

@@ -113,7 +113,7 @@ deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
 #'   to run xCell with a list of cell types that are expected to be in the mixture.
 #'   The names of cell types in this list must be a subset of the cell types that are inferred by xCell.
 #'   (`cell.types.use` parameter in xCell)
-#'  @param ... Passed through to original xCell function. A native argument takes precedence
+#' @param ... Passed through to original xCell function. A native argument takes precedence
 #'   over an immunedeconv argument (e.g. `rnaseq` takes precedence over `arrays`)
 #'   See [xCellAnalysis](https://rdrr.io/github/dviraran/xCell/man/xCellAnalysis.html)
 #'

@@ -4,10 +4,12 @@
 \alias{deconvolute_quantiseq}
 \title{Deconvolute using quanTIseq}
 \usage{
-deconvolute_quantiseq(gene_expresssion_matrix, tumor, arrays, scale_mrna,
+deconvolute_quantiseq(gene_expression_matrix, tumor, arrays, scale_mrna,
   ...)
 }
 \arguments{
+\item{gene_expression_matrix}{a m x n matrix with m genes and n samples}
+
 \item{tumor}{Set to TRUE if dealing with a tumor samples. if TRUE, signature genes with
 high expressin in tumor samles are removed.}
 
@@ -19,8 +21,6 @@ in mRNA content}
 \item{...}{passed through to original quantiseq method. A native argument takes precedence
 over an immunedeconv argument (e.g. \code{mRNAscale} takes precedence over \code{scale_mrna})
 See \code{deconvolute_quantiseq.default()}.}
-
-\item{gene_expression_matrix}{a m x n matrix with m genes and n samples}
 }
 \description{
 Deconvolute using quanTIseq

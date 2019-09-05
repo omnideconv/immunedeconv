@@ -15,7 +15,6 @@ vignette: >
 # devtools::load_all(".")
 library(immunedeconv)
 library(data.tree)
-library(tidyr)
 library(tibble)
 library(dplyr)
 ```

@@ -196,6 +196,7 @@ The algorithm is explained in detail in the methods section of @sturm2019.
 In general, cell-type scores allow for the comparison (1) between samples, (2) between cell-types or (3) both. 
 Between-sample comparisons allow to make statements such as *"In patient A, there are more CD8+ T cells than in patient B"*. 
 Between-cell-type comparisons allow to make statements such as *"In a certain patient, there are more B cells than T cells"*.
+For more information, see our Benchmark paper (@sturm2019). 
 
 ### Methods that allow between-sample comparisons
 

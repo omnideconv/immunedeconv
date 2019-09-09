@@ -18,22 +18,17 @@ library(tidyr)
 library(immunedeconv)
 ```
 
-*Immunedeconv* ships with an example dataset containing purified immune cells extracted from several donors.
-For demonstration purposes, let's create a subset of this dataset and estimate immune cell fractions.
+*Immunedeconv* ships with an example dataset with samples from four patients with metastatic melanoma published in @EPIC2017. 
+It is available from `immunedeconv::dataset_racle`. It contains a gene expression matrix (`dataset_racle$expr_mat`) generated using bulk RNA-seq and 'gold standard' estimates of immune cell contents profiled with FACS (`dataset_racle$ref`). We are going to use the bulk RNA-seq data to run the deconvolution methods and will compare the results to the FACS data later on.   
 
+The gene expression data is a matrix with HGNC symbols in rows and samples in columns:
+The dataset is a matrix 
 ```{r}
-my_matrix = example_gene_expression_matrix[,c(1,2,12,13,19,20)]
+# show the first 5 lines of the gene expression matrix
+knitr::kable(dataset_racle$expr_mat[1:5, ])
 ```
 
-Gene expression in rows:
-```{r}
-rownames(my_matrix)[1:5]
-```
 
-Samples in columns:
-```{r}
-colnames(my_matrix)
-```
 
 To estimate immune cell fractions, we simply have to invoke the `deconvolute` function. It requires the specification
 of one of the following methods for deconvolution:
@@ -46,7 +41,7 @@ deconvolution_methods
 For this example, we use `quanTIseq`. As a result, we obtain a cell_type x sample data frame with cell-type scores for each sample.
 
 ```{r, message=FALSE, warning=FALSE}
-res_quantiseq = deconvolute(my_matrix, "quantiseq")
+res_quantiseq = deconvolute(dataset_racle$expr_mat, "quantiseq", tumor = TRUE)
 ```
 
 
@@ -55,32 +50,42 @@ the results as a stacked bar chart with tidyverse/ggplot2.
 ```{r, fig.height=3, fig.width=8}
 res_quantiseq %>%
   gather(sample, fraction, -cell_type) %>%
+  # plot as stacked bar chart
   ggplot(aes(x=sample, y=fraction, fill=cell_type)) +
     geom_bar(stat='identity') +
     coord_flip() +
-    scale_fill_brewer(palette="Paired")
+    scale_fill_brewer(palette="Paired") + 
+    scale_x_discrete(limits = rev(levels(res_quantiseq)))
 ```
 
-We observe that the correct cell-types are correctly recovered, however we observe small fractions of NK cells and CD4+ predicted to be present in CD8+ T cells and considerable fractions of CD8+ and regulatory T cells in NK cells. This can either be due to the fact that the purification of the samples has not worked reliably or due to spillover-effects between closely-related cell-types (see our benchmark).
+We observe that
+
+* the scores of the first two samples sum to 1, while the last two don't. #TODO other cells
+* the first two samples contain a large quantity of B cells and CD4+ T cells. 
+
 
 
 Let's now apply MCP-counter to the same dataset.
 ```{r, message=FALSE, warning=FALSE}
-res_mcp_counter = deconvolute(my_matrix, "mcp_counter")
+res_mcp_counter = deconvolute(dataset_racle$expr_mat, "mcp_counter")
 ```
 MCP-counter provides scores in arbitrary units that are only comparable between samples, but not between
 cell-types. The visualisation as bar-chart suggests the scores to be cell-type fractions and is, therefore, unsuitable.
 Instead, we use ggplot to visualize the scores per-cell type, allowing for a relative comparison between samples.
 
-```{r, fig.height=5, fig.width=10}
+```{r, fig.height=7, fig.width=7}
 res_mcp_counter %>%
   gather(sample, score, -cell_type) %>%
   ggplot(aes(x=sample, y=score, color=cell_type)) +
-    geom_point() +
-    facet_wrap(~cell_type, scales="free_y", nrow=2) +
+    geom_point(size=4) +
+    facet_wrap(~cell_type, scales="free_x", ncol=3) +
     scale_color_brewer(palette="Paired", guide=FALSE) +
+    coord_flip() + 
+    theme_bw() + 
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
 With the scores being in arbitrary units, the results are not useful for judging if a cell type is present in the sample, or not. However, the score correctly reflects the presence of NK cells and CD8+ T cells in the corresponding samples.
 
+
+## TODO add comparison with FACS data. 

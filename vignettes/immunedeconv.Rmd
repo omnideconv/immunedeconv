@@ -192,27 +192,36 @@ knitr::kable(res, digits=2)
 
 The algorithm is explained in detail in the methods section of @sturm2019.
 
-# Absolute scores and unknown cell types
+# Interpretation of scores
+In general, cell-type scores allow for the comparison (1) between samples, (2) between cell-types or (3) both. 
+Between-sample comparisons allow to make statements such as *"In patient A, there are more CD8+ T cells than in patient B"*. 
+Between-cell-type comparisons allow to make statements such as *"In a certain patient, there are more B cells than T cells"*.
+
+### Methods that allow between-sample comparisons
+
+* MCP-counter
+* xCell
+* TIMER
+
+### Methods that allow between-cell-type comparisions
+
+* CIBERSORT
+
+### Methods that allow both
+
+* EPIC
+* quanTIseq
+* CIBERSORT abs. mode
+
 EPIC and quanTIseq are currently the only methods providing an absolute score,
 i.e. a score that can be interpreted as a cell fraction. These methods
-also provide an estimate for the amount of unknown cells, i.e. cells for
-that no signature exists.
+also provide an estimate for the amount of uncharacterized cells, i.e. cells for
+that no signature exists. This measure often corresponds to the fraction of cancer cells in the sample. 
 
-In *immunedeconv* this estimate is implicitly available as $1 - \text{SUM(scores)}$.
+CIBERSORT abs., while allowing both between- and within-sample comparisons, generates
+a score in arbitrary units. 
 
-It can be easily computed using the following snippet:
-```{r, message=FALSE}
-res = deconvolute(immunedeconv::dataset_racle$expr_mat, "quantiseq", tumor=TRUE)
-other_cells = res %>% select(-cell_type) %>% summarise_all(function(x) {1-sum(x)})
-knitr::kable(other_cells, digits=2)
-```
 
-If desired, the estimate can be added to the result table:
-```{r, message=FALSE}
-res2 = bind_rows(res,
-                other_cells %>% add_column(cell_type="other cells", .before=0))
-knitr::kable(res2, digits=2)
-```
 
 
 # FAQs

@@ -47,7 +47,7 @@ res_quantiseq = deconvolute(dataset_racle$expr_mat, "quantiseq", tumor = TRUE)
 
 QuanTIseq generates scores that can be interpreted as a cell-type fraction. Let's visualize
 the results as a stacked bar chart with tidyverse/ggplot2.
-```{r, fig.height=3, fig.width=8}
+```{r, fig.height=4, fig.width=8}
 res_quantiseq %>%
   gather(sample, fraction, -cell_type) %>%
   # plot as stacked bar chart

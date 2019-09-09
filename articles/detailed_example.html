@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Detailed Usage Example • immunedeconv</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Detailed Usage Example">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">immunedeconv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -64,7 +65,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/grst/immunedeconv">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -77,6 +78,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -90,55 +92,153 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(immunedeconv)</a></code></pre></div>
-<p><em>Immunedeconv</em> ships with an example dataset containing purified immune cells extracted from several donors. For demonstration purposes, let’s create a subset of this dataset and estimate immune cell fractions.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">my_matrix =<span class="st"> </span>example_gene_expression_matrix[,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">19</span>,<span class="dv">20</span>)]</a></code></pre></div>
-<p>Gene expression in rows:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">rownames</a></span>(my_matrix)[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a></code></pre></div>
-<pre><code>## [1] "A1BG"     "A1BG-AS1" "A1CF"     "A2M"      "A2ML1"</code></pre>
-<p>Samples in columns:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(my_matrix)</a></code></pre></div>
-<pre><code>## [1] "CD4-positive T Cells, donor1" "CD4-positive T Cells, donor2"
-## [3] "CD8-positive T Cells, donor1" "CD8-positive T Cells, donor2"
-## [5] "Natural Killer Cells, donor1" "Natural Killer Cells, donor2"</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyr)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(immunedeconv)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tibble)</a></code></pre></div>
+<p><em>Immunedeconv</em> ships with an example dataset with samples from four patients with metastatic melanoma published in <span class="citation">@EPIC2017</span>. It is available from <code><a href="https://rdrr.io/pkg/immunedeconv/man/dataset_racle.html">immunedeconv::dataset_racle</a></code>. It contains a gene expression matrix (<code>dataset_racle$expr_mat</code>) generated using bulk RNA-seq and ‘gold standard’ estimates of immune cell contents profiled with FACS (<code>dataset_racle$ref</code>). We are going to use the bulk RNA-seq data to run the deconvolution methods and will compare the results to the FACS data later on.</p>
+<p>The gene expression data is a matrix with HGNC symbols in rows and samples in columns: The dataset is a matrix</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># show the first 5 lines of the gene expression matrix</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(dataset_racle<span class="op">$</span>expr_mat[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ])</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="right">LAU125</th>
+<th align="right">LAU355</th>
+<th align="right">LAU1255</th>
+<th align="right">LAU1314</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>A1BG</td>
+<td align="right">0.82</td>
+<td align="right">0.58</td>
+<td align="right">0.81</td>
+<td align="right">0.71</td>
+</tr>
+<tr class="even">
+<td>A1CF</td>
+<td align="right">0.00</td>
+<td align="right">0.01</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td>A2M</td>
+<td align="right">247.15</td>
+<td align="right">24.88</td>
+<td align="right">2307.94</td>
+<td align="right">20.30</td>
+</tr>
+<tr class="even">
+<td>A2M-AS1</td>
+<td align="right">1.38</td>
+<td align="right">0.20</td>
+<td align="right">2.60</td>
+<td align="right">0.28</td>
+</tr>
+<tr class="odd">
+<td>A2ML1</td>
+<td align="right">0.03</td>
+<td align="right">0.00</td>
+<td align="right">0.05</td>
+<td align="right">0.02</td>
+</tr>
+</tbody>
+</table>
 <p>To estimate immune cell fractions, we simply have to invoke the <code>deconvolute</code> function. It requires the specification of one of the following methods for deconvolution:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">deconvolution_methods</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">deconvolution_methods</a></code></pre></div>
 <pre><code>##       MCPcounter             EPIC        quanTIseq            xCell 
 ##    "mcp_counter"           "epic"      "quantiseq"          "xcell" 
 ##        CIBERSORT CIBERSORT (abs.)            TIMER 
 ##      "cibersort"  "cibersort_abs"          "timer"</code></pre>
 <p>For this example, we use <code>quanTIseq</code>. As a result, we obtain a cell_type x sample data frame with cell-type scores for each sample.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">res_quantiseq =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/immunedeconv/topics/deconvolute">deconvolute</a></span>(my_matrix, <span class="st">"quantiseq"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">res_quantiseq =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/immunedeconv/man/deconvolute.html">deconvolute</a></span>(dataset_racle<span class="op">$</span>expr_mat, <span class="st">"quantiseq"</span>, <span class="dt">tumor =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>QuanTIseq generates scores that can be interpreted as a cell-type fraction. Let’s visualize the results as a stacked bar chart with tidyverse/ggplot2.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">res_quantiseq <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(sample, fraction, <span class="op">-</span>cell_type) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x=</span>sample, <span class="dt">y=</span>fraction, <span class="dt">fill=</span>cell_type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat=</span><span class="st">'identity'</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span>(<span class="dt">palette=</span><span class="st">"Paired"</span>)</a></code></pre></div>
-<p><img src="detailed_example_files/figure-html/unnamed-chunk-8-1.png" width="768"></p>
-<p>We observe that the correct cell-types are correctly recovered, however we observe small fractions of NK cells and CD4+ predicted to be present in CD8+ T cells and considerable fractions of CD8+ and regulatory T cells in NK cells. This can either be due to the fact that the purification of the samples has not worked reliably or due to spillover-effects between closely-related cell-types (see our benchmark).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">res_quantiseq <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(sample, fraction, <span class="op">-</span>cell_type) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="co"># plot as stacked bar chart</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x=</span>sample, <span class="dt">y=</span>fraction, <span class="dt">fill=</span>cell_type)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span>(<span class="dt">stat=</span><span class="st">'identity'</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span>(<span class="dt">palette=</span><span class="st">"Paired"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span>(<span class="dt">limits =</span> <span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(res_quantiseq)))</a></code></pre></div>
+<p><img src="detailed_example_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
+<p>We observe that</p>
+<ul>
+<li>the first two samples (LAU355, LAU1314) appear to contain a large amount of CD4+ T cells and B cells</li>
+<li>the last two samples (LAU1255, LAU125) appear to contain a large amount of “uncharacterized cells”</li>
+<li>the last sample (LAU125) appears to contain no CD8+ T cells, often associated with bad prognosis.</li>
+</ul>
+<p>Estimating the amount of “uncharacterized cells” is a novel feature introduced by quanTIseq and EPIC <span class="citation">[@EPIC2017, @quantiseq2017]</span>. This estimate often corresponds to the fraction of tumor cells in the sample.</p>
 <p>Let’s now apply MCP-counter to the same dataset.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">res_mcp_counter =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/immunedeconv/topics/deconvolute">deconvolute</a></span>(my_matrix, <span class="st">"mcp_counter"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">res_mcp_counter =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/immunedeconv/man/deconvolute.html">deconvolute</a></span>(dataset_racle<span class="op">$</span>expr_mat, <span class="st">"mcp_counter"</span>)</a></code></pre></div>
 <p>MCP-counter provides scores in arbitrary units that are only comparable between samples, but not between cell-types. The visualisation as bar-chart suggests the scores to be cell-type fractions and is, therefore, unsuitable. Instead, we use ggplot to visualize the scores per-cell type, allowing for a relative comparison between samples.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">res_mcp_counter <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(sample, score, <span class="op">-</span>cell_type) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x=</span>sample, <span class="dt">y=</span>score, <span class="dt">color=</span>cell_type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>cell_type, <span class="dt">scales=</span><span class="st">"free_y"</span>, <span class="dt">nrow=</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span>(<span class="dt">palette=</span><span class="st">"Paired"</span>, <span class="dt">guide=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">axis.text.x =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">vjust =</span> <span class="fl">0.5</span>, <span class="dt">hjust=</span><span class="dv">1</span>))</a></code></pre></div>
-<p><img src="detailed_example_files/figure-html/unnamed-chunk-10-1.png" width="960"></p>
-<p>With the scores being in arbitrary units, the results are not useful for judging if a cell type is present in the sample, or not. However, the score correctly reflects the presence of NK cells and CD8+ T cells in the corresponding samples.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">res_mcp_counter <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(sample, score, <span class="op">-</span>cell_type) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x=</span>sample, <span class="dt">y=</span>score, <span class="dt">color=</span>cell_type)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="dt">size=</span><span class="dv">4</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>cell_type, <span class="dt">scales=</span><span class="st">"free_x"</span>, <span class="dt">ncol=</span><span class="dv">3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span>(<span class="dt">palette=</span><span class="st">"Paired"</span>, <span class="dt">guide=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">axis.text.x =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">vjust =</span> <span class="fl">0.5</span>, <span class="dt">hjust=</span><span class="dv">1</span>))</a></code></pre></div>
+<p><img src="detailed_example_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p>With the scores being in arbitrary units, the results are not useful for judging if a cell type is present in the sample, or not. However, we can compare the relative values between samples and relate them to the results we obtained earlier using quanTIseq.</p>
+<ul>
+<li>Consistent with quanTIseq, MCP-counter predicts B cells to be more abundant in LAU355 and LAU1314 than in the other two samples.</li>
+<li>Also consistent with quanTIseq, the last LAU125 appears to contain significantly less CD8+ T cells than the other samples.</li>
+<li>the estimates for Neutrophils and Monocytes are inconsistent with quanTIseq.</li>
+</ul>
+<div id="comparison-with-facs-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#comparison-with-facs-data" class="anchor"></a>Comparison with FACS data</h2>
+<p>Let’s now compare the results with ‘gold standard’ FACS data obtained for the four samples. This is, of course, not a representative benchmark, but it gives a notion about what magnitude of predictive accuracy we can expect.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># construct a single dataframe containing all data</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co"># re-map the cell-types to common names. </span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># only include the cell-types that are measured using FACS</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">cell_types =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"B cell"</span>, <span class="st">"T cell CD4+"</span>, <span class="st">"T cell CD8+"</span>, <span class="st">"NK cell"</span>)</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">tmp_quantiseq =<span class="st"> </span>res_quantiseq <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/immunedeconv/man/map_result_to_celltypes.html">map_result_to_celltypes</a></span>(cell_types, <span class="st">"quantiseq"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span>(<span class="st">"cell_type"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(<span class="st">"sample"</span>, <span class="st">"estimate"</span>, <span class="op">-</span>cell_type) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">method=</span><span class="st">"quanTIseq"</span>) </a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">tmp_mcp_counter =<span class="st"> </span>res_mcp_counter <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/immunedeconv/man/map_result_to_celltypes.html">map_result_to_celltypes</a></span>(cell_types, <span class="st">"mcp_counter"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span>(<span class="st">"cell_type"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(<span class="st">"sample"</span>, <span class="st">"estimate"</span>, <span class="op">-</span>cell_type) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">method=</span><span class="st">"MCP-counter"</span>) </a>
+<a class="sourceLine" id="cb9-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb9-16" data-line-number="16">result =<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span>(tmp_quantiseq, tmp_mcp_counter) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(dataset_racle<span class="op">$</span>ref)</a></code></pre></div>
+<pre><code>## Joining, by = c("cell_type", "sample")</code></pre>
+<p>Plot the true vs. estimated values:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">result <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x=</span>true_fraction, <span class="dt">y=</span>estimate)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">shape=</span>cell_type, <span class="dt">color=</span>cell_type)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(cell_type<span class="op">~</span>method, <span class="dt">scales=</span><span class="st">"free_y"</span>, <span class="dt">ncol =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Dark2"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
+<pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
+<p><img src="detailed_example_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
+<p>(MCP counter does not provide estimates for CD4+ T cells.)</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#comparison-with-facs-data">Comparison with FACS data</a></li>
+      </ul>
+</div>
       </div>
 
 </div>
+
 
 
       <footer><div class="copyright">
@@ -146,12 +246,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

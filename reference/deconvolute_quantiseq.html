@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get all children of a certain cell type. — get_all_children • immunedeconv</title>
+<title>Deconvolute using quanTIseq — deconvolute_quantiseq • immunedeconv</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,8 @@
 
 
 
-<meta property="og:title" content="Get all children of a certain cell type. — get_all_children" />
-<meta property="og:description" content="If method is NULL, this function will return ALL children of the given
-cell type in the cell type hierarchy." />
+<meta property="og:title" content="Deconvolute using quanTIseq — deconvolute_quantiseq" />
+<meta property="og:description" content="Deconvolute using quanTIseq" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,47 +120,53 @@ cell type in the cell type hierarchy." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get all children of a certain cell type.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/grst/immunedeconv/blob/master/R/cell_type_mapping.R'><code>R/cell_type_mapping.R</code></a></small>
-    <div class="hidden name"><code>get_all_children.Rd</code></div>
+    <h1>Deconvolute using quanTIseq</h1>
+    <small class="dont-index">Source: <a href='https://github.com/grst/immunedeconv/blob/master/R/immune_deconvolution_methods.R'><code>R/immune_deconvolution_methods.R</code></a></small>
+    <div class="hidden name"><code>deconvolute_quantiseq.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>If method is NULL, this function will return ALL children of the given
-cell type in the cell type hierarchy.</p>
+    <p>Deconvolute using quanTIseq</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_all_children</span>(<span class='no'>cell_type</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>deconvolute_quantiseq</span>(<span class='no'>gene_expression_matrix</span>, <span class='no'>tumor</span>, <span class='no'>arrays</span>, <span class='no'>scale_mrna</span>,
+  <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>cell_type</th>
-      <td><p>cell type name that appears in the cell type hierarchy.</p></td>
+      <th>gene_expression_matrix</th>
+      <td><p>a m x n matrix with m genes and n samples</p></td>
     </tr>
     <tr>
-      <th>method</th>
-      <td><p>method or dataset from the cell type mapping.</p></td>
+      <th>tumor</th>
+      <td><p>Set to TRUE if dealing with a tumor samples. if TRUE, signature genes with
+high expressin in tumor samles are removed.</p></td>
+    </tr>
+    <tr>
+      <th>arrays</th>
+      <td><p>Set to TRUE if working with Microarray data instead of RNA-seq</p></td>
+    </tr>
+    <tr>
+      <th>scale_mrna</th>
+      <td><p>Set to FALSE to disable correction for cell type-specific differences
+in mRNA content</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>passed through to original quantiseq method. A native argument takes precedence
+over an immunedeconv argument (e.g. <code>mRNAscale</code> takes precedence over <code>scale_mrna</code>)
+See <code>deconvolute_quantiseq.default()</code>.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>character vector of cell type names.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>If a method is given, this function will return the cell type names
-as used by <code>method</code> and stop as soon as a cell type maps to a cell type
-provided by <code>method</code>.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
     </ul>
 
   </div>

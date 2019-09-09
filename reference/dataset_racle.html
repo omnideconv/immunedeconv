@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get all children of a certain cell type. — get_all_children • immunedeconv</title>
+<title>Example RNA-seq dataset from the EPIC publication. — dataset_racle • immunedeconv</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,9 @@
 
 
 
-<meta property="og:title" content="Get all children of a certain cell type. — get_all_children" />
-<meta property="og:description" content="If method is NULL, this function will return ALL children of the given
-cell type in the cell type hierarchy." />
+<meta property="og:title" content="Example RNA-seq dataset from the EPIC publication. — dataset_racle" />
+<meta property="og:description" content="A dataset of four RNA-seq samples from patients with metastatic melanoma and associated
+'gold standard' immune cell estimates profiled with fluorescence activated cell sorting (FACS)" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,47 +121,34 @@ cell type in the cell type hierarchy." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get all children of a certain cell type.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/grst/immunedeconv/blob/master/R/cell_type_mapping.R'><code>R/cell_type_mapping.R</code></a></small>
-    <div class="hidden name"><code>get_all_children.Rd</code></div>
+    <h1>Example RNA-seq dataset from the EPIC publication.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/grst/immunedeconv/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
+    <div class="hidden name"><code>dataset_racle.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>If method is NULL, this function will return ALL children of the given
-cell type in the cell type hierarchy.</p>
+    <p>A dataset of four RNA-seq samples from patients with metastatic melanoma and associated
+'gold standard' immune cell estimates profiled with fluorescence activated cell sorting (FACS)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_all_children</span>(<span class='no'>cell_type</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='no'>dataset_racle</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>cell_type</th>
-      <td><p>cell type name that appears in the cell type hierarchy.</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>method or dataset from the cell type mapping.</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>character vector of cell type names.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <p>an environment with two objects:
+(1) <code>expr_mat</code>: gene expression matrix with gene_symbols as rownames and sample identifiers as colnames.
+(2) <code>ref</code>: FACS measurements in a data.frame with three columns: sample, cell_type, true_fraction</p>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>If a method is given, this function will return the cell type names
-as used by <code>method</code> and stop as soon as a cell type maps to a cell type
-provided by <code>method</code>.</p>
+    <p>Racle et al. (2017), eLIFE, https://doi.org/10.7554/eLife.26476.029</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
+      <li><a href="#format">Format</a></li>
+      <li><a href="#source">Source</a></li>
     </ul>
 
   </div>

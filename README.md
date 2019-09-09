@@ -2,7 +2,7 @@
 [![travis](https://travis-ci.com/grst/immunedeconv.svg?branch=master)](https://travis-ci.com/grst/immunedeconv)
 [![appveyor](https://ci.appveyor.com/api/projects/status/j2fb3fd097kqahg5/branch/master?svg=true)](https://ci.appveyor.com/project/grst/immunedeconv/branch/master)
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/r-immunedeconv/README.html)
-![license](https://img.shields.io/badge/license-BSD-green.svg)
+[![license](https://img.shields.io/badge/license-BSD-green.svg)](https://github.com/grst/immunedeconv/blob/master/LICENSE.md)
 [![docs](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://grst.github.io/immunedeconv)
 
 ## Basic usage

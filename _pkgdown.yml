@@ -35,7 +35,7 @@ reference:
   - title: Datasets
     desc: List of datasets provided by the package
     contents:
-      - example_gene_expression_matrix
+      - dataset_racle
   - title: TIMER
     desc: functions and objects related to the TIMER method
     contents:

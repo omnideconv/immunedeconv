@@ -64,7 +64,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/grst/immunedeconv">
+  <a href="https://github.com/icbi-lab/immunedeconv">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -85,7 +85,7 @@
       <h1>Detailed Usage Example</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/grst/immunedeconv/blob/master/vignettes/detailed_example.Rmd"><code>vignettes/detailed_example.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/icbi-lab/immunedeconv/blob/master/vignettes/detailed_example.Rmd"><code>vignettes/detailed_example.Rmd</code></a></small>
       <div class="hidden name"><code>detailed_example.Rmd</code></div>
 
     </div>
@@ -97,7 +97,7 @@
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyr)</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(immunedeconv)</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tibble)</a></code></pre></div>
-<p><em>Immunedeconv</em> ships with an example dataset with samples from four patients with metastatic melanoma published in <span class="citation">@EPIC2017</span>. It is available from <code><a href="https://rdrr.io/pkg/immunedeconv/man/dataset_racle.html">immunedeconv::dataset_racle</a></code>. It contains a gene expression matrix (<code>dataset_racle$expr_mat</code>) generated using bulk RNA-seq and ‘gold standard’ estimates of immune cell contents profiled with FACS (<code>dataset_racle$ref</code>). We are going to use the bulk RNA-seq data to run the deconvolution methods and will compare the results to the FACS data later on.</p>
+<p><em>Immunedeconv</em> ships with an example dataset with samples from four patients with metastatic melanoma published in <span class="citation">@EPIC2017</span>. It is available from <code><a href="https://grst.github.io/immunedeconv/reference/dataset_racle.html">immunedeconv::dataset_racle</a></code>. It contains a gene expression matrix (<code>dataset_racle$expr_mat</code>) generated using bulk RNA-seq and ‘gold standard’ estimates of immune cell contents profiled with FACS (<code>dataset_racle$ref</code>). We are going to use the bulk RNA-seq data to run the deconvolution methods and will compare the results to the FACS data later on.</p>
 <p>The gene expression data is a matrix with HGNC symbols in rows and samples in columns: The dataset is a matrix</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># show the first 5 lines of the gene expression matrix</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(dataset_racle<span class="op">$</span>expr_mat[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ])</a></code></pre></div>
@@ -154,7 +154,7 @@
 ##        CIBERSORT CIBERSORT (abs.)            TIMER 
 ##      "cibersort"  "cibersort_abs"          "timer"</code></pre>
 <p>For this example, we use <code>quanTIseq</code>. As a result, we obtain a cell_type x sample data frame with cell-type scores for each sample.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">res_quantiseq =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/immunedeconv/man/deconvolute.html">deconvolute</a></span>(dataset_racle<span class="op">$</span>expr_mat, <span class="st">"quantiseq"</span>, <span class="dt">tumor =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">res_quantiseq =<span class="st"> </span><span class="kw"><a href="https://grst.github.io/immunedeconv/reference/deconvolute.html">deconvolute</a></span>(dataset_racle<span class="op">$</span>expr_mat, <span class="st">"quantiseq"</span>, <span class="dt">tumor =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>QuanTIseq generates scores that can be interpreted as a cell-type fraction. Let’s visualize the results as a stacked bar chart with tidyverse/ggplot2.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">res_quantiseq <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(sample, fraction, <span class="op">-</span>cell_type) <span class="op">%&gt;%</span></a>
@@ -173,7 +173,7 @@
 </ul>
 <p>Estimating the amount of “uncharacterized cells” is a novel feature introduced by quanTIseq and EPIC <span class="citation">[@EPIC2017, @quantiseq2017]</span>. This estimate often corresponds to the fraction of tumor cells in the sample.</p>
 <p>Let’s now apply MCP-counter to the same dataset.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">res_mcp_counter =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/immunedeconv/man/deconvolute.html">deconvolute</a></span>(dataset_racle<span class="op">$</span>expr_mat, <span class="st">"mcp_counter"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">res_mcp_counter =<span class="st"> </span><span class="kw"><a href="https://grst.github.io/immunedeconv/reference/deconvolute.html">deconvolute</a></span>(dataset_racle<span class="op">$</span>expr_mat, <span class="st">"mcp_counter"</span>)</a></code></pre></div>
 <p>MCP-counter provides scores in arbitrary units that are only comparable between samples, but not between cell-types. The visualisation as bar-chart suggests the scores to be cell-type fractions and is, therefore, unsuitable. Instead, we use ggplot to visualize the scores per-cell type, allowing for a relative comparison between samples.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">res_mcp_counter <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(sample, score, <span class="op">-</span>cell_type) <span class="op">%&gt;%</span></a>
@@ -201,11 +201,11 @@
 <a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># only include the cell-types that are measured using FACS</span></a>
 <a class="sourceLine" id="cb9-5" data-line-number="5">cell_types =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"B cell"</span>, <span class="st">"T cell CD4+"</span>, <span class="st">"T cell CD8+"</span>, <span class="st">"NK cell"</span>)</a>
 <a class="sourceLine" id="cb9-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">tmp_quantiseq =<span class="st"> </span>res_quantiseq <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/immunedeconv/man/map_result_to_celltypes.html">map_result_to_celltypes</a></span>(cell_types, <span class="st">"quantiseq"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">tmp_quantiseq =<span class="st"> </span>res_quantiseq <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://grst.github.io/immunedeconv/reference/map_result_to_celltypes.html">map_result_to_celltypes</a></span>(cell_types, <span class="st">"quantiseq"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span>(<span class="st">"cell_type"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(<span class="st">"sample"</span>, <span class="st">"estimate"</span>, <span class="op">-</span>cell_type) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">method=</span><span class="st">"quanTIseq"</span>) </a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">tmp_mcp_counter =<span class="st"> </span>res_mcp_counter <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/immunedeconv/man/map_result_to_celltypes.html">map_result_to_celltypes</a></span>(cell_types, <span class="st">"mcp_counter"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">tmp_mcp_counter =<span class="st"> </span>res_mcp_counter <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://grst.github.io/immunedeconv/reference/map_result_to_celltypes.html">map_result_to_celltypes</a></span>(cell_types, <span class="st">"mcp_counter"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span>(<span class="st">"cell_type"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(<span class="st">"sample"</span>, <span class="st">"estimate"</span>, <span class="op">-</span>cell_type) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">method=</span><span class="st">"MCP-counter"</span>) </a>
@@ -246,7 +246,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

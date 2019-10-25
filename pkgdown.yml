@@ -1,8 +1,8 @@
 pandoc: '2.2'
-pkgdown: 1.4.0
+pkgdown: 1.4.1
 pkgdown_sha: ~
 articles: []
 urls:
-  reference: https://grst.github.io/immunedeconv/reference
-  article: https://grst.github.io/immunedeconv/articles
+  reference: https://icbi-lab.github.io/immunedeconv/reference
+  article: https://icbi-lab.github.io/immunedeconv/articles
 

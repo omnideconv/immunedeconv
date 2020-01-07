@@ -34,7 +34,8 @@ Suggests:
     knitr,
     rmarkdown,
     pkgdown,
-    devtools
+    devtools,
+    DiagrammeR
 Remotes:
     dviraran/xCell,
     GfellerLab/EPIC,

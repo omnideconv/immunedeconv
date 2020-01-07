@@ -103,7 +103,7 @@ mapGenes<-function(mydata) {
 
   # Take the median if duplicates are present
   outdata<-aggregate(mydata, by=list(newgenes), FUN=median)
-  rownames(outdata)<-outdata[,1]
+  rownames(outdata)<-outdata[,1, drop=FALSE]
   outdata<-outdata[,-1, drop=FALSE]
   outdata<-as.data.frame(outdata)
 

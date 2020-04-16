@@ -13,6 +13,9 @@
     <loc>https://icbi-lab.github.io/immunedeconv/reference/available_datasets.html</loc>
   </url>
   <url>
+    <loc>https://icbi-lab.github.io/immunedeconv/reference/cell_type_list.html</loc>
+  </url>
+  <url>
     <loc>https://icbi-lab.github.io/immunedeconv/reference/cell_type_map.html</loc>
   </url>
   <url>
@@ -64,6 +67,9 @@
     <loc>https://icbi-lab.github.io/immunedeconv/reference/find_children.html</loc>
   </url>
   <url>
+    <loc>https://icbi-lab.github.io/immunedeconv/reference/fix_namespace.html</loc>
+  </url>
+  <url>
     <loc>https://icbi-lab.github.io/immunedeconv/reference/get_all_children.html</loc>
   </url>
   <url>
@@ -80,6 +86,9 @@
   </url>
   <url>
     <loc>https://icbi-lab.github.io/immunedeconv/reference/map_result_to_celltypes.html</loc>
+  </url>
+  <url>
+    <loc>https://icbi-lab.github.io/immunedeconv/reference/node_by_name.html</loc>
   </url>
   <url>
     <loc>https://icbi-lab.github.io/immunedeconv/reference/quantiseq_helper.html</loc>

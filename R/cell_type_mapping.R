@@ -6,10 +6,9 @@
 #' @importFrom dplyr select
 #' @importFrom stats na.omit
 #' @import magrittr
-#'
-#' @export
-cell_type_mapping = NULL
-
+#' 
+#' @name cell_type_mapping
+NULL
 
 #' Table mapping the cell types from methods/datasets to a single, controlled vocabulary.
 #'

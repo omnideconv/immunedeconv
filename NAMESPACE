@@ -2,7 +2,6 @@
 
 export(available_datasets)
 export(cell_type_map)
-export(cell_type_mapping)
 export(cell_type_tree)
 export(deconvolute)
 export(deconvolute_cibersort)

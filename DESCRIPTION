@@ -28,7 +28,8 @@ Imports:
     sva,
     GSEABase,
     xCell,
-    MCPcounter
+    MCPcounter,
+    utils
 Suggests:
     testthat,
     knitr,
@@ -47,4 +48,4 @@ Roxygen: list(markdown = TRUE)
 LazyData: true
 URL: https://icbi-lab.github.io/immunedeconv, https://github.com/icbi-lab/immunedeconv
 BugReports: https://github.com/icbi-lab/immunedeconv/issues
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0

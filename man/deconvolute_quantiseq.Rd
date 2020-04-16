@@ -4,8 +4,7 @@
 \alias{deconvolute_quantiseq}
 \title{Deconvolute using quanTIseq}
 \usage{
-deconvolute_quantiseq(gene_expression_matrix, tumor, arrays, scale_mrna,
-  ...)
+deconvolute_quantiseq(gene_expression_matrix, tumor, arrays, scale_mrna, ...)
 }
 \arguments{
 \item{gene_expression_matrix}{a m x n matrix with m genes and n samples}

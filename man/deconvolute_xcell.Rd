@@ -4,8 +4,12 @@
 \alias{deconvolute_xcell}
 \title{Deconvolute using xCell}
 \usage{
-deconvolute_xcell(gene_expression_matrix, arrays,
-  expected_cell_types = NULL, ...)
+deconvolute_xcell(
+  gene_expression_matrix,
+  arrays,
+  expected_cell_types = NULL,
+  ...
+)
 }
 \arguments{
 \item{gene_expression_matrix}{a m x n matrix with m genes and n samples}

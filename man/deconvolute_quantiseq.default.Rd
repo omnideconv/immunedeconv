@@ -4,9 +4,16 @@
 \alias{deconvolute_quantiseq.default}
 \title{Use quanTIseq to deconvolute a gene expression matrix.}
 \usage{
-deconvolute_quantiseq.default(mix.mat, arrays = FALSE,
-  signame = "TIL10", tumor = FALSE, mRNAscale = TRUE,
-  method = "lsei", btotalcells = FALSE, rmgenes = "unassigned")
+deconvolute_quantiseq.default(
+  mix.mat,
+  arrays = FALSE,
+  signame = "TIL10",
+  tumor = FALSE,
+  mRNAscale = TRUE,
+  method = "lsei",
+  btotalcells = FALSE,
+  rmgenes = "unassigned"
+)
 }
 \arguments{
 \item{mix.mat}{table with the gene TPM (or microarray expression values) for all samples to be deconvoluted

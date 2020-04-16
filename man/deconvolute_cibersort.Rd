@@ -4,8 +4,13 @@
 \alias{deconvolute_cibersort}
 \title{Deconvolute using CIBERSORT or CIBERSORT abs.}
 \usage{
-deconvolute_cibersort(gene_expression_matrix, arrays, absolute = FALSE,
-  abs_method = "sig.score", ...)
+deconvolute_cibersort(
+  gene_expression_matrix,
+  arrays,
+  absolute = FALSE,
+  abs_method = "sig.score",
+  ...
+)
 }
 \arguments{
 \item{gene_expression_matrix}{a m x n matrix with m genes and n samples}

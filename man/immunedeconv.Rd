@@ -3,8 +3,8 @@
 \docType{package}
 \name{immunedeconv}
 \alias{immunedeconv}
-\alias{immunedeconv-package}
 \title{Collection of immune cell deconvolution methods.}
 \description{
-Collection of immune cell deconvolution methods.
+Immunedeconv is an an R package for unified access to computational methods for
+estimating immune cell fractions from bulk RNA sequencing data.
 }

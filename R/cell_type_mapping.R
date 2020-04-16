@@ -7,9 +7,8 @@
 #' @importFrom stats na.omit
 #' @import magrittr
 #'
-#' @name cell_type_mapping
 #' @export
-NULL
+cell_type_mapping = NULL
 
 
 #' Table mapping the cell types from methods/datasets to a single, controlled vocabulary.
@@ -18,9 +17,8 @@ NULL
 #'
 #' See `inst/extdata/cell_type_mapping.xlsx` for more details.
 #'
-#' @name cell_type_map
 #' @export
-NULL
+cell_type_map = NULL
 # gets attached on .onLoad, see zzz.R
 .get_cell_type_map = function() {
   readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx",
@@ -36,15 +34,16 @@ NULL
 #' A list of all methods (e.g. `cibersort`) and datasets (e.g. `schelker_ovarian`) for
 #' that the cell types are mapped to the controlled vocabulary.
 #'
-#' @name available_datasets
 #' @export
-NULL
+available_datasets = NULL
 # gets attached on .onLoad, see zzz.R
 .get_available_datasets = function() {
   cell_type_map %>% pull(method_dataset) %>% unique()
 }
 
 
+#' List with controlled cell-type vocabulary
+cell_type_list = NULL
 .get_cell_type_list = function() {
   tmp_list = readxl::read_excel(system.file("extdata", "cell_type_mapping.xlsx",
                                             package="immunedeconv", mustWork=TRUE),
@@ -61,14 +60,18 @@ NULL
 #' @details a `data.tree` object
 #' @name cell_type_tree
 #' @export
-NULL
+cell_type_tree = NULL
 # gets attached on .onLoad, see zzz.R
 .get_cell_type_tree = function() {
   cell_type_list %>% as.data.frame() %>% data.tree::FromDataFrameNetwork()
 }
 
 
-# Access nodes by name in O(1). Node names are unique in our tree.
+#' Lookup dictionary for cell-type nodes
+#' 
+#' Access nodes by name in O(1). Node names are unique in our tree.
+#' gets attached on .onLoad, see zzz.R
+node_by_name=NULL
 # gets attached on .onLoad, see zzz.R
 .get_node_by_name = function() {
   cell_type_tree$Get(function(node){node})

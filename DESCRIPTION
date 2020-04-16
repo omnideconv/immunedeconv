@@ -28,7 +28,8 @@ Imports:
     sva,
     GSEABase,
     xCell,
-    MCPcounter
+    MCPcounter,
+    utils
 Suggests:
     testthat,
     knitr,

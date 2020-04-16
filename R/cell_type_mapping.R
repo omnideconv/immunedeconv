@@ -8,6 +8,7 @@
 #' @import magrittr
 #'
 #' @name cell_type_mapping
+#' @export
 NULL
 
 
@@ -18,6 +19,7 @@ NULL
 #' See `inst/extdata/cell_type_mapping.xlsx` for more details.
 #'
 #' @name cell_type_map
+#' @export
 NULL
 # gets attached on .onLoad, see zzz.R
 .get_cell_type_map = function() {
@@ -35,6 +37,7 @@ NULL
 #' that the cell types are mapped to the controlled vocabulary.
 #'
 #' @name available_datasets
+#' @export
 NULL
 # gets attached on .onLoad, see zzz.R
 .get_available_datasets = function() {
@@ -57,6 +60,7 @@ NULL
 #'
 #' @details a `data.tree` object
 #' @name cell_type_tree
+#' @export
 NULL
 # gets attached on .onLoad, see zzz.R
 .get_cell_type_tree = function() {

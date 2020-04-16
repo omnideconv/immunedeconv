@@ -3,8 +3,4 @@
 \docType{package}
 \name{immunedeconv}
 \alias{immunedeconv}
-\alias{immunedeconv-package}
 \title{Collection of immune cell deconvolution methods.}
-\description{
-Collection of immune cell deconvolution methods.
-}

@@ -4,10 +4,18 @@
 \alias{deconvolute}
 \title{Perform an immune cell deconvolution on a dataset.}
 \usage{
-deconvolute(gene_expression, method = deconvolution_methods,
-  indications = NULL, tumor = TRUE, arrays = FALSE,
-  column = "gene_symbol", rmgenes = NULL, scale_mrna = TRUE,
-  expected_cell_types = NULL, ...)
+deconvolute(
+  gene_expression,
+  method = deconvolution_methods,
+  indications = NULL,
+  tumor = TRUE,
+  arrays = FALSE,
+  column = "gene_symbol",
+  rmgenes = NULL,
+  scale_mrna = TRUE,
+  expected_cell_types = NULL,
+  ...
+)
 }
 \arguments{
 \item{gene_expression}{A gene expression matrix or a Biobase ExpressionSet.

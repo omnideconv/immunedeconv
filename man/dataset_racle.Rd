@@ -4,9 +4,11 @@
 \name{dataset_racle}
 \alias{dataset_racle}
 \title{Example RNA-seq dataset from the EPIC publication.}
-\format{an environment with two objects:
+\format{
+an environment with two objects:
 (1) \code{expr_mat}: gene expression matrix with gene_symbols as rownames and sample identifiers as colnames.
-(2) \code{ref}: FACS measurements in a data.frame with three columns: sample, cell_type, true_fraction}
+(2) \code{ref}: FACS measurements in a data.frame with three columns: sample, cell_type, true_fraction
+}
 \source{
 Racle et al. (2017), eLIFE, https://doi.org/10.7554/eLife.26476.029
 }

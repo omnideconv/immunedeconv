@@ -4,14 +4,17 @@
 \alias{deconvolute_mcp_counter}
 \title{Deconvolute using MCP-counter}
 \usage{
-deconvolute_mcp_counter(gene_expression_matrix,
-  feature_types = "HUGO_symbols", ...)
+deconvolute_mcp_counter(
+  gene_expression_matrix,
+  feature_types = "HUGO_symbols",
+  ...
+)
 }
 \arguments{
 \item{gene_expression_matrix}{a m x n matrix with m genes and n samples}
 
 \item{feature_types}{type of identifiers used for expression features. May be
-one of \code{"affy133P2_probesets","HUGO_symbols","ENTREZ_ID"}}
+one of \verb{"affy133P2_probesets","HUGO_symbols","ENTREZ_ID"}}
 
 \item{...}{pased through to original MCP-counter function. A native argument takes precedence
 over an immunedeconv argument (e.g. \code{featureType} takes precedence over \code{feature_types})

@@ -4,7 +4,9 @@
 \name{timer_available_cancers}
 \alias{timer_available_cancers}
 \title{TIMER signatures are cancer specific. This is the list of available cancer types.}
-\format{An object of class \code{character} of length 32.}
+\format{
+An object of class \code{character} of length 32.
+}
 \usage{
 timer_available_cancers
 }

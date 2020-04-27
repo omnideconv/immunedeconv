@@ -58,7 +58,7 @@ environment:
       secure: Xl3cNXsF+tbyVRLHb28x2q3KmLnrZx1sXRZV5LAJ7uye1ymXhbMQYNuTses3GB0N
 
   matrix:
-  - R_VERSION: release
+  - R_VERSION: 3.6.2
     R_ARCH: x64
 
   - R_VERSION: 3.5.1

@@ -60,6 +60,9 @@ environment:
   matrix:
   - R_VERSION: release
     R_ARCH: x64
+    
+  - R_VERSION: 3.6.2
+    R_ARCH: x64
 
   - R_VERSION: 3.5.1
     R_ARCH: x64

@@ -17,6 +17,7 @@ matrix:
       local-dir: docs
       on:
         branch: master
+  - r: 3.6.2
   - r: 3.5.1
   - r: 3.4.1
 

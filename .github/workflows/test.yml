@@ -32,7 +32,7 @@ jobs:
           r-version: ${{ matrix.R }}
       
       - name: Setup pandoc
-      - uses: r-lib/actions/setup-pandoc@v1
+        uses: r-lib/actions/setup-pandoc@v1
       
       - name: Query dependencies
         shell: Rscript {0}        

@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup R 
-        uses: actions/setup-R@v1
+        uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.R }}
       - name: Setup pandoc

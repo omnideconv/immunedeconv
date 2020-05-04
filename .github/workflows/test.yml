@@ -31,6 +31,9 @@ jobs:
         with:
           r-version: ${{ matrix.R }}
       
+      - name: Setup pandoc
+      - uses: r-lib/actions/setup-pandoc@v1
+      
       - name: Query dependencies
         shell: Rscript {0}        
         run: |
@@ -51,7 +54,7 @@ jobs:
         env:
           RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
         run: |
-          sudo apt-get -y update && sudo apt-get install -y pandoc pandoc-citeproc libcurl4-openssl-dev
+          sudo apt-get -y update && sudo apt-get install -y libcurl4-openssl-dev
           # Rscript -e "remotes::install_github('r-hub/sysreqs')"
           # sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           # sudo -s eval "$sysreqs"
@@ -72,6 +75,7 @@ jobs:
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_: false
+          _R_CHECK_DOC_SIZES_: false
           _R_CHECK_TESTS_NLINES_: 0
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}

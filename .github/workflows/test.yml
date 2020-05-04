@@ -9,12 +9,13 @@ on:
 jobs:
   tests:
     runs-on: ${{ matrix.config.os }}
-    name: ${{ matrix.config.os }} (${{ matrix.R }})
+    name: ${{ matrix.config.os }} (R ${{ matrix.R }})
     strategy:
+      fail-fast: false
       matrix:
         R: [ '3.4', '3.5', '3.6', '4.0' ] 
         config: 
-         - {os: ubuntu-18.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
+         - {os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
          - {os: windows-latest}
          - {os: macos-latest} 
            

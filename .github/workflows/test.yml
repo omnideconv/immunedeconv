@@ -1,0 +1,36 @@
+name: tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+    
+jobs:
+  tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        R: [ '3.5.3', '3.6.1', '4.0.0' ] 
+        os: [ 'ubuntu-latest', 'windows-latest', 'macos-latest' ] 
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup R 
+        uses: actions/setup-R@v1
+        with:
+          r-version: ${{ matrix.R }}
+      - name: Setup pandoc
+        uses: r-lib/actions/setup-pandoc@v1
+      - name: Install dependencies
+        run: |
+          Rscript -e 'install.packages("remotes", repos="https://cran.rstudio.com")'
+          Rscript -e 'remotes::install_cran(c("devtools", "roxygen2", "covr"), repos="https://cran.rstudio.com")'
+          Rscript -e 'deps <- remotes::dev_package_deps(dependencies = NA); remotes::install_deps(dependencies = TRUE, upgrade="never"); if (!all(deps$$package %in% installed.packages())) { message("missing: ", paste(setdiff(deps$$package, installed.packages()), collapse=", ")); q(status = 1, save = "no")}'
+      - name: Run tests
+        run: |
+          _R_CHECK_TESTS_NLINES_=0 Rscript -e 'devtools::check()'
+      - name: Build docs
+        run: | 
+          Rscript -e 'pkgdown::build_site()'
+          

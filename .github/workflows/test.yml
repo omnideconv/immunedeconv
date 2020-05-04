@@ -22,6 +22,10 @@ jobs:
           r-version: ${{ matrix.R }}
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@v1
+      - name: Setup system libraries (ubuntu)
+        if: ${{ matrix.os == "ubuntu-latest" }}
+        run: |
+          sudo apt-get update && sudo apt-get install -y libcurl4-openssl-dev
       - name: Install dependencies
         run: |
           Rscript -e 'install.packages("remotes", repos="https://cran.rstudio.com")'

@@ -11,33 +11,67 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        R: [ '3.5.3', '3.6.1', '4.0.0' ] 
+        R: [ '3.4', '3.5', '3.6', '4.0' ] 
         os: [ 'ubuntu-latest', 'windows-latest', 'macos-latest' ] 
     
     steps:
       - uses: actions/checkout@v2
+        
       - name: Setup R 
         uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.R }}
-      - name: Setup pandoc
-        uses: r-lib/actions/setup-pandoc@v1
-      - name: Setup system libraries (ubuntu)
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+      
+      - name: Query dependencies
+        shell: Rscript {0}        
         run: |
-          sudo apt-get update && sudo apt-get install -y libcurl4-openssl-dev
+          install.packages('remotes', repos='https://cloud.r-project.org')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)          
+          # Rscript -e "deps <- devtools::dev_package_deps(dependencies = NA); remotes::install_deps(dependencies = TRUE, upgrade='never'); if (!all(deps$$package %in% installed.packages())) { message('missing: ', paste(setdiff(deps$$package, installed.packages()), collapse=', ')); q(status = 1, save = 'no')}"
+      
+      - name: Cache R packages
+        if: runner.os != 'Windows'
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-1-
+          
+      - name: Install system dependencies
+        if: runner.os == 'Linux'
+        env:
+          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
+        run: |
+          Rscript -e "remotes::install_github('r-hub/sysreqs')"
+          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
+          sudo -s eval "$sysreqs"
+      
       - name: Install dependencies
-        shell: bash
         run: |
-          Rscript -e "install.packages('remotes', repos='https://cloud.r-project.org')"
-          Rscript -e "remotes::install_cran(c('devtools', 'roxygen2', 'covr'), repos='https://cloud.r-project.org')"
-          Rscript -e "deps <- remotes::dev_package_deps(dependencies = NA); remotes::install_deps(dependencies = TRUE, upgrade='never'); if (!all(deps$$package %in% installed.packages())) { message('missing: ', paste(setdiff(deps$$package, installed.packages()), collapse=', ')); q(status = 1, save = 'no')}"
-      - name: Run tests
-        shell: bash
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("rcmdcheck")
+        shell: Rscript {0}
+
+      - name: Session info
         run: |
-          _R_CHECK_TESTS_NLINES_=0 Rscript -e 'devtools::check()'
+          options(width = 100)
+          pkgs <- installed.packages()[, "Package"]
+          sessioninfo::session_info(pkgs, include_base = TRUE)
+        shell: Rscript {0}
+
+      - name: Check
+        env:
+          _R_CHECK_CRAN_INCOMING_: false
+          _R_CHECK_TESTS_NLINES_: 0
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+
+      - name: Show testthat output
+        if: always()
+        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+        shell: bash
+      
       - name: Build docs
-        shell: bash
-        run: | 
-          Rscript -e 'pkgdown::build_site()'
+        shell: Rscript {0}
+        run: pkgdown::build_site()
           

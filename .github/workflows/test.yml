@@ -23,7 +23,7 @@ jobs:
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@v1
       - name: Setup system libraries (ubuntu)
-        if: ${{ matrix.os == "ubuntu-latest" }}
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           sudo apt-get update && sudo apt-get install -y libcurl4-openssl-dev
       - name: Install dependencies

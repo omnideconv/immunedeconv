@@ -36,7 +36,8 @@ Suggests:
     rmarkdown,
     pkgdown,
     devtools,
-    DiagrammeR
+    DiagrammeR,
+    webshot
 Remotes:
     dviraran/xCell,
     GfellerLab/EPIC,

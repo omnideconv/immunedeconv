@@ -101,4 +101,34 @@ jobs:
       - name: Build docs
         shell: Rscript {0}
         run: pkgdown::build_site()
+        
+      - name: Get target folder for page deploy from github ref
+        run: |
+          # get rid of "refs/"
+          tmp_target_dir=$(echo $github_ref | sed "s/^refs\///")
+          echo $tmp_target_dir
+          # get rid of "merge" at the end of ref for PRs
+          if [[ $tmp_target_dir = pull/* ]]
+          then
+            tmp_target_dir=$(echo $tmp_target_dir | sed "s/\/merge$//")
+          fi
+          # when on master, we want to deploy to the root dir (-> ".")
+          target_dir=$(echo $tmp_target_dir | sed "s/heads\/master/./")
+          echo $target_dir
+          echo "::set-env name=target_dir::$target_dir"
+        env:
+          github_ref: ${{ github.ref }}
+        shell: bash
+        
+      - name: Deploy docs to gh-pages
+        if: {{ matrix.config.os == 'ubuntu-16.04' && matrix.config.R == "3.6" }}
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: docs # The folder the action should deploy.
+          TARGET_FOLDER: ${{ env.target_dir }}
+          CLEAN: true
+          CLEAN_EXCLUDE: '["heads", "pull", "tags"]'
+ 
           

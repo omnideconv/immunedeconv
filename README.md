@@ -2,8 +2,8 @@
 
 **an R package for unified access to computational methods for estimating immune cell fractions from bulk RNA sequencing data.**
 
-[![travis](https://travis-ci.com/icbi-lab/immunedeconv.svg?branch=master)](https://travis-ci.com/icbi-lab/immunedeconv)
-[![appveyor](https://ci.appveyor.com/api/projects/status/j2fb3fd097kqahg5/branch/master?svg=true)](https://ci.appveyor.com/project/icbi-lab/immunedeconv/branch/master)
+![tests](https://github.com/icbi-lab/immunedeconv/workflows/tests/badge.svg)
+![test-conda](https://github.com/icbi-lab/immunedeconv/workflows/conda/badge.svg)
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/r-immunedeconv/README.html)
 [![license](https://img.shields.io/badge/license-BSD-green.svg)](https://github.com/icbi-lab/immunedeconv/blob/master/LICENSE.md)
 [![docs](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://icbi-lab.github.io/immunedeconv)

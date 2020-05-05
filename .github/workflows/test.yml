@@ -9,15 +9,23 @@ on:
 jobs:
   tests:
     runs-on: ${{ matrix.config.os }}
-    name: ${{ matrix.config.os }} (R ${{ matrix.R }})
+    name: ${{ matrix.config.os }} (R ${{ matrix.config.R }})
     strategy:
       fail-fast: false
       matrix:
-        R: [ '3.4', '3.5', '3.6', '4.0' ] 
         config: 
-         - {os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-         - {os: windows-latest}
-         - {os: macos-latest} 
+         - {R: "3.4", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+         - {R: "3.5", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+         - {R: "3.6", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+         - {R: "4.0", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+         # R3.4 does not work on windows (some dependencies are not available) 
+         - {R: "3.5", os: windows-latest}
+         - {R: "3.6", os: windows-latest}
+         - {R: "4.0", os: windows-latest}
+         - {R: "3.4", os: macos-latest} 
+         - {R: "3.5", os: macos-latest} 
+         - {R: "3.6", os: macos-latest} 
+         - {R: "4.0", os: macos-latest} 
            
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -29,7 +37,7 @@ jobs:
       - name: Setup R 
         uses: r-lib/actions/setup-r@v1
         with:
-          r-version: ${{ matrix.R }}
+          r-version: ${{ matrix.config.R }}
       
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@v1
@@ -46,8 +54,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ matrix.config.r }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-1-
+          key: ${{ runner.os }}-r-${{ matrix.config.R }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.R }}-1-
           
       - name: Install system dependencies
         if: runner.os == 'Linux'

@@ -23,8 +23,11 @@ jobs:
         with:
           auto-update-conda: true
       
-      - name: Install conda build
+      - name: Set-up channels and install conda build
         run: |
+          conda config --add channels defaults
+          conda config --add channels bioconda
+          conda config --add channels conda-forge
           conda install -y conda-build conda-verify
         shell: bash
           

@@ -8,8 +8,8 @@ on:
     
 jobs:
   tests:
-    runs-on: ${{ matrix.config.os }}
-    name: conda ${{ matrix.config.os }}
+    runs-on: ${{ matrix.os }}
+    name: conda ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:

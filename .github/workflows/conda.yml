@@ -1,0 +1,38 @@
+name: conda
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+    
+jobs:
+  tests:
+    runs-on: ${{ matrix.config.os }}
+    name: conda ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest", "windows-latest", "macos-latest"]
+    
+    steps:
+      - uses: actions/checkout@v2
+        
+      - name: Setup Minoconda 
+        uses: goanpeca/setup-miniconda@v1
+        with:
+          auto-update-conda: true
+      
+      - name: Install conda build
+        run: |
+          conda install -y conda-build conda-verify
+        shell: bash
+          
+      - name: build and test package
+        run: |
+          cd .conda
+          conda build . --no-anaconda-upload
+        shell: bash
+          
+ 
+          

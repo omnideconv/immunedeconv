@@ -18,10 +18,12 @@ jobs:
          - {R: "3.5", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
          - {R: "3.6", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
          - {R: "4.0", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-         # R3.4 does not work on windows (some dependencies are not available) 
-         - {R: "3.5", os: windows-latest}
+         # Currently trouble running with various R version on windows (some dependencies fail to install, 
+         # it's different ones every day...) 
+         # - {R: "3.4", os: windows-latest}
+         # - {R: "3.5", os: windows-latest}
          - {R: "3.6", os: windows-latest}
-         - {R: "4.0", os: windows-latest}
+         # - {R: "4.0", os: windows-latest}
          - {R: "3.4", os: macos-latest} 
          - {R: "3.5", os: macos-latest} 
          - {R: "3.6", os: macos-latest} 

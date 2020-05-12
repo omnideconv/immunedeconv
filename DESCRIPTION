@@ -8,6 +8,7 @@ Depends:
     R (>= 3.4),
     EPIC
 Imports:
+    ps,
     dplyr (>= 0.7),
     magrittr (>= 1.5),
     readr (>= 1.1),

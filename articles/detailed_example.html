@@ -79,7 +79,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="detailed_example_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Detailed Usage Example</h1>
@@ -103,7 +103,7 @@
 <span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="no">dataset_racle</span>$<span class="no">expr_mat</span>[<span class="fl">1</span>:<span class="fl">5</span>, ])</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="right">LAU125</th>
 <th align="right">LAU355</th>
 <th align="right">LAU1255</th>
@@ -111,35 +111,35 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>A1BG</td>
+<td align="left">A1BG</td>
 <td align="right">0.82</td>
 <td align="right">0.58</td>
 <td align="right">0.81</td>
 <td align="right">0.71</td>
 </tr>
 <tr class="even">
-<td>A1CF</td>
+<td align="left">A1CF</td>
 <td align="right">0.00</td>
 <td align="right">0.01</td>
 <td align="right">0.00</td>
 <td align="right">0.00</td>
 </tr>
 <tr class="odd">
-<td>A2M</td>
+<td align="left">A2M</td>
 <td align="right">247.15</td>
 <td align="right">24.88</td>
 <td align="right">2307.94</td>
 <td align="right">20.30</td>
 </tr>
 <tr class="even">
-<td>A2M-AS1</td>
+<td align="left">A2M-AS1</td>
 <td align="right">1.38</td>
 <td align="right">0.20</td>
 <td align="right">2.60</td>
 <td align="right">0.28</td>
 </tr>
 <tr class="odd">
-<td>A2ML1</td>
+<td align="left">A2ML1</td>
 <td align="right">0.03</td>
 <td align="right">0.00</td>
 <td align="right">0.05</td>
@@ -204,17 +204,30 @@
 <span class="no">tmp_quantiseq</span> <span class="kw">=</span> <span class="no">res_quantiseq</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://icbi-lab.github.io/immunedeconv/reference/map_result_to_celltypes.html">map_result_to_celltypes</a></span>(<span class="no">cell_types</span>, <span class="st">"quantiseq"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span>(<span class="st">"cell_type"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(<span class="st">"sample"</span>, <span class="st">"estimate"</span>, -<span class="no">cell_type</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">method</span><span class="kw">=</span><span class="st">"quanTIseq"</span>)
-<span class="no">tmp_mcp_counter</span> <span class="kw">=</span> <span class="no">res_mcp_counter</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://icbi-lab.github.io/immunedeconv/reference/map_result_to_celltypes.html">map_result_to_celltypes</a></span>(<span class="no">cell_types</span>, <span class="st">"mcp_counter"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">method</span><span class="kw">=</span><span class="st">"quanTIseq"</span>)</pre></body></html></div>
+<pre><code>## Warning: `funs()` is deprecated as of dplyr 0.8.0.
+## Please use a list of either functions or lambdas: 
+## 
+##   # Simple named list: 
+##   list(mean = mean, median = median)
+## 
+##   # Auto named with `tibble::lst()`: 
+##   tibble::lst(mean, median)
+## 
+##   # Using lambdas
+##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">tmp_mcp_counter</span> <span class="kw">=</span> <span class="no">res_mcp_counter</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://icbi-lab.github.io/immunedeconv/reference/map_result_to_celltypes.html">map_result_to_celltypes</a></span>(<span class="no">cell_types</span>, <span class="st">"mcp_counter"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span>(<span class="st">"cell_type"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(<span class="st">"sample"</span>, <span class="st">"estimate"</span>, -<span class="no">cell_type</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">method</span><span class="kw">=</span><span class="st">"MCP-counter"</span>)
 
 <span class="no">result</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span>(<span class="no">tmp_quantiseq</span>, <span class="no">tmp_mcp_counter</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(<span class="no">dataset_racle</span>$<span class="no">ref</span>)</pre></body></html></div>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span>(<span class="no">dataset_racle</span>$<span class="no">ref</span>)</pre></body></html></div>
 <pre><code>## Joining, by = c("cell_type", "sample")</code></pre>
 <p>Plot the true vs. estimated values:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">result</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">result</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span><span class="kw">=</span><span class="no">true_fraction</span>, <span class="kw">y</span><span class="kw">=</span><span class="no">estimate</span>)) +
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">shape</span><span class="kw">=</span><span class="no">cell_type</span>, <span class="kw">color</span><span class="kw">=</span><span class="no">cell_type</span>)) +
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="no">cell_type</span>~<span class="no">method</span>, <span class="kw">scales</span><span class="kw">=</span><span class="st">"free_y"</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">2</span>) +

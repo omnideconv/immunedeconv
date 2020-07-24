@@ -193,11 +193,13 @@ sum is scaled to 1 million (TPM).</p>
 <span class='no'>desired_cell_fractions</span> <span class='kw'>=</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(<span class='st'>"T cell CD8+"</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.2</span>, <span class='fl'>0.3</span>),
                                     <span class='st'>"T cell CD4+"</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.9</span>, <span class='fl'>0.7</span>, <span class='fl'>0.5</span>),
                                     <span class='st'>"B cell"</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0.1</span>, <span class='fl'>0.2</span>))
-<span class='no'>new_eset</span> <span class='kw'>=</span> <span class='fu'>make_bulk_eset</span>(<span class='no'>eset</span>, <span class='no'>desired_cell_fractions</span>, <span class='kw'>n_cells</span><span class='kw'>=</span><span class='fl'>500</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/Biobase/man/exprs.html'>exprs</a></span>(<span class='no'>new_eset</span>)</div><div class='output co'>#&gt;      value value1 value2
-#&gt; CD8A 1e+05  2e+05  3e+05
-#&gt; CD4  9e+05  7e+05  5e+05
-#&gt; CD19 0e+00  1e+05  2e+05</div><div class='input'>
+<span class='no'>new_eset</span> <span class='kw'>=</span> <span class='fu'>make_bulk_eset</span>(<span class='no'>eset</span>, <span class='no'>desired_cell_fractions</span>, <span class='kw'>n_cells</span><span class='kw'>=</span><span class='fl'>500</span>)</div><div class='output co'>#&gt; <span class='message'>New names:</span>
+#&gt; <span class='message'>* value -&gt; value...1</span>
+#&gt; <span class='message'>* value -&gt; value...2</span>
+#&gt; <span class='message'>* value -&gt; value...3</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/Biobase/man/exprs.html'>exprs</a></span>(<span class='no'>new_eset</span>)</div><div class='output co'>#&gt;      value...1 value...2 value...3
+#&gt; CD8A     1e+05     2e+05     3e+05
+#&gt; CD4      9e+05     7e+05     5e+05
+#&gt; CD19     0e+00     1e+05     2e+05</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

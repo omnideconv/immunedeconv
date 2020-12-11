@@ -37,6 +37,8 @@ Suggests:
     pkgdown,
     devtools,
     DiagrammeR,
+    tidyr,
+    ggplot2,
     webshot
 Remotes:
     omegahat/XML,
@@ -50,3 +52,4 @@ Roxygen: list(markdown = TRUE)
 LazyData: true
 URL: https://icbi-lab.github.io/immunedeconv, https://github.com/icbi-lab/immunedeconv
 BugReports: https://github.com/icbi-lab/immunedeconv/issues
+RoxygenNote: 7.1.1

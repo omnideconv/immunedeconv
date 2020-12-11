@@ -1,6 +1,6 @@
 Package: immunedeconv
 Title: Methods for immune cell deconvolution
-Description: Collection of methods for immune cell deconvolution from bulk RNA-seq samples
+Description: Collection of methods for immune cell deconvolution from bulk RNA-seq samples.
 Version: 2.0.3
 Authors@R: person("Gregor", "Sturm", role=c("aut", "cre"), email="mail@gregor-sturm.de")
 biocViews:

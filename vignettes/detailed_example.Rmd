@@ -1,0 +1,130 @@
+---
+title: "Detailed Usage Example"
+output: rmarkdown::html_vignette
+vignette: >
+   %\VignetteIndexEntry{Detailed Exampe}
+   %\VignetteEngine{knitr::rmarkdown}
+   \usepackage[utf8]{inputenc}
+---
+
+```{r, include=FALSE}
+devtools::load_all(".")
+```
+
+```{r, message=FALSE, warning=FALSE}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(immunedeconv)
+library(tibble)
+```
+
+*Immunedeconv* ships with an example dataset with samples from four patients with metastatic melanoma published in @EPIC2017. 
+It is available from `immunedeconv::dataset_racle`. It contains a gene expression matrix (`dataset_racle$expr_mat`) generated using bulk RNA-seq and 'gold standard' estimates of immune cell contents profiled with FACS (`dataset_racle$ref`). We are going to use the bulk RNA-seq data to run the deconvolution methods and will compare the results to the FACS data later on.   
+
+The gene expression data is a matrix with HGNC symbols in rows and samples in columns:
+The dataset is a matrix 
+```{r}
+# show the first 5 lines of the gene expression matrix
+knitr::kable(dataset_racle$expr_mat[1:5, ])
+```
+
+
+
+To estimate immune cell fractions, we simply have to invoke the `deconvolute` function. It requires the specification
+of one of the following methods for deconvolution:
+
+```{r}
+deconvolution_methods
+```
+
+
+For this example, we use `quanTIseq`. As a result, we obtain a cell_type x sample data frame with cell-type scores for each sample.
+
+```{r, message=FALSE, warning=FALSE}
+res_quantiseq = deconvolute(dataset_racle$expr_mat, "quantiseq", tumor = TRUE)
+```
+
+
+QuanTIseq generates scores that can be interpreted as a cell-type fraction. Let's visualize
+the results as a stacked bar chart with tidyverse/ggplot2.
+```{r, fig.height=4, fig.width=8}
+res_quantiseq %>%
+  gather(sample, fraction, -cell_type) %>%
+  # plot as stacked bar chart
+  ggplot(aes(x=sample, y=fraction, fill=cell_type)) +
+    geom_bar(stat='identity') +
+    coord_flip() +
+    scale_fill_brewer(palette="Paired") + 
+    scale_x_discrete(limits = rev(levels(res_quantiseq)))
+```
+
+We observe that
+
+* the first two samples (LAU355, LAU1314) appear to contain a large amount of CD4+ T cells and B cells
+* the last two samples (LAU1255, LAU125) appear to contain a large amount of "uncharacterized cells"
+* the last sample (LAU125) appears to contain no CD8+ T cells, often associated with bad prognosis. 
+
+Estimating the amount of "uncharacterized cells" is a novel feature introduced by quanTIseq and EPIC [@EPIC2017, @quantiseq2017]. This estimate often corresponds to the fraction of tumor cells in the sample. 
+
+
+Let's now apply MCP-counter to the same dataset.
+```{r, message=FALSE, warning=FALSE}
+res_mcp_counter = deconvolute(dataset_racle$expr_mat, "mcp_counter")
+```
+MCP-counter provides scores in arbitrary units that are only comparable between samples, but not between
+cell-types. The visualisation as bar-chart suggests the scores to be cell-type fractions and is, therefore, unsuitable.
+Instead, we use ggplot to visualize the scores per-cell type, allowing for a relative comparison between samples.
+
+```{r, fig.height=7, fig.width=7}
+res_mcp_counter %>%
+  gather(sample, score, -cell_type) %>%
+  ggplot(aes(x=sample, y=score, color=cell_type)) +
+    geom_point(size=4) +
+    facet_wrap(~cell_type, scales="free_x", ncol=3) +
+    scale_color_brewer(palette="Paired", guide=FALSE) +
+    coord_flip() + 
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+With the scores being in arbitrary units, the results are not useful for judging if a cell type is present in the sample, or not. However, we can compare the relative values between samples and relate them to the results we obtained earlier using quanTIseq. 
+
+* Consistent with quanTIseq, MCP-counter predicts B cells to be more abundant in LAU355 and LAU1314 than in the other two samples. 
+* Also consistent with quanTIseq, the last LAU125 appears to contain significantly less CD8+ T cells than the other samples. 
+* the estimates for Neutrophils and Monocytes are inconsistent with quanTIseq. 
+
+
+## Comparison with FACS data
+Let's now compare the results with 'gold standard' FACS data obtained for the four samples. This is, of course, not a representative benchmark, but it gives a notion about what magnitude of predictive accuracy we can expect. 
+```{r}
+# construct a single dataframe containing all data
+#
+# re-map the cell-types to common names. 
+# only include the cell-types that are measured using FACS
+cell_types = c("B cell", "T cell CD4+", "T cell CD8+", "NK cell")
+
+tmp_quantiseq = res_quantiseq %>% map_result_to_celltypes(cell_types, "quantiseq") %>% 
+  rownames_to_column("cell_type") %>%
+  gather("sample", "estimate", -cell_type) %>% 
+  mutate(method="quanTIseq") 
+tmp_mcp_counter = res_mcp_counter %>% map_result_to_celltypes(cell_types, "mcp_counter") %>%
+  rownames_to_column("cell_type") %>%
+  gather("sample", "estimate", -cell_type) %>%
+  mutate(method="MCP-counter") 
+
+result = bind_rows(tmp_quantiseq, tmp_mcp_counter) %>%
+  inner_join(dataset_racle$ref)
+```
+
+Plot the true vs. estimated values: 
+```{r, fig.width=6, fig.height=7}
+result %>% 
+  ggplot(aes(x=true_fraction, y=estimate)) + 
+    geom_point(aes(shape=cell_type, color=cell_type)) + 
+    facet_wrap(cell_type~method, scales="free_y", ncol = 2) + 
+    scale_color_brewer(palette = "Dark2") + 
+    theme_bw()
+```
+
+(MCP counter does not provide estimates for CD4+ T cells.)

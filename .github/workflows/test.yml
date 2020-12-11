@@ -1,0 +1,136 @@
+name: tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+    
+jobs:
+  tests:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.os }} (R ${{ matrix.config.R }})
+    strategy:
+      fail-fast: false
+      matrix:
+        config: 
+         - {R: "3.4", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+         - {R: "3.5", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+         - {R: "3.6", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+         - {R: "4.0", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+         # Currently trouble running with various R version on windows (some dependencies fail to install, 
+         # it's different ones every day...) 
+         # - {R: "3.4", os: windows-latest}
+         # - {R: "3.5", os: windows-latest}
+         - {R: "3.6", os: windows-latest}
+         # - {R: "4.0", os: windows-latest}
+         - {R: "3.4", os: macos-latest} 
+         - {R: "3.5", os: macos-latest} 
+         - {R: "3.6", os: macos-latest} 
+         - {R: "4.0", os: macos-latest} 
+           
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      RSPM: ${{ matrix.config.rspm }}
+    
+    steps:
+      - uses: actions/checkout@v2
+        
+      - name: Setup R 
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: ${{ matrix.config.R }}
+      
+      - name: Setup pandoc
+        uses: r-lib/actions/setup-pandoc@v1
+      
+      - name: Query dependencies
+        shell: Rscript {0}        
+        run: |
+          install.packages('remotes', repos='https://cloud.r-project.org')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)          
+          # Rscript -e "deps <- devtools::dev_package_deps(dependencies = NA); remotes::install_deps(dependencies = TRUE, upgrade='never'); if (!all(deps$$package %in% installed.packages())) { message('missing: ', paste(setdiff(deps$$package, installed.packages()), collapse=', ')); q(status = 1, save = 'no')}"
+      
+      - name: Cache R packages
+        if: runner.os != 'Windows'
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ matrix.config.R }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.R }}-1-
+          
+      - name: Install system dependencies
+        if: runner.os == 'Linux'
+        env:
+          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
+        run: |
+          sudo apt-get -y update && sudo apt-get install -y libcurl4-openssl-dev
+          # Rscript -e "remotes::install_github('r-hub/sysreqs')"
+          # sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
+          # sudo -s eval "$sysreqs"
+      
+      - name: Install dependencies
+        run: |
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("rcmdcheck")
+        shell: Rscript {0}
+
+      - name: Session info
+        run: |
+          options(width = 100)
+          pkgs <- installed.packages()[, "Package"]
+          sessioninfo::session_info(pkgs, include_base = TRUE)
+        shell: Rscript {0}
+
+      - name: Check
+        env:
+          _R_CHECK_CRAN_INCOMING_: 0
+          _R_CHECK_DOC_SIZES_: 0
+          _R_CHECK_TESTS_NLINES_: 0
+          R_QPDF: "true" # /bin/true https://www.mail-archive.com/r-devel@r-project.org/msg34816.html
+        run: |
+          R CMD build . 
+          R CMD check --no-manual --as-cran immunedeconv*.tar.gz
+        shell: bash
+       # run: rcmdcheck::rcmdcheck(args = c('--no-manual', '--as-cran'), error_on = 'warning', check_dir = 'check') 
+       # shell: Rscript {0}
+
+      - name: Show testthat output
+        if: always()
+        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+        shell: bash
+      
+      - name: Build docs
+        shell: Rscript {0}
+        run: pkgdown::build_site()
+        
+      - name: Get target folder for page deploy from github ref
+        run: |
+          # get rid of "refs/"
+          tmp_target_dir=$(echo $github_ref | sed "s/^refs\///")
+          echo $tmp_target_dir
+          # get rid of "merge" at the end of ref for PRs
+          if [[ $tmp_target_dir = pull/* ]]
+          then
+            tmp_target_dir=$(echo $tmp_target_dir | sed "s/\/merge$//")
+          fi
+          # when on master, we want to deploy to the root dir (-> ".")
+          target_dir=$(echo $tmp_target_dir | sed "s/heads\/master/./")
+          echo $target_dir
+          echo "::set-env name=target_dir::$target_dir"
+        env:
+          github_ref: ${{ github.ref }}
+        shell: bash
+        
+      - name: Deploy docs to gh-pages
+        if: ( matrix.config.os == 'ubuntu-16.04' ) &&  ( matrix.config.R == '3.6' )
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: docs # The folder the action should deploy.
+          TARGET_FOLDER: ${{ env.target_dir }}
+          CLEAN: true
+          CLEAN_EXCLUDE: '["heads", "pull", "tags"]'
+ 
+          

@@ -1,18 +1,22 @@
 ---
-title: "Getting started with `immunedeconv`"
+title: "Getting started with immunedeconv"
 bibliography: references.bib
 biblio-style: apalike
 link-citations: yes
 colorlinks: yes
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Getting started}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE}
-devtools::load_all(".")
+# devtools::load_all(".")
+library(immunedeconv)
+library(data.tree)
+library(tibble)
+library(dplyr)
 ```
 
 # Introduction
@@ -28,26 +32,41 @@ However, RNA-seq does not provide a detailed information on a cellular
 composition of a sample, which then has to be inferred using computational
 techniques.
 
+## Conceptual differences between the methods
+
 Such methods can, in general, be classified in two categories:
-Marker gene-based approaches and deconvolution-based approaches. The marker
-gene based approaches are based on a list of genes, referred to as signature,
-that are characteristic for a cell type. These signatures are usually derived
-from targeted transcriptomic studies characterizing each immune cell type
-or/and comprehensive literature search and experimental validation. By looking
-at the expression values of signature genes, every cell type is quantified
-independently, either using the gene expression values directly
-[@Becht2016] or by performing a statistical test for enrichment of the
-signatures [@XCELL2017]. Deconvolution methods, on the other hand, formulate
-the problem as a system of equations that describe the gene expression of
-a sample as the weighted sum of the contributions of the different cell types.
-By solving the inverse problem, cell type fractions can be inferred given
-a signature matrix and the mixed gene expression. In practice, this problem is
-solved using $\nu$-Support Vector Regression (SVR) [@CIBERSORT2016],
-constrained least square regression [@quantiseq2017; @EPIC2017] or linear least
-square regression [@TIMER2016] (reviewed in @Finotello2018).
+
+ * Marker gene-based approaches and
+ * deconvolution-based approaches.
+
+```{r fig_deconvolution_concepts, echo=FALSE, fig.cap="*Fig by @Finotello2018.*"}
+knitr::include_graphics("img/concepts_deconvolution.gif")
+```
+
+Marker gene based approaches (a) are based on a list of genes (signature), that are characteristic for a cell type. By looking at the expression values of signature genes, every cell type is quantified independently, either using the gene expression values directly (MCP-counter) or by performing a statistical test for enrichment of the signatures (xCell).
+
+Deconvolution methods (b) formulate the problem as a system of equations that describe the gene expression of a sample as the weighted sum of the contributions of the different cell types.  By solving the inverse problem, cell type fractions can be inferred given a signature matrix and the mixed gene expression. This can be accomplished using $\nu$-Support Vector Regression (SVR) (CIBERSORT) constrained least square regression (quanTIseq, EPIC) or linear least square regression (TIMER).
+
+For more information, check out the review by @Finotello2018.
 
 
-# Deconvolution
+# Run the deconvolution
+## Input Data
+The input data is a `gene` $\times$ `sample` gene expression
+matrix. In general values should be
+
+* TPM-normalized
+* *not* log-transformed.
+
+For xCell and MCP-counter this is not so important. xCell works on the ranks of
+the gene expression only and MCP-counter sums up the gene expression values.
+
+Rownames are expected to be HGNC gene symbols.
+Instead of a matrix, *immunedeconv* also supports ExpressionSets ([see
+below](#using-expressionsets)).
+
+
+## Run a method
 This package gives you easy access to these methods.
 To run a method with default options, simply invoke
 
@@ -69,13 +88,14 @@ xcell
 epic
 ```
 
-## Example
+### Example
+For this example, we use a dataset of four melanoma patients from @EPIC2017. 
 ```{r, message=FALSE}
-res = deconvolute(immunedeconv::example_gene_expression_matrix, "quantiseq")
+res = deconvolute(immunedeconv::dataset_racle$expr_mat, "quantiseq")
 knitr::kable(res, digits=2)
 ```
 
-## CIBERSORT
+### special case: CIBERSORT
 CIBERSORT is only freely available for academic users and could not be
 directly included in this package. To use CIBERSORT with this package,
 you need to register on the
@@ -107,7 +127,7 @@ deconvolute(your_mixture_matrix, "cibersort")   # or 'cibersort_abs'
 as for any other method.
 
 
-## TIMER
+### special case: TIMER
 TIMER uses indication-specific reference profiles. Therefore, you *must*
 specify the tumor type when running TIMER:
 
@@ -125,7 +145,7 @@ immunedeconv::timer_available_cancers
 
 What the abbreviations stand for is documented on the [TCGA wiki](https://gdc.cancer.gov/resources-tcga-users/tcga-code-tables/tcga-study-abbreviations).
 
-## Using ExpressionSets
+### Using ExpressionSets
 The [Bioconductor](https://bioconductor.org/)
 [ExpressionSet](https://www.rdocumentation.org/packages/Biobase/versions/2.32.0/topics/ExpressionSet)
 is a convenient way to store a gene expression matrix with metadata for both
@@ -138,5 +158,94 @@ symbols. Which one needs to be specified in the `deconvolute()` call:
 ```r
 deconvolute(my_expression_set, "quantiseq", column = "<column name>")
 ```
+
+# Cell-type re-mapping
+To provide consistently named results independent of the method, we defined
+a *controlled vocabulary* (CV) of cell-types and arranged them in a tree.
+
+```{r, echo=FALSE}
+cell_type_hierarchy = new.env()
+with(cell_type_hierarchy, {
+  tree = immunedeconv:::.get_cell_type_tree()
+  SetGraphStyle(tree, rankdir = "LR")
+  SetEdgeStyle(tree, arrowhead = "vee", color = "grey35", penwidth = 2)
+  SetNodeStyle(tree, style = "filled,rounded", shape = "box", fillcolor = "GreenYellow",
+              fontname = "helvetica", tooltip = GetDefaultTooltip, fontcolor="black")
+  plot(tree)
+})
+```
+
+For each method, each cell-type is mapped to a node in the tree.
+If you are curious, it's all defined in [this excel
+sheet](https://github.com/grst/immunedeconv/blob/master/inst/extdata/cell_type_mapping.xlsx).
+
+This tree can be used to summarize scores along the tree. For instance,
+quanTIseq provides scores for regulatory and non-regulatory CD4+ T cells independently, but you are
+interested in the fraction of overall CD4+ T cells. In that case you can use
+`map_result_to_celltypes` to sum up the scores:
+
+```{r, message=FALSE}
+res = deconvolute(immunedeconv::dataset_racle$expr_mat, "quantiseq") %>%
+  map_result_to_celltypes(c("T cell CD4+"), "quantiseq")
+knitr::kable(res, digits=2)
+```
+
+The algorithm is explained in detail in the methods section of @sturm2019.
+
+# Interpretation of scores
+In general, cell-type scores allow for the comparison (1) between samples, (2) between cell-types or (3) both. 
+Between-sample comparisons allow to make statements such as *"In patient A, there are more CD8+ T cells than in patient B"*. 
+Between-cell-type comparisons allow to make statements such as *"In a certain patient, there are more B cells than T cells"*.
+For more information, see our Benchmark paper (@sturm2019). 
+
+### Methods that allow between-sample comparisons
+
+* MCP-counter
+* xCell
+* TIMER
+
+### Methods that allow between-cell-type comparisions
+
+* CIBERSORT
+
+### Methods that allow both
+
+* EPIC
+* quanTIseq
+* CIBERSORT abs. mode
+
+EPIC and quanTIseq are currently the only methods providing an absolute score,
+i.e. a score that can be interpreted as a cell fraction. These methods
+also provide an estimate for the amount of uncharacterized cells, i.e. cells for
+that no signature exists. This measure often corresponds to the fraction of cancer cells in the sample. 
+
+CIBERSORT abs., while allowing both between- and within-sample comparisons, generates
+a score in arbitrary units. 
+
+
+
+
+# FAQs
+### Can I specify a custom signature matrix through immunedeconv?
+No, currently not. The reason is that the methods are conceptually different.
+Some are marker gene based and others deconvolution-based. CIBERSORT performs
+feature-selection on the matrix while EPIC and quanTIseq don't. EPIC uses *all*
+genes to estimate the inter-sample variance while quanTIseq uses marker genes
+only. This is also being discussed in
+[#15](https://github.com/grst/immunedeconv/issues/15).
+
+You can, however, provide custom signatures for most individual methods (see
+next question).
+
+### I want to use a special feature of a method, but I cannot access it through the `deconvolute` function.
+You can access each method individually through the `deconvolute_xxx` function.
+Through these functions you can access all native features. See the [function
+  reference](../reference/) for details.
+
+If you believe that the feature is available across multiple methods and
+should be added to the `deconvolute` interface, feel free to open an
+[issue](https://github.com/grst/immunedeconv/issues) or pull request.
+
+
 
 # References

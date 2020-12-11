@@ -1,8 +1,9 @@
 Package: immunedeconv
 Title: Methods for immune cell deconvolution
 Description: Collection of methods for immune cell deconvolution from bulk RNA-seq samples
-Version: 1.1.0
+Version: 2.0.3
 Authors@R: person("Gregor", "Sturm", role=c("aut", "cre"), email="mail@gregor-sturm.de")
+biocViews:
 Depends:
     R (>= 3.4),
     EPIC
@@ -18,8 +19,8 @@ Imports:
     limSolve (>= 1.5.5.1),
     e1071 (>= 1.6),
     parallel (>= 3.4),
-    BiocInstaller,
     BiocGenerics,
+    rlang,
     BiocParallel,
     preprocessCore,
     Biobase,
@@ -27,30 +28,26 @@ Imports:
     sva,
     GSEABase,
     xCell,
-    MCPcounter
+    MCPcounter,
+    utils
 Suggests:
     testthat,
     knitr,
     rmarkdown,
     pkgdown,
-    devtools
+    devtools,
+    DiagrammeR,
+    webshot
 Remotes:
-    bioc::BiocInstaller,
-    bioc::BiocGenerics,
-    bioc::BiocParallel,
-    bioc::preprocessCore,
-    bioc::Biobase,
-    bioc::GSVA,
-    bioc::sva,
-    bioc::GSEABase,
+    omegahat/XML,
     dviraran/xCell,
     GfellerLab/EPIC,
     ebecht/MCPcounter/Source
 VignetteBuilder: knitr
-License: CC-BY-4.0
+License: BSD_3_clause + file LICENSE.md
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 LazyData: true
-URL: https://github.com/grst/immunedeconv
-BugReports: https://github.com/grst/immunedeconv/issues
-RoxygenNote: 6.1.1
+URL: https://icbi-lab.github.io/immunedeconv, https://github.com/icbi-lab/immunedeconv
+BugReports: https://github.com/icbi-lab/immunedeconv/issues
+RoxygenNote: 7.1.0

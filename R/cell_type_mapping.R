@@ -4,8 +4,9 @@
 #'
 #' @importFrom testit assert
 #' @importFrom dplyr select
+#' @importFrom stats na.omit
 #' @import magrittr
-#'
+#' 
 #' @name cell_type_mapping
 NULL
 
@@ -16,38 +17,64 @@ NULL
 #' See `inst/extdata/cell_type_mapping.xlsx` for more details.
 #'
 #' @export
-cell_type_map = readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx",
-                                                  package="immunedeconv", mustWork=TRUE),
-                                      sheet="mapping") %>%
-                          select(method_dataset, method_cell_type, cell_type) %>%
-                          na.omit()
+cell_type_map = NULL
+# gets attached on .onLoad, see zzz.R
+.get_cell_type_map = function() {
+  readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx",
+                                package="immunedeconv", mustWork=TRUE),
+                    sheet="mapping") %>%
+      select(method_dataset, method_cell_type, cell_type) %>%
+      na.omit()
+}
 
 
 #' Available methods and datasets.
 #'
 #' A list of all methods (e.g. `cibersort`) and datasets (e.g. `schelker_ovarian`) for
-#' which the cell types are mapped to the controlled vocabulary.
+#' that the cell types are mapped to the controlled vocabulary.
 #'
 #' @export
-available_datasets = cell_type_map %>% pull(method_dataset) %>% unique()
+available_datasets = NULL
+# gets attached on .onLoad, see zzz.R
+.get_available_datasets = function() {
+  cell_type_map %>% pull(method_dataset) %>% unique()
+}
 
-cell_type_list =  readxl::read_excel(system.file("extdata", "cell_type_mapping.xlsx",
-                                                 package="immunedeconv", mustWork=TRUE),
-                                     sheet = "controlled_vocabulary") %>%
-  select(parent, cell_type, optional) %>%
-  mutate(optional = optional %in% TRUE)
+
+#' List with controlled cell-type vocabulary
+cell_type_list = NULL
+.get_cell_type_list = function() {
+  tmp_list = readxl::read_excel(system.file("extdata", "cell_type_mapping.xlsx",
+                                            package="immunedeconv", mustWork=TRUE),
+                                sheet = "controlled_vocabulary") %>%
+      select(parent, cell_type, optional) %>%
+      mutate(optional = optional %in% TRUE)
+  assert("Node names are unique", length(tmp_list$cell_type) == length(unique(tmp_list$cell_type)))
+  tmp_list
+}
 
 
 #' Available cell types in the controlled vocabulary organized as a lineage tree.
 #'
 #' @details a `data.tree` object
+#' @name cell_type_tree
 #' @export
-cell_type_tree = cell_type_list %>% as.data.frame() %>% data.tree::FromDataFrameNetwork()
+cell_type_tree = NULL
+# gets attached on .onLoad, see zzz.R
+.get_cell_type_tree = function() {
+  cell_type_list %>% as.data.frame() %>% data.tree::FromDataFrameNetwork()
+}
 
 
-# Access nodes by name in O(1). Node names are unique in our tree.
-assert("Node names are unique", length(cell_type_list$cell_type) == length(unique(cell_type_list$cell_type)))
-node_by_name = cell_type_tree$Get(function(node){node})
+#' Lookup dictionary for cell-type nodes
+#' 
+#' Access nodes by name in O(1). Node names are unique in our tree.
+#' gets attached on .onLoad, see zzz.R
+node_by_name=NULL
+# gets attached on .onLoad, see zzz.R
+.get_node_by_name = function() {
+  cell_type_tree$Get(function(node){node})
+}
 
 
 #' Use a tree-hierarchy to map cell types among different methods.
@@ -175,6 +202,9 @@ map_result_to_celltypes = function(result, use_cell_types, method=NULL) {
 #'
 #' @export
 get_all_children = function(cell_type, method=NULL) {
+  if(!cell_type %in% names(node_by_name)) {
+    stop(sprintf("unknown cell type: %s", cell_type))
+  }
   if(is.null(method)) {
     names(node_by_name[[cell_type]]$Get('name'))
   } else {

@@ -1,6 +1,6 @@
 
 test_that("cell_type mapping to a single method_cell_type are calculated correctly", {
-  fractions = data.frame(sample1=c("B cell"=.3, "T cell CD4+"=.5, "Dendritic cell"=.2))
+  fractions = data.frame(sample1=c("B cell"=.3, "T cell CD4+"=.5, "Myeloid dendritic cell"=.2))
   cell_type = "T cell CD4+"
   node = node_by_name[[cell_type]]
   result = find_children(node, fractions, "timer")
@@ -16,7 +16,7 @@ test_that("cell_type mapping to multiple sub method_cell_type are calculated cor
 })
 
 test_that("cell_type mapping is NA if no corresponding method_cell_type exists", {
-  fractions = data.frame(sample1=c("B cell"=.3, "T cell CD4+"=.5, "Dendritic cell"=.2))
+  fractions = data.frame(sample1=c("B cell"=.3, "T cell CD4+"=.5, "Myeloid dendritic cell"=.2))
   cell_type = "NK cell activated"
   node = node_by_name[[cell_type]]
   result = find_children(node, fractions, "timer")
@@ -74,22 +74,28 @@ test_that("if no children are available, NA is returned instead of 0", {
   assert(is.na(result[,1]))
 })
 
+test_that("get_all_children throws an error on unknown cell type", {
+  err = expect_error(get_all_children("foo cell type"))
+  assert(startsWith(err$message, "unknown cell type"))
+})
+
 test_that("get_all_children works without specifying a method", {
-  cell_type = "Dendritic cell"
+  cell_type = "Myeloid dendritic cell"
   assert(all(sort(get_all_children(cell_type)) ==
-             sort(c("Dendritic cell resting", "Dendritic cell activated", "Dendritic cell"))))
+             sort(c("Myeloid dendritic cell resting", "Myeloid dendritic cell activated", "Myeloid dendritic cell"))))
 
   cell_type = "T cell CD4+"
   assert(all(sort(get_all_children(cell_type)) ==
-             sort(c("T cell CD4+", "T cell CD4+ (non-regulatory)", "T cell CD4+ naive", "T cell CD4+ memory",
-                    "T cell CD4+ memory resting" , "T cell CD4+ memory activated", "T cell follicular helper",
-                    "T cell regulatory (Tregs)"))))
+             sort(c("T cell CD4+", "T cell CD4+ (non-regulatory)", "T cell CD4+ central memory",
+                    "T cell CD4+ effector memory", "T cell CD4+ memory", "T cell CD4+ memory activated",
+                    "T cell CD4+ memory resting", "T cell CD4+ naive", "T cell CD4+ Th1",
+                    "T cell CD4+ Th2", "T cell follicular helper", "T cell regulatory (Tregs)"))))
 })
 
 test_that("get_all_children works with a method specified", {
   # unlike before, subsequent children should not be returned if the parent
   # is already mapped to a cell type.
-  cell_type = "Dendritic cell"
+  cell_type = "Myeloid dendritic cell"
   method = "xcell"
   assert(all(sort(get_all_children(cell_type, method)) == c("DC")))
 

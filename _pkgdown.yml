@@ -1,3 +1,5 @@
+url: https://icbi-lab.github.io/immunedeconv
+
 reference:
   - title: Deconvolution
     desc: Use the package to estimate immune cell fractions from bulk RNA-seq samples.
@@ -7,6 +9,15 @@ reference:
       - set_cibersort_binary
       - set_cibersort_mat
       - eset_to_matrix
+  - title: Deconvolution methods
+    desc: Direct access to the individual deconvolution methods to access special features that are not available through `deconvolute()`.
+    contents:
+      - deconvolute_cibersort
+      - deconvolute_epic
+      - deconvolute_mcp_counter
+      - deconvolute_quantiseq
+      - deconvolute_timer
+      - deconvolute_xcell
   - title: Cell type mapping
     desc: Map cell types and datasets to a controlled vocabulary.
     contents:
@@ -24,7 +35,7 @@ reference:
   - title: Datasets
     desc: List of datasets provided by the package
     contents:
-      - example_gene_expression_matrix
+      - dataset_racle
   - title: TIMER
     desc: functions and objects related to the TIMER method
     contents:

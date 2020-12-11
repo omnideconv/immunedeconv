@@ -11,6 +11,10 @@
 #' @importFrom tibble as_tibble
 #' @importFrom EPIC EPIC
 #' @importFrom rlang dots_list
+#' @importFrom grDevices dev.off pdf
+#' @importFrom graphics abline barplot box mtext
+#' @importFrom stats aggregate lm lsfit median qqplot
+#' @importFrom utils capture.output read.csv read.table tail write.table
 NULL
 
 

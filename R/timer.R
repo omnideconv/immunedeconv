@@ -101,7 +101,7 @@ RemoveBatchEffect <- function(cancer.exp, immune.exp, immune.cellType) {
   tmp0 <- c()
   for(kk in unique(names(immune.cellType))){
     tmp.vv <- which(names(immune.cellType)==kk)
-    tmp0 <- cbind(tmp0, apply(immune.exp.br[, tmp.vv], 1, median, na.rm=T))
+    tmp0 <- cbind(tmp0, apply(immune.exp.br[, tmp.vv], 1, median, na.rm=TRUE))
   }
 
 
@@ -141,7 +141,7 @@ check_cancer_types <- function(args) {
 GetFractions.Abbas <- function(XX, YY, w=NA){
   ss.remove=c()
   ss.names=colnames(XX)
-  while(T){
+  while(TRUE){
     if(length(ss.remove)==0)tmp.XX=XX else{
       if(is.null(ncol(tmp.XX)))return(rep(0, ncol(XX)))
       tmp.XX=tmp.XX[, -ss.remove]
@@ -150,7 +150,7 @@ GetFractions.Abbas <- function(XX, YY, w=NA){
       ss.names=ss.names[-ss.remove]
       if(length(ss.names)==0)return(rep(0, ncol(XX)))
     }
-    if(is.na(w[1]))tmp=lsfit(tmp.XX, YY, intercept=F) else tmp=lsfit(tmp.XX, YY, w, intercept=F)
+    if(is.na(w[1]))tmp=lsfit(tmp.XX, YY, intercept=FALSE) else tmp=lsfit(tmp.XX, YY, w, intercept=FALSE)
     if(is.null(ncol(tmp.XX)))tmp.beta=tmp$coefficients[1] else tmp.beta=tmp$coefficients[1:(ncol(tmp.XX)+0)]
     if(min(tmp.beta>0))break
     ss.remove=which.min(tmp.beta)

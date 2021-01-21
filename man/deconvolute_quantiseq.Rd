@@ -9,8 +9,8 @@ deconvolute_quantiseq(gene_expression_matrix, tumor, arrays, scale_mrna, ...)
 \arguments{
 \item{gene_expression_matrix}{a m x n matrix with m genes and n samples}
 
-\item{tumor}{Set to TRUE if dealing with a tumor samples. if TRUE, signature genes with
-high expressin in tumor samles are removed.}
+\item{tumor}{Set to TRUE if dealing with tumor samples. if TRUE, signature genes with
+high expression in tumor samples are removed.}
 
 \item{arrays}{Set to TRUE if working with Microarray data instead of RNA-seq}
 

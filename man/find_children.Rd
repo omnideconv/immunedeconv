@@ -11,7 +11,7 @@ find_children(node, fractions, method_dataset = NULL)
 
 \item{fractions}{a named list of fractions for each method_cell_type}
 
-\item{method_dataset}{character identifing the method or dataset in the celltype_mapping. If NULL, the input
+\item{method_dataset}{character identifying the method or dataset in the celltype_mapping. If NULL, the input
 vector already uses controlled vocabulary.}
 }
 \value{
@@ -20,5 +20,5 @@ numeric Either (1) the value of the method_cell_type mapped to cell_type,
 (3) NA, if the mapping cannot be resolved, i.e. at least one of the child nodes is missing.
 }
 \description{
-Traverses the cell type hierchy, summing up cell type fractions when necessary.
+Traverses the cell type hierarchy, summing up cell type fractions when necessary.
 }

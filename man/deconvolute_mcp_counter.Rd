@@ -16,7 +16,7 @@ deconvolute_mcp_counter(
 \item{feature_types}{type of identifiers used for expression features. May be
 one of \verb{"affy133P2_probesets","HUGO_symbols","ENTREZ_ID"}}
 
-\item{...}{pased through to original MCP-counter function. A native argument takes precedence
+\item{...}{passed through to original MCP-counter function. A native argument takes precedence
 over an immunedeconv argument (e.g. \code{featureType} takes precedence over \code{feature_types})
 See \href{https://github.com/ebecht/MCPcounter/blob/master/Source/R/MCPcounter.R#L19}{MCPcounter.estimate}.}
 }

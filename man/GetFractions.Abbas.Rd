@@ -7,7 +7,7 @@
 GetFractions.Abbas(XX, YY, w = NA)
 }
 \arguments{
-\item{XX}{immume expression data}
+\item{XX}{immune expression data}
 
 \item{YY}{cancer expression data}
 

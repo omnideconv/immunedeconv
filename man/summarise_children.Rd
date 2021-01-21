@@ -8,7 +8,7 @@ Take into account which cell types are optional.}
 summarise_children(df)
 }
 \arguments{
-\item{df}{with samples in columns and cell types in rows. Contains a logical columnn \code{optional} which states which
+\item{df}{with samples in columns and cell types in rows. Contains a logical column \code{optional} which states which
 cell type may be missing}
 }
 \description{

@@ -35,7 +35,7 @@ if supported by the method. Currently affects EPIC and quanTIseq.}
 \item{arrays}{Runs methods in a mode optimized for microarray data.
 Currently affects quanTIseq and CIBERSORT.}
 
-\item{column}{Only releveant if \code{gene_expression} is an ExpressionSet. Defines in which column
+\item{column}{Only relevant if \code{gene_expression} is an ExpressionSet. Defines in which column
 of fData the HGNC symbol can be found.}
 
 \item{rmgenes}{a character vector of gene symbols. Exclude these genes from the analysis.
@@ -44,7 +44,7 @@ Use this to exclude e.g. noisy genes.}
 \item{scale_mrna}{logical. If FALSE, disable correction for mRNA content of different cell types.
 This is supported by methods that compute an absolute score (EPIC and quanTIseq)}
 
-\item{expected_cell_types}{Limit the anlysis to the cell types given in this list. If the cell
+\item{expected_cell_types}{Limit the analysis to the cell types given in this list. If the cell
 types present in the sample are known \emph{a priori}, setting this can improve results for
 xCell (see https://github.com/grst/immunedeconv/issues/1).}
 

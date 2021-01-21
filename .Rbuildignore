@@ -6,3 +6,8 @@
 ^NEWS\.md$
 ^\.travis\.yml$
 ^\.github
+^CODE_OF_CONDUCT\.md$
+CONTRIBUTING\.md$
+Makefile$
+_pkgdown.yml$
+\.conda

@@ -204,7 +204,7 @@ For more information, see our Benchmark paper (@sturm2019).
 * xCell
 * TIMER
 
-### Methods that allow between-cell-type comparisions
+### Methods that allow between-cell-type comparisons
 
 * CIBERSORT
 

@@ -276,6 +276,8 @@ annotate_cell_type = function(result_table, method) {
 #' @param eset `ExpressionSet`
 #' @param column column name of the `fData()` table, which contains the HGNC gene symbols.
 #' @return matrix with gene symbols as rownames and sample identifiers as colnames.
+#' 
+#' @importFrom Biobase exprs fData pData
 #'
 #' @export
 eset_to_matrix = function(eset, column) {

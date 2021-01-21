@@ -117,7 +117,7 @@ jobs:
           # when on master, we want to deploy to the root dir (-> ".")
           target_dir=$(echo $tmp_target_dir | sed "s/heads\/master/./")
           echo $target_dir
-          echo "::set-env name=target_dir::$target_dir"
+          echo "target_dir=$target_dir" >> $GITHUB_ENV
         env:
           github_ref: ${{ github.ref }}
         shell: bash

@@ -102,7 +102,7 @@ map_cell_types = function(use_cell_types, fractions, method_dataset=NULL) {
 #' sum up the fraction of all child nodes to a single value.
 #' Take into account which cell types are optional.
 #'
-#' @param df with samples in columns and cell types in rows. Contains a logical columnn `optional` which states which
+#' @param df with samples in columns and cell types in rows. Contains a logical column `optional` which states which
 #'   cell type may be missing
 summarise_children = function(df) {
   # store the 'optional' column in a vector and remove it from the dataframe.
@@ -125,11 +125,11 @@ summarise_children = function(df) {
 
 #' Recursive helper function for map_cell_types.
 #'
-#' Traverses the cell type hierchy, summing up cell type fractions when necessary.
+#' Traverses the cell type hierarchy, summing up cell type fractions when necessary.
 #'
 #' @param node data.tree::Node corresponding to a controlled vocabulary cell type
 #' @param fractions a named list of fractions for each method_cell_type
-#' @param method_dataset character identifing the method or dataset in the celltype_mapping. If NULL, the input
+#' @param method_dataset character identifying the method or dataset in the celltype_mapping. If NULL, the input
 #'                         vector already uses controlled vocabulary.
 #'
 #' @return numeric Either (1) the value of the method_cell_type mapped to cell_type,

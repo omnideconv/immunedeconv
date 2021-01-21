@@ -135,7 +135,7 @@ check_cancer_types <- function(args) {
 
 #' Constrained regression method implemented in Abbas et al., 2009
 #'
-#' @param XX immume expression data
+#' @param XX immune expression data
 #' @param YY cancer expression data
 #' @param w ?
 GetFractions.Abbas <- function(XX, YY, w=NA){

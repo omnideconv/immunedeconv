@@ -70,7 +70,7 @@ set_cibersort_mat = function(path) {
 
 
 ###########################################################################
-# Deconvolution functions for consistenctly accessing each method
+# Deconvolution functions for consistently accessing each method
 #
 # These functions are called from the generic `deconvolute()` function.
 # They can also be used by the end-user to access method-specific
@@ -150,7 +150,7 @@ deconvolute_xcell = function(gene_expression_matrix, arrays, expected_cell_types
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples
 #' @param feature_types type of identifiers used for expression features. May be
 #'  one of `"affy133P2_probesets","HUGO_symbols","ENTREZ_ID"`
-#' @param ... pased through to original MCP-counter function. A native argument takes precedence
+#' @param ... passed through to original MCP-counter function. A native argument takes precedence
 #'   over an immunedeconv argument (e.g. `featureType` takes precedence over `feature_types`)
 #'  See [MCPcounter.estimate](https://github.com/ebecht/MCPcounter/blob/master/Source/R/MCPcounter.R#L19).
 #'
@@ -191,8 +191,8 @@ deconvolute_epic = function(gene_expression_matrix, tumor, scale_mrna, ...) {
 #' Deconvolute using quanTIseq
 #'
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples
-#' @param tumor Set to TRUE if dealing with a tumor samples. if TRUE, signature genes with
-#'   high expressin in tumor samles are removed.
+#' @param tumor Set to TRUE if dealing with tumor samples. if TRUE, signature genes with
+#'   high expression in tumor samples are removed.
 #' @param arrays Set to TRUE if working with Microarray data instead of RNA-seq
 #' @param scale_mrna Set to FALSE to disable correction for cell type-specific differences
 #'  in mRNA content
@@ -291,7 +291,7 @@ eset_to_matrix = function(eset, column) {
 #'   Either: A numeric matrix or data.frame with HGNC gene symbols as rownames and sample identifiers as colnames.
 #'   Or: A Biobase ExpressionSet with HGNC symbols in an fData column (see `column` parameter)
 #'   In both cases, data must be on non-log scale.
-#' @param column Only releveant if `gene_expression` is an ExpressionSet. Defines in which column
+#' @param column Only relevant if `gene_expression` is an ExpressionSet. Defines in which column
 #'   of fData the HGNC symbol can be found.
 #' @param method a string specifying the method.
 #'   Supported methods are `xcell`, `...`
@@ -305,7 +305,7 @@ eset_to_matrix = function(eset, column) {
 #'   Use this to exclude e.g. noisy genes.
 #' @param scale_mrna logical. If FALSE, disable correction for mRNA content of different cell types.
 #'   This is supported by methods that compute an absolute score (EPIC and quanTIseq)
-#' @param expected_cell_types Limit the anlysis to the cell types given in this list. If the cell
+#' @param expected_cell_types Limit the analysis to the cell types given in this list. If the cell
 #'   types present in the sample are known *a priori*, setting this can improve results for
 #'   xCell (see https://github.com/grst/immunedeconv/issues/1).
 #' @param ... arguments passed to the respective method

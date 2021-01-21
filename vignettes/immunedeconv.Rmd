@@ -39,7 +39,7 @@ Such methods can, in general, be classified in two categories:
  * Marker gene-based approaches and
  * deconvolution-based approaches.
 
-```{r fig_deconvolution_concepts, echo=FALSE, fig.cap="*Fig by @Finotello2018.*"}
+```{r fig_deconvolution_concepts, echo=FALSE, fig.cap="*Fig by [@Finotello2018].*"}
 knitr::include_graphics("img/concepts_deconvolution.gif")
 ```
 
@@ -47,7 +47,7 @@ Marker gene based approaches (a) are based on a list of genes (signature), that 
 
 Deconvolution methods (b) formulate the problem as a system of equations that describe the gene expression of a sample as the weighted sum of the contributions of the different cell types.  By solving the inverse problem, cell type fractions can be inferred given a signature matrix and the mixed gene expression. This can be accomplished using $\nu$-Support Vector Regression (SVR) (CIBERSORT) constrained least square regression (quanTIseq, EPIC) or linear least square regression (TIMER).
 
-For more information, check out the review by @Finotello2018.
+For more information, check out the review by [@Finotello2018].
 
 
 # Run the deconvolution
@@ -89,7 +89,7 @@ epic
 ```
 
 ### Example
-For this example, we use a dataset of four melanoma patients from @EPIC2017. 
+For this example, we use a dataset of four melanoma patients from [@EPIC2017]. 
 ```{r, message=FALSE}
 res = deconvolute(immunedeconv::dataset_racle$expr_mat, "quantiseq")
 knitr::kable(res, digits=2)
@@ -190,13 +190,13 @@ res = deconvolute(immunedeconv::dataset_racle$expr_mat, "quantiseq") %>%
 knitr::kable(res, digits=2)
 ```
 
-The algorithm is explained in detail in the methods section of @sturm2019.
+The algorithm is explained in detail in the methods section of [@sturm2019].
 
 # Interpretation of scores
 In general, cell-type scores allow for the comparison (1) between samples, (2) between cell-types or (3) both. 
 Between-sample comparisons allow to make statements such as *"In patient A, there are more CD8+ T cells than in patient B"*. 
 Between-cell-type comparisons allow to make statements such as *"In a certain patient, there are more B cells than T cells"*.
-For more information, see our Benchmark paper (@sturm2019). 
+For more information, see our Benchmark paper ([@sturm2019]). 
 
 ### Methods that allow between-sample comparisons
 

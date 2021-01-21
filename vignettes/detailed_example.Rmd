@@ -5,6 +5,7 @@ vignette: >
    %\VignetteIndexEntry{Detailed Example}
    %\VignetteEngine{knitr::rmarkdown}
    \usepackage[utf8]{inputenc}
+bibliography: references.bib
 ---
 
 ```{r, include=FALSE}
@@ -19,7 +20,7 @@ library(immunedeconv)
 library(tibble)
 ```
 
-*Immunedeconv* ships with an example dataset with samples from four patients with metastatic melanoma published in @EPIC2017. 
+*Immunedeconv* ships with an example dataset with samples from four patients with metastatic melanoma published in [@EPIC2017]. 
 It is available from `immunedeconv::dataset_racle`. It contains a gene expression matrix (`dataset_racle$expr_mat`) generated using bulk RNA-seq and 'gold standard' estimates of immune cell contents profiled with FACS (`dataset_racle$ref`). We are going to use the bulk RNA-seq data to run the deconvolution methods and will compare the results to the FACS data later on.   
 
 The gene expression data is a matrix with HGNC symbols in rows and samples in columns:
@@ -128,3 +129,5 @@ result %>%
 ```
 
 (MCP counter does not provide estimates for CD4+ T cells.)
+
+# References {-}

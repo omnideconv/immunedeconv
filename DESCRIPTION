@@ -24,7 +24,10 @@ Imports:
     sva,
     xCell,
     MCPcounter,
-    utils
+    utils,
+    grDevices,
+    graphics,
+    stats
 Suggests:
     testthat,
     knitr,

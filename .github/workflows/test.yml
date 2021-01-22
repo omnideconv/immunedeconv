@@ -14,17 +14,14 @@ jobs:
       fail-fast: false
       matrix:
         config: 
-         - {R: "3.4", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
          - {R: "3.5", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
          - {R: "3.6", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
          - {R: "4.0", os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
          # Currently trouble running with various R version on windows (some dependencies fail to install, 
          # it's different ones every day...) 
-         # - {R: "3.4", os: windows-latest}
          # - {R: "3.5", os: windows-latest}
          - {R: "3.6", os: windows-latest}
          # - {R: "4.0", os: windows-latest}
-         - {R: "3.4", os: macos-latest} 
          - {R: "3.5", os: macos-latest} 
          - {R: "3.6", os: macos-latest} 
          - {R: "4.0", os: macos-latest} 
@@ -123,7 +120,7 @@ jobs:
         shell: bash
         
       - name: Deploy docs to gh-pages
-        if: ( matrix.config.os == 'ubuntu-16.04' ) &&  ( matrix.config.R == '3.6' )
+        if: ( matrix.config.os == 'ubuntu-16.04' ) &&  ( matrix.config.R == '4.0' ) && (github.event.pull_request.head.repo.full_name == github.repository)
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}

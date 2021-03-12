@@ -70,7 +70,7 @@ jobs:
       - name: Install macOS system dependencies
         if: matrix.config.os == 'macOS-latest'
         run: |
-          brew install harfbuzz fribidi
+          brew install harfbuzz fribidi xquartz
       
       - name: Install dependencies
         run: |

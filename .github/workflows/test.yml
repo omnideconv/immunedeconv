@@ -22,7 +22,7 @@ jobs:
          # - {R: "3.5", os: windows-latest}
          - {R: "3.6", os: windows-latest}
          # - {R: "4.0", os: windows-latest}
-         - {R: "3.5", os: macos-latest} 
+         # - {R: "3.5", os: macos-latest} 
          - {R: "3.6", os: macos-latest} 
          - {R: "4.0", os: macos-latest} 
            

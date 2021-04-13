@@ -54,11 +54,11 @@ pipeline](https://github.com/icbi-lab/immune_deconvolution_benchmark).
 
 
 ## Installation
-System requirements: R >= 3.4.1. Only linux is officially supported, but Mac/Windows should work, too.
+System requirements: R >= 3.5. Only linux is officially supported, but Mac/Windows should work, too.
 
 ### Bioconda (Linux/MacOS only)
 The easiest way to retrieve this package and all its dependencies is to use [Anaconda](https://conda.io/miniconda.html).
-Install typically completes within minutes.
+The installation typically completes within minutes.
 
 1. Download [Miniconda](https://conda.io/miniconda.html), if you don't have a conda installation already.
 
@@ -80,7 +80,7 @@ You can then open an `R` instance within the environment and use the package.
 ### Standard R Package
 We highly recommend using `conda`, as it will avoid incompatibilities between
 different package versions. That being said, you can also install `immunedeconv`
-as a regular R package in your default R installation. Installation typically completes within 30 minutes, depending
+as a regular R package in your default R installation. The installation typically completes within 30 minutes, depending
 on how many dependency packages need to be compiled.
 
 The easiest way to do so is to use the `remotes` package, which will automatically download all CRAN, Bioconductor and GitHub dependencies:

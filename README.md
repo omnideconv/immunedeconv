@@ -31,7 +31,7 @@ For more detailed usage instructions, see the Documentation:
 
 
 ## Available methods, Licenses, Citations
-Note that, while *immunedeconv* itself is free ([BSD](https://github.com/icbi-lab/immunedeconv/blob/master/LICENSE.md)), you may need to obtain a license to use the individual methods. See the table below for more information. If you use this package in your work, please cite both our package and the method(s) you are using.
+Note that, while *immunedeconv* itself is free ([BSD](https://github.com/icbi-lab/immunedeconv/blob/master/LICENSE)), you may need to obtain a license to use the individual methods. See the table below for more information. If you use this package in your work, please cite both our package and the method(s) you are using.
 
 > Sturm, G., Finotello, F., Petitprez, F., Zhang, J. D., Baumbach, J., Fridman, W. H., ..., List, M., Aneichyk, T. (2019). Comprehensive evaluation of transcriptome-based cell-type quantification methods for immuno-oncology. Bioinformatics, 35(14), i436-i445. https://doi.org/10.1093/bioinformatics/btz363
 

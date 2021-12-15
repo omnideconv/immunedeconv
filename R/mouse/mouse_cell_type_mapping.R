@@ -25,9 +25,15 @@ reduce_mouse_cell_types <- function(deconvolution.results,
                                     cell.table = NULL, 
                                     method = c('sum', 'median')){
   
+  dcq.mapping.path <- system.file('extdata', 'mouse_deconvolution', 'cell_types_table_DCQ.rds',
+                                  package = 'immunedeconv', mustWork=TRUE)
+  base.mapping.path <- system.file('extdata', 'mouse_deconvolution', 'cell_types_table_BASE.rds',
+                                   package = 'immunedeconv', mustWork=TRUE)
+  
+  
   cell.types.table = switch(annotation,
-      dcq = load('path.to.DCQ.cell.mapping'), 
-      base = load('path.to.BASE.mapping'),
+      dcq = load(dcq.mapping.path), 
+      base = load(base.mapping.path),
       user = cell.table)
   
   if (method == 'median'){deconvolution.results = scale(deconvolution.results)}

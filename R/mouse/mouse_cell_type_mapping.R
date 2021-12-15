@@ -1,12 +1,9 @@
 #' Functions for mapping cell types between deconvolution methods.
-#' 
-#' @importFrom testit assert
-#' @importFrom dplyr select
-#' @importFrom ComICS immgen_dat
-#' @import magrittr
-#' @import stringr 
-#' 
-#' @name mouse_cell_type_mapping
+
+require(tidyverse)
+require(magrittr)
+require(rlang)
+require(ComICS)
 
 
 #' Since DCQ and BASE provide estimates for several cell types, this function 

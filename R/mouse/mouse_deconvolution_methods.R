@@ -1,16 +1,10 @@
 #' Collection of deconvolution methods for mouse data.
-#' 
-#' @import methods
-#' @import dplyr
-#' @importFrom testit assert
-#' @import readr
-#' @import stringr
-#' @import mMCPcounter
-#' @import ComICS
-#' @importFrom tibble as_tibble
-#' @importFrom rlang dots_list
-#' @importFrom utils capture.output read.csv read.table tail write.table
-
+require(tidyverse)
+require(magrittr)
+require(rlang)
+require(ComICS)
+require(mMCPcounter)
+require(biomaRt)
 
 #' List of supported mouse deconvolution methods
 #'
@@ -188,4 +182,45 @@ deconvolute_mouse = function(gene.expression.matrix,
     as_tibble(., rownames = 'method_cell_type')
   
   return(results)
+}
+
+
+#' This function converts the mouse gene symbols into corresponding human ones.
+#' 
+#' @param gene.expression.matrix a m x n matrix with m genes and n samples. 
+#'    Gene symbols must be the rownames of the matrix. 
+#' @return the same matrix, with the counts for the corresponding human genes    
+#'    
+#' @export
+mouse_genes_to_human = function(gene.expression.matrix){
+  
+  gene.names.mouse = rownames(gene.expression.matrix)
+  gene.expression.matrix$gene_name = gene.names.mouse
+  
+  library(biomaRt)
+  human = useMart('ensembl', dataset = 'hsapiens_gene_ensembl')
+  mouse = useMart('ensembl', dataset = 'mmusculus_gene_ensembl')
+  genes.retrieved = getLDS(attributes = c("mgi_symbol"), filters = "mgi_symbol", values = gene.names.mouse, 
+                           mart = mouse, attributesL = c("hgnc_symbol"), martL = human, uniqueRows=T)
+  
+  
+  newGenes.counts <- gene.expression.matrix %>%
+    left_join(., genes.retrieved, by = c('gene_name' = 'MGI.symbol')) %>%
+    select(., -c('gene_name')) %>%
+    select(., c('HGNC.symbol', everything())) %>%
+    .[!(is.na(.$HGNC.symbol)), ]
+  
+  colnames(newGenes.counts)[1] <- 'gene_name'
+  newGenes.counts <- newGenes.counts[!(duplicated(newGenes.counts$gene_name)), ] %>%
+    as.data.frame(.)
+  rownames(newGenes.counts) <- newGenes.counts$gene_name
+  newGenes.counts <- select(newGenes.counts, -c('gene_name'))
+  
+  fraction = 100*(nrow(newGenes.counts)/nrow(gene.expression.matrix)) %>%
+    round(., 1)
+  
+  message(paste0('ATTENTION: Only the ', fraction, '% of genes was maintained'))
+  
+  return(newGenes.counts)
+  
 }

@@ -1,10 +1,16 @@
 #' Collection of deconvolution methods for mouse data.
-require(tidyverse)
-require(magrittr)
-require(rlang)
-require(ComICS)
-require(mMCPcounter)
-require(biomaRt)
+#' 
+#' @import methods
+#' @import dplyr
+#' @importFrom testit assert
+#' @import readr
+#' @import stringr
+#' @import mMCPcounter
+#' @import ComICS
+#' @importFrom tibble as_tibble
+#' @importFrom rlang dots_list
+#' @importFrom utils capture.output read.csv read.table tail write.table
+
 
 #' List of supported mouse deconvolution methods
 #'
@@ -39,7 +45,7 @@ deconvolution_methods_mouse = c("mMCPcounter"="mMcp_counter",
 #' @param log2 logical. If TRUE, log2 transforms the expression matrix
 #' @export
 #' 
-deconvolute_mMCP = function(gene.expression.matrix, log2 = TRUE){
+deconvolute_mMcp = function(gene.expression.matrix, log2 = TRUE){
   if(log2 == TRUE){gene.expression.matrix = log2(gene.expression.matrix + 1)}
   call = rlang::call2(mMCPcounter::mMCPcounter.estimate)
   results = eval(call)
@@ -55,7 +61,7 @@ deconvolute_mMCP = function(gene.expression.matrix, log2 = TRUE){
 #'    'SVR' for CIBERSORT or 'LLSR' for least squares regression
 #' @export
 #'     
-deconvolute_seqImmuCC = function(gene.expression.matrix, method = c('SVR', 'LLSR')){
+deconvolute_seqimmucc = function(gene.expression.matrix, method = c('SVR', 'LLSR')){
   
   signature.path <- system.file('extdata', 'mouse_deconvolution', 'sig_matr',
                                    package = 'immunedeconv', mustWork=TRUE)
@@ -93,7 +99,7 @@ deconvolute_seqImmuCC = function(gene.expression.matrix, method = c('SVR', 'LLSR
 #'    will then be averaged.    
 #' @export
 #'      
-deconvolute_DCQ = function(gene.expression.matrix, 
+deconvolute_dcq = function(gene.expression.matrix, 
                            ref.samples = NULL, n.repeats = 10){
   
   # We need to scale the counts
@@ -129,15 +135,13 @@ deconvolute_DCQ = function(gene.expression.matrix,
 #' 
 #' @export
 #' 
-deconvolute_BASE = function(gene.expression.matrix, n.permutations = 100, log10 = TRUE){
+deconvolute_base_algorithm = function(gene.expression.matrix, n.permutations = 100, log10 = TRUE){
   
   base.compendium.path <- system.file('extdata', 'mouse_deconvolution', 'BASE_immune_compendium.rds',
                                       package = 'immunedeconv', mustWork=TRUE)
   immune.compendium = load(base.compendium.path)
   
-  source('./BASE.R')
-  
-  results = base_full_pipeline(gene.expression.matrix, immune.compendium, perm = n.permutations, median.norm = T)
+  results = base_algorithm(gene.expression.matrix, immune.compendium, perm = n.permutations, median.norm = T)
   
   return(results)
 }  
@@ -166,10 +170,10 @@ deconvolute_mouse = function(gene.expression.matrix,
   }
   
   results = switch(method, 
-                   mMcp_counter = deconvolute_mMCP(gene.expression.matrix, ...),
-                   seqimmucc = deconvolute_seqImmuCC(gene.expression.matrix, ...),
-                   dcq = deconvolute_DCQ(gene.expression.matrix, ...),
-                   base = deconvolute_BASE(gene.expression.matrix, ...))
+                   mMcp_counter = deconvolute_mMcp(gene.expression.matrix, ...),
+                   seqimmucc = deconvolute_seqimmucc(gene.expression.matrix, ...),
+                   dcq = deconvolute_dcq(gene.expression.matrix, ...),
+                   base = deconvolute_base_algorithm(gene.expression.matrix, ...))
   
   # Whenever BASE/DCQ are used, the cell types are reduced
   if(method == 'dcq'){

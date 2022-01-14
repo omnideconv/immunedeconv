@@ -1,16 +1,13 @@
 #' Souce code for the BASE algorithm. 
 #' This code is adapted from Varn et al., DOI: 10.1158/0008-5472.CAN-16-2490 
 #' 
-#' @param 
-#---------------------------------------------------------------------------------------------------
-#	data: numeric matrix; Patient gene expression data, with genes as rows and patients as columns
-#	reg: numeric matrix; Reference immune cell weights created using SuppSoftware1
-#	perm: numeric; Number of permutations to perform during the normalization step
-#	myoutf: character; Directory location to save cell lineage score output file to (example: "/home/immune/cell_scores.txt")
-#	median.norm: logical;  parameter stating whether to median center the expression values for each gene
-#---------------------------------------------------------------------------------------------------
-
-base <- function(data, reg, perm=100, median.norm=T)
+#' @param data: numeric matrix; Patient gene expression data, with genes as rows and patients as columns
+#' @param reg: numeric matrix; Reference immune cell weights created using SuppSoftware1
+#' @param perm: numeric; Number of permutations to perform during the normalization step
+#' @param median.norm: logical;  parameter stating whether to median center the expression values for each gene
+#'
+#' 
+base_algorithm <- function(data, reg, perm=100, median.norm=T)
 {
   ## quantile normalization
   myrk = matrix(0, nrow(data), ncol(data))
@@ -108,18 +105,12 @@ base <- function(data, reg, perm=100, median.norm=T)
   res = es
   colnames(res) = paste(colnames(reg), ".ES", sep="")
   row.names(res) = colnames(data)
-  return(res)
-}
-
-base_full_pipeline <- function(data, immune.compendium, perm=100, median.norm=T){
-  
-  results.base.deconvolution <- base(data, immune.compendium, perm, median.norm)
   
   # Now we have to adjust the results
-  ncol.half <- ncol(results.base.deconvolution)/2
+  ncol.half <- ncol(res)/2
   
-  CLP.up <- results.base.deconvolution[, 1:ncol.half]
-  CLP.down <- results.base.deconvolution[, (ncol.half+1):ncol(results.base.deconvolution)]
+  CLP.up <- res[, 1:ncol.half]
+  CLP.down <- resn[, (ncol.half+1):ncol(res)]
   
   CLP.scores <- CLP.up - CLP.down
   colnames(CLP.scores) <- str_replace_all(colnames(CLP.scores), 

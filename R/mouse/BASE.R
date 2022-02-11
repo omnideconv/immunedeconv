@@ -110,7 +110,7 @@ base_algorithm <- function(data, reg, perm=100, median.norm=T)
   ncol.half <- ncol(res)/2
   
   CLP.up <- res[, 1:ncol.half]
-  CLP.down <- resn[, (ncol.half+1):ncol(res)]
+  CLP.down <- res[, (ncol.half+1):ncol(res)]
   
   CLP.scores <- CLP.up - CLP.down
   colnames(CLP.scores) <- str_replace_all(colnames(CLP.scores), 

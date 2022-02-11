@@ -21,7 +21,7 @@ NULL
 #' List of supported immune deconvolution methods
 #'
 #' The methods currently supported are
-#' `mcp_counter`, `epic`, `quantiseq`, `xcell`, `cibersort`, `cibersort_abs`, `timer`
+#' `mcp_counter`, `epic`, `quantiseq`, `xcell`, `cibersort`, `cibersort_abs`, `timer`, `abis`, `consensus_tme`
 #'
 #' The object is a named vector. The names correspond to the display name of the method,
 #' the values to the internal name.
@@ -33,7 +33,9 @@ deconvolution_methods = c("MCPcounter"="mcp_counter",
                           "xCell"="xcell",
                           "CIBERSORT"="cibersort",
                           "CIBERSORT (abs.)"="cibersort_abs",
-                          "TIMER"="timer")
+                          "TIMER"="timer", 
+                          "ConsensusTME"="consensus_tme", 
+                          "ABIS"="abis")
 
 #' Data object from xCell.
 #'
@@ -254,6 +256,13 @@ deconvolute_cibersort = function(gene_expression_matrix,
     t() %>%
     .[!rownames(.) %in% c("RMSE", "P-value", "Correlation"), ]
   return(res)
+}
+
+
+deconvolute_abis = function(gene_expression_matrix, 
+                            arrays=FALSE){
+  # SHould I put the function or not?
+  results = 
 }
 
 

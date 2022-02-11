@@ -43,11 +43,18 @@ deconvolution_methods_mouse = c("mMCPcounter"="mMcp_counter",
 #' 
 #' @param gene.expression.matrix a m x n matrix with m genes and n samples. Should be TPM normalized
 #' @param log2 logical. If TRUE, log2 transforms the expression matrix
+#' @param gene.id specifies the format of the gene IDs. Possible choices are 'Gene.Symbol'
+#'    (default), 'ENSEMBL.ID' or 'Probes' (Affymetrix array probes)
+#' @param genome specifies the mouse genome version to use, GCRm39 (default) or GCRm38 
 #' @export
 #' 
-deconvolute_mMcp = function(gene.expression.matrix, log2 = TRUE){
+deconvolute_mMcp = function(gene.expression.matrix, log2 = TRUE, 
+                            gene.id = 'Gene.Symbol', genome = 'GCRm39'){
   if(log2 == TRUE){gene.expression.matrix = log2(gene.expression.matrix + 1)}
-  call = rlang::call2(mMCPcounter::mMCPcounter.estimate)
+  arguments = dots_list(features = gene.id, 
+                        genomeVersion = genome)
+  
+  call = rlang::call2(mMCPcounter::mMCPcounter.estimate, !!!arguments)
   results = eval(call)
   return(t(results))
 }

@@ -1,3 +1,12 @@
+#' Use quanTIseq to deconvolute a gene expression matrix.
+#'
+#' Source code adapted from https://github.com/giannimonaco/ABIS - 
+#'   server.R of the Shiny application
+#' @param expression numeric matrix; genes as rows and patients as columns. 
+#'     Must be TP normalized 
+#' @param array: logical; specifies whether the expression data are from 
+#'     microarrays (TRUE) or RNAseq (FALSE)    
+
 deconvolute_abis_default <- function(expression, array = FALSE){
   
   # 2 sets of operations for RNA/Microarray

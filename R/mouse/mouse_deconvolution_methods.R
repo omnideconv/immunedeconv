@@ -48,7 +48,7 @@ deconvolution_methods_mouse = c("mMCPcounter"="mMcp_counter",
 #' @param genome specifies the mouse genome version to use, GCRm39 (default) or GCRm38 
 #' @export
 #' 
-deconvolute_mMcp = function(gene.expression.matrix, log2 = TRUE, 
+deconvolute_mmcp = function(gene.expression.matrix, log2 = TRUE, 
                             gene.id = 'Gene.Symbol', genome = 'GCRm39'){
   if(log2 == TRUE){gene.expression.matrix = log2(gene.expression.matrix + 1)}
   arguments = dots_list(features = gene.id, 
@@ -134,6 +134,9 @@ deconvolute_dcq = function(gene.expression.matrix,
 
 #' Deconvolute using BASE
 #' 
+#' Cell types obtained with this method can be reduced with the
+#'    map_result_to_celltypes function, using 'DCQ' as the method
+#' 
 #' @param gene.expression.matrix a m x n matrix with m genes and n samples. Data
 #'    should be TPM normalized and log10 scaled.
 #' @param n.permutations the number of permutations of each sample expression
@@ -144,11 +147,11 @@ deconvolute_dcq = function(gene.expression.matrix,
 #' 
 deconvolute_base_algorithm = function(gene.expression.matrix, n.permutations = 100, log10 = TRUE){
   
-  base.compendium.path <- system.file('extdata', 'mouse_deconvolution', 'BASE_immune_compendium.rds',
+  base.compendium.path <- system.file('extdata', 'mouse_deconvolution', 'BASE_cell_compendium.rds',
                                       package = 'immunedeconv', mustWork=TRUE)
-  immune.compendium = load(base.compendium.path)
+  cell.compendium = readRDS(base.compendium.path)
   
-  results = base_algorithm(gene.expression.matrix, immune.compendium, perm = n.permutations, median.norm = T)
+  results = base_algorithm(gene.expression.matrix, cell.compendium, perm = n.permutations, median.norm = T)
   
   return(results)
 }  
@@ -177,16 +180,16 @@ deconvolute_mouse = function(gene.expression.matrix,
   }
   
   results = switch(method, 
-                   mMcp_counter = deconvolute_mMcp(gene.expression.matrix, ...),
+                   mMcp_counter = deconvolute_mmcp(gene.expression.matrix, ...),
                    seqimmucc = deconvolute_seqimmucc(gene.expression.matrix, ...),
                    dcq = deconvolute_dcq(gene.expression.matrix, ...),
                    base = deconvolute_base_algorithm(gene.expression.matrix, ...))
   
   # Whenever BASE/DCQ are used, the cell types are reduced
   if(method == 'dcq'){
-    results = reduce_cell_types(results, 'dcq', 'sum')
+    results = reduce_cell_types(results, 'sum')
   } else if(method == 'base'){
-    results = reduce_cell_types(results, 'base', 'median')
+    results = reduce_cell_types(results, 'median')
   }
   
   results = t(results) %>%

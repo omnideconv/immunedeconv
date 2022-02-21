@@ -114,7 +114,7 @@ base_algorithm <- function(data, reg, perm=100, median.norm=T)
   
   CLP.scores <- CLP.up - CLP.down
   colnames(CLP.scores) <- str_replace_all(colnames(CLP.scores), 
-                                          '\\_up\\.ES', '')
+                                          '\\_UP\\.ES', '')
   colnames(CLP.scores) <- make.names(colnames(CLP.scores), allow_ = FALSE)
   return(CLP.scores)
 }

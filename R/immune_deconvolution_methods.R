@@ -258,13 +258,47 @@ deconvolute_cibersort = function(gene_expression_matrix,
   return(res)
 }
 
-
+#' Deconvolute using ABIS.
+#'
+#' @param gene_expression_matrix a m x n matrix with m genes and n samples. Data 
+#'    must be TPM-normalized, since the matrix accounts for mRNA bias
+#' @param arrays Set to TRUE if working with Microarray data instead of RNA-seq.
+#'    A different signature matrix will be used.
+#'
+#' @export
 deconvolute_abis = function(gene_expression_matrix, 
                             arrays=FALSE){
-  # SHould I put the function or not?
-  results = 
+  results = deconvolute_abis_default(gene_expression_matrix, arrays)
+  return(results)
 }
 
+#' Deconvolute using ConsensusTME.
+#'
+#' @param gene_expression_matrix a m x n matrix with m genes and n samples
+#' @param indications a n-vector giving and indication string (e.g. 'brca') for each sample.
+#'     Accepted indications are 'kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
+#'     'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
+#'     'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
+#'     'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol'
+#' @param stat_method Choose statistical framework to generate the entichment scores. 
+#'     Default: 'ssgsea'
+#' @param ... passed through to the original ConsensusTME function. A native argument takes precedence
+#'   over an immunedeconv argument. Documentation can be found at http://consensusTME.org
+#'
+#' @export
+deconvolute_consensus_tme = function(gene_expression_matrix, 
+                                     indications = NULL, 
+                                     method = 'ssgsea', 
+                                     ...){
+  
+  indications = toupper(indications)
+  assert("indications fit to mixture matrix", length(indications) == ncol(gene_expression_matrix))
+  
+  results = ConsensusTME::consensusTMEAnalysis(bulkExp = gene_expression_matrix, 
+                                               cancerType = indications, 
+                                               statMethod = method, ...)
+  return(results)
+}
 
 #' Annotate unified cell_type names
 #'
@@ -356,7 +390,10 @@ deconvolute = function(gene_expression, method=deconvolution_methods,
                                            arrays=arrays, ...),
          cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE,
                                                arrays=arrays, ...),
-         timer = deconvolute_timer(gene_expression, indications=indications, ...))
+         timer = deconvolute_timer(gene_expression, indications=indications, ...), 
+         abis = deconvolute_abis(gene_expression, arrays=arrays), 
+         consensus_tme = deconvolute_consensus_tme()
+         )
 
   # convert to tibble and annotate unified cell_type names
   res = res %>%

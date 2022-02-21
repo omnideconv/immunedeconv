@@ -275,7 +275,8 @@ deconvolute_abis = function(gene_expression_matrix,
 #' Deconvolute using ConsensusTME.
 #'
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples
-#' @param indications a n-vector giving and indication string (e.g. 'brca') for each sample.
+#' @param indication a string with the TCGA cancer type (e.g. 'brca') the samples are most similar to.
+#'     Different cancer types should b analyzed separately.
 #'     Accepted indications are 'kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
 #'     'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
 #'     'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
@@ -287,15 +288,12 @@ deconvolute_abis = function(gene_expression_matrix,
 #'
 #' @export
 deconvolute_consensus_tme = function(gene_expression_matrix, 
-                                     indications = NULL, 
+                                     indication = NULL, 
                                      method = 'ssgsea', 
                                      ...){
-  
-  indications = toupper(indications)
-  assert("indications fit to mixture matrix", length(indications) == ncol(gene_expression_matrix))
-  
-  results = ConsensusTME::consensusTMEAnalysis(bulkExp = gene_expression_matrix, 
-                                               cancerType = indications, 
+  indication = toupper(indication)
+  results = ConsensusTME::consensusTMEAnalysis(bulkExp = as.matrix(gene_expression_matrix), 
+                                               cancerType = indication, 
                                                statMethod = method, ...)
   return(results)
 }

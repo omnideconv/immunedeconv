@@ -29,7 +29,9 @@ Imports:
     utils,
     grDevices,
     graphics,
-    stats
+    stats,
+    MASS,
+    ConsensusTME
 Suggests:
     testthat,
     knitr,

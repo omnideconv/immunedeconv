@@ -51,13 +51,26 @@ test_that("xcell works with reduced set of expected cell types", {
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
 })
 
+test_that("abis works", {
+  res = deconvolute_abis(test_mat, arrays=FALSE)
+  assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+  res = deconvolute_abis(test_mat, arrays=TRUE)
+  assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+})
+
+test_that("consensus_tme works", {
+  res = deconvolute_consensus_tme(test_mat, indication="brca")
+  assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+})
+
+
 test_that("generic deconvolution works for all methods", {
   lapply(deconvolution_methods, function(method) {
     # cibersort requires the binary path to be set, n/a in unittest.
     if(!method %in% c("cibersort", "cibersort_abs")) {
       print(paste0("method is ", method))
       res = deconvolute(test_mat, method, indications=rep("brca", ncol(test_mat)),
-                        tumor=TRUE, arrays=FALSE, rmgenes=c("ALB", "ERBB2"),
+                        indication="brca", tumor=TRUE, arrays=FALSE, rmgenes=c("ALB", "ERBB2"),
                         expected_cell_types=c("T cell CD4+", "T cell CD8+", "Macrophage", "NK cell"),
                         scale_mrna=FALSE)
       # matrix has the 'cell type' column -> +1
@@ -73,7 +86,7 @@ test_that("generic deconvolution works for all methods, without extra arguments"
     # cibersort requires the binary path to be set, n/a in unittest.
     if(!method %in% c("cibersort", "cibersort_abs")) {
       print(paste0("method is ", method))
-      res = deconvolute(test_mat, method, indications=rep("brca", ncol(test_mat)))
+      res = deconvolute(test_mat, method, indications=rep("brca", ncol(test_mat)), indication = 'brca')
       # matrix has the 'cell type' column -> +1
       assert("matrix dimensions consistent", ncol(res) == ncol(test_mat) + 1)
       assert("cell type column exists", colnames(res)[1] == "cell_type")

@@ -56,7 +56,7 @@ deconvolute_mmcp = function(gene.expression.matrix, log2 = TRUE,
   
   call = rlang::call2(mMCPcounter::mMCPcounter.estimate, !!!arguments)
   results = eval(call)
-  return(t(results))
+  return(results)
 }
 
 
@@ -94,7 +94,7 @@ deconvolute_seqimmucc = function(gene.expression.matrix, method = c('SVR', 'LLSR
   }
   
   
-  return(results)
+  return(t(results))
 }
 
 #' Deconvolute using DCQ
@@ -129,7 +129,7 @@ deconvolute_dcq = function(gene.expression.matrix,
                          number_of_repeats = n.repeats)
   call = rlang::call2(dcq, !!!arguments)
   results = eval(call)
-  return(results$average)
+  return(t(results$average))
 }
 
 #' Deconvolute using BASE
@@ -153,7 +153,7 @@ deconvolute_base_algorithm = function(gene.expression.matrix, n.permutations = 1
   
   results = base_algorithm(gene.expression.matrix, cell.compendium, perm = n.permutations, median.norm = T)
   
-  return(results)
+  return(t(results))
 }  
 
 
@@ -187,15 +187,15 @@ deconvolute_mouse = function(gene.expression.matrix,
   
   # Whenever BASE/DCQ are used, the cell types are reduced
   if(method == 'dcq'){
-    results = reduce_cell_types(results, 'sum')
+    results = reduce_mouse_cell_types(t(results), 'sum')
   } else if(method == 'base'){
-    results = reduce_cell_types(results, 'median')
+    results = reduce_mouse_cell_types(t(results), 'median')
   }
   
   results = t(results) %>%
     as_tibble(., rownames = 'method_cell_type')
   
-  return(results)
+  return(t(results))
 }
 
 

@@ -29,10 +29,10 @@ reduce_mouse_cell_types <- function(deconvolution.results,
   cell.types <- unique(cell.types.table$Subtype)
   
   if (method == 'median'){deconvolution.results = scale(deconvolution.results)}
-  results.transformed = deconvolution.results
+  results.transformed = as.data.frame(deconvolution.results)
   
   for(cell in cell.types){
-    current.columns <- colnames(results.transformed) %in% cell.types.table[which(cell.types.table$subtype == cell), 1]
+    current.columns <- colnames(results.transformed) %in% cell.types.table[which(cell.types.table$Subtype == cell), 1]
     
     # Some cell types might not be present for both DCQ and BASE (ex. Treg)
     if(sum(current.columns) > 0){

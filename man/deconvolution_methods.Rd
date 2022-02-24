@@ -5,14 +5,14 @@
 \alias{deconvolution_methods}
 \title{List of supported immune deconvolution methods}
 \format{
-An object of class \code{character} of length 7.
+An object of class \code{character} of length 9.
 }
 \usage{
 deconvolution_methods
 }
 \description{
 The methods currently supported are
-\code{mcp_counter}, \code{epic}, \code{quantiseq}, \code{xcell}, \code{cibersort}, \code{cibersort_abs}, \code{timer}
+\code{mcp_counter}, \code{epic}, \code{quantiseq}, \code{xcell}, \code{cibersort}, \code{cibersort_abs}, \code{timer}, \code{abis}, \code{consensus_tme}
 }
 \details{
 The object is a named vector. The names correspond to the display name of the method,

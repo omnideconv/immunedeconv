@@ -3,6 +3,7 @@
 #' @importFrom testit assert
 #' @importFrom dplyr select
 #' @importFrom ComICS immgen_dat
+#' @importFrom matrixStats rowMedians
 #' @import magrittr
 #' @import stringr 
 #' 
@@ -39,6 +40,7 @@ reduce_mouse_cell_types <- function(deconvolution.results,
       
       if (method == 'median'){
         results.transformed[cell] <- results.transformed[current.columns] %>%
+          as.matrix(.) %>%
           rowMedians(.)
       } else {
         results.transformed[cell] <- results.transformed[current.columns] %>%
@@ -69,7 +71,7 @@ get_cell_types_list <- function(method = c('dcq', 'base')){
   
   if (method == 'dcq'){
 
-    all.cell.types <- ComICS::immgen_dat %>%
+    all.cell.types <- immgen_dat %>%
       colnames(.)
     
   } else if (method == 'base'){

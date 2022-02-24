@@ -15,7 +15,9 @@
 #' @param sig.stand logical.If TRUE, standardizes the signature matrix
 #' @param sample.scale logical. If TRUE, scales the sample expression 
 #' @param log logical. If TRUE, log transforms signature and expression data
-LLSR <- function(signature, SampleData, w=NA, QN=T, sig.scale=F, sig.stand=T, sample.scale=T, log=T){
+#' 
+#' 
+seqImmuCC_LLSR <- function(signature, SampleData, w=NA, QN=T, sig.scale=F, sig.stand=T, sample.scale=T, log=T){
  
   # Expression profile format standarlization
   signature <- data.matrix(signature)
@@ -67,12 +69,12 @@ LLSR <- function(signature, SampleData, w=NA, QN=T, sig.scale=F, sig.stand=T, sa
     tmp.res <- tmp$residuals
     tmp.coef <- tmp$coefficients
     tmp.coef[which(tmp.coef <0)] <- 0
-    cat(length(tmp.coef), "\n")
+    #cat(length(tmp.coef), "\n")
     
     u <- sweep(signature, MARGIN=2, tmp$coefficients, '*')
     v <- apply(u, 1, sum)
     rsem <- c(rsem, sqrt(mean((v-SampleData[, i])^2)))
-    cat ("The RSEM value is", rsem[i], "\n")
+    #cat ("The RSEM value is", rsem[i], "\n")
     corrv <- c(corrv, cor(v, SampleData[, i]))
     
     tmp.coef <- tmp.coef/sum(tmp.coef) *100

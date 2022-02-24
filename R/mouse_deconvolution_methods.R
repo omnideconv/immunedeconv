@@ -4,24 +4,26 @@
 #' @import dplyr
 #' @importFrom testit assert
 #' @import readr
+#' @importFrom matrixStats rowSds
 #' @import stringr
 #' @import mMCPcounter
 #' @import ComICS
+#' @import biomaRt
 #' @importFrom tibble as_tibble
 #' @importFrom rlang dots_list
 #' @importFrom utils capture.output read.csv read.table tail write.table
+NULL
 
 
 #' List of supported mouse deconvolution methods
-#'
+
 #' The methods currently supported are
-#' `mMcp_counter`, `seqimmucc`, `dcq`, `base`
-#'
+#' `mmcp_counter`, `seqimmucc`, `dcq`, `base`
 #' The object is a named vector. The names correspond to the display name of the method,
 #' the values to the internal name.
 #'
 #' @export
-deconvolution_methods_mouse = c("mMCPcounter"="mMcp_counter",
+deconvolution_methods_mouse = c("mMCPcounter"="mmcp_counter",
                                 "seqImmuCC"="seqimmucc", 
                                 "DCQ"="dcq", 
                                 "BASE"="base")
@@ -48,11 +50,14 @@ deconvolution_methods_mouse = c("mMCPcounter"="mMcp_counter",
 #' @param genome specifies the mouse genome version to use, GCRm39 (default) or GCRm38 
 #' @export
 #' 
-deconvolute_mmcp = function(gene.expression.matrix, log2 = TRUE, 
-                            gene.id = 'Gene.Symbol', genome = 'GCRm39'){
+deconvolute_mmcp_counter = function(gene.expression.matrix, log2 = TRUE, 
+                                    gene.id = 'Gene.Symbol', genome = 'GCRm39', 
+                                    ...){
   if(log2 == TRUE){gene.expression.matrix = log2(gene.expression.matrix + 1)}
-  arguments = dots_list(features = gene.id, 
-                        genomeVersion = genome)
+  arguments = dots_list(exp = gene.expression.matrix,
+                        features = gene.id, 
+                        genomeVersion = genome, 
+                        ..., .homonyms="last")
   
   call = rlang::call2(mMCPcounter::mMCPcounter.estimate, !!!arguments)
   results = eval(call)
@@ -64,17 +69,17 @@ deconvolute_mmcp = function(gene.expression.matrix, log2 = TRUE,
 #' 
 #' @param gene.expression.matrix a m x n matrix with m genes and n samples. Data 
 #'    should NOT be normalized (raw counts)
-#' @param method the method to use for deconvolution. Possible choices are
+#' @param algorithm the method to use for deconvolution. Possible choices are
 #'    'SVR' for CIBERSORT or 'LLSR' for least squares regression
 #' @export
 #'     
-deconvolute_seqimmucc = function(gene.expression.matrix, method = c('SVR', 'LLSR')){
+deconvolute_seqimmucc = function(gene.expression.matrix, 
+                                 algorithm = c('SVR', 'LLSR'), ...){
   
-  signature.path <- system.file('extdata', 'mouse_deconvolution', 'sig_matr',
+  signature.path <- system.file('extdata', 'mouse_deconvolution', 'sig_matr_seqImmuCC.txt',
                                    package = 'immunedeconv', mustWork=TRUE)
-  source('./seqImmuCC_LLSR.R')
   
-  if (method == 'SVR'){
+  if (algorithm == 'SVR'){
     
     assert("CIBERSORT.R is provided", exists("cibersort_binary", envir=config_env))
     source(get("cibersort_binary", envir=config_env))
@@ -87,10 +92,10 @@ deconvolute_seqimmucc = function(gene.expression.matrix, method = c('SVR', 'LLSR
     results = results %>%
      .[, !colnames(.) %in% c("RMSE", "P-value", "Correlation")]
     
-  } else if (method == 'LLSR'){
+  } else if (algorithm == 'LLSR'){
     
     signature = read.table(signature.path, header=T, sep="\t", row.names=1, check.names=F)
-    results = LLSR(signature, gene.expression.matrix)
+    results = seqImmuCC_LLSR(signature, gene.expression.matrix)
   }
   
   
@@ -104,10 +109,13 @@ deconvolute_seqimmucc = function(gene.expression.matrix, method = c('SVR', 'LLSR
 #'    used to standardize the expressions. If NULL, all the samples are used. 
 #' @param n.repeats the number of models to generate. Predicted cell quantities
 #'    will then be averaged.    
+#' @param combine_cells logical. This method estimates several cell types (~200).
+#'    If TRUE (default), these are combined into 19 major immune-stromal cell types. 
 #' @export
 #'      
 deconvolute_dcq = function(gene.expression.matrix, 
-                           ref.samples = NULL, n.repeats = 10){
+                           ref.samples = NULL, n.repeats = 10, 
+                           combine_cells = TRUE, ...){
   
   # We need to scale the counts
   gene.expression.matrix = as.matrix(gene.expression.matrix)
@@ -124,12 +132,19 @@ deconvolute_dcq = function(gene.expression.matrix,
   gene.expression.matrix = (gene.expression.matrix - rows.means)/rows.SD
   
   arguments = dots_list(reference_data = immgen_dat, 
-                         mix_data = gene.expression.matrix, 
-                         marker_set = DCQ_mar, 
-                         number_of_repeats = n.repeats)
+                        mix_data = gene.expression.matrix, 
+                        marker_set = DCQ_mar, 
+                        number_of_repeats = n.repeats, 
+                        ..., .homonyms="last")
   call = rlang::call2(dcq, !!!arguments)
   results = eval(call)
-  return(t(results$average))
+  results = results$average
+  
+  if(combine_cells == TRUE){
+    results = reduce_mouse_cell_types(results, 'sum')
+  }
+  
+  return(t(results))
 }
 
 #' Deconvolute using BASE
@@ -142,16 +157,22 @@ deconvolute_dcq = function(gene.expression.matrix,
 #' @param n.permutations the number of permutations of each sample expression
 #'    to generate. These are used to normalize the results. 
 #' @param log10 logical. if TRUE, log10 transforms the expression matrix. 
-#' 
+#' @param combine_cells logical. This method estimates several cell types (~180).
+#'    If TRUE (default), these are combined into 19 major immune-stromal cell types.  
 #' @export
 #' 
-deconvolute_base_algorithm = function(gene.expression.matrix, n.permutations = 100, log10 = TRUE){
+deconvolute_base_algorithm = function(gene.expression.matrix, n.permutations = 100, 
+                                      log10 = TRUE, combine_cells = TRUE, ...){
   
   base.compendium.path <- system.file('extdata', 'mouse_deconvolution', 'BASE_cell_compendium.rds',
                                       package = 'immunedeconv', mustWork=TRUE)
   cell.compendium = readRDS(base.compendium.path)
   
   results = base_algorithm(gene.expression.matrix, cell.compendium, perm = n.permutations, median.norm = T)
+  
+  if(combine_cells == TRUE){
+    results = reduce_mouse_cell_types(results, 'median')
+  }
   
   return(t(results))
 }  
@@ -172,7 +193,8 @@ deconvolute_base_algorithm = function(gene.expression.matrix, n.permutations = 1
 
 deconvolute_mouse = function(gene.expression.matrix, 
                               method = deconvolution_methods_mouse, 
-                              rmgenes = NULL, ...){
+                              rmgenes = NULL, 
+                              algorithm = NULL, ...){
   message(paste0("\n", ">>> Running ", method))
   
   if(!is.null(rmgenes)) {
@@ -180,22 +202,15 @@ deconvolute_mouse = function(gene.expression.matrix,
   }
   
   results = switch(method, 
-                   mMcp_counter = deconvolute_mmcp(gene.expression.matrix, ...),
-                   seqimmucc = deconvolute_seqimmucc(gene.expression.matrix, ...),
+                   mmcp_counter = deconvolute_mmcp_counter(gene.expression.matrix, ...),
+                   seqimmucc = deconvolute_seqimmucc(gene.expression.matrix, algorithm, ...),
                    dcq = deconvolute_dcq(gene.expression.matrix, ...),
                    base = deconvolute_base_algorithm(gene.expression.matrix, ...))
   
-  # Whenever BASE/DCQ are used, the cell types are reduced
-  if(method == 'dcq'){
-    results = reduce_mouse_cell_types(t(results), 'sum')
-  } else if(method == 'base'){
-    results = reduce_mouse_cell_types(t(results), 'median')
-  }
-  
-  results = t(results) %>%
+  results = results %>%
     as_tibble(., rownames = 'method_cell_type')
   
-  return(t(results))
+  return(results)
 }
 
 
@@ -213,7 +228,7 @@ mouse_genes_to_human = function(gene.expression.matrix){
   gene.names.mouse = rownames(gene.expression.matrix)
   gene.expression.matrix$gene_name = gene.names.mouse
   
-  library(biomaRt)
+
   human = useMart('ensembl', dataset = 'hsapiens_gene_ensembl')
   mouse = useMart('ensembl', dataset = 'mmusculus_gene_ensembl')
   genes.retrieved = getLDS(attributes = c("mgi_symbol"), filters = "mgi_symbol", values = gene.names.mouse, 

@@ -59,8 +59,22 @@ test_that("abis works", {
 })
 
 test_that("consensus_tme works", {
-  res = deconvolute_consensus_tme(test_mat, indication="brca")
+  res = deconvolute_consensus_tme(test_mat, indications=rep("brca", ncol(test_mat)))
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+})
+
+
+test_that("consensus_tme with multiple indications, ordered and unordered", {
+  indications_1 = c("blca", "brca", "brca", "brca", "brca", "brca", "chol", "chol")
+  indications_2=  c("brca", "brca", "brca", "chol", "chol", "brca", "brca", "blca")
+  res_1 = deconvolute_consensus_tme(test_mat, indications=indications_1)
+  res_2 = deconvolute_consensus_tme(test_mat, indications=indications_2)
+  assert("matrix dimensions consistent", ncol(res_1) == ncol(test_mat))
+  assert("matrix dimensions consistent", ncol(res_2) == ncol(test_mat))
+
+  order.samples <- order(toupper(indications_2))
+
+  assert("proper results", all(colnames(res_1)[order.samples] == colnames(res_2)))
 })
 
 
@@ -70,7 +84,7 @@ test_that("generic deconvolution works for all methods", {
     if(!method %in% c("cibersort", "cibersort_abs")) {
       print(paste0("method is ", method))
       res = deconvolute(test_mat, method, indications=rep("brca", ncol(test_mat)),
-                        indication="brca", tumor=TRUE, arrays=FALSE, rmgenes=c("ALB", "ERBB2"),
+                        tumor=TRUE, arrays=FALSE, rmgenes=c("ALB", "ERBB2"),
                         expected_cell_types=c("T cell CD4+", "T cell CD8+", "Macrophage", "NK cell"),
                         scale_mrna=FALSE)
       # matrix has the 'cell type' column -> +1
@@ -111,14 +125,14 @@ test_that("additional arguments are properly passed to original method", {
 })
 
 test_that("additional (native) arguments take precedence over the corresponding immuedeconv parameters", {
-  # this test is only for xCell. 
+  # this test is only for xCell.
   # For the other methods it's not so easy to judge by the result if it worked.
-  # they use exactely the same pattern, though, so it should be ok. 
-  res = deconvolute_xcell(test_mat, arrays=TRUE, 
-                          expected_cell_types = c("T cell CD8+", "T cell CD4+"), 
+  # they use exactely the same pattern, though, so it should be ok.
+  res = deconvolute_xcell(test_mat, arrays=TRUE,
+                          expected_cell_types = c("T cell CD8+", "T cell CD4+"),
                           cell.types.use=c("Basophils", "Astrocytes"))
   assert("native argument does not take precedent", rownames(res) == c("Basophils", "Astrocytes"))
-  res = deconvolute_xcell(test_mat, arrays=TRUE, 
+  res = deconvolute_xcell(test_mat, arrays=TRUE,
                           cell.types.use=c("Basophils", "Astrocytes"),
                           expected_cell_types = c("T cell CD8+", "T cell CD4+"))
   assert("native argument does not take precedent when in different order", rownames(res) == c("Basophils", "Astrocytes"))

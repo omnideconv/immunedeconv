@@ -8,7 +8,7 @@
 #'     microarrays (TRUE) or RNAseq (FALSE)  
 #'     
 #' @importFrom MASS rlm
-#' @export    
+#'  
 
 deconvolute_abis_default <- function(expression, array = FALSE){
   
@@ -23,8 +23,12 @@ deconvolute_abis_default <- function(expression, array = FALSE){
     Dec <- (apply(expression[genes, , drop=F], 2, function(x) coef(rlm( as.matrix(signature[genes,]), x, maxit =100 ))))*100
     
   } else {
+    
     signature.path.micro <- paste0(signature.path, '/sigmatrixMicro.txt')
+    signature.path.target <- paste0(signature.path, '/target.txt')
+    
     signature <- read.delim(signature.path.micro, check.names = F)
+    target <- read.delim(signature.path.target, header = F)
     genes <- intersect(rownames(expression), rownames(signature))
     expression2 <- normalize.quantiles.use.target(as.matrix(expression[genes,]), target[,1],copy=TRUE,subset=NULL)
     colnames(expression2) <-colnames(expression)

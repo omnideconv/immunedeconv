@@ -267,7 +267,7 @@ deconvolute_cibersort = function(gene_expression_matrix,
 #'
 #' @export
 deconvolute_abis = function(gene_expression_matrix, 
-                            arrays=FALSE){
+                            arrays=FALSE, ...){
   results = deconvolute_abis_default(gene_expression_matrix, arrays)
   return(results)
 }
@@ -275,7 +275,7 @@ deconvolute_abis = function(gene_expression_matrix,
 #' Deconvolute using ConsensusTME.
 #'
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples
-#' @param indication a string with the TCGA cancer type (e.g. 'brca') the samples are most similar to.
+#' @param indication a n-vector giving and indication string (e.g. 'brca') for each sample.
 #'     Different cancer types should b analyzed separately.
 #'     Accepted indications are 'kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
 #'     'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
@@ -288,15 +288,36 @@ deconvolute_abis = function(gene_expression_matrix,
 #'
 #' @export
 deconvolute_consensus_tme = function(gene_expression_matrix, 
-                                     indication = NULL, 
+                                     indications = NULL, 
                                      method = 'ssgsea', 
                                      ...){
-  indication = toupper(indication)
-  results = ConsensusTME::consensusTMEAnalysis(bulkExp = as.matrix(gene_expression_matrix), 
-                                               cancerType = indication, 
-                                               statMethod = method, ...)
+  indications = toupper(indications)
+  assert("indications fit to mixture matrix", length(indications) == ncol(gene_expression_matrix))
+  
+  gene_expression_matrix <- as.matrix(gene_expression_matrix)
+  
+  sorting <- order(indications)
+  indications <- indications[sorting]
+  gene_expression_matrix <- gene_expression_matrix[, sorting]
+
+  
+  tumor.types <- unique(indications)
+  list.results <- list()
+  for(t in tumor.types){
+    cur.samples <- indications == t
+    cur.results <- ConsensusTME::consensusTMEAnalysis(as.matrix(gene_expression_matrix[, cur.samples]), t, method)
+
+    list.results[[t]] <- cur.results
+  }
+  
+  results = Reduce(cbind, list.results)
+  
+  colnames(results) = colnames(gene_expression_matrix)
+  
   return(results)
 }
+
+
 
 #' Annotate unified cell_type names
 #'
@@ -390,7 +411,7 @@ deconvolute = function(gene_expression, method=deconvolution_methods,
                                                arrays=arrays, ...),
          timer = deconvolute_timer(gene_expression, indications=indications, ...), 
          abis = deconvolute_abis(gene_expression, arrays=arrays), 
-         consensus_tme = deconvolute_consensus_tme()
+         consensus_tme = deconvolute_consensus_tme(gene_expression, indications=indications, ...)
          )
 
   # convert to tibble and annotate unified cell_type names

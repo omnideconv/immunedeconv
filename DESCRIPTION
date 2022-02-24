@@ -31,7 +31,9 @@ Imports:
     graphics,
     stats,
     MASS,
-    ConsensusTME
+    ConsensusTME, 
+    ComICS,
+    mMCPcounter
 Suggests:
     testthat,
     knitr,
@@ -46,7 +48,9 @@ Remotes:
     omegahat/XML,
     dviraran/xCell,
     GfellerLab/EPIC,
-    ebecht/MCPcounter/Source
+    ebecht/MCPcounter/Source,
+    cit-bioinfo/mMCP-counter,
+    cansysbio/ConsensusTME
 VignetteBuilder: knitr
 License: BSD_3_clause + file LICENSE
 Encoding: UTF-8
@@ -54,4 +58,4 @@ Roxygen: list(markdown = TRUE)
 LazyData: true
 URL: https://icbi-lab.github.io/immunedeconv, https://github.com/icbi-lab/immunedeconv
 BugReports: https://github.com/icbi-lab/immunedeconv/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

@@ -61,6 +61,7 @@ deconvolute_mmcp_counter = function(gene.expression.matrix, log2 = TRUE,
   
   call = rlang::call2(mMCPcounter::mMCPcounter.estimate, !!!arguments)
   results = eval(call)
+  results = as.matrix(results)
   return(results)
 }
 
@@ -131,9 +132,9 @@ deconvolute_dcq = function(gene.expression.matrix,
   
   gene.expression.matrix = (gene.expression.matrix - rows.means)/rows.SD
   
-  arguments = dots_list(reference_data = immgen_dat, 
+  arguments = dots_list(reference_data = ComICS::immgen_dat, 
                         mix_data = gene.expression.matrix, 
-                        marker_set = DCQ_mar, 
+                        marker_set = ComICS::DCQ_mar, 
                         number_of_repeats = n.repeats, 
                         ..., .homonyms="last")
   call = rlang::call2(dcq, !!!arguments)
@@ -208,7 +209,8 @@ deconvolute_mouse = function(gene.expression.matrix,
                    base = deconvolute_base_algorithm(gene.expression.matrix, ...))
   
   results = results %>%
-    as_tibble(., rownames = 'method_cell_type')
+    as_tibble(., rownames = 'method_cell_type') %>%
+    annotate_cell_type(method=method)
   
   return(results)
 }

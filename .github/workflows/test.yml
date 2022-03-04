@@ -29,6 +29,7 @@ jobs:
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     
     steps:
       - uses: actions/checkout@v2
@@ -129,7 +130,7 @@ jobs:
         if: ( matrix.config.os == 'ubuntu-16.04' ) &&  ( matrix.config.R == '4.0' ) && (github.event.pull_request.head.repo.full_name == github.repository)
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: docs # The folder the action should deploy.
           TARGET_FOLDER: ${{ env.target_dir }}

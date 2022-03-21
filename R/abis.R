@@ -37,6 +37,7 @@ deconvolute_abis_default <- function(expression, array = FALSE){
   }
   
   Dec <- signif(Dec, 3)
+  #Dec[Dec < 0] <- 0
   
   Dec
 }

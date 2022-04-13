@@ -32,7 +32,7 @@ test_that("generic deconvolution works for all methods", {
     res = deconvolute_mouse(test_mat, method, algorithm='LLSR')
     # matrix has the 'cell type' column -> +1
     assert("matrix dimensions consistent", ncol(res) == ncol(test_mat) + 1)
-    assert("cell type column exists", colnames(res)[1] == "method_cell_type")
+    assert("cell type column exists", colnames(res)[1] == "cell_type")
     assert("sample names consistent with input", colnames(res)[-1] == colnames(test_mat))
   })
 })

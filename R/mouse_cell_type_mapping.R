@@ -2,10 +2,10 @@
 #' 
 #' @importFrom testit assert
 #' @importFrom dplyr select
-#' @importFrom ComICS immgen_dat
 #' @importFrom matrixStats rowMedians
 #' @import magrittr
 #' @import stringr 
+#' @import ComICS
 #' 
 #' @name mouse_cell_type_mapping
 
@@ -71,7 +71,7 @@ get_cell_types_list <- function(method = c('dcq', 'base')){
   
   if (method == 'dcq'){
 
-    all.cell.types <- immgen_dat %>%
+    all.cell.types <- ComICS::immgen_dat %>%
       colnames(.)
     
   } else if (method == 'base'){

@@ -62,7 +62,7 @@ reduce_mouse_cell_types <- function(deconvolution.results,
 #'    correspondent, more general one  
 #' @export    
 
-get_cell_types_list <- function(method = c('dcq', 'base')){
+get_dcq_cell_types_list <- function(method = c('dcq', 'base')){
   
   
   table.mapping.path <- system.file('extdata', 'mouse_deconvolution', 'cell_correspondance.txt',

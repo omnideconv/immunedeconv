@@ -23,6 +23,7 @@ Imports:
     BiocParallel,
     preprocessCore,
     Biobase,
+    biomaRt,
     sva,
     xCell,
     MCPcounter,

@@ -45,3 +45,20 @@ reference:
     desc: functions and objects related to the quanTIseq method
     contents:
      - deconvolute_quantiseq.default
+  - title: internal
+    contents:
+     - xCell.data
+     - timer
+     - annotate_cell_type
+     - cell_type_list
+     - cell_type_mapping
+     - check_cancer_types
+     - .get_all_children
+     - .find_children
+     - .fix_namespace
+     - .GetFractions.Abbas
+     - get_all_children
+     - immunedeconv
+     - node_by_name
+     - quantiseq_helper
+     - summarise_children

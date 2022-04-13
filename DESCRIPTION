@@ -34,7 +34,9 @@ Imports:
     MASS,
     ConsensusTME, 
     ComICS,
-    mMCPcounter
+    mMCPcounter,
+    matrixStats,
+    stringr
 Suggests:
     testthat,
     knitr,

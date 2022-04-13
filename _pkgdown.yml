@@ -57,6 +57,10 @@ reference:
      - .find_children
      - .fix_namespace
      - .GetFractions.Abbas
+     - find_children
+     - GetFractions.Abbas
+     - fix_namespace
+     - single_cell_simulation
      - get_all_children
      - immunedeconv
      - node_by_name

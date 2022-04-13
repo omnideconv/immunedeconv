@@ -2,13 +2,13 @@
 #' 
 #' @importFrom testit assert
 #' @importFrom dplyr select
+#' @import ComICS
 #' @importFrom matrixStats rowMedians
 #' @import magrittr
 #' @import stringr 
-#' @import ComICS
 #' 
 #' @name mouse_cell_type_mapping
-
+NULL
 
 #' Since DCQ and BASE provide estimates for several cell types, this function 
 #'    combines the results to align them with the rest of the methods
@@ -71,7 +71,7 @@ get_cell_types_list <- function(method = c('dcq', 'base')){
   
   if (method == 'dcq'){
 
-    all.cell.types <- ComICS::immgen_dat %>%
+    all.cell.types <- immgen_dat %>%
       colnames(.)
     
   } else if (method == 'base'){

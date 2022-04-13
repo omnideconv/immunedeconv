@@ -85,3 +85,4 @@ reference:
      - summarise_children
      - deconvolute_abis_default
      - seqImmuCC_LLSR
+     - base_algorithm

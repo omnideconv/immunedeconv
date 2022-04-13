@@ -14,7 +14,6 @@ jobs:
       fail-fast: false
       matrix:
         config: 
-         - {R: "4.0", os: ubuntu-20.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
          - {R: "4.1", os: ubuntu-20.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
          - {R: "4.1", os: windows-latest}
          - {R: "4.1", os: macos-latest} 

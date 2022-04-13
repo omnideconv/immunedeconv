@@ -5,7 +5,7 @@ Version: 2.0.4
 Authors@R: person("Gregor", "Sturm", role=c("aut", "cre"), email="mail@gregor-sturm.de")
 biocViews:
 Depends:
-    R (>= 3.5),
+    R (>= 4.1),
     EPIC
 Imports:
     dplyr (>= 0.7),
@@ -41,7 +41,6 @@ Suggests:
     ggplot2,
     webshot
 Remotes:
-    omegahat/XML,
     dviraran/xCell,
     GfellerLab/EPIC,
     ebecht/MCPcounter/Source

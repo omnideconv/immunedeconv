@@ -34,7 +34,7 @@ requirements:
     - r-xcell >=1.2
     - r-epic >=1.1
     - r-mcpcounter
-    - r-biomart
+    - bioconductor-biomart
     - r-comics
     - r-consensustme
     - r-mmcpcounter
@@ -56,7 +56,7 @@ requirements:
     - r-xcell >=1.2
     - r-epic >=1.1
     - r-mcpcounter
-    - r-biomart
+    - bioconductor-biomart
     - r-comics
     - r-consensustme
     - r-mmcpcounter

@@ -36,9 +36,9 @@ test_that("generic deconvolution works for all methods", {
     assert("sample names consistent with input", colnames(res)[-1] == colnames(test_mat))
   })
 })
-
-
-test_that("mouse gene names can be converted into their human orthologues", {
-  test_mat_newGenes = mouse_genes_to_human(test_mat)
-  assert("matrix dimensions consistent", ncol(test_mat_newGenes) == ncol(test_mat))
-})
+# 
+# 
+# test_that("mouse gene names can be converted into their human orthologues", {
+#   test_mat_newGenes = mouse_genes_to_human(test_mat)
+#   assert("matrix dimensions consistent", ncol(test_mat_newGenes) == ncol(test_mat))
+# })

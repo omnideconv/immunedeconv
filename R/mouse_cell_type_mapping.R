@@ -93,4 +93,5 @@ get_dcq_cell_types_list <- function(method = c('dcq', 'base')){
     select(., c('Name', 'Subtype'))
   
   method.output
+  
 }

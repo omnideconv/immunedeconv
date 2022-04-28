@@ -5,7 +5,7 @@
 \alias{node_by_name}
 \title{Lookup dictionary for cell-type nodes}
 \format{
-An object of class \code{list} of length 66.
+An object of class \code{list} of length 75.
 }
 \usage{
 node_by_name

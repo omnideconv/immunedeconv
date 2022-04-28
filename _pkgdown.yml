@@ -9,6 +9,11 @@ reference:
       - set_cibersort_binary
       - set_cibersort_mat
       - eset_to_matrix
+  - title: Deconvolution for mouse data
+    desc: Use the package to estimate immune cell fractions from murine bulk RNA-seq samples.
+    contents:
+      - deconvolution_methods_mouse
+      - deconvolute_mouse
   - title: Deconvolution methods
     desc: Direct access to the individual deconvolution methods to access special features that are not available through `deconvolute()`.
     contents:
@@ -18,6 +23,16 @@ reference:
       - deconvolute_quantiseq
       - deconvolute_timer
       - deconvolute_xcell
+      - deconvolute_abis
+      - deconvolute_consensus_tme
+  - title: Deconvolution methods for mouse data
+    desc: Direct access to the individual mouse deconvolution methods to access special features that are not available through `deconvolute()`.
+    contents:
+      - deconvolute_mmcp_counter
+      - deconvolute_seqimmucc
+      - deconvolute_base_algorithm
+      - deconvolute_dcq
+      - mouse_genes_to_human
   - title: Cell type mapping
     desc: Map cell types and datasets to a controlled vocabulary.
     contents:
@@ -26,6 +41,8 @@ reference:
       - available_datasets
       - map_cell_types
       - map_result_to_celltypes
+      - get_dcq_cell_types_list
+      - reduce_mouse_cell_types
   - title: Simulation of bulk samples
     desc: Use this package to simulate bulk RNA-seq samples from single cell RNA-seq data.
     contents:
@@ -66,3 +83,6 @@ reference:
      - node_by_name
      - quantiseq_helper
      - summarise_children
+     - deconvolute_abis_default
+     - seqImmuCC_LLSR
+     - base_algorithm

@@ -275,8 +275,8 @@ deconvolute_abis = function(gene_expression_matrix,
 #' Deconvolute using ConsensusTME.
 #'
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples
-#' @param indication a n-vector giving and indication string (e.g. 'brca') for each sample.
-#'     Different cancer types should b analyzed separately.
+#' @param indications a n-vector giving and indication string (e.g. 'brca') for each sample.
+#'     Different cancer types should be analyzed separately.
 #'     Accepted indications are 'kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
 #'     'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
 #'     'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',

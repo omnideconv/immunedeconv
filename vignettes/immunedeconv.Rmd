@@ -86,6 +86,8 @@ cibersort_abs
 mcp_counter
 xcell
 epic
+abis
+consensus_tme
 ```
 
 ### Example
@@ -127,9 +129,9 @@ deconvolute(your_mixture_matrix, "cibersort")   # or 'cibersort_abs'
 as for any other method.
 
 
-### special case: TIMER
-TIMER uses indication-specific reference profiles. Therefore, you *must*
-specify the tumor type when running TIMER:
+### special case: TIMER and ConsensusTME
+TIMER and ConsensusTME uses indication-specific reference profiles. Therefore, you *must*
+specify the tumor type when running TIMER or ConsensusTME:
 
 ```r
 deconvolute(your_mixture_matrix, "timer",
@@ -203,6 +205,8 @@ For more information, see our Benchmark paper ([@sturm2019]).
 * MCP-counter
 * xCell
 * TIMER
+* ConsensusTME
+* ABIS
 
 ### Methods that allow between-cell-type comparisons
 

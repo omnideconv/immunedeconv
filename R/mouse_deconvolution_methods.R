@@ -183,7 +183,7 @@ deconvolute_base_algorithm = function(gene.expression.matrix, n.permutations = 1
 #' Perform deconvolution on a mouse RNAseq dataset
 #' 
 #' @param gene.expression.matrix a m x n matrix with m genes and n samples. 
-#'    Data should be TP normalized, except when using seqImmuCC where raw 
+#'    Data should be TPM normalized, except when using seqImmuCC where raw 
 #'    counts are prefereable.
 #' @param method string specifying the method
 #' @param rmgenes noisy genes to be removed from the analysis
@@ -194,9 +194,15 @@ deconvolute_base_algorithm = function(gene.expression.matrix, n.permutations = 1
 
 deconvolute_mouse = function(gene.expression.matrix, 
                               method = deconvolution_methods_mouse, 
-                              rmgenes = NULL, 
+                              rmgenes = NULL, column="gene_symbol",
                               algorithm = NULL, ...){
   message(paste0("\n", ">>> Running ", method))
+  
+  
+  # convert expression set to matrix, if required.
+  if(is(gene_expression, "ExpressionSet")) {
+    gene_expression = gene_expression %>% eset_to_matrix(column)
+  }
   
   if(!is.null(rmgenes)) {
     gene.expression.matrix = gene.expression.matrix[!rownames(gene.expression.matrix) %in% rmgenes, ]

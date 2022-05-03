@@ -9,12 +9,22 @@
 [![docs](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://icbi-lab.github.io/immunedeconv)
 
 ## Basic usage
+
+Deconvolution of human data:
+
 ```R
 immunedeconv::deconvolute(gene_expression_matrix, "quantiseq")
 ```
 
+Deconvolution of mouse data:
+
+```R
+immunedeconv::deconvolute_mouse(gene_expression_matrix, "quantiseq")
+```
+
 where `gene_expression_matrix` is a matrix with genes in rows and samples in columns. The rownames must be
-[HGNC](https://www.genenames.org/) symbols and the colnames must be sample names. The method can be one of
+[HGNC](https://www.genenames.org/) symbols and the colnames must be sample names. For human data, the method can be one of
+
 ```
 quantiseq
 timer
@@ -23,6 +33,24 @@ cibersort_abs
 mcp_counter
 xcell
 epic
+abis
+consensus_tme
+```
+
+The methods available for the deconvolution of mouse data are 
+
+```
+mmcp_counter
+seqimmucc
+dcq
+base
+```
+In addition, human-based methods can be used to deconvolute mouse data through the conversion of gene names
+
+
+```R
+gene_expression_matrix <- immunedeconv::mouse_genes_to_human(gene_expression_matrix)
+immunedeconv::deconvolute(gene_expression_matrix, "quantiseq")
 ```
 
 For more detailed usage instructions, see the Documentation:
@@ -37,18 +65,25 @@ Note that, while *immunedeconv* itself is free ([BSD](https://github.com/icbi-la
 
 
 
-| method | license | citation |
+| method | organism |license | citation |
 |--------|---------|----------|
-| [quanTIseq](http://icbi.at/software/quantiseq/doc/index.html) | free ([BSD](https://github.com/icbi-lab/immunedeconv/blob/master/LICENSE.md)) | Finotello, F., Mayer, C., Plattner, C., Laschober, G., Rieder, D., Hackl, H., ..., Sopper, S. (2019). Molecular and pharmacological modulators of the tumor immune contexture revealed by deconvolution of RNA-seq data. Genome medicine, 11(1), 34. https://doi.org/10.1186/s13073-019-0638-6 |
-| [TIMER](http://cistrome.org/TIMER/) | free ([GPL 2.0](http://cistrome.org/TIMER/download.html)) | Li, B., Severson, E., Pignon, J.-C., Zhao, H., Li, T., Novak, J., … Liu, X. S. (2016). Comprehensive analyses of tumor immunity: implications for cancer immunotherapy. Genome Biology, 17(1), 174.  https://doi.org/10.1186/s13059-016-1028-7 |
-| [CIBERSORT](https://cibersort.stanford.edu/) | free for non-commerical use only | Newman, A. M., Liu, C. L., Green, M. R., Gentles, A. J., Feng, W., Xu, Y., … Alizadeh, A. A. (2015). Robust enumeration of cell subsets from tissue expression profiles. Nature Methods, 12(5), 453–457.  https://doi.org/10.1038/nmeth.3337 |
-| [MCPCounter](https://github.com/ebecht/MCPcounter) | free ([GPL 3.0](https://github.com/ebecht/MCPcounter/blob/master/Source/License)) | Becht, E., Giraldo, N. A., Lacroix, L., Buttard, B., Elarouci, N., Petitprez, F., … de Reyniès, A. (2016). Estimating the population abundance of tissue-infiltrating immune and stromal cell populations using gene expression. Genome Biology, 17(1), 218. https://doi.org/10.1186/s13059-016-1070-5 |
-| [xCell](http://xcell.ucsf.edu/) | free ([GPL 3.0](https://github.com/dviraran/xCell/blob/master/DESCRIPTION)) | Aran, D., Hu, Z., & Butte, A. J. (2017). xCell: digitally portraying the tissue cellular heterogeneity landscape. Genome Biology, 18(1), 220. https://doi.org/10.1186/s13059-017-1349-1 |
-| [EPIC](https://gfellerlab.shinyapps.io/EPIC_1-1/) | free for non-commercial use only ([Academic License](https://github.com/GfellerLab/EPIC/blob/master/LICENSE)) | Racle, J., de Jonge, K., Baumgaertner, P., Speiser, D. E., & Gfeller, D. (2017). Simultaneous enumeration of cancer and immune cell types from bulk tumor gene expression data. ELife, 6, e26476. https://doi.org/10.7554/eLife.26476 |
+| [quanTIseq](http://icbi.at/software/quantiseq/doc/index.html) | human | free ([BSD](https://github.com/icbi-lab/immunedeconv/blob/master/LICENSE.md)) | Finotello, F., Mayer, C., Plattner, C., Laschober, G., Rieder, D., Hackl, H., ..., Sopper, S. (2019). Molecular and pharmacological modulators of the tumor immune contexture revealed by deconvolution of RNA-seq data. Genome medicine, 11(1), 34. https://doi.org/10.1186/s13073-019-0638-6 |
+| [TIMER](http://cistrome.org/TIMER/) | human | free ([GPL 2.0](http://cistrome.org/TIMER/download.html)) | Li, B., Severson, E., Pignon, J.-C., Zhao, H., Li, T., Novak, J., … Liu, X. S. (2016). Comprehensive analyses of tumor immunity: implications for cancer immunotherapy. Genome Biology, 17(1), 174.  https://doi.org/10.1186/s13059-016-1028-7 |
+| [CIBERSORT](https://cibersort.stanford.edu/) | human | free for non-commerical use only | Newman, A. M., Liu, C. L., Green, M. R., Gentles, A. J., Feng, W., Xu, Y., … Alizadeh, A. A. (2015). Robust enumeration of cell subsets from tissue expression profiles. Nature Methods, 12(5), 453–457.  https://doi.org/10.1038/nmeth.3337 |
+| [MCPCounter](https://github.com/ebecht/MCPcounter) | human | free ([GPL 3.0](https://github.com/ebecht/MCPcounter/blob/master/Source/License)) | Becht, E., Giraldo, N. A., Lacroix, L., Buttard, B., Elarouci, N., Petitprez, F., … de Reyniès, A. (2016). Estimating the population abundance of tissue-infiltrating immune and stromal cell populations using gene expression. Genome Biology, 17(1), 218. https://doi.org/10.1186/s13059-016-1070-5 |
+| [xCell](http://xcell.ucsf.edu/) | human | free ([GPL 3.0](https://github.com/dviraran/xCell/blob/master/DESCRIPTION)) | Aran, D., Hu, Z., & Butte, A. J. (2017). xCell: digitally portraying the tissue cellular heterogeneity landscape. Genome Biology, 18(1), 220. https://doi.org/10.1186/s13059-017-1349-1 |
+| [EPIC](https://gfellerlab.shinyapps.io/EPIC_1-1/) | human | free for non-commercial use only ([Academic License](https://github.com/GfellerLab/EPIC/blob/master/LICENSE)) | Racle, J., de Jonge, K., Baumgaertner, P., Speiser, D. E., & Gfeller, D. (2017). Simultaneous enumeration of cancer and immune cell types from bulk tumor gene expression data. ELife, 6, e26476. https://doi.org/10.7554/eLife.26476 |
+| [ABIS](https://giannimonaco.shinyapps.io/ABIS/) | human | free ([GPL 2.0](https://github.com/giannimonaco/ABIS)) | Monaco, G., Lee, B., Xu, W., Mustafah, S., Hwang, Y. Y., ..., Larbi, A. (2019). RNA-Seq Signatures Normalized by mRNA Abundance Allow Absolute Deconvolution of Human Immune Cell Types. Cell reports, 26(6), 1627–1640.e7. https://doi.org/10.1016/j.celrep.2019.01.041|
+| [ConsensusTME](https://olliecast.shinyapps.io/Deconvolution_Benchmarking/) | human | free ([GPL 3.0](https://github.com/cansysbio/ConsensusTME/blob/master/LICENSE.md)) | Jiménez-Sánchez, A., Cast, O., & Miller, M. L. (2019). Comprehensive Benchmarking and Integration of Tumor Microenvironment Cell Estimation Methods. Cancer research, 79(24), 6238–6246. https://doi.org/10.1158/0008-5472.CAN-18-3560 |
 
+|[mMCPCounter](https://github.com/cit-bioinfo/mMCP-counter)| mouse | free ([GPL 3.0](https://github.com/cit-bioinfo/mMCP-counter/blob/master/LICENSE.md))| Petitprez, F., Levy, S., Sun, C. M., Meylan, M., ..., de Reyniès, A. (2020). The murine Microenvironment Cell Population counter method to estimate abundance of tissue-infiltrating immune and stromal cell populations in murine samples using gene expression. Genome medicine, 12(1), 86. https://doi.org/10.1186/s13073-020-00783-w
+  |
+|[seqImmuCC](218.4.234.74:3200/immune/)| mouse | free for non-commerical use only | Chen, Z., Quan, L., Huang, A., Zhao, Q., Yuan, Y., Yuan, X., ..., Wu, A. (2018). seq-ImmuCC: Cell-Centric View of Tissue Transcriptome Measuring Cellular Compositions of Immune Microenvironment From Mouse RNA-Seq Data. Frontiers in immunology, 9, 1286. https://doi.org/10.3389/fimmu.2018.01286 |
+|[DCQ](http://dcq.tau.ac.il/)| mouse | free ([GPL 2.0](https://cran.r-project.org/web/packages/ComICS/index.html))| Altboum, Z., Steuerman, Y., David, E., Barnett-Itzhaki, Z., Valadarsky, L., ..., Amit, I. (2014). Digital cell quantification identifies global immune cell dynamics during influenza infection. Molecular systems biology, 10(2), 720. https://doi.org/10.1002/msb.134947 |
+|BASE| mouse | free | Varn, F. S., Andrews, E. H., Mullins, D. W., & Cheng, C. (2016). Integrative analysis of breast cancer reveals prognostic haematopoietic activity and patient-specific immune response profiles. Nature communications, 7, 10248. https://doi.org/10.1038/ncomms10248  |
 
 ### Comparison of the methods
-For a benchmark comparison of the methods, please see our [publication](https://doi.org/10.1101/463828).
+For a benchmark comparison of the human-based methods, please see our [publication](https://doi.org/10.1101/463828).
 If you would like to benchmark additional methods, please see our [benchmark
 pipeline](https://github.com/icbi-lab/immune_deconvolution_benchmark).
 

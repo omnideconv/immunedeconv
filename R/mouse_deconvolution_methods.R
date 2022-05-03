@@ -198,12 +198,7 @@ deconvolute_mouse = function(gene.expression.matrix,
                               algorithm = NULL, ...){
   message(paste0("\n", ">>> Running ", method))
   
-  
-  # convert expression set to matrix, if required.
-  if(is(gene_expression, "ExpressionSet")) {
-    gene_expression = gene_expression %>% eset_to_matrix(column)
-  }
-  
+
   if(!is.null(rmgenes)) {
     gene.expression.matrix = gene.expression.matrix[!rownames(gene.expression.matrix) %in% rmgenes, ]
   }

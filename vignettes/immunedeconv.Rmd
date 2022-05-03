@@ -67,6 +67,7 @@ below](#using-expressionsets)).
 
 
 ## Run a method
+
 This package gives you easy access to these methods.
 To run a method with default options, simply invoke
 
@@ -89,6 +90,34 @@ epic
 abis
 consensus_tme
 ```
+
+## Deconvolution of mouse data
+
+Imunedeconv has been extended to include methods aimed at the deconvolution of mouse data. 
+The format of the input `gene_expression_matrix` is the same. 
+
+
+```r
+immunedeconv::deconvolute_mouse(gene_expression_matrix, method)
+```
+The method can be one of
+
+
+```
+mmcp_counter
+seqimmucc
+dcq
+base
+```
+
+In addition, human-based methods can be used to deconvolute mouse data through the conversion of mouse gene names
+to the corresponding human orthologues
+
+```R
+gene_expression_matrix <- immunedeconv::mouse_genes_to_human(gene_expression_matrix)
+immunedeconv::deconvolute(gene_expression_matrix, "quantiseq")
+```
+
 
 ### Example
 For this example, we use a dataset of four melanoma patients from [@EPIC2017]. 
@@ -146,6 +175,11 @@ immunedeconv::timer_available_cancers
 ```
 
 What the abbreviations stand for is documented on the [TCGA wiki](https://gdc.cancer.gov/resources-tcga-users/tcga-code-tables/tcga-study-abbreviations).
+
+
+### special case: seqImmuCC (mouse-based)
+seqImmuCC is a method that can deconvolute using two regression approaches, *SVR* or *LLSR*. 
+If the *SVR* approach is chosen, then the *CIBERSORT* script needs to be provided as described above.  
 
 ### Using ExpressionSets
 The [Bioconductor](https://bioconductor.org/)
@@ -207,16 +241,20 @@ For more information, see our Benchmark paper ([@sturm2019]).
 * TIMER
 * ConsensusTME
 * ABIS
+* mMCP-counter (mouse based)
+* BASE (mouse based)
 
 ### Methods that allow between-cell-type comparisons
 
 * CIBERSORT
+* DCQ (mouse based)
 
 ### Methods that allow both
 
 * EPIC
 * quanTIseq
 * CIBERSORT abs. mode
+* seqImmuCC (mouse based)
 
 EPIC and quanTIseq are currently the only methods providing an absolute score,
 i.e. a score that can be interpreted as a cell fraction. These methods

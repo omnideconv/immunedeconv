@@ -256,6 +256,7 @@ For more information, see our Benchmark paper ([@sturm2019]).
 * CIBERSORT abs. mode
 * seqImmuCC (mouse based)
 
+
 EPIC and quanTIseq are currently the only methods providing an absolute score,
 i.e. a score that can be interpreted as a cell fraction. These methods
 also provide an estimate for the amount of uncharacterized cells, i.e. cells for

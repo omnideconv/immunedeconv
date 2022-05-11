@@ -2,7 +2,7 @@
 title: "Detailed Usage Example - Mouse data"
 output: rmarkdown::html_vignette
 vignette: >
-   %\VignetteIndexEntry{Detailed Example}
+   %\VignetteIndexEntry{Detailed Example - Mouse data}
    %\VignetteEngine{knitr::rmarkdown}
    \usepackage[utf8]{inputenc}
 bibliography: references.bib
@@ -66,12 +66,13 @@ res_mMCPcounter %>%
 
 ## Deconvolution with human-based methods
 
-Human-based methods can still be used to deconvolve mouse data through the use of orthologi genes. The function `mouse_genes_to_human` does that by retrieving the correspondent gene names with `biomaRt`. Since the genes are retrieved from an online database the function could produce some errors if the connection is not stable. 
+Human-based methods can still be used to deconvolve mouse data through the use of orthologi genes. The function `mouse_genes_to_human` does that by retrieving the correspondent gene names with `biomaRt`. Since the gene names are retrieved from the Ensembl database, it can happen that the command has to be run with different Emsembl mirrors (see the documentation)
 
 
 ```{r, message=FALSE, warning=FALSE}
 
-dataset_petitprez_humanGenes <- mouse_genes_to_human(dataset_petitprez$expr_mat)
+dataset_petitprez_humanGenes <- mouse_genes_to_human(dataset_petitprez$expr_mat, mirror = 'uswest')
+res_MCPcounter <- deconvolute(dataset_petitprez_humanGenes, 'mcp_counter')
 
 ```
 

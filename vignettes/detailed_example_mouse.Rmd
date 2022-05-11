@@ -69,12 +69,12 @@ res_mMCPcounter %>%
 Human-based methods can still be used to deconvolve mouse data through the use of orthologi genes. The function `mouse_genes_to_human` does that by retrieving the correspondent gene names with `biomaRt`. Since the gene names are retrieved from the Ensembl database, it can happen that the command has to be run with different Emsembl mirrors (see the documentation)
 
 
-```{r, message=FALSE, warning=FALSE}
+<!-- ```{r, message=FALSE, warning=FALSE} -->
+<!-- # I will leave this as a comment since the Esembl database causes problems lately -->
+<!-- dataset_petitprez_humanGenes <- mouse_genes_to_human(dataset_petitprez$expr_mat, mirror = 'uswest') -->
+<!-- res_MCPcounter <- deconvolute(dataset_petitprez_humanGenes, 'mcp_counter') -->
 
-dataset_petitprez_humanGenes <- mouse_genes_to_human(dataset_petitprez$expr_mat, mirror = 'uswest')
-res_MCPcounter <- deconvolute(dataset_petitprez_humanGenes, 'mcp_counter')
-
-```
+<!-- ``` -->
 
 
 ## Comparison with FACS data

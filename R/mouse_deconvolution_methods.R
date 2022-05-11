@@ -221,19 +221,22 @@ deconvolute_mouse = function(gene.expression.matrix,
 #' 
 #' @param gene.expression.matrix a m x n matrix with m genes and n samples. 
 #'    Gene symbols must be the rownames of the matrix. 
+#' @param mirror the ensembl mirror to use. Possible choices are 'www' (default),
+#'    'uswest', 'useast', 'asia'  
 #' @return the same matrix, with the counts for the corresponding human genes. 
 #'    This matrix can directly be used with the immunedeconv methods. A message 
 #'    will display the ratio of original genes which were converted.     
 #'    
 #' @export
-mouse_genes_to_human = function(gene.expression.matrix){
+mouse_genes_to_human = function(gene.expression.matrix, mirror = 'www'){
   
   gene.names.mouse = rownames(gene.expression.matrix)
   gene.expression.matrix$gene_name = gene.names.mouse
   
-
-  human = useMart('ensembl', dataset = 'hsapiens_gene_ensembl')
-  mouse = useMart('ensembl', dataset = 'mmusculus_gene_ensembl')
+  # human = useMart('ensembl', dataset = 'hsapiens_gene_ensembl')
+  # mouse = useMart('ensembl', dataset = 'mmusculus_gene_ensembl')
+  human = useEnsembl('ensembl', dataset = 'hsapiens_gene_ensembl', mirror=mirror)
+  mouse = useEnsembl('ensembl', dataset = 'mmusculus_gene_ensembl', mirror=mirror)
   genes.retrieved = getLDS(attributes = c("mgi_symbol"), filters = "mgi_symbol", values = gene.names.mouse, 
                            mart = mouse, attributesL = c("hgnc_symbol"), martL = human, uniqueRows=T)
   

@@ -19,7 +19,7 @@ immunedeconv::deconvolute(gene_expression_matrix, "quantiseq")
 Deconvolution of mouse data:
 
 ```R
-immunedeconv::deconvolute_mouse(gene_expression_matrix, "quantiseq")
+immunedeconv::deconvolute_mouse(gene_expression_matrix, "mmcp_counter")
 ```
 
 where `gene_expression_matrix` is a matrix with genes in rows and samples in columns. The rownames must be

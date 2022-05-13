@@ -45,7 +45,7 @@ seqimmucc
 dcq
 base
 ```
-In addition, human-based methods can be used to deconvolute mouse data through the conversion of gene names
+In addition, human-based methods can be used to deconvolute mouse data through the conversion to orthologous gene names
 
 
 ```R
@@ -87,7 +87,7 @@ pipeline](https://github.com/icbi-lab/immune_deconvolution_benchmark).
 
 
 ## Installation
-System requirements: R >= 4.0. Only linux is officially supported, but Mac/Windows should work, too.
+System requirements: R >= 4.1. Only linux is officially supported, but Mac/Windows should work, too.
 
 ### Bioconda (Linux/MacOS only)
 The easiest way to retrieve this package and all its dependencies is to use [Anaconda](https://conda.io/miniconda.html).

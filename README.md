@@ -45,7 +45,7 @@ seqimmucc
 dcq
 base
 ```
-In addition, human-based methods can be used to deconvolute mouse data through the conversion of gene names
+In addition, human-based methods can be used to deconvolute mouse data through the conversion to orthologous gene names
 
 
 ```R

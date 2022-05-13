@@ -23,7 +23,8 @@ immunedeconv::deconvolute_mouse(gene_expression_matrix, "mmcp_counter")
 ```
 
 where `gene_expression_matrix` is a matrix with genes in rows and samples in columns. The rownames must be
-[HGNC](https://www.genenames.org/) symbols and the colnames must be sample names. For human data, the method can be one of
+[HGNC](https://www.genenames.org/) symbols for human data, or [MGI](http://www.informatics.jax.org/mgihome/nomen/) gene symbols for mouse data. 
+The colnames must be sample names. For human data, the method can be one of
 
 ```
 quantiseq

@@ -119,7 +119,7 @@ jobs:
         shell: bash
         
       - name: Deploy docs to gh-pages
-        if: ( matrix.config.os == 'ubuntu-16.04' ) &&  ( matrix.config.R == '4.0' ) && (github.event.pull_request.head.repo.full_name == github.repository)
+        if: ( matrix.config.os == 'ubuntu-20.04' ) &&  ( matrix.config.R == '4.1' ) && (github.event.pull_request.head.repo.full_name == github.repository)
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}

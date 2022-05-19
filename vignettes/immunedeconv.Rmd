@@ -67,6 +67,7 @@ below](#using-expressionsets)).
 
 
 ## Run a method
+
 This package gives you easy access to these methods.
 To run a method with default options, simply invoke
 
@@ -86,7 +87,37 @@ cibersort_abs
 mcp_counter
 xcell
 epic
+abis
+consensus_tme
 ```
+
+## Deconvolution of mouse data
+
+Imunedeconv has been extended to include methods aimed at the deconvolution of mouse data. 
+The format of the input `gene_expression_matrix` is the same. 
+
+
+```r
+immunedeconv::deconvolute_mouse(gene_expression_matrix, method)
+```
+The method can be one of
+
+
+```
+mmcp_counter
+seqimmucc
+dcq
+base
+```
+
+In addition, human-based methods can be used to deconvolute mouse data through the conversion of mouse gene names
+to the corresponding human orthologues
+
+```R
+gene_expression_matrix <- immunedeconv::mouse_genes_to_human(gene_expression_matrix)
+immunedeconv::deconvolute(gene_expression_matrix, "quantiseq")
+```
+
 
 ### Example
 For this example, we use a dataset of four melanoma patients from [@EPIC2017]. 
@@ -127,9 +158,9 @@ deconvolute(your_mixture_matrix, "cibersort")   # or 'cibersort_abs'
 as for any other method.
 
 
-### special case: TIMER
-TIMER uses indication-specific reference profiles. Therefore, you *must*
-specify the tumor type when running TIMER:
+### special case: TIMER and ConsensusTME
+TIMER and ConsensusTME uses indication-specific reference profiles. Therefore, you *must*
+specify the tumor type when running TIMER or ConsensusTME:
 
 ```r
 deconvolute(your_mixture_matrix, "timer",
@@ -144,6 +175,11 @@ immunedeconv::timer_available_cancers
 ```
 
 What the abbreviations stand for is documented on the [TCGA wiki](https://gdc.cancer.gov/resources-tcga-users/tcga-code-tables/tcga-study-abbreviations).
+
+
+### special case: seqImmuCC (mouse-based)
+seqImmuCC is a method that can deconvolute using two regression approaches, *SVR* or *LLSR*. 
+If the *SVR* approach is chosen, then the *CIBERSORT* script needs to be provided as described above.  
 
 ### Using ExpressionSets
 The [Bioconductor](https://bioconductor.org/)
@@ -184,7 +220,7 @@ quanTIseq provides scores for regulatory and non-regulatory CD4+ T cells indepen
 interested in the fraction of overall CD4+ T cells. In that case you can use
 `map_result_to_celltypes` to sum up the scores:
 
-```{r, message=FALSE}
+```{r, message=FALSE, warning=FALSE}
 res = deconvolute(immunedeconv::dataset_racle$expr_mat, "quantiseq") %>%
   map_result_to_celltypes(c("T cell CD4+"), "quantiseq")
 knitr::kable(res, digits=2)
@@ -203,16 +239,23 @@ For more information, see our Benchmark paper ([@sturm2019]).
 * MCP-counter
 * xCell
 * TIMER
+* ConsensusTME
+* ABIS
+* mMCP-counter (mouse based)
+* BASE (mouse based)
 
 ### Methods that allow between-cell-type comparisons
 
 * CIBERSORT
+* DCQ (mouse based)
 
 ### Methods that allow both
 
 * EPIC
 * quanTIseq
 * CIBERSORT abs. mode
+* seqImmuCC (mouse based)
+
 
 EPIC and quanTIseq are currently the only methods providing an absolute score,
 i.e. a score that can be interpreted as a cell fraction. These methods

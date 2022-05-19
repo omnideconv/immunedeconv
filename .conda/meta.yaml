@@ -17,7 +17,7 @@ build:
 
 requirements:
   host:
-    - r-base
+    - r-base >=4.1
     - r-dplyr >=0.7
     - r-magrittr >=1.5
     - r-readr >=1.1
@@ -34,8 +34,12 @@ requirements:
     - r-xcell >=1.2
     - r-epic >=1.1
     - r-mcpcounter
+    - bioconductor-biomart
+    - r-comics
+    - r-consensustme
+    - r-mmcpcounter
   run:
-    - r-base
+    - r-base >=4.1
     - r-dplyr >=0.7
     - r-magrittr >=1.5
     - r-readr >=1.1
@@ -52,6 +56,10 @@ requirements:
     - r-xcell >=1.2
     - r-epic >=1.1
     - r-mcpcounter
+    - bioconductor-biomart
+    - r-comics
+    - r-consensustme
+    - r-mmcpcounter
 
 test:
   commands:

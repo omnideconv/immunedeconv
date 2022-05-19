@@ -88,11 +88,7 @@ pipeline](https://github.com/icbi-lab/immune_deconvolution_benchmark).
 
 
 ## Installation
-<<<<<<< HEAD
-System requirements: R >= 3.5. Only linux is officially supported, but Mac/Windows should work, too.
-=======
 System requirements: R >= 4.1. Only linux is officially supported, but Mac/Windows should work, too.
->>>>>>> 142cb0cf3fe990824554a48af891635f56dcea80
 
 ### Bioconda (Linux/MacOS only)
 The easiest way to retrieve this package and all its dependencies is to use [Anaconda](https://conda.io/miniconda.html).

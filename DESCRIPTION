@@ -8,6 +8,7 @@ biocViews:
 Depends:
     R (>= 4.1),
     EPIC
+    test
 Imports:
     dplyr (>= 0.7),
     magrittr (>= 1.5),

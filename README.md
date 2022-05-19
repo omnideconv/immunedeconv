@@ -55,8 +55,8 @@ immunedeconv::deconvolute(gene_expression_matrix, "quantiseq")
 ```
 
 For more detailed usage instructions, see the Documentation:
-* [Getting started](https://icbi-lab.github.io/immunedeconv/articles/immunedeconv.html).
-* [Detailed example](https://icbi-lab.github.io/immunedeconv/articles/detailed_example.html).
+* [Getting started](https://omnideconv.org/immunedeconv/articles/immunedeconv.html).
+* [Detailed example](https://omnideconv.org/immunedeconv/articles/detailed_example.html).
 
 
 ## Available methods, Licenses, Citations
@@ -124,4 +124,7 @@ install.packages("remotes")
 remotes::install_github("icbi-lab/immunedeconv")
 ```
 
+## Credits
+
+This package was originally developed by [Gregor Sturm](https://github.com/grst) in 2018 at [Pieris Pharmaceuticals GmbH](https://www.pieris.com/) in collaboration with the [List Lab](https://biomedical-big-data.de/) and [Francesca Finotello](https://computationalbiomedicinegroup.github.io/). Gregor Sturm continued to support this package while at [icbi-lab](https://icbi.at). In 2022, this repository moved to the [omnideconv](https://omnideconv.org) organization, a joint effort of the [List Lab](https://biomedical-big-data.de/) and [Finotello Lab](https://computationalbiomedicinegroup.github.io/) dedicated to improve accessibility of deconvolution methods. At this point [Lorenzo Merotto](https://github.com/LorenzoMerotto) became primary maintainer of the immunedeconv package. 
 

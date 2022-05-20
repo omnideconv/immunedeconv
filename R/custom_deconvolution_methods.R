@@ -80,8 +80,16 @@ deconvolute_cibersort_custom = function(gene_expression_matrix, signature_matrix
   
 }
 
-
-deconvolute_epic_custom = function(){}
+#' Deconvolute using EPIC and a custom signature matrix.
+#' 
+#' @param gene_expression_matrix
+#' @param signature_matrix
+#' @param signature_genes
+#' @param mrna_cells
+#' @param ...
+deconvolute_epic_custom = function(gene_expression_matrix, signature_matrix, 
+                                   signature_genes, mrna_cells = NULL, 
+                                   ...){}
 
 
 

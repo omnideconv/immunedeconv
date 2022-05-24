@@ -121,7 +121,7 @@ The easiest way to do so is to use the `remotes` package, which will automatical
 
 ```R
 install.packages("remotes")
-remotes::install_github("icbi-lab/immunedeconv")
+remotes::install_github("omnideconv/immunedeconv")
 ```
 
 ## Credits

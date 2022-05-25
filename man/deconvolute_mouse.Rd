@@ -5,16 +5,17 @@
 \title{Perform deconvolution on a mouse RNAseq dataset}
 \usage{
 deconvolute_mouse(
-  gene.expression.matrix,
+  gene_expression_matrix,
   method = deconvolution_methods_mouse,
   rmgenes = NULL,
+  column = "gene_symbol",
   algorithm = NULL,
   ...
 )
 }
 \arguments{
-\item{gene.expression.matrix}{a m x n matrix with m genes and n samples.
-Data should be TP normalized, except when using seqImmuCC where raw
+\item{gene_expression_matrix}{a m x n matrix with m genes and n samples.
+Data should be TPM normalized, except when using seqImmuCC where raw
 counts are prefereable.}
 
 \item{method}{string specifying the method}

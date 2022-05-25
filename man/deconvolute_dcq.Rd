@@ -5,25 +5,29 @@
 \title{Deconvolute using DCQ}
 \usage{
 deconvolute_dcq(
-  gene.expression.matrix,
-  ref.samples = NULL,
-  n.repeats = 10,
+  gene_expression_matrix,
+  ref_samples = NULL,
+  n_repeats = 10,
   combine_cells = TRUE,
   ...
 )
 }
 \arguments{
-\item{gene.expression.matrix}{a m x n matrix with m genes and n samples}
+\item{gene_expression_matrix}{a m x n matrix with m genes and n samples}
 
-\item{ref.samples}{a vector containing the names of the samples to be
+\item{ref_samples}{a vector containing the names of the samples to be
 used to standardize the expressions. If NULL, all the samples are used.}
 
-\item{n.repeats}{the number of models to generate. Predicted cell quantities
+\item{n_repeats}{the number of models to generate. Predicted cell quantities
 will then be averaged.}
 
 \item{combine_cells}{logical. This method estimates several cell types (~200).
 If TRUE (default), these are combined into 19 major immune-stromal cell types.}
+
+\item{...}{passed through to original quantiseq method. A native argument takes precedence
+over an immunedeconv argument}
 }
 \description{
-Deconvolute using DCQ
+Cell types obtained with this method can be further reduced with the
+map_result_to_celltypes function, using 'DCQ' as the method
 }

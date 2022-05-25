@@ -9,6 +9,8 @@
 #' @importFrom rlang dots_list
 #' @importFrom stats aggregate lm lsfit median qqplot
 #' @importFrom utils capture.output read.csv read.table tail write.table
+#' 
+#' @name custom_deconvolution
 NULL
 
 
@@ -16,7 +18,7 @@ NULL
 #' List of methods that support the use of a custom signature
 #'
 #' The available methods are
-#' `epic`, `xcell`, `cibersort`, `cibersort_abs`, `consensus_tme`, `base`
+#' `epic`, `cibersort`, `cibersort_abs`, `consensus_tme`, `base`
 #'
 #' The object is a named vector. The names correspond to the display name of the method,
 #' the values to the internal name.
@@ -86,7 +88,7 @@ deconvolute_cibersort_custom = function(gene_expression_matrix, signature_matrix
 #'    needs to be smaller than the genes in the signature matrix
 #' @param genes_var (optional) a m x l matrix with m genes and l cell types, with 
 #'    the variability of each gene expression for each cell type. 
-#'    This wil be used in the optimization
+#'    This will be used in the optimization
 #' @param mrna_cells (optional) A named numeric vector with 
 #'    the amount of mRNA in arbitrary units for each of the 
 #'    reference cells and of the other uncharacterized cells. 
@@ -98,16 +100,17 @@ deconvolute_epic_custom = function(gene_expression_matrix, signature_matrix,
                                    signature_genes, genes_var = NULL, mrna_quantities = NULL, 
                                    ...){
   
-  reference = list()
-  reference$refProfiles <- signature_matrix
-  reference$sigGenes <- signature_genes
-  if(!is.null(genes_var)){reference$refProfiles.var <- genes_var}
+  ref = list()
+  ref$refProfiles <- signature_matrix
+  ref$sigGenes <- signature_genes
+  if(!is.null(genes_var)){ref$refProfiles.var <- genes_var}
   
   mrna_cell = mrna_quantities
   if(is.null(mrna_quantities)){mRNA_cell = c("default"=1.)}
   
   arguments = dots_list(bulk=gene_expression_matrix,
                         reference=ref, mRNA_cell = mRNA_cell, ..., .homonyms="last")
+  
   call = rlang::call2(EPIC::EPIC, !!!arguments)
   epic_res_raw = eval(call)
   
@@ -123,7 +126,7 @@ deconvolute_epic_custom = function(gene_expression_matrix, signature_matrix,
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples. Data
 #'    should be TPM normalized and log10 scaled.
 #' @param signature_genes a list with each element containing genes to represent a cell type. The cell types
-#' should be the names of each element of the list.
+#'    should be the names of each element of the list.
 #' @param stat_method Choose statistical framework to generate the entichment scores. 
 #'     Default: 'ssgsea'. Available methods: 'ssgsea', 'gsva', 'plage', 'zscore', 'singScore'.
 #'     These mirror the parameter options of \code{GSVA::gsva()} with the exception of \code{singScore}
@@ -164,14 +167,4 @@ deconvolute_base_custom = function(gene_expression_matrix,
   results = base_algorithm(gene_expression_matrix, new.cell.compendium, perm = n_permutations)
   
   return(t(results))
-}
-  
-  
-  
-  
-
-
-
-deconvolute_with_custom_signature = function(gene_expression_matrix, method, ...){
-  
 }

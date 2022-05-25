@@ -5,19 +5,18 @@
 \title{Deconvolute using mMCP-counter}
 \usage{
 deconvolute_mmcp_counter(
-  gene.expression.matrix,
+  gene_expression_matrix,
   log2 = TRUE,
-  gene.id = "Gene.Symbol",
-  genome = "GCRm39",
-  ...
+  gene_id = "Gene.Symbol",
+  genome = "GCRm39"
 )
 }
 \arguments{
-\item{gene.expression.matrix}{a m x n matrix with m genes and n samples. Should be TPM normalized}
+\item{gene_expression_matrix}{a m x n matrix with m genes and n samples. Should be TPM normalized}
 
 \item{log2}{logical. If TRUE, log2 transforms the expression matrix}
 
-\item{gene.id}{specifies the format of the gene IDs. Possible choices are 'Gene.Symbol'
+\item{gene_id}{specifies the format of the gene IDs. Possible choices are 'Gene.Symbol'
 (default), 'ENSEMBL.ID' or 'Probes' (Affymetrix array probes)}
 
 \item{genome}{specifies the mouse genome version to use, GCRm39 (default) or GCRm38}

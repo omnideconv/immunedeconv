@@ -12,6 +12,8 @@
 #' @importFrom tibble as_tibble
 #' @importFrom rlang dots_list
 #' @importFrom utils capture.output read.csv read.table tail write.table
+#' 
+#' @name mouse_deconvolution
 NULL
 
 

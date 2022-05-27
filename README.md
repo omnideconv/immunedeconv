@@ -50,7 +50,7 @@ base
 In addition, human-based methods can be used to deconvolute mouse data through the conversion to orthologous gene names
 
 
-```R
+```r
 gene_expression_matrix <- immunedeconv::mouse_genes_to_human(gene_expression_matrix)
 immunedeconv::deconvolute(gene_expression_matrix, "quantiseq")
 ```
@@ -62,7 +62,7 @@ The functions may require different input data formats, related to the requireme
 The available methods are
 
 
-```
+```r
 base:  deconvolute_base_custom()
 cibersort norm/abs:  deconvolute_cibersort_custom()
 epic: deconvolute_epic_custom()

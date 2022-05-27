@@ -118,6 +118,22 @@ gene_expression_matrix <- immunedeconv::mouse_genes_to_human(gene_expression_mat
 immunedeconv::deconvolute(gene_expression_matrix, "quantiseq")
 ```
 
+## Deconvolution using a custom signature 
+
+Finally, certain methods can be used with custom signatures, consisting of either a signature matrix or signature genes 
+for the cell types of interest. Since the information used to deconvolute the bulk is user-provided, these functions can be 
+used for different tissues and organisms. 
+The functions may require different input data formats, related to the requirements of each method. Please refer to their documentation. 
+The available methods are
+
+
+```r
+base:  deconvolute_base_custom()
+cibersort norm/abs:  deconvolute_cibersort_custom()
+epic: deconvolute_epic_custom()
+consensus_tme: deconvolute_consensus_tme_custom()
+```
+
 
 ### Example
 For this example, we use a dataset of four melanoma patients from [@EPIC2017]. 

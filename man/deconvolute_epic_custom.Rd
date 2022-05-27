@@ -23,7 +23,7 @@ needs to be smaller than the genes in the signature matrix}
 
 \item{genes_var}{(optional) a m x l matrix with m genes and l cell types, with
 the variability of each gene expression for each cell type.
-This wil be used in the optimization}
+This will be used in the optimization}
 
 \item{...}{passed through to EPIC. A native argument takes precedence
 over an immunedeconv argument.

@@ -16,7 +16,8 @@ deconvolute_cibersort_custom(
 \arguments{
 \item{gene_expression_matrix}{a m x n matrix with m genes and n samples}
 
-\item{signature_matrix}{a m x l matrix with m genes and l cell types}
+\item{signature_matrix}{a m x l matrix with m genes and l cell types. The
+matrix should contain only a subset of the genes useful for the analysis.}
 
 \item{QN}{boolean. Wheter to quantile normalize the data. Data should be normalized
 when the signature matrix is derived from different studies/sample batches}

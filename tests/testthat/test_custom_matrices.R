@@ -14,6 +14,8 @@ test_that("BASE works with a custom signature matrix", {
   
   res = deconvolute_base_custom(test_mat, sign_mat)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+  assert("matrix dimensions consistent", nrow(res) == ncol(sign_mat))
+  
 })
 
 
@@ -33,6 +35,8 @@ test_that("EPIC works with a custom signature matrix", {
                                 signature_matrix = sign_mat, 
                                 signature_genes = marker_genes_epic)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+  assert("matrix dimensions consistent", nrow(res) == ncol(sign_mat))
+  
 })
 
 test_that("EPIC works with a custom signature matrix and variances", {
@@ -56,6 +60,8 @@ test_that("EPIC works with a custom signature matrix and variances", {
                                 signature_genes = marker_genes_epic, 
                                 genes_var = variance_genes_epic)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+  assert("matrix dimensions consistent", nrow(res) == ncol(sign_mat))
+  
 })
 
 
@@ -78,4 +84,6 @@ test_that("ConsensusTME works with a custom signature matrix", {
   
   res = deconvolute_consensus_tme_custom(test_mat, sign_genes)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+  assert("matrix dimensions consistent", nrow(res) == ncol(sign_mat))
+  
 })

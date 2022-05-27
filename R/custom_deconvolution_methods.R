@@ -41,7 +41,8 @@ deconvolution_methods = c("EPIC"="epic",
 #' Deconvolute using CIBERSORT or CIBERSORT abs and a custom signature matrix.
 #'
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples
-#' @param signature_matrix a m x l matrix with m genes and l cell types
+#' @param signature_matrix a m x l matrix with m genes and l cell types. The 
+#'   matrix should contain only a subset of the genes useful for the analysis.
 #' @param QN boolean. Wheter to quantile normalize the data. Data should be normalized 
 #'   when the signature matrix is derived from different studies/sample batches
 #' @param absolute Set to TRUE for CIBERSORT absolute mode.
@@ -66,7 +67,7 @@ deconvolute_cibersort_custom = function(gene_expression_matrix, signature_matrix
   write_tsv(as_tibble(signature_matrix, rownames = 'gene_symbol'), path = temp.signature.file)
   
   
-  arguments = dots_list(temp.signature.file, temp.expression.file, perm=perm,
+  arguments = dots_list(temp.signature.file, temp.expression.file, perm=0,
                         QN=QN, absolute=absolute, abs_method=abs_method, ..., .homonyms="last")
   
   call = rlang::call2(CIBERSORT, !!!arguments)
@@ -83,7 +84,8 @@ deconvolute_cibersort_custom = function(gene_expression_matrix, signature_matrix
 #' Deconvolute using EPIC and a custom signature matrix.
 #' 
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples
-#' @param signature_matrix a m x l matrix with m genes and l cell types
+#' @param signature_matrix a m x l matrix with m genes and l cell types. This matrix 
+#'    should contain the whole set of genes
 #' @param signature_genes a character vector of the gene names to use as signature
 #'    needs to be smaller than the genes in the signature matrix
 #' @param genes_var (optional) a m x l matrix with m genes and l cell types, with 

@@ -276,7 +276,7 @@ deconvolute_abis = function(gene_expression_matrix,
 #'
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples
 #' @param indications a n-vector giving and indication string (e.g. 'brca') for each sample.
-#'     Different cancer types should be analyzed separately.
+#'     The method requires at least 2 samples of a certain cancer type.
 #'     Accepted indications are 'kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
 #'     'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
 #'     'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
@@ -307,7 +307,8 @@ deconvolute_consensus_tme = function(gene_expression_matrix,
   list.results <- list()
   for(t in tumor.types){
     cur.samples <- indications == t
-    cur.results <- ConsensusTME::consensusTMEAnalysis(as.matrix(gene_expression_matrix[, cur.samples]), t, method)
+    cur.results <- ConsensusTME::consensusTMEAnalysis(as.matrix(gene_expression_matrix[, cur.samples]), 
+                                                      t, method)
 
     list.results[[t]] <- cur.results
   }

@@ -97,7 +97,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https:/omnideconv.org/immunedeconv">immunedeconv</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></code></pre></div>
-<p>As previously done for the human deconvolution methods, <em>Immunedeconv</em> includes an example dataset with samples from mouse blood and spleen from <span class="citation">(<span class="citeproc-not-found" data-reference-id="Petitprez2020"><strong>???</strong></span>)</span>(<a href="https://doi.org/10.1186/s13073-020-00783-w" class="external-link uri">https://doi.org/10.1186/s13073-020-00783-w</a>). It is available from <code>immunedeconv::dataset_petitprez</code>. It contains a gene expression matrix (<code>dataset_petitprez$expr_mat</code>) generated using bulk RNA-seq and ‘gold standard’ estimates of immune cell contents profiled with FACS (<code>dataset_petitprez$ref</code>). We are going to use the bulk RNA-seq data to run the deconvolution methods and will compare the results to the FACS data later on.</p>
+<p>As previously done for the human deconvolution methods, <em>Immunedeconv</em> includes an example dataset with samples from mouse blood and spleen from <span class="citation">(Petitprez et al. 2020)</span>. It is available from <code>immunedeconv::dataset_petitprez</code>. It contains a gene expression matrix (<code>dataset_petitprez$expr_mat</code>) generated using bulk RNA-seq and ‘gold standard’ estimates of immune cell contents profiled with FACS (<code>dataset_petitprez$ref</code>). We are going to use the bulk RNA-seq data to run the deconvolution methods and will compare the results to the FACS data later on.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># show the first 5 lines of the gene expression matrix</span>
 <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">dataset_petitprez</span><span class="op">$</span><span class="va">expr_mat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span><span class="op">)</span></code></pre></div>
@@ -192,17 +192,15 @@
 <h3 id="deconvolution-with-human-based-methods">Deconvolution with human-based methods<a class="anchor" aria-label="anchor" href="#deconvolution-with-human-based-methods"></a>
 </h3>
 <p>Human-based methods can still be used to deconvolve mouse data through the use of orthologous genes. The function <code>mouse_genes_to_human</code> does that by retrieving the correspondent gene names with <code>biomaRt</code>. Since the gene names are retrieved from the Ensembl database, it can happen that the command has to be run with different Emsembl mirrors (see the documentation)</p>
-<!-- ```{r, message=FALSE, warning=FALSE} -->
-<!-- # I will leave this as a comment since the Esembl database causes problems lately -->
-<!-- dataset_petitprez_humanGenes <- mouse_genes_to_human(dataset_petitprez$expr_mat, mirror = 'uswest') -->
-<!-- res_MCPcounter <- deconvolute(dataset_petitprez_humanGenes, 'mcp_counter') -->
-<!-- ``` -->
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dataset_petitprez_humanGenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mouse_genes_to_human.html">mouse_genes_to_human</a></span><span class="op">(</span><span class="va">dataset_petitprez</span><span class="op">$</span><span class="va">expr_mat</span>, mirror <span class="op">=</span> <span class="st">'uswest'</span><span class="op">)</span>
+<span class="va">res_MCPcounter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">dataset_petitprez_humanGenes</span>, <span class="st">'mcp_counter'</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="comparison-with-facs-data">Comparison with FACS data<a class="anchor" aria-label="anchor" href="#comparison-with-facs-data"></a>
 </h3>
 <p>Let’s now compare the results with ‘gold standard’ FACS data obtained for the four samples. This is, of course, not a representative benchmark, but it gives a notion about what magnitude of predictive accuracy we can expect.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># construct a single dataframe containing all data</span>
 <span class="co">#</span>
 <span class="co"># re-map the cell-types to common names. </span>
@@ -218,7 +216,6 @@
 
 <span class="va">result</span> <span class="op">=</span> <span class="va">tmp_res</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="va">reference_facs</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Joining, by = c("cell_type", "sample")</span></code></pre>
 <p>Plot the true vs. estimated values:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
@@ -231,6 +228,11 @@
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
+<div id="refs" class="references">
+<div id="ref-Petitprez2020">
+<p>Petitprez, Florent, Sacha Levy, Cheng-Ming Sun, Maxime Meylan, Christophe Linhard, Etienne Becht, Nabila Elarouci, et al. 2020. “The Murine Microenvironment Cell Population Counter Method to Estimate Abundance of Tissue-Infiltrating Immune and Stromal Cell Populations in Murine Samples Using Gene Expression.” <em>Genome Medicine</em> 12 (1): 1–15.</p>
+</div>
+</div>
 </div>
   </div>
 

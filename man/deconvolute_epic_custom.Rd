@@ -16,7 +16,8 @@ deconvolute_epic_custom(
 \arguments{
 \item{gene_expression_matrix}{a m x n matrix with m genes and n samples}
 
-\item{signature_matrix}{a m x l matrix with m genes and l cell types}
+\item{signature_matrix}{a m x l matrix with m genes and l cell types. This matrix
+should contain the whole set of genes}
 
 \item{signature_genes}{a character vector of the gene names to use as signature
 needs to be smaller than the genes in the signature matrix}

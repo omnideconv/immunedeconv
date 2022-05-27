@@ -35,7 +35,7 @@ test_that("EPIC works with a custom signature matrix", {
                                 signature_matrix = sign_mat, 
                                 signature_genes = marker_genes_epic)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
-  assert("matrix dimensions consistent", nrow(res) == ncol(sign_mat))
+  assert("matrix dimensions consistent", nrow(res) == (ncol(sign_mat) + 1))
   
 })
 
@@ -60,7 +60,7 @@ test_that("EPIC works with a custom signature matrix and variances", {
                                 signature_genes = marker_genes_epic, 
                                 genes_var = variance_genes_epic)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
-  assert("matrix dimensions consistent", nrow(res) == ncol(sign_mat))
+  assert("matrix dimensions consistent", nrow(res) == (ncol(sign_mat) + 1))
   
 })
 

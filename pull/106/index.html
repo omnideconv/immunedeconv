@@ -114,6 +114,11 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gene_expression_matrix</span> <span class="op">&lt;-</span> <span class="fu">immunedeconv</span><span class="fu">::</span><span class="fu"><a href="reference/mouse_genes_to_human.html">mouse_genes_to_human</a></span><span class="op">(</span><span class="va">gene_expression_matrix</span><span class="op">)</span>
 <span class="fu">immunedeconv</span><span class="fu">::</span><span class="fu"><a href="reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">gene_expression_matrix</span>, <span class="st">"quantiseq"</span><span class="op">)</span></code></pre></div>
+<p>Finally, certain methods can be used with custom signatures, consisting of either a signature matrix or signature genes for the cell types of interest. Since the information used to deconvolute the bulk is user-provided, these functions can be used for different tissues and organisms. The functions may require different input data formats, related to the requirements of each method. Please refer to their documentation. The available methods are</p>
+<pre><code>base:  deconvolute_base_custom()
+cibersort norm/abs:  deconvolute_cibersort_custom()
+epic: deconvolute_epic_custom()
+consensus_tme: deconvolute_consensus_tme_custom()</code></pre>
 <p>For more detailed usage instructions, see the Documentation: * <a href="https://omnideconv.org/immunedeconv/articles/immunedeconv.html" class="external-link">Getting started</a>. * <a href="https://omnideconv.org/immunedeconv/articles/detailed_example.html" class="external-link">Detailed example</a>. * <a href="https://omnideconv.org/immunedeconv/articles/detailed_example_mouse.html" class="external-link">Detailed example - mouse</a>.</p>
 </div>
 <div class="section level2">
@@ -250,7 +255,7 @@ conda activate deconvolution</code></pre>
 </h3>
 <p>We highly recommend using <code>conda</code>, as it will avoid incompatibilities between different package versions. That being said, you can also install <code>immunedeconv</code> as a regular R package in your default R installation. The installation typically completes within 30 minutes, depending on how many dependency packages need to be compiled.</p>
 <p>The easiest way to do so is to use the <code>remotes</code> package, which will automatically download all CRAN, Bioconductor and GitHub dependencies:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"omnideconv/immunedeconv"</span><span class="op">)</span></code></pre></div>
 </div>

@@ -11,6 +11,7 @@
 #' @importFrom utils capture.output read.csv read.table tail write.table
 #' 
 #' @name custom_deconvolution
+#' @docType package
 NULL
 
 
@@ -24,10 +25,10 @@ NULL
 #' the values to the internal name.
 #'
 #' @export
-deconvolution_methods = c("EPIC"="epic",
-                          "CIBERSORT"="cibersort",
-                          "ConsensusTME"="consensus_tme", 
-                          "BASE"="base")
+custom_deconvolution_methods = c("EPIC"="epic",
+                                 "CIBERSORT"="cibersort",
+                                 "ConsensusTME"="consensus_tme", 
+                                 "BASE"="base")
 
 
 ###########################################################################

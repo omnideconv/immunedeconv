@@ -33,6 +33,14 @@ reference:
       - deconvolute_base_algorithm
       - deconvolute_dcq
       - mouse_genes_to_human
+  - title: Deconvolution methods with custom signature
+    desc: Access to the individual deconvolution methods that allow the use of a custom signature (matrix or gene set)
+    contents:
+      - custom_deconvolution_methods
+      - deconvolute_cibersort_custom
+      - deconvolute_epic_custom
+      - deconvolute_base_custom
+      - deconvolute_consensus_tme_custom
   - title: Cell type mapping
     desc: Map cell types and datasets to a controlled vocabulary.
     contents:
@@ -86,3 +94,7 @@ reference:
      - deconvolute_abis_default
      - seqImmuCC_LLSR
      - base_algorithm
+     - create_base_compendium
+     - mouse_deconvolution
+     - mouse_cell_type_mapping
+     - custom_deconvolution

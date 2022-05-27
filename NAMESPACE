@@ -3,6 +3,7 @@
 export(available_datasets)
 export(cell_type_map)
 export(cell_type_tree)
+export(custom_deconvolution_methods)
 export(deconvolute)
 export(deconvolute_abis)
 export(deconvolute_base_algorithm)

@@ -8,6 +8,7 @@
 #' @import stringr 
 #' 
 #' @name mouse_cell_type_mapping
+#' @docType package
 NULL
 
 #' Since DCQ and BASE provide estimates for several cell types, this function 

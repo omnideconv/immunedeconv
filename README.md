@@ -57,6 +57,7 @@ immunedeconv::deconvolute(gene_expression_matrix, "quantiseq")
 For more detailed usage instructions, see the Documentation:
 * [Getting started](https://omnideconv.org/immunedeconv/articles/immunedeconv.html).
 * [Detailed example](https://omnideconv.org/immunedeconv/articles/detailed_example.html).
+* [Detailed example - mouse](https://omnideconv.org/immunedeconv/articles/detailed_example_mouse.html).
 
 
 ## Available methods, Licenses, Citations

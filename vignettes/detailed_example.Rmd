@@ -77,7 +77,7 @@ MCP-counter provides scores in arbitrary units that are only comparable between 
 cell-types. The visualisation as bar-chart suggests the scores to be cell-type fractions and is, therefore, unsuitable.
 Instead, we use ggplot to visualize the scores per-cell type, allowing for a relative comparison between samples.
 
-```{r, fig.height=7, fig.width=7}
+```{r, fig.height=7, fig.width=7, warning=FALSE}
 res_mcp_counter %>%
   gather(sample, score, -cell_type) %>%
   ggplot(aes(x=sample, y=score, color=cell_type)) +
@@ -98,7 +98,7 @@ With the scores being in arbitrary units, the results are not useful for judging
 
 ## Comparison with FACS data
 Let's now compare the results with 'gold standard' FACS data obtained for the four samples. This is, of course, not a representative benchmark, but it gives a notion about what magnitude of predictive accuracy we can expect. 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 # construct a single dataframe containing all data
 #
 # re-map the cell-types to common names. 
@@ -119,7 +119,7 @@ result = bind_rows(tmp_quantiseq, tmp_mcp_counter) %>%
 ```
 
 Plot the true vs. estimated values: 
-```{r, fig.width=6, fig.height=7}
+```{r, fig.width=6, fig.height=7, warning=FALSE}
 result %>% 
   ggplot(aes(x=true_fraction, y=estimate)) + 
     geom_point(aes(shape=cell_type, color=cell_type)) + 
@@ -130,4 +130,5 @@ result %>%
 
 (MCP counter does not provide estimates for CD4+ T cells.)
 
-# References {-}
+
+# References

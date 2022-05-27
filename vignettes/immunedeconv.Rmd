@@ -135,7 +135,7 @@ consensus_tme: deconvolute_consensus_tme_custom()
 ```
 
 
-### Example
+## Example
 For this example, we use a dataset of four melanoma patients from [@EPIC2017]. 
 ```{r, message=FALSE}
 res = deconvolute(immunedeconv::dataset_racle$expr_mat, "quantiseq")

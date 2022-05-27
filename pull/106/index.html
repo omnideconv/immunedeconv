@@ -115,10 +115,10 @@
 <code class="sourceCode R"><span class="va">gene_expression_matrix</span> <span class="op">&lt;-</span> <span class="fu">immunedeconv</span><span class="fu">::</span><span class="fu"><a href="reference/mouse_genes_to_human.html">mouse_genes_to_human</a></span><span class="op">(</span><span class="va">gene_expression_matrix</span><span class="op">)</span>
 <span class="fu">immunedeconv</span><span class="fu">::</span><span class="fu"><a href="reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">gene_expression_matrix</span>, <span class="st">"quantiseq"</span><span class="op">)</span></code></pre></div>
 <p>Finally, certain methods can be used with custom signatures, consisting of either a signature matrix or signature genes for the cell types of interest. Since the information used to deconvolute the bulk is user-provided, these functions can be used for different tissues and organisms. The functions may require different input data formats, related to the requirements of each method. Please refer to their documentation. The available methods are</p>
-<pre><code>base:  deconvolute_base_custom()
-cibersort norm/abs:  deconvolute_cibersort_custom()
-epic: deconvolute_epic_custom()
-consensus_tme: deconvolute_consensus_tme_custom()</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>base<span class="op">:</span><span class="st">  </span><span class="kw">deconvolute_base_custom</span>()</span>
+<span id="cb6-2"><a href="#cb6-2"></a>cibersort norm<span class="op">/</span>abs<span class="op">:</span><span class="st">  </span><span class="kw">deconvolute_cibersort_custom</span>()</span>
+<span id="cb6-3"><a href="#cb6-3"></a>epic<span class="op">:</span><span class="st"> </span><span class="kw">deconvolute_epic_custom</span>()</span>
+<span id="cb6-4"><a href="#cb6-4"></a>consensus_tme<span class="op">:</span><span class="st"> </span><span class="kw">deconvolute_consensus_tme_custom</span>()</span></code></pre></div>
 <p>For more detailed usage instructions, see the Documentation: * <a href="https://omnideconv.org/immunedeconv/articles/immunedeconv.html" class="external-link">Getting started</a>. * <a href="https://omnideconv.org/immunedeconv/articles/detailed_example.html" class="external-link">Detailed example</a>. * <a href="https://omnideconv.org/immunedeconv/articles/detailed_example_mouse.html" class="external-link">Detailed example - mouse</a>.</p>
 </div>
 <div class="section level2">

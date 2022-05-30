@@ -276,13 +276,15 @@ deconvolute_abis = function(gene_expression_matrix,
 #'
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples
 #' @param indications a n-vector giving and indication string (e.g. 'brca') for each sample.
-#'     Different cancer types should be analyzed separately.
+#'     The method requires at least 2 samples of a certain cancer type.
 #'     Accepted indications are 'kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 'lgg',
 #'     'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
 #'     'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
 #'     'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol'
 #' @param stat_method Choose statistical framework to generate the entichment scores. 
-#'     Default: 'ssgsea'
+#'     Default: 'ssgsea'. Available methods: 'ssgsea', 'gsva', 'plage', 'zscore', 'singScore'.
+#'     These mirror the parameter options of \code{GSVA::gsva()} with the exception of \code{singScore}
+#'     which leverages \code{singscore::multiScore()}
 #' @param ... passed through to the original ConsensusTME function. A native argument takes precedence
 #'   over an immunedeconv argument. Documentation can be found at http://consensusTME.org
 #'
@@ -305,7 +307,8 @@ deconvolute_consensus_tme = function(gene_expression_matrix,
   list.results <- list()
   for(t in tumor.types){
     cur.samples <- indications == t
-    cur.results <- ConsensusTME::consensusTMEAnalysis(as.matrix(gene_expression_matrix[, cur.samples]), t, method)
+    cur.results <- ConsensusTME::consensusTMEAnalysis(as.matrix(gene_expression_matrix[, cur.samples]), 
+                                                      t, method)
 
     list.results[[t]] <- cur.results
   }

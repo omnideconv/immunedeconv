@@ -46,13 +46,30 @@ seqimmucc
 dcq
 base
 ```
+
 In addition, human-based methods can be used to deconvolute mouse data through the conversion to orthologous gene names
 
 
-```R
+```r
 gene_expression_matrix <- immunedeconv::mouse_genes_to_human(gene_expression_matrix)
 immunedeconv::deconvolute(gene_expression_matrix, "quantiseq")
 ```
+
+Finally, certain methods can be used with custom signatures, consisting of either a signature matrix or signature genes 
+for the cell types of interest. Since the information used to deconvolute the bulk is user-provided, these functions can be 
+used for different tissues and organisms. 
+The functions may require different input data formats, related to the requirements of each method. Please refer to their documentation. 
+The available methods are
+
+
+```r
+base:  deconvolute_base_custom()
+cibersort norm/abs:  deconvolute_cibersort_custom()
+epic: deconvolute_epic_custom()
+consensus_tme: deconvolute_consensus_tme_custom()
+```
+
+
 
 For more detailed usage instructions, see the Documentation:
 * [Getting started](https://omnideconv.org/immunedeconv/articles/immunedeconv.html).
@@ -122,7 +139,7 @@ The easiest way to do so is to use the `remotes` package, which will automatical
 
 ```R
 install.packages("remotes")
-remotes::install_github("icbi-lab/immunedeconv")
+remotes::install_github("omnideconv/immunedeconv")
 ```
 
 ## Credits

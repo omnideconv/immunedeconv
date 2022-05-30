@@ -121,3 +121,63 @@ base_algorithm <- function(data, reg, perm=100, median.norm=T)
   
   return(CLP.scores)
 }
+
+
+
+#' Souce code to create the compendium used kin the BASE algorithm, containing 
+#'    up- and down-regulated weight sets that specify the 
+#	    specificity by which each gene is expressed by a given cell. 
+#' This code is adapted from Varn et al., DOI: 10.1158/0008-5472.CAN-16-2490 
+#' 
+#' @param signature_matrix: numeric matrix; The signature matrix from which the compendium will be built. 
+#'    Must contain genes on rows and cell on columns
+#'
+create_base_compendium = function(signature_matrix){
+  
+  myinf1 = signature_matrix
+  
+  med = apply(myinf1, 1, median)
+  myinf1 = myinf1-med
+  
+  avg = apply(myinf1, 2, mean)
+  std = apply(myinf1, 2, sd)
+  for(k in 1:ncol(myinf1))
+  {
+    myinf1[,k] = (myinf1[,k]-avg[k])/std[k]
+  }
+  
+  
+  res1 = myinf1
+  for(k in 1:ncol(res1))
+  {
+    tmp = myinf1[,k]
+    tmp[tmp<0]=0
+    tmp = -log10(pnorm(-tmp)*2)
+    tmp[tmp>10]=10
+    res1[,k] = tmp
+  }
+  colnames(res1) = paste(colnames(myinf1), "_up", sep="")
+  
+  res2 = myinf1
+  for(k in 1:ncol(res2))
+  {
+    tmp = myinf1[,k]
+    tmp[tmp>0]=0
+    tmp = -log10(pnorm(tmp)*2)
+    tmp[tmp>10]=10
+    res2[,k] = tmp
+  }
+  colnames(res2) = paste(colnames(myinf1), "_dn", sep="")
+  
+  res = cbind(res1, res2)
+  
+  minv = min(res)
+  maxv= max(res)
+  res = (res-minv)/(maxv-minv)
+  colnames(res) = gsub(" ", "", colnames(res))
+  
+  
+  colnames(res) <- toupper(colnames(res))
+  
+  return(res)
+}

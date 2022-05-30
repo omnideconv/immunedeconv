@@ -65,8 +65,8 @@ test_that("consensus_tme works", {
 
 
 test_that("consensus_tme with multiple indications, ordered and unordered", {
-  indications_1 = c("blca", "brca", "brca", "brca", "brca", "brca", "chol", "chol")
-  indications_2=  c("brca", "brca", "brca", "chol", "chol", "brca", "brca", "blca")
+  indications_1 = c("blca", "blca", "brca", "brca", "brca", "brca", "chol", "chol")
+  indications_2=  c("brca", "brca", "blca", "chol", "chol", "brca", "brca", "blca")
   res_1 = deconvolute_consensus_tme(test_mat, indications=indications_1)
   res_2 = deconvolute_consensus_tme(test_mat, indications=indications_2)
   assert("matrix dimensions consistent", ncol(res_1) == ncol(test_mat))

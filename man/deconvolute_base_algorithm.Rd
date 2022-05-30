@@ -5,18 +5,17 @@
 \title{Deconvolute using BASE}
 \usage{
 deconvolute_base_algorithm(
-  gene.expression.matrix,
-  n.permutations = 100,
+  gene_expression_matrix,
+  n_permutations = 100,
   log10 = TRUE,
-  combine_cells = TRUE,
-  ...
+  combine_cells = TRUE
 )
 }
 \arguments{
-\item{gene.expression.matrix}{a m x n matrix with m genes and n samples. Data
+\item{gene_expression_matrix}{a m x n matrix with m genes and n samples. Data
 should be TPM normalized and log10 scaled.}
 
-\item{n.permutations}{the number of permutations of each sample expression
+\item{n_permutations}{the number of permutations of each sample expression
 to generate. These are used to normalize the results.}
 
 \item{log10}{logical. if TRUE, log10 transforms the expression matrix.}
@@ -25,6 +24,6 @@ to generate. These are used to normalize the results.}
 If TRUE (default), these are combined into 19 major immune-stromal cell types.}
 }
 \description{
-Cell types obtained with this method can be reduced with the
+Cell types obtained with this method can be further reduced with the
 map_result_to_celltypes function, using 'DCQ' as the method
 }

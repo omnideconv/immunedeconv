@@ -11,3 +11,5 @@ CONTRIBUTING\.md$
 Makefile$
 _pkgdown.yml$
 \.conda
+^doc$
+^Meta$

@@ -20,7 +20,7 @@ library(immunedeconv)
 library(tibble)
 ```
 
-As previously done for the human deconvolution methods, *Immunedeconv* includes an example dataset with samples from mouse blood and spleen from [@Petitprez2020](https://doi.org/10.1186/s13073-020-00783-w). 
+As previously done for the human deconvolution methods, *Immunedeconv* includes an example dataset with samples from mouse blood and spleen from [@Petitprez2020]. 
 It is available from `immunedeconv::dataset_petitprez`. It contains a gene expression matrix (`dataset_petitprez$expr_mat`) generated using bulk RNA-seq and 'gold standard' estimates of immune cell contents profiled with FACS (`dataset_petitprez$ref`). We are going to use the bulk RNA-seq data to run the deconvolution methods and will compare the results to the FACS data later on.   
 
 
@@ -69,17 +69,16 @@ res_mMCPcounter %>%
 Human-based methods can still be used to deconvolve mouse data through the use of orthologous genes. The function `mouse_genes_to_human` does that by retrieving the correspondent gene names with `biomaRt`. Since the gene names are retrieved from the Ensembl database, it can happen that the command has to be run with different Emsembl mirrors (see the documentation)
 
 
-<!-- ```{r, message=FALSE, warning=FALSE} -->
-<!-- # I will leave this as a comment since the Esembl database causes problems lately -->
-<!-- dataset_petitprez_humanGenes <- mouse_genes_to_human(dataset_petitprez$expr_mat, mirror = 'uswest') -->
-<!-- res_MCPcounter <- deconvolute(dataset_petitprez_humanGenes, 'mcp_counter') -->
+```R
+dataset_petitprez_humanGenes <- mouse_genes_to_human(dataset_petitprez$expr_mat, mirror = 'uswest')
+res_MCPcounter <- deconvolute(dataset_petitprez_humanGenes, 'mcp_counter')
 
-<!-- ``` -->
+```
 
 
 ## Comparison with FACS data
 Let's now compare the results with 'gold standard' FACS data obtained for the four samples. This is, of course, not a representative benchmark, but it gives a notion about what magnitude of predictive accuracy we can expect. 
-```{r}
+```{r, message=FALSE}
 # construct a single dataframe containing all data
 #
 # re-map the cell-types to common names. 
@@ -107,4 +106,4 @@ result %>%
     theme_bw()
 ```
 
-# References {-}
+# References

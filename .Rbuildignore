@@ -13,3 +13,4 @@ _pkgdown.yml$
 \.conda
 ^doc$
 ^Meta$
+^\.pre-commit-config\.yaml$

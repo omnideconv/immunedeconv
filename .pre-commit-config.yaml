@@ -1,0 +1,35 @@
+# All available hooks: https://pre-commit.com/hooks.html
+# R specific hooks: https://github.com/lorenzwalthert/precommit
+repos:
+-   repo: https://github.com/lorenzwalthert/precommit
+    rev: v0.3.1
+    hooks: 
+    -   id: style-files
+        args: [--style_pkg=styler, --style_fun=tidyverse_style]    
+    -   id: roxygenize
+    -   id: readme-rmd-rendered
+    -   id: parsable-R
+    -   id: no-browser-statement
+    -   id: no-debug-statement
+    -   id: deps-in-desc
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks: 
+    -   id: end-of-file-fixer
+        exclude: '\.Rd'
+-   repo: https://github.com/pre-commit-ci/pre-commit-ci-config
+    rev: v1.5.1
+    hooks:
+    # Only reuiqred when https://pre-commit.ci is used for config validation
+    -   id: check-pre-commit-ci-config
+-   repo: local
+    hooks:
+    -   id: forbid-to-commit
+        name: Don't commit common R artifacts
+        entry: Cannot commit .Rhistory, .RData, .Rds or .rds.
+        language: fail
+        files: '\.(Rhistory|RData|Rds|rds)$'
+        # `exclude: <regex>` to allow committing specific files
+
+ci:
+    autoupdate_schedule: monthly

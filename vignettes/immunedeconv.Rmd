@@ -138,8 +138,8 @@ consensus_tme: deconvolute_consensus_tme_custom()
 ## Example
 For this example, we use a dataset of four melanoma patients from [@EPIC2017]. 
 ```{r, message=FALSE}
-res = deconvolute(immunedeconv::dataset_racle$expr_mat, "quantiseq")
-knitr::kable(res, digits=2)
+res <- deconvolute(immunedeconv::dataset_racle$expr_mat, "quantiseq")
+knitr::kable(res, digits = 2)
 ```
 
 ### special case: CIBERSORT
@@ -216,13 +216,15 @@ To provide consistently named results independent of the method, we defined
 a *controlled vocabulary* (CV) of cell-types and arranged them in a tree.
 
 ```{r, echo=FALSE}
-cell_type_hierarchy = new.env()
+cell_type_hierarchy <- new.env()
 with(cell_type_hierarchy, {
-  tree = immunedeconv:::.get_cell_type_tree()
+  tree <- immunedeconv:::.get_cell_type_tree()
   SetGraphStyle(tree, rankdir = "LR")
   SetEdgeStyle(tree, arrowhead = "vee", color = "grey35", penwidth = 2)
-  SetNodeStyle(tree, style = "filled,rounded", shape = "box", fillcolor = "GreenYellow",
-              fontname = "helvetica", tooltip = GetDefaultTooltip, fontcolor="black")
+  SetNodeStyle(tree,
+    style = "filled,rounded", shape = "box", fillcolor = "GreenYellow",
+    fontname = "helvetica", tooltip = GetDefaultTooltip, fontcolor = "black"
+  )
   plot(tree)
 })
 ```
@@ -237,9 +239,9 @@ interested in the fraction of overall CD4+ T cells. In that case you can use
 `map_result_to_celltypes` to sum up the scores:
 
 ```{r, message=FALSE, warning=FALSE}
-res = deconvolute(immunedeconv::dataset_racle$expr_mat, "quantiseq") %>%
+res <- deconvolute(immunedeconv::dataset_racle$expr_mat, "quantiseq") %>%
   map_result_to_celltypes(c("T cell CD4+"), "quantiseq")
-knitr::kable(res, digits=2)
+knitr::kable(res, digits = 2)
 ```
 
 The algorithm is explained in detail in the methods section of [@sturm2019].

@@ -6,7 +6,7 @@
 #' @importFrom dplyr select
 #' @importFrom stats na.omit
 #' @import magrittr
-#' 
+#'
 #' @name cell_type_mapping
 NULL
 
@@ -17,14 +17,16 @@ NULL
 #' See `inst/extdata/cell_type_mapping.xlsx` for more details.
 #'
 #' @export
-cell_type_map = NULL
+cell_type_map <- NULL
 # gets attached on .onLoad, see zzz.R
-.get_cell_type_map = function() {
+.get_cell_type_map <- function() {
   readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx",
-                                package="immunedeconv", mustWork=TRUE),
-                    sheet="mapping") %>%
-      select(method_dataset, method_cell_type, cell_type) %>%
-      na.omit()
+    package = "immunedeconv", mustWork = TRUE
+  ),
+  sheet = "mapping"
+  ) %>%
+    select(method_dataset, method_cell_type, cell_type) %>%
+    na.omit()
 }
 
 
@@ -34,21 +36,25 @@ cell_type_map = NULL
 #' that the cell types are mapped to the controlled vocabulary.
 #'
 #' @export
-available_datasets = NULL
+available_datasets <- NULL
 # gets attached on .onLoad, see zzz.R
-.get_available_datasets = function() {
-  cell_type_map %>% pull(method_dataset) %>% unique()
+.get_available_datasets <- function() {
+  cell_type_map %>%
+    pull(method_dataset) %>%
+    unique()
 }
 
 
 #' List with controlled cell-type vocabulary
-cell_type_list = NULL
-.get_cell_type_list = function() {
-  tmp_list = readxl::read_excel(system.file("extdata", "cell_type_mapping.xlsx",
-                                            package="immunedeconv", mustWork=TRUE),
-                                sheet = "controlled_vocabulary") %>%
-      select(parent, cell_type, optional) %>%
-      mutate(optional = optional %in% TRUE)
+cell_type_list <- NULL
+.get_cell_type_list <- function() {
+  tmp_list <- readxl::read_excel(system.file("extdata", "cell_type_mapping.xlsx",
+    package = "immunedeconv", mustWork = TRUE
+  ),
+  sheet = "controlled_vocabulary"
+  ) %>%
+    select(parent, cell_type, optional) %>%
+    mutate(optional = optional %in% TRUE)
   assert("Node names are unique", length(tmp_list$cell_type) == length(unique(tmp_list$cell_type)))
   tmp_list
 }
@@ -59,21 +65,25 @@ cell_type_list = NULL
 #' @details a `data.tree` object
 #' @name cell_type_tree
 #' @export
-cell_type_tree = NULL
+cell_type_tree <- NULL
 # gets attached on .onLoad, see zzz.R
-.get_cell_type_tree = function() {
-  cell_type_list %>% as.data.frame() %>% data.tree::FromDataFrameNetwork()
+.get_cell_type_tree <- function() {
+  cell_type_list %>%
+    as.data.frame() %>%
+    data.tree::FromDataFrameNetwork()
 }
 
 
 #' Lookup dictionary for cell-type nodes
-#' 
+#'
 #' Access nodes by name in O(1). Node names are unique in our tree.
 #' gets attached on .onLoad, see zzz.R
-node_by_name=NULL
+node_by_name <- NULL
 # gets attached on .onLoad, see zzz.R
-.get_node_by_name = function() {
-  cell_type_tree$Get(function(node){node})
+.get_node_by_name <- function() {
+  cell_type_tree$Get(function(node) {
+    node
+  })
 }
 
 
@@ -90,9 +100,9 @@ node_by_name=NULL
 #' @return numeric vector with CV cell types as names
 #'
 #' @export
-map_cell_types = function(use_cell_types, fractions, method_dataset=NULL) {
-  fractions = as.data.frame(fractions)
-  tmp_res = lapply(use_cell_types, function(cell_type) {
+map_cell_types <- function(use_cell_types, fractions, method_dataset = NULL) {
+  fractions <- as.data.frame(fractions)
+  tmp_res <- lapply(use_cell_types, function(cell_type) {
     assert(paste("cell type is in node list:", cell_type), cell_type %in% names(node_by_name))
     find_children(node_by_name[[cell_type]], fractions, method_dataset)
   })
@@ -104,22 +114,22 @@ map_cell_types = function(use_cell_types, fractions, method_dataset=NULL) {
 #'
 #' @param df with samples in columns and cell types in rows. Contains a logical column `optional` which states which
 #'   cell type may be missing
-summarise_children = function(df) {
+summarise_children <- function(df) {
   # store the 'optional' column in a vector and remove it from the dataframe.
-  optional = df$optional
-  df$optional = NULL
+  optional <- df$optional
+  df$optional <- NULL
 
   # generate a vector which indicates samples which have *only* NA cell types.
   # we do not want to set them to zero, despite all cell types being optional
-  all_na = apply(is.na(df), 2, all)
+  all_na <- apply(is.na(df), 2, all)
 
   # create a mask which cell types we set to zero.
   # -> we want to set all NAs to zero that are optional, unless there are only NAs
-  set_to_zero = (optional %*% t(!all_na)) & is.na(df)
-  df[set_to_zero] = 0
+  set_to_zero <- (optional %*% t(!all_na)) & is.na(df)
+  df[set_to_zero] <- 0
 
   # finally, sum up the children.
-  df_sum = summarise_all(df, funs(sum))
+  df_sum <- summarise_all(df, funs(sum))
   df_sum
 }
 
@@ -135,34 +145,36 @@ summarise_children = function(df) {
 #' @return numeric Either (1) the value of the method_cell_type mapped to cell_type,
 #'                  (2) the sum of all child nodes (recursively) of cell_type
 #'                  (3) NA, if the mapping cannot be resolved, i.e. at least one of the child nodes is missing.
-find_children = function(node, fractions, method_dataset=NULL) {
-  cell_type = node$name
-  if(is.null(method_dataset)) {
-    tmp_cell_type = rownames(fractions)[rownames(fractions) == cell_type]
+find_children <- function(node, fractions, method_dataset = NULL) {
+  cell_type <- node$name
+  if (is.null(method_dataset)) {
+    tmp_cell_type <- rownames(fractions)[rownames(fractions) == cell_type]
   } else {
-    tmp_cell_type = cell_type_map %>% filter(cell_type == !!cell_type, method_dataset == !!method_dataset) %>% pull(cell_type)
+    tmp_cell_type <- cell_type_map %>%
+      filter(cell_type == !!cell_type, method_dataset == !!method_dataset) %>%
+      pull(cell_type)
   }
   assert("Method cell type is uniquely mapped to a cell type", length(tmp_cell_type) <= 1)
-  if(length(tmp_cell_type) == 1 && tmp_cell_type %in% rownames(fractions)) {
+  if (length(tmp_cell_type) == 1 && tmp_cell_type %in% rownames(fractions)) {
     # assert(paste("tmp_cell_type is available in the given fractions vector:", tmp_cell_type), tmp_cell_type %in% rownames(fractions))
-    fractions[tmp_cell_type,,drop=FALSE]
+    fractions[tmp_cell_type, , drop = FALSE]
   } else {
-    if(!node$isLeaf) {
+    if (!node$isLeaf) {
       # recursively sum up the child nodes
-      tmp_sum = lapply(node$children, function(child) {
-                  tmp_row = find_children(child, fractions, method_dataset)
-                  tmp_row$optional = child$optional
-                  tmp_row
-                }) %>%
-                  bind_rows() %>%
-                  summarise_children()
-      rownames(tmp_sum) = cell_type
+      tmp_sum <- lapply(node$children, function(child) {
+        tmp_row <- find_children(child, fractions, method_dataset)
+        tmp_row$optional <- child$optional
+        tmp_row
+      }) %>%
+        bind_rows() %>%
+        summarise_children()
+      rownames(tmp_sum) <- cell_type
       tmp_sum
     } else {
       # return NA row
-      tmp_na = as.data.frame(matrix(nrow=1, ncol=ncol(fractions)))
-      rownames(tmp_na) = cell_type
-      colnames(tmp_na) = colnames(fractions)
+      tmp_na <- as.data.frame(matrix(nrow = 1, ncol = ncol(fractions)))
+      rownames(tmp_na) <- cell_type
+      colnames(tmp_na) <- colnames(fractions)
       tmp_na
     }
   }
@@ -176,12 +188,12 @@ find_children = function(node, fractions, method_dataset=NULL) {
 #' @param result result data.frame generated by the deconvolution method
 #' @param use_cell_types list of cell_types to map to
 #' @param method method or cell type to used. If method is NULL, it is expected to already use controlled vocabulary terms
-#' 
+#'
 #' @importFrom tibble column_to_rownames
 #'
 #' @export
-map_result_to_celltypes = function(result, use_cell_types, method=NULL) {
-  result_mat = result %>%
+map_result_to_celltypes <- function(result, use_cell_types, method = NULL) {
+  result_mat <- result %>%
     as.data.frame() %>%
     column_to_rownames("cell_type")
   map_cell_types(use_cell_types, result_mat, method)
@@ -203,12 +215,12 @@ map_result_to_celltypes = function(result, use_cell_types, method=NULL) {
 #' @return character vector of cell type names.
 #'
 #' @export
-get_all_children = function(cell_type, method=NULL) {
-  if(!cell_type %in% names(node_by_name)) {
+get_all_children <- function(cell_type, method = NULL) {
+  if (!cell_type %in% names(node_by_name)) {
     stop(sprintf("unknown cell type: %s", cell_type))
   }
-  if(is.null(method)) {
-    names(node_by_name[[cell_type]]$Get('name'))
+  if (is.null(method)) {
+    names(node_by_name[[cell_type]]$Get("name"))
   } else {
     .get_all_children(node_by_name[[cell_type]], method)
   }
@@ -218,20 +230,20 @@ get_all_children = function(cell_type, method=NULL) {
 #'
 #' @param node Node in the cell type hierarchy. Will look for children of this node.
 #' @param method method or dataset from the cell type mapping.
-.get_all_children = function(node, method) {
-  tmp_method_cell_type = cell_type_map %>%
+.get_all_children <- function(node, method) {
+  tmp_method_cell_type <- cell_type_map %>%
     filter(method_dataset == method, cell_type == node$name) %>%
     pull(method_cell_type)
   assert("Method cell type is uniquely mapped to a cell type", length(tmp_method_cell_type) <= 1)
-  if(length(tmp_method_cell_type) == 1) {
+  if (length(tmp_method_cell_type) == 1) {
     # stop at the highest level the cell type is mapped to a method
     return(tmp_method_cell_type)
-  } else if(!node$isLeaf) {
+  } else if (!node$isLeaf) {
     # otherwise, continue searching children
     lapply(node$children, function(child) {
       .get_all_children(child, method)
-    }) %>% unlist() %>% unname()
+    }) %>%
+      unlist() %>%
+      unname()
   }
 }
-
-

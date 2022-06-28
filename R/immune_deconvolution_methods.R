@@ -1,7 +1,7 @@
 #' Collection of immune cell deconvolution methods.
-#' 
+#'
 #' @description Immunedeconv is an an R package for unified access to computational methods for
-#'  estimating immune cell fractions from bulk RNA sequencing data. 
+#'  estimating immune cell fractions from bulk RNA sequencing data.
 #' @docType package
 #' @name immunedeconv
 #' @import methods
@@ -27,15 +27,17 @@ NULL
 #' the values to the internal name.
 #'
 #' @export
-deconvolution_methods = c("MCPcounter"="mcp_counter",
-                          "EPIC"="epic",
-                          "quanTIseq"="quantiseq",
-                          "xCell"="xcell",
-                          "CIBERSORT"="cibersort",
-                          "CIBERSORT (abs.)"="cibersort_abs",
-                          "TIMER"="timer", 
-                          "ConsensusTME"="consensus_tme", 
-                          "ABIS"="abis")
+deconvolution_methods <- c(
+  "MCPcounter" = "mcp_counter",
+  "EPIC" = "epic",
+  "quanTIseq" = "quantiseq",
+  "xCell" = "xcell",
+  "CIBERSORT" = "cibersort",
+  "CIBERSORT (abs.)" = "cibersort_abs",
+  "TIMER" = "timer",
+  "ConsensusTME" = "consensus_tme",
+  "ABIS" = "abis"
+)
 
 #' Data object from xCell.
 #'
@@ -43,7 +45,7 @@ deconvolution_methods = c("MCPcounter"="mcp_counter",
 #' This is a workaround, that `xCellAnalysis` can be properly called from this package.
 #'
 #' @export
-xCell.data = xCell::xCell.data
+xCell.data <- xCell::xCell.data
 
 #' Set Path to CIBERSORT R script (`CIBERSORT.R`)
 #'
@@ -53,8 +55,8 @@ xCell.data = xCell::xCell.data
 #' @param path path to cibersort R script.
 #'
 #' @export
-set_cibersort_binary = function(path) {
-  assign("cibersort_binary", path, envir=config_env)
+set_cibersort_binary <- function(path) {
+  assign("cibersort_binary", path, envir = config_env)
 }
 
 #' Set Path to CIBERSORT matrix file (`LM22.txt`)
@@ -65,8 +67,8 @@ set_cibersort_binary = function(path) {
 #' @param path path to cibersort matrix.
 #'
 #' @export
-set_cibersort_mat = function(path) {
-  assign("cibersort_mat", path, envir=config_env)
+set_cibersort_mat <- function(path) {
+  assign("cibersort_mat", path, envir = config_env)
 }
 
 
@@ -92,21 +94,21 @@ set_cibersort_mat = function(path) {
 #'     'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
 #'     'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol'
 #' @export
-deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
-  indications = tolower(indications)
+deconvolute_timer <- function(gene_expression_matrix, indications = NULL) {
+  indications <- tolower(indications)
   assert("indications fit to mixture matrix", length(indications) == ncol(gene_expression_matrix))
-  args = new.env()
-  args$outdir = tempdir()
-  args$batch = tempfile()
+  args <- new.env()
+  args$outdir <- tempdir()
+  args$batch <- tempfile()
   lapply(unique(indications), function(ind) {
-    tmp_file = tempfile()
-    tmp_mat = gene_expression_matrix[, indications == ind, drop=FALSE] %>% as_tibble(rownames = "gene_symbol")
+    tmp_file <- tempfile()
+    tmp_mat <- gene_expression_matrix[, indications == ind, drop = FALSE] %>% as_tibble(rownames = "gene_symbol")
     write_tsv(tmp_mat, tmp_file)
-    cat(paste0(tmp_file, ",", ind, "\n"), file=args$batch, append=TRUE)
+    cat(paste0(tmp_file, ",", ind, "\n"), file = args$batch, append = TRUE)
   })
   # reorder results to be consistent with input matrix
-  results = deconvolute_timer.default(args)[, make.names(colnames(gene_expression_matrix))]
-  colnames(results) = colnames(gene_expression_matrix)
+  results <- deconvolute_timer.default(args)[, make.names(colnames(gene_expression_matrix))]
+  colnames(results) <- colnames(gene_expression_matrix)
   results
 }
 
@@ -126,21 +128,25 @@ deconvolute_timer = function(gene_expression_matrix, indications=NULL) {
 #'   See [xCellAnalysis](https://rdrr.io/github/dviraran/xCell/man/xCellAnalysis.html)
 #'
 #' @export
-deconvolute_xcell = function(gene_expression_matrix, arrays, expected_cell_types=NULL, ...) {
-  rnaseq = !arrays
+deconvolute_xcell <- function(gene_expression_matrix, arrays, expected_cell_types = NULL, ...) {
+  rnaseq <- !arrays
 
   # map the 'expected cell types' to their xCell counterpart.
-  if(!is.null(expected_cell_types)) {
-    get_children_xcell = function(cell_type) get_all_children(cell_type, "xcell")
-    cell_types_xcell = lapply(expected_cell_types, get_children_xcell) %>% unlist() %>% unique()
+  if (!is.null(expected_cell_types)) {
+    get_children_xcell <- function(cell_type) get_all_children(cell_type, "xcell")
+    cell_types_xcell <- lapply(expected_cell_types, get_children_xcell) %>%
+      unlist() %>%
+      unique()
   } else {
-    cell_types_xcell = NULL
+    cell_types_xcell <- NULL
   }
 
-  arguments = dots_list(gene_expression_matrix, rnaseq=rnaseq,
-                        cell.types.use=cell_types_xcell,
-                        parallel.sz=config_env$xcell_cores, ..., .homonyms="last")
-  call = rlang::call2(xCell::xCellAnalysis, !!!arguments)
+  arguments <- dots_list(gene_expression_matrix,
+    rnaseq = rnaseq,
+    cell.types.use = cell_types_xcell,
+    parallel.sz = config_env$xcell_cores, ..., .homonyms = "last"
+  )
+  call <- rlang::call2(xCell::xCellAnalysis, !!!arguments)
   invisible(capture.output(res <- eval(call)))
 
   res
@@ -157,9 +163,9 @@ deconvolute_xcell = function(gene_expression_matrix, arrays, expected_cell_types
 #'  See [MCPcounter.estimate](https://github.com/ebecht/MCPcounter/blob/master/Source/R/MCPcounter.R#L19).
 #'
 #' @export
-deconvolute_mcp_counter = function(gene_expression_matrix, feature_types="HUGO_symbols", ...) {
-  arguments = dots_list(gene_expression_matrix, featuresType=feature_types, ..., .homonyms="last")
-  call = rlang::call2(MCPcounter::MCPcounter.estimate, !!!arguments)
+deconvolute_mcp_counter <- function(gene_expression_matrix, feature_types = "HUGO_symbols", ...) {
+  arguments <- dots_list(gene_expression_matrix, featuresType = feature_types, ..., .homonyms = "last")
+  call <- rlang::call2(MCPcounter::MCPcounter.estimate, !!!arguments)
   eval(call)
 }
 
@@ -176,15 +182,17 @@ deconvolute_mcp_counter = function(gene_expression_matrix, feature_types="HUGO_s
 #'  See [EPIC](https://rdrr.io/github/GfellerLab/EPIC/man/EPIC.html)
 #'
 #' @export
-deconvolute_epic = function(gene_expression_matrix, tumor, scale_mrna, ...) {
-  ref = ifelse(tumor, "TRef", "BRef")
-  mRNA_cell = NULL
-  if(!scale_mrna) mRNA_cell = c("default"=1.)
+deconvolute_epic <- function(gene_expression_matrix, tumor, scale_mrna, ...) {
+  ref <- ifelse(tumor, "TRef", "BRef")
+  mRNA_cell <- NULL
+  if (!scale_mrna) mRNA_cell <- c("default" = 1.)
 
-  arguments = dots_list(bulk=gene_expression_matrix,
-                        reference=ref, mRNA_cell = mRNA_cell, ..., .homonyms="last")
-  call = rlang::call2(EPIC::EPIC, !!!arguments)
-  epic_res_raw = eval(call)
+  arguments <- dots_list(
+    bulk = gene_expression_matrix,
+    reference = ref, mRNA_cell = mRNA_cell, ..., .homonyms = "last"
+  )
+  call <- rlang::call2(EPIC::EPIC, !!!arguments)
+  epic_res_raw <- eval(call)
 
   t(epic_res_raw$cellFractions)
 }
@@ -203,17 +211,17 @@ deconvolute_epic = function(gene_expression_matrix, tumor, scale_mrna, ...) {
 #'   See `deconvolute_quantiseq.default()`.
 #'
 #' @export
-deconvolute_quantiseq = function(gene_expression_matrix, tumor, arrays, scale_mrna, ...) {
-  arguments = dots_list(gene_expression_matrix, tumor=tumor, arrays=arrays, mRNAscale = scale_mrna, ..., .homonyms="last")
-  call = rlang::call2(deconvolute_quantiseq.default, !!!arguments)
-  res = eval(call)
+deconvolute_quantiseq <- function(gene_expression_matrix, tumor, arrays, scale_mrna, ...) {
+  arguments <- dots_list(gene_expression_matrix, tumor = tumor, arrays = arrays, mRNAscale = scale_mrna, ..., .homonyms = "last")
+  call <- rlang::call2(deconvolute_quantiseq.default, !!!arguments)
+  res <- eval(call)
 
-  sample_names = res$Sample
-  res_mat = res %>%
+  sample_names <- res$Sample
+  res_mat <- res %>%
     as_tibble() %>%
     select(-Sample) %>%
     as.matrix()
-  rownames(res_mat) = sample_names
+  rownames(res_mat) <- sample_names
 
   t(res_mat)
 }
@@ -232,27 +240,29 @@ deconvolute_quantiseq = function(gene_expression_matrix, tumor, arrays, scale_mr
 #'   is not publicly available. Log in to the CIBERSORT website for details.
 #'
 #' @export
-deconvolute_cibersort = function(gene_expression_matrix,
-                                 arrays,
-                                 absolute=FALSE,
-                                 abs_method="sig.score",
-                                 ...) {
+deconvolute_cibersort <- function(gene_expression_matrix,
+                                  arrays,
+                                  absolute = FALSE,
+                                  abs_method = "sig.score",
+                                  ...) {
   # the authors reccomend to disable quantile normalizeation for RNA seq.
   # (see CIBERSORT website).
-  quantile_norm = arrays
-  assert("CIBERSORT.R is provided", exists("cibersort_binary", envir=config_env))
-  assert("CIBERSORT signature matrix is provided", exists("cibersort_mat", envir=config_env))
-  source(get("cibersort_binary", envir=config_env))
+  quantile_norm <- arrays
+  assert("CIBERSORT.R is provided", exists("cibersort_binary", envir = config_env))
+  assert("CIBERSORT signature matrix is provided", exists("cibersort_mat", envir = config_env))
+  source(get("cibersort_binary", envir = config_env))
 
-  tmp_mat = tempfile()
-  write_tsv(as_tibble(gene_expression_matrix, rownames="gene_symbol"), path=tmp_mat)
+  tmp_mat <- tempfile()
+  write_tsv(as_tibble(gene_expression_matrix, rownames = "gene_symbol"), path = tmp_mat)
 
-  arguments = dots_list(get("cibersort_mat", envir=config_env), tmp_mat, perm=0,
-                        QN=quantile_norm, absolute=absolute, abs_method=abs_method, ..., .homonyms="last")
-  call = rlang::call2(CIBERSORT, !!!arguments)
-  res = eval(call)
+  arguments <- dots_list(get("cibersort_mat", envir = config_env), tmp_mat,
+    perm = 0,
+    QN = quantile_norm, absolute = absolute, abs_method = abs_method, ..., .homonyms = "last"
+  )
+  call <- rlang::call2(CIBERSORT, !!!arguments)
+  res <- eval(call)
 
-  res = res %>%
+  res <- res %>%
     t() %>%
     .[!rownames(.) %in% c("RMSE", "P-value", "Correlation"), ]
   return(res)
@@ -260,15 +270,15 @@ deconvolute_cibersort = function(gene_expression_matrix,
 
 #' Deconvolute using ABIS.
 #'
-#' @param gene_expression_matrix a m x n matrix with m genes and n samples. Data 
+#' @param gene_expression_matrix a m x n matrix with m genes and n samples. Data
 #'    must be TPM-normalized, since the matrix accounts for mRNA bias
 #' @param arrays Set to TRUE if working with Microarray data instead of RNA-seq.
 #'    A different signature matrix will be used.
 #'
 #' @export
-deconvolute_abis = function(gene_expression_matrix, 
-                            arrays=FALSE, ...){
-  results = deconvolute_abis_default(gene_expression_matrix, arrays)
+deconvolute_abis <- function(gene_expression_matrix,
+                             arrays = FALSE, ...) {
+  results <- deconvolute_abis_default(gene_expression_matrix, arrays)
   return(results)
 }
 
@@ -281,7 +291,7 @@ deconvolute_abis = function(gene_expression_matrix,
 #'     'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
 #'     'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
 #'     'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol'
-#' @param stat_method Choose statistical framework to generate the entichment scores. 
+#' @param stat_method Choose statistical framework to generate the entichment scores.
 #'     Default: 'ssgsea'. Available methods: 'ssgsea', 'gsva', 'plage', 'zscore', 'singScore'.
 #'     These mirror the parameter options of \code{GSVA::gsva()} with the exception of \code{singScore}
 #'     which leverages \code{singscore::multiScore()}
@@ -289,34 +299,36 @@ deconvolute_abis = function(gene_expression_matrix,
 #'   over an immunedeconv argument. Documentation can be found at http://consensusTME.org
 #'
 #' @export
-deconvolute_consensus_tme = function(gene_expression_matrix, 
-                                     indications = NULL, 
-                                     method = 'ssgsea', 
-                                     ...){
-  indications = toupper(indications)
+deconvolute_consensus_tme <- function(gene_expression_matrix,
+                                      indications = NULL,
+                                      method = "ssgsea",
+                                      ...) {
+  indications <- toupper(indications)
   assert("indications fit to mixture matrix", length(indications) == ncol(gene_expression_matrix))
-  
+
   gene_expression_matrix <- as.matrix(gene_expression_matrix)
-  
+
   sorting <- order(indications)
   indications <- indications[sorting]
   gene_expression_matrix <- gene_expression_matrix[, sorting]
 
-  
+
   tumor.types <- unique(indications)
   list.results <- list()
-  for(t in tumor.types){
+  for (t in tumor.types) {
     cur.samples <- indications == t
-    cur.results <- ConsensusTME::consensusTMEAnalysis(as.matrix(gene_expression_matrix[, cur.samples]), 
-                                                      t, method)
+    cur.results <- ConsensusTME::consensusTMEAnalysis(
+      as.matrix(gene_expression_matrix[, cur.samples]),
+      t, method
+    )
 
     list.results[[t]] <- cur.results
   }
-  
-  results = Reduce(cbind, list.results)
-  
-  colnames(results) = colnames(gene_expression_matrix)
-  
+
+  results <- Reduce(cbind, list.results)
+
+  colnames(results) <- colnames(gene_expression_matrix)
+
   return(results)
 }
 
@@ -328,10 +340,10 @@ deconvolute_consensus_tme = function(gene_expression_matrix,
 #'
 #' @param result_table output of `deconvolute`
 #' @param method one of `immune_deconvolution_methods`.
-annotate_cell_type = function(result_table, method) {
+annotate_cell_type <- function(result_table, method) {
   cell_type_map %>%
     filter(method_dataset == !!method) %>%
-    inner_join(result_table, by="method_cell_type") %>%
+    inner_join(result_table, by = "method_cell_type") %>%
     select(-method_cell_type, -method_dataset)
 }
 
@@ -341,13 +353,13 @@ annotate_cell_type = function(result_table, method) {
 #' @param eset `ExpressionSet`
 #' @param column column name of the `fData()` table, which contains the HGNC gene symbols.
 #' @return matrix with gene symbols as rownames and sample identifiers as colnames.
-#' 
+#'
 #' @importFrom Biobase exprs fData pData ExpressionSet
 #'
 #' @export
-eset_to_matrix = function(eset, column) {
-  expr_mat = exprs(eset)
-  rownames(expr_mat) = fData(eset) %>% pull(!!column)
+eset_to_matrix <- function(eset, column) {
+  expr_mat <- exprs(eset)
+  rownames(expr_mat) <- fData(eset) %>% pull(!!column)
   return(expr_mat)
 }
 
@@ -384,44 +396,48 @@ eset_to_matrix = function(eset, column) {
 #'
 #' @name deconvolute
 #' @export deconvolute
-deconvolute = function(gene_expression, method=deconvolution_methods,
-                       indications=NULL, tumor=TRUE,
-                       arrays=FALSE, column="gene_symbol",
-                       rmgenes=NULL, scale_mrna=TRUE,
-                       expected_cell_types=NULL,
-                       ...) {
+deconvolute <- function(gene_expression, method = deconvolution_methods,
+                        indications = NULL, tumor = TRUE,
+                        arrays = FALSE, column = "gene_symbol",
+                        rmgenes = NULL, scale_mrna = TRUE,
+                        expected_cell_types = NULL,
+                        ...) {
   message(paste0("\n", ">>> Running ", method))
 
   # convert expression set to matrix, if required.
-  if(is(gene_expression, "ExpressionSet")) {
-    gene_expression = gene_expression %>% eset_to_matrix(column)
+  if (is(gene_expression, "ExpressionSet")) {
+    gene_expression <- gene_expression %>% eset_to_matrix(column)
   }
 
-  if(!is.null(rmgenes)) {
-    gene_expression = gene_expression[!rownames(gene_expression) %in% rmgenes,]
+  if (!is.null(rmgenes)) {
+    gene_expression <- gene_expression[!rownames(gene_expression) %in% rmgenes, ]
   }
 
   # run selected method
-  res = switch(method,
-         xcell = deconvolute_xcell(gene_expression, arrays=arrays, expected_cell_types=expected_cell_types, ...),
-         mcp_counter = deconvolute_mcp_counter(gene_expression, ...),
-         epic = deconvolute_epic(gene_expression, tumor=tumor, scale_mrna=scale_mrna, ...),
-         quantiseq = deconvolute_quantiseq(gene_expression,
-                                           tumor=tumor, arrays=arrays, scale_mrna=scale_mrna, ...),
-         cibersort = deconvolute_cibersort(gene_expression, absolute = FALSE,
-                                           arrays=arrays, ...),
-         cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE,
-                                               arrays=arrays, ...),
-         timer = deconvolute_timer(gene_expression, indications=indications, ...), 
-         abis = deconvolute_abis(gene_expression, arrays=arrays), 
-         consensus_tme = deconvolute_consensus_tme(gene_expression, indications=indications, ...)
-         )
+  res <- switch(method,
+    xcell = deconvolute_xcell(gene_expression, arrays = arrays, expected_cell_types = expected_cell_types, ...),
+    mcp_counter = deconvolute_mcp_counter(gene_expression, ...),
+    epic = deconvolute_epic(gene_expression, tumor = tumor, scale_mrna = scale_mrna, ...),
+    quantiseq = deconvolute_quantiseq(gene_expression,
+      tumor = tumor, arrays = arrays, scale_mrna = scale_mrna, ...
+    ),
+    cibersort = deconvolute_cibersort(gene_expression,
+      absolute = FALSE,
+      arrays = arrays, ...
+    ),
+    cibersort_abs = deconvolute_cibersort(gene_expression,
+      absolute = TRUE,
+      arrays = arrays, ...
+    ),
+    timer = deconvolute_timer(gene_expression, indications = indications, ...),
+    abis = deconvolute_abis(gene_expression, arrays = arrays),
+    consensus_tme = deconvolute_consensus_tme(gene_expression, indications = indications, ...)
+  )
 
   # convert to tibble and annotate unified cell_type names
-  res = res %>%
-    as_tibble(rownames="method_cell_type") %>%
-    annotate_cell_type(method=method)
+  res <- res %>%
+    as_tibble(rownames = "method_cell_type") %>%
+    annotate_cell_type(method = method)
 
   return(res)
 }
-

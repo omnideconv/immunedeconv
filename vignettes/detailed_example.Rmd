@@ -43,7 +43,7 @@ deconvolution_methods
 For this example, we use `quanTIseq`. As a result, we obtain a cell_type x sample data frame with cell-type scores for each sample.
 
 ```{r, message=FALSE, warning=FALSE}
-res_quantiseq = deconvolute(dataset_racle$expr_mat, "quantiseq", tumor = TRUE)
+res_quantiseq <- deconvolute(dataset_racle$expr_mat, "quantiseq", tumor = TRUE)
 ```
 
 
@@ -53,11 +53,11 @@ the results as a stacked bar chart with tidyverse/ggplot2.
 res_quantiseq %>%
   gather(sample, fraction, -cell_type) %>%
   # plot as stacked bar chart
-  ggplot(aes(x=sample, y=fraction, fill=cell_type)) +
-    geom_bar(stat='identity') +
-    coord_flip() +
-    scale_fill_brewer(palette="Paired") + 
-    scale_x_discrete(limits = rev(levels(res_quantiseq)))
+  ggplot(aes(x = sample, y = fraction, fill = cell_type)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_brewer(palette = "Paired") +
+  scale_x_discrete(limits = rev(levels(res_quantiseq)))
 ```
 
 We observe that
@@ -71,7 +71,7 @@ Estimating the amount of "uncharacterized cells" is a novel feature introduced b
 
 Let's now apply MCP-counter to the same dataset.
 ```{r, message=FALSE, warning=FALSE}
-res_mcp_counter = deconvolute(dataset_racle$expr_mat, "mcp_counter")
+res_mcp_counter <- deconvolute(dataset_racle$expr_mat, "mcp_counter")
 ```
 MCP-counter provides scores in arbitrary units that are only comparable between samples, but not between
 cell-types. The visualisation as bar-chart suggests the scores to be cell-type fractions and is, therefore, unsuitable.
@@ -80,13 +80,13 @@ Instead, we use ggplot to visualize the scores per-cell type, allowing for a rel
 ```{r, fig.height=7, fig.width=7, warning=FALSE}
 res_mcp_counter %>%
   gather(sample, score, -cell_type) %>%
-  ggplot(aes(x=sample, y=score, color=cell_type)) +
-    geom_point(size=4) +
-    facet_wrap(~cell_type, scales="free_x", ncol=3) +
-    scale_color_brewer(palette="Paired", guide=FALSE) +
-    coord_flip() + 
-    theme_bw() + 
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  ggplot(aes(x = sample, y = score, color = cell_type)) +
+  geom_point(size = 4) +
+  facet_wrap(~cell_type, scales = "free_x", ncol = 3) +
+  scale_color_brewer(palette = "Paired", guide = FALSE) +
+  coord_flip() +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 ```
 
 With the scores being in arbitrary units, the results are not useful for judging if a cell type is present in the sample, or not. However, we can compare the relative values between samples and relate them to the results we obtained earlier using quanTIseq. 
@@ -101,31 +101,33 @@ Let's now compare the results with 'gold standard' FACS data obtained for the fo
 ```{r, warning=FALSE, message=FALSE}
 # construct a single dataframe containing all data
 #
-# re-map the cell-types to common names. 
+# re-map the cell-types to common names.
 # only include the cell-types that are measured using FACS
-cell_types = c("B cell", "T cell CD4+", "T cell CD8+", "NK cell")
+cell_types <- c("B cell", "T cell CD4+", "T cell CD8+", "NK cell")
 
-tmp_quantiseq = res_quantiseq %>% map_result_to_celltypes(cell_types, "quantiseq") %>% 
-  rownames_to_column("cell_type") %>%
-  gather("sample", "estimate", -cell_type) %>% 
-  mutate(method="quanTIseq") 
-tmp_mcp_counter = res_mcp_counter %>% map_result_to_celltypes(cell_types, "mcp_counter") %>%
+tmp_quantiseq <- res_quantiseq %>%
+  map_result_to_celltypes(cell_types, "quantiseq") %>%
   rownames_to_column("cell_type") %>%
   gather("sample", "estimate", -cell_type) %>%
-  mutate(method="MCP-counter") 
+  mutate(method = "quanTIseq")
+tmp_mcp_counter <- res_mcp_counter %>%
+  map_result_to_celltypes(cell_types, "mcp_counter") %>%
+  rownames_to_column("cell_type") %>%
+  gather("sample", "estimate", -cell_type) %>%
+  mutate(method = "MCP-counter")
 
-result = bind_rows(tmp_quantiseq, tmp_mcp_counter) %>%
+result <- bind_rows(tmp_quantiseq, tmp_mcp_counter) %>%
   inner_join(dataset_racle$ref)
 ```
 
 Plot the true vs. estimated values: 
 ```{r, fig.width=6, fig.height=7, warning=FALSE}
-result %>% 
-  ggplot(aes(x=true_fraction, y=estimate)) + 
-    geom_point(aes(shape=cell_type, color=cell_type)) + 
-    facet_wrap(cell_type~method, scales="free_y", ncol = 2) + 
-    scale_color_brewer(palette = "Dark2") + 
-    theme_bw()
+result %>%
+  ggplot(aes(x = true_fraction, y = estimate)) +
+  geom_point(aes(shape = cell_type, color = cell_type)) +
+  facet_wrap(cell_type ~ method, scales = "free_y", ncol = 2) +
+  scale_color_brewer(palette = "Dark2") +
+  theme_bw()
 ```
 
 (MCP counter does not provide estimates for CD4+ T cells.)

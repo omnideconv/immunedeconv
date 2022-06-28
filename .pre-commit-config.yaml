@@ -6,7 +6,6 @@ repos:
     hooks:
       - id: style-files
         args: [--style_pkg=styler, --style_fun=tidyverse_style]
-      - id: roxygenize
       - id: readme-rmd-rendered
       - id: parsable-R
       - id: no-browser-statement
@@ -29,6 +28,7 @@ repos:
         entry: Cannot commit .Rhistory, .RData, .Rds or .rds.
         language: fail
         files: '\.(Rhistory|RData|Rds|rds)$'
+        exclude: "inst/extdata/.*"
         # `exclude: <regex>` to allow committing specific files
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.7.1

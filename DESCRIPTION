@@ -54,7 +54,7 @@ Remotes:
     dviraran/xCell,
     GfellerLab/EPIC,
     grst/MCPcounter,
-    grst/mMCP-counter,
+    cit-bioinfo/mMCP-counter,
     cansysbio/ConsensusTME
 VignetteBuilder: knitr
 License: BSD_3_clause + file LICENSE

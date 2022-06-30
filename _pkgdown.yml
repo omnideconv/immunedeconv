@@ -80,7 +80,6 @@ reference:
      - cell_type_mapping
      - check_cancer_types
      - .get_all_children
-     - .GetFractions.Abbas
      - find_children
      - GetFractions.Abbas
      - fix_namespace

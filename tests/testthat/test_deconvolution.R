@@ -1,5 +1,12 @@
 test_mat = read_tsv("bulk_mat.tsv") %>% as.data.frame() %>% tibble::column_to_rownames("gene_symbol")
 
+
+test_that("estimate works", {
+  res = deconvolute_estimate(test_mat)
+  assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+  assert("matrix dimensions consistent", nrow(res) == 4)
+})
+
 test_that("timer works", {
   res = deconvolute_timer(test_mat, indications=rep("brca", ncol(test_mat)))
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))

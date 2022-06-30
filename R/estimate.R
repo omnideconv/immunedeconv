@@ -10,11 +10,13 @@
 #'  ESTIMATE algortihm: This function computes stromal, immune, and ESTIMATE scores
 #'  per sample using gene expression data, through GSEA. The ESTIMATE score is used
 #'  to compute an estimate of the tumor purity
+#'  *Warning*: The tumor purity estimation was originally intended only for microarray
+#'  affymetrix data
 #'
 #'  @param gene_expression_matrix a m x n matrix with m genes and n samples
 #'
 #'  @export
-estimate_scores <- function(gene_expression_matrix){
+deconvolute_estimate <- function(gene_expression_matrix){
 
   estimate.genes.path <- system.file('extdata', 'estimate', 'estimate_genes.rds',
                                          package = 'immunedeconv', mustWork=TRUE)
@@ -27,7 +29,7 @@ estimate_scores <- function(gene_expression_matrix){
 
   merged.df <- merge(common_genes, gene_expression_matrix, by.x = "GeneSymbol", by.y = "row.names")
   rownames(merged.df) <- merged.df$GeneSymbol
-  filtered_matrix <- merged.df[, -1:-(ncol(common_genes)+1)]
+  filtered_matrix <- merged.df[, -1:-(ncol(common_genes))]
   print(sprintf("Merged dataset includes %d genes (%d mismatched).",
                 nrow(filtered_matrix), nrow(common_genes) - nrow(filtered_matrix)))
 

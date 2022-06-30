@@ -38,6 +38,12 @@ abis
 consensus_tme
 ```
 
+In addition the [ESTIMATE](https://bioinformatics.mdanderson.org/public-software/estimate/) algorithm, which computes a score for the tumoral, immune and stromal components of a sample, has been implemented. 
+
+```R
+immunedeconv::deconvolute_estimate(gene_expression_matrix)
+```
+
 The methods available for the deconvolution of mouse data are 
 
 ```
@@ -92,6 +98,7 @@ Note that, while *immunedeconv* itself is free ([BSD](https://github.com/icbi-la
 | [MCPCounter](https://github.com/ebecht/MCPcounter) | human | free ([GPL 3.0](https://github.com/ebecht/MCPcounter/blob/master/Source/License)) | Becht, E., Giraldo, N. A., Lacroix, L., Buttard, B., Elarouci, N., Petitprez, F., … de Reyniès, A. (2016). Estimating the population abundance of tissue-infiltrating immune and stromal cell populations using gene expression. Genome Biology, 17(1), 218. https://doi.org/10.1186/s13059-016-1070-5 |
 | [xCell](http://xcell.ucsf.edu/) | human | free ([GPL 3.0](https://github.com/dviraran/xCell/blob/master/DESCRIPTION)) | Aran, D., Hu, Z., & Butte, A. J. (2017). xCell: digitally portraying the tissue cellular heterogeneity landscape. Genome Biology, 18(1), 220. https://doi.org/10.1186/s13059-017-1349-1 |
 | [EPIC](https://gfellerlab.shinyapps.io/EPIC_1-1/) | human | free for non-commercial use only ([Academic License](https://github.com/GfellerLab/EPIC/blob/master/LICENSE)) | Racle, J., de Jonge, K., Baumgaertner, P., Speiser, D. E., & Gfeller, D. (2017). Simultaneous enumeration of cancer and immune cell types from bulk tumor gene expression data. ELife, 6, e26476. https://doi.org/10.7554/eLife.26476 |
+| [ESTIMATE](https://gfellerlab.shinyapps.io/EPIC_1-1/) | human | free ([GPL 2.0](https://bioinformatics.mdanderson.org/public-software/estimate/)) | Yoshihara, K., Shahmoradgoli, M., Martínez, E., Vegesna, R., Kim, H., Torres-Garcia, W., Treviño, V., Shen, H., Laird, P. W., Levine, D. A., Carter, S. L., Getz, G., Stemke-Hale, K., Mills, G. B., & Verhaak, R. G. (2013). Inferring tumour purity and stromal and immune cell admixture from expression data. Nature communications, 4, 2612. https://doi.org/10.1038/ncomms3612 |
 | [ABIS](https://giannimonaco.shinyapps.io/ABIS/) | human | free ([GPL 2.0](https://github.com/giannimonaco/ABIS)) | Monaco, G., Lee, B., Xu, W., Mustafah, S., Hwang, Y. Y., ..., Larbi, A. (2019). RNA-Seq Signatures Normalized by mRNA Abundance Allow Absolute Deconvolution of Human Immune Cell Types. Cell reports, 26(6), 1627–1640.e7. https://doi.org/10.1016/j.celrep.2019.01.041|
 | [ConsensusTME](https://olliecast.shinyapps.io/Deconvolution_Benchmarking/) | human | free ([GPL 3.0](https://github.com/cansysbio/ConsensusTME/blob/master/LICENSE.md)) | Jiménez-Sánchez, A., Cast, O., & Miller, M. L. (2019). Comprehensive Benchmarking and Integration of Tumor Microenvironment Cell Estimation Methods. Cancer research, 79(24), 6238–6246. https://doi.org/10.1158/0008-5472.CAN-18-3560 |
 |[mMCPCounter](https://github.com/cit-bioinfo/mMCP-counter)| mouse | free ([GPL 3.0](https://github.com/cit-bioinfo/mMCP-counter/blob/master/LICENSE.md))| Petitprez, F., Levy, S., Sun, C. M., Meylan, M., ..., de Reyniès, A. (2020). The murine Microenvironment Cell Population counter method to estimate abundance of tissue-infiltrating immune and stromal cell populations in murine samples using gene expression. Genome medicine, 12(1), 86. https://doi.org/10.1186/s13073-020-00783-w |

@@ -9,3 +9,8 @@
 #'
 #' @source Racle et al. (2017), eLIFE, https://doi.org/10.7554/eLife.26476.029
 "dataset_racle"
+
+#' RNA-seq dataset with FACS measurements
+#'
+#' TODO
+"dataset_petitprez"

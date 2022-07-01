@@ -14,3 +14,5 @@ _pkgdown.yml$
 ^doc$
 ^Meta$
 ^\.pre-commit-config\.yaml$
+^codecov\.yml$
+^\.github$

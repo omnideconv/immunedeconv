@@ -79,10 +79,10 @@ reference:
      - cell_type_mapping
      - check_cancer_types
      - find_children
+     - .get_all_children
      - GetFractions.Abbas
      - fix_namespace
      - single_cell_simulation
-     - get_all_children
      - immunedeconv
      - node_by_name
      - quantiseq_helper

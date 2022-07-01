@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">immunedeconv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
       </span>
     </div>
 
@@ -155,8 +155,8 @@
 <span><span class="co">##    "mcp_counter"           "epic"      "quantiseq"          "xcell" </span></span>
 <span><span class="co">##        CIBERSORT CIBERSORT (abs.)            TIMER     ConsensusTME </span></span>
 <span><span class="co">##      "cibersort"  "cibersort_abs"          "timer"  "consensus_tme" </span></span>
-<span><span class="co">##             ABIS </span></span>
-<span><span class="co">##           "abis"</span></span></code></pre>
+<span><span class="co">##             ABIS         ESTIMATE </span></span>
+<span><span class="co">##           "abis"       "estimate"</span></span></code></pre>
 <p>For this example, we use <code>quanTIseq</code>. As a result, we obtain a cell_type x sample data frame with cell-type scores for each sample.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_quantiseq</span> <span class="op">=</span> <span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">dataset_racle</span><span class="op">$</span><span class="va">expr_mat</span>, <span class="st">"quantiseq"</span>, tumor <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>

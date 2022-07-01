@@ -127,9 +127,8 @@ base_algorithm <- function(data, reg, perm = 100, median.norm = T) {
 # 	    specificity by which each gene is expressed by a given cell.
 #' This code is adapted from Varn et al., DOI: 10.1158/0008-5472.CAN-16-2490
 #'
-#' @param signature_matrix: numeric matrix; The signature matrix from which the compendium will be built.
+#' @param signature_matrix numeric matrix; The signature matrix from which the compendium will be built.
 #'    Must contain genes on rows and cell on columns
-#'
 create_base_compendium <- function(signature_matrix) {
   myinf1 <- signature_matrix
 

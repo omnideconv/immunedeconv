@@ -1,5 +1,6 @@
 #' Collection of deconvolution methods that allow custom signature matrices.
 #'
+#' @description Aliases to some of the deconvolution functions with extra arguments.
 #' @import methods
 #' @import dplyr
 #' @importFrom testit assert

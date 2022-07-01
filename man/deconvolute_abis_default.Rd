@@ -10,7 +10,7 @@ deconvolute_abis_default(expression, array = FALSE)
 \item{expression}{numeric matrix; genes as rows and patients as columns.
 Must be TP normalized}
 
-\item{array:}{logical; specifies whether the expression data are from
+\item{array}{logical; specifies whether the expression data are from
 microarrays (TRUE) or RNAseq (FALSE)}
 }
 \description{

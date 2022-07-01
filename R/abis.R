@@ -4,12 +4,10 @@
 #'   server.R of the Shiny application
 #' @param expression numeric matrix; genes as rows and patients as columns.
 #'     Must be TP normalized
-#' @param array: logical; specifies whether the expression data are from
+#' @param array logical; specifies whether the expression data are from
 #'     microarrays (TRUE) or RNAseq (FALSE)
 #'
 #' @importFrom MASS rlm
-#'
-
 deconvolute_abis_default <- function(expression, array = FALSE) {
 
   # 2 sets of operations for RNA/Microarray

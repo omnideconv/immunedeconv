@@ -7,6 +7,14 @@ test_that("estimate works", {
   assert("matrix dimensions consistent", nrow(res) == 4)
 })
 
+test_that("remapping with estimate works" ,{
+  res = deconvolute(test_mat ,"estimate")
+  res = map_result_to_celltypes(res, c('stroma score', 'immune score',
+                                       'tumor purity score', 'tumor purity fraction'))
+  assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+  assert("matrix dimensions consistent", nrow(res) == 4)
+})
+
 test_that("timer works", {
   res = deconvolute_timer(test_mat, indications=rep("brca", ncol(test_mat)))
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))

@@ -8,7 +8,7 @@
 #' @import stringr
 #' @import mMCPcounter
 #' @import ComICS
-#' @import biomaRt
+#' @importFrom biomaRt useEnsembl getLDS
 #' @importFrom tibble as_tibble
 #' @importFrom rlang dots_list
 #' @importFrom utils capture.output read.csv read.table tail write.table
@@ -242,6 +242,8 @@ deconvolute_mouse <- function(gene_expression_matrix,
 
 
 #' This function converts the mouse gene symbols into corresponding human ones.
+#'
+#' This function relies on the `biomaRt`` package.
 #'
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples.
 #'    Gene symbols must be the rownames of the matrix.

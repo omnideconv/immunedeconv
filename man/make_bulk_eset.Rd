@@ -28,31 +28,34 @@ suppressPackageStartupMessages(library(Biobase))
 suppressPackageStartupMessages(library(tibble))
 
 # generate toy matrix with three marker genes and three cell types
-expr = matrix(c(
-    rep(c(1,0,0), 300),
-    rep(c(0,1,0), 300),
-    rep(c(0,0,1), 300)
-), nrow=3)
+expr <- matrix(c(
+  rep(c(1, 0, 0), 300),
+  rep(c(0, 1, 0), 300),
+  rep(c(0, 0, 1), 300)
+), nrow = 3)
 
-# generate a featureData and phenoData data-frame. 
-# row names must be consistent between expr and featureData. 
-gene_names = c("CD8A", "CD4", "CD19")
-rownames(expr) = gene_names
-cell_types = c(rep("T cell CD8+", 300), rep("T cell CD4+", 300), rep("B cell", 300))
-pdata = data.frame(cell_type=cell_types)
-fdata = data.frame(gene_symbol=gene_names)
-rownames(fdata) = gene_names
+# generate a featureData and phenoData data-frame.
+# row names must be consistent between expr and featureData.
+gene_names <- c("CD8A", "CD4", "CD19")
+rownames(expr) <- gene_names
+cell_types <- c(rep("T cell CD8+", 300), rep("T cell CD4+", 300), rep("B cell", 300))
+pdata <- data.frame(cell_type = cell_types)
+fdata <- data.frame(gene_symbol = gene_names)
+rownames(fdata) <- gene_names
 
 # tie expr, fdata and pdata together in expression set
-eset = ExpressionSet(expr, 
-                     phenoData=as(pdata, "AnnotatedDataFrame"),
-                     featureData=as(fdata, "AnnotatedDataFrame"))
-                     
+eset <- ExpressionSet(expr,
+  phenoData = as(pdata, "AnnotatedDataFrame"),
+  featureData = as(fdata, "AnnotatedDataFrame")
+)
+
 # create data frame with cell fractions (one row per sample)
-desired_cell_fractions = tibble("T cell CD8+"=c(0.1, 0.2, 0.3),
-                                    "T cell CD4+"=c(0.9, 0.7, 0.5), 
-                                    "B cell"=c(0, 0.1, 0.2))
-new_eset = make_bulk_eset(eset, desired_cell_fractions, n_cells=500)                     
+desired_cell_fractions <- tibble(
+  "T cell CD8+" = c(0.1, 0.2, 0.3),
+  "T cell CD4+" = c(0.9, 0.7, 0.5),
+  "B cell" = c(0, 0.1, 0.2)
+)
+new_eset <- make_bulk_eset(eset, desired_cell_fractions, n_cells = 500)
 exprs(new_eset)
 
 }

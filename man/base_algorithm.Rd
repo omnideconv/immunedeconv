@@ -8,13 +8,13 @@ This code is adapted from Varn et al., DOI: 10.1158/0008-5472.CAN-16-2490}
 base_algorithm(data, reg, perm = 100, median.norm = T)
 }
 \arguments{
-\item{data:}{numeric matrix; Patient gene expression data, with genes as rows and patients as columns}
+\item{data}{numeric matrix; Patient gene expression data, with genes as rows and patients as columns}
 
-\item{reg:}{numeric matrix; Reference immune cell weights created using SuppSoftware1}
+\item{reg}{numeric matrix; Reference immune cell weights created using SuppSoftware1}
 
-\item{perm:}{numeric; Number of permutations to perform during the normalization step}
+\item{perm}{numeric; Number of permutations to perform during the normalization step}
 
-\item{median.norm:}{logical;  parameter stating whether to median center the expression values for each gene}
+\item{median.norm}{logical;  parameter stating whether to median center the expression values for each gene}
 }
 \description{
 Souce code for the BASE algorithm.

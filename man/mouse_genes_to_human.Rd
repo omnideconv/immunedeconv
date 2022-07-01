@@ -19,5 +19,5 @@ This matrix can directly be used with the immunedeconv methods. A message
 will display the ratio of original genes which were converted.
 }
 \description{
-This function converts the mouse gene symbols into corresponding human ones.
+This function relies on the `biomaRt`` package.
 }

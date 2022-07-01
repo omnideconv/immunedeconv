@@ -33,29 +33,31 @@ suppressPackageStartupMessages(library(Biobase))
 suppressPackageStartupMessages(library(tibble))
 
 # generate toy matrix with three marker genes and three cell types
-expr = matrix(c(
-    rep(c(1,0,0), 300),
-    rep(c(0,1,0), 300),
-    rep(c(0,0,1), 300)
-), nrow=3)
+expr <- matrix(c(
+  rep(c(1, 0, 0), 300),
+  rep(c(0, 1, 0), 300),
+  rep(c(0, 0, 1), 300)
+), nrow = 3)
 
-# generate a featureData and phenoData data-frame. 
-# row names must be consistent between expr and featureData. 
-gene_names = c("CD8A", "CD4", "CD19")
-rownames(expr) = gene_names
-cell_types = c(rep("T cell CD8+", 300), rep("T cell CD4+", 300), rep("B cell", 300))
-pdata = data.frame(cell_type=cell_types)
-fdata = data.frame(gene_symbol=gene_names)
-rownames(fdata) = gene_names
+# generate a featureData and phenoData data-frame.
+# row names must be consistent between expr and featureData.
+gene_names <- c("CD8A", "CD4", "CD19")
+rownames(expr) <- gene_names
+cell_types <- c(rep("T cell CD8+", 300), rep("T cell CD4+", 300), rep("B cell", 300))
+pdata <- data.frame(cell_type = cell_types)
+fdata <- data.frame(gene_symbol = gene_names)
+rownames(fdata) <- gene_names
 
 # tie expr, fdata and pdata together in expression set
-eset = ExpressionSet(expr, 
-                     phenoData=as(pdata, "AnnotatedDataFrame"),
-                     featureData=as(fdata, "AnnotatedDataFrame"))
-                     
-# make a random bulk sample. 
+eset <- ExpressionSet(expr,
+  phenoData = as(pdata, "AnnotatedDataFrame"),
+  featureData = as(fdata, "AnnotatedDataFrame")
+)
+
+# make a random bulk sample.
 make_random_bulk(eset,
-                 c("T cell CD8+"=0.3, "B cell"=0.4, "T cell CD4+"=0.3),
-                 n_cells=1000)
+  c("T cell CD8+" = 0.3, "B cell" = 0.4, "T cell CD4+" = 0.3),
+  n_cells = 1000
+)
 
 }

@@ -12,7 +12,6 @@
 #' @importFrom utils capture.output read.csv read.table tail write.table
 #'
 #' @name custom_deconvolution
-#' @docType package
 NULL
 
 

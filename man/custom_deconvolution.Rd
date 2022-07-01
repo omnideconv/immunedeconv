@@ -4,3 +4,6 @@
 \name{custom_deconvolution}
 \alias{custom_deconvolution}
 \title{Collection of deconvolution methods that allow custom signature matrices.}
+\description{
+Aliases to some of the deconvolution functions with extra arguments.
+}

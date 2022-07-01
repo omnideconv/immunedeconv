@@ -9,7 +9,7 @@ This code is adapted from Varn et al., DOI: 10.1158/0008-5472.CAN-16-2490}
 create_base_compendium(signature_matrix)
 }
 \arguments{
-\item{signature_matrix:}{numeric matrix; The signature matrix from which the compendium will be built.
+\item{signature_matrix}{numeric matrix; The signature matrix from which the compendium will be built.
 Must contain genes on rows and cell on columns}
 }
 \description{

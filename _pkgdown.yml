@@ -61,6 +61,7 @@ reference:
     desc: List of datasets provided by the package
     contents:
       - dataset_racle
+      - dataset_petitprez
   - title: TIMER
     desc: functions and objects related to the TIMER method
     contents:

@@ -274,6 +274,7 @@ deconvolute_cibersort <- function(gene_expression_matrix,
 #'    must be TPM-normalized, since the matrix accounts for mRNA bias
 #' @param arrays Set to TRUE if working with Microarray data instead of RNA-seq.
 #'    A different signature matrix will be used.
+#' @param ... additional arguments
 #'
 #' @export
 deconvolute_abis <- function(gene_expression_matrix,

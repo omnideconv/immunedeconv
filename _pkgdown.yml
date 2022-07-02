@@ -25,6 +25,7 @@ reference:
       - deconvolute_xcell
       - deconvolute_abis
       - deconvolute_consensus_tme
+      - deconvolute_estimate
   - title: Deconvolution methods for mouse data
     desc: Direct access to the individual mouse deconvolution methods to access special features that are not available through `deconvolute()`.
     contents:
@@ -79,6 +80,7 @@ reference:
       - cell_type_list
       - cell_type_mapping
       - check_cancer_types
+      - .get_all_children
       - find_children
       - GetFractions.Abbas
       - fix_namespace

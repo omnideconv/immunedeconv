@@ -21,7 +21,7 @@ NULL
 #' List of supported immune deconvolution methods
 #'
 #' The methods currently supported are
-#' `mcp_counter`, `epic`, `quantiseq`, `xcell`, `cibersort`, `cibersort_abs`, `timer`, `abis`, `consensus_tme`
+#' `mcp_counter`, `epic`, `quantiseq`, `xcell`, `cibersort`, `cibersort_abs`, `timer`, `abis`, `consensus_tme`, `estimate`
 #'
 #' The object is a named vector. The names correspond to the display name of the method,
 #' the values to the internal name.
@@ -36,7 +36,8 @@ deconvolution_methods <- c(
   "CIBERSORT (abs.)" = "cibersort_abs",
   "TIMER" = "timer",
   "ConsensusTME" = "consensus_tme",
-  "ABIS" = "abis"
+  "ABIS" = "abis",
+  "ESTIMATE" = "estimate"
 )
 
 #' Data object from xCell.
@@ -432,7 +433,8 @@ deconvolute <- function(gene_expression, method = deconvolution_methods,
     ),
     timer = deconvolute_timer(gene_expression, indications = indications, ...),
     abis = deconvolute_abis(gene_expression, arrays = arrays),
-    consensus_tme = deconvolute_consensus_tme(gene_expression, indications = indications, ...)
+    consensus_tme = deconvolute_consensus_tme(gene_expression, indications = indications, ...),
+    estimate = deconvolute_estimate(gene_expression)
   )
 
   # convert to tibble and annotate unified cell_type names

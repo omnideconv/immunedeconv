@@ -1,3 +1,7 @@
+# The purpose of this action is to test that the bioconda recipe can be built
+# To this end it uses the recipe in `.conda/meta.yaml` which should be kept in sync
+# with the bioconda recipe (i.e. modify dependencies on bioconda if you need
+# to modify the dependencies of `.conda/meta.yaml` to make the tests pass. )
 name: conda
 
 on:

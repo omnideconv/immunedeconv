@@ -1,3 +1,9 @@
+# The purpose of this action is to run `document()` of the roxygen2 package on each commit.
+# If new documentation was generated, it will automatically add a commit to the current branch.
+# This has the same effect as running `document()` locally, but
+#  * ensures it cannot be forgotten
+#  * saves setting up the development environment locally, which is especially useful for new contributors.
+#
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:

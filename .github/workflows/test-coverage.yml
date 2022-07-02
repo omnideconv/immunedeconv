@@ -1,3 +1,6 @@
+# The purpose of this action is to calculate the code coverage and add the results on codecov.io
+# codecov.io provides a badge showing the current coverage and generates coverage reports for each pull requests.
+#
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:

@@ -48,13 +48,6 @@ jobs:
           branch: gh-pages
           folder: docs
 
-      - name: Upload page build as artifact
-        uses: actions/upload-artifact@v2
-        if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master'
-        with:
-          name: pkgdown
-          path: ./docs
-
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
         if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master'

@@ -210,6 +210,9 @@ deconvolute_base_algorithm <- function(gene_expression_matrix, n_permutations = 
 #'    counts are prefereable.
 #' @param method string specifying the method
 #' @param rmgenes noisy genes to be removed from the analysis
+#' @param column Only relevant if `gene_expression` is an ExpressionSet. Defines in which column
+#'   of fData the HGNC symbol can be found.
+#' @param algorithm statistcal algorithm for SeqImmuCC (ignored by all other methods)
 #' @param ... additional arguments passed to the respective method
 #' @return a dataset with the estimated fractions/scores, with samples in rows and cell types in column
 #'

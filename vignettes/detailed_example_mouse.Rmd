@@ -2,7 +2,7 @@
 title: "Detailed Usage Example - Mouse data"
 output: rmarkdown::html_vignette
 vignette: >
-   %\VignetteIndexEntry{Detailed Example - Mouse data}
+   %\VignetteIndexEntry{Detailed Usage Example - Mouse data}
    %\VignetteEngine{knitr::rmarkdown}
    \usepackage[utf8]{inputenc}
 bibliography: references.bib

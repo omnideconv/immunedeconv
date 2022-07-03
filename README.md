@@ -36,9 +36,10 @@ xcell
 epic
 abis
 consensus_tme
+estimate
 ```
 
-In addition the [ESTIMATE](https://bioinformatics.mdanderson.org/public-software/estimate/) algorithm, which computes a score for the tumoral, immune and stromal components and the fraction of tumor purity of a sample, has been implemented. 
+The [ESTIMATE](https://bioinformatics.mdanderson.org/public-software/estimate/) algorithm, which computes a score for the tumoral, immune and stromal components and the fraction of tumor purity of a sample, has been implemented. 
 
 ```R
 immunedeconv::deconvolute_estimate(gene_expression_matrix)

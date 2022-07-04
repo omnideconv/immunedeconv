@@ -5,7 +5,7 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
-    
+
 jobs:
   tests:
     runs-on: ${{ matrix.os }}
@@ -14,11 +14,11 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest", "macos-latest"]
-    
+
     steps:
       - uses: actions/checkout@v2
-        
-      - name: Setup Minoconda 
+
+      - name: Setup Minoconda
         uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
@@ -26,17 +26,14 @@ jobs:
           channels: conda-forge,bioconda,defaults
           channel-priority: true
           python-version: 3.8
-      
+
       - name: Set-up channels and install conda build
         run: |
           mamba install -y conda-build conda-verify
         shell: bash
-          
+
       - name: build and test package
         run: |
           cd .conda
           mamba build . --no-anaconda-upload
         shell: bash
-          
- 
-          

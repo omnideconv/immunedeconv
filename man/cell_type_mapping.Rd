@@ -6,3 +6,6 @@
 \description{
 makes use of the manually curated mapping in \code{inst/extdata/cell_type_mapping.xlsx}.
 }
+\details{
+TEST TEST TODO
+}

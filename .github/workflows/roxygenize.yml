@@ -41,3 +41,5 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Roxygenize
+          # extra token required to trigger github actions again on commit
+          token: ${{ secrets.BOT_GH_TOKEN }}

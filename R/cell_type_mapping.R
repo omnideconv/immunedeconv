@@ -2,6 +2,8 @@
 #'
 #' makes use of the manually curated mapping in `inst/extdata/cell_type_mapping.xlsx`.
 #'
+#' TEST TEST TODO
+#'
 #' @importFrom testit assert
 #' @importFrom dplyr select
 #' @importFrom stats na.omit

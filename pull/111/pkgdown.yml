@@ -1,0 +1,12 @@
+pandoc: 2.7.3
+pkgdown: 2.0.5
+pkgdown_sha: ~
+articles:
+  detailed_example: detailed_example.html
+  detailed_example_mouse: detailed_example_mouse.html
+  immunedeconv: immunedeconv.html
+last_built: 2022-07-04T12:15Z
+urls:
+  reference: https://icbi-lab.github.io/immunedeconv/reference
+  article: https://icbi-lab.github.io/immunedeconv/articles
+

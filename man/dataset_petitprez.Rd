@@ -3,17 +3,21 @@
 \docType{data}
 \name{dataset_petitprez}
 \alias{dataset_petitprez}
-\title{RNA-seq dataset with FACS measurements}
+\title{Example RNA-seq dataset from the mMCP_Counter publication.}
 \format{
-TODO
+an environment with two objects:
+(1) \code{expr_mat}: gene expression matrix with gene_symbols as rownames and sample identifiers as colum names.
+Counts are TPM-normalized
+(2) \code{ref}: FACS measurements in a data.frame
 }
 \source{
-TODO
+Petitprez et al. (2020), https://doi.org/10.1186/s13073-020-00783-w
 }
 \usage{
 dataset_petitprez
 }
 \description{
-TODO
+A dataset of six RNA-seq samples from mouse blood and spleen, and associated
+'gold standard' immune cell estimates profiled with fluorescence activated cell sorting (FACS)
 }
 \keyword{datasets}

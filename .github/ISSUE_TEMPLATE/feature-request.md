@@ -1,11 +1,11 @@
 ---
 name: Feature request
 about: Anything you’d like to see in immunedeconv?
-title: ''
+title: ""
 labels: enhancement
-assignees: ''
+assignees: ""
 ---
 
 <!-- Please describe your wishes below: -->
-...
 
+...

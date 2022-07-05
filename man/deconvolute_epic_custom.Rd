@@ -26,13 +26,13 @@ needs to be smaller than the genes in the signature matrix}
 the variability of each gene expression for each cell type.
 This will be used in the optimization}
 
+\item{mrna_quantities}{(optional) A named numeric vector with
+the amount of mRNA in arbitrary units for each of the
+reference cells and of the other uncharacterized cells.}
+
 \item{...}{passed through to EPIC. A native argument takes precedence
 over an immunedeconv argument.
 See \href{https://rdrr.io/github/GfellerLab/EPIC/man/EPIC.html}{EPIC}}
-
-\item{mrna_cells}{(optional) A named numeric vector with
-the amount of mRNA in arbitrary units for each of the
-reference cells and of the other uncharacterized cells.}
 }
 \description{
 Deconvolute using EPIC and a custom signature matrix.

@@ -48,11 +48,14 @@ available_datasets <- NULL
 #' List with controlled cell-type vocabulary
 cell_type_list <- NULL
 .get_cell_type_list <- function() {
-  tmp_list <- readxl::read_excel(system.file("extdata", "cell_type_mapping.xlsx",
-    package = "immunedeconv", mustWork = TRUE
-  ),
-  sheet = "controlled_vocabulary"
-  ) %>%
+  suppressWarnings({
+    tmp_sheet <- readxl::read_excel(system.file("extdata", "cell_type_mapping.xlsx",
+      package = "immunedeconv", mustWork = TRUE
+    ),
+    sheet = "controlled_vocabulary"
+    )
+  })
+  tmp_list <- tmp_sheet %>%
     select(parent, cell_type, optional) %>%
     mutate(optional = optional %in% TRUE)
   assert("Node names are unique", length(tmp_list$cell_type) == length(unique(tmp_list$cell_type)))

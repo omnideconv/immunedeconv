@@ -1,5 +1,6 @@
 #' Collection of deconvolution methods that allow custom signature matrices.
 #'
+#' @description Aliases to some of the deconvolution functions with extra arguments.
 #' @import methods
 #' @import dplyr
 #' @importFrom testit assert
@@ -11,7 +12,6 @@
 #' @importFrom utils capture.output read.csv read.table tail write.table
 #'
 #' @name custom_deconvolution
-#' @docType package
 NULL
 
 
@@ -93,7 +93,7 @@ deconvolute_cibersort_custom <- function(gene_expression_matrix, signature_matri
 #' @param genes_var (optional) a m x l matrix with m genes and l cell types, with
 #'    the variability of each gene expression for each cell type.
 #'    This will be used in the optimization
-#' @param mrna_cells (optional) A named numeric vector with
+#' @param mrna_quantities (optional) A named numeric vector with
 #'    the amount of mRNA in arbitrary units for each of the
 #'    reference cells and of the other uncharacterized cells.
 #' @param ... passed through to EPIC. A native argument takes precedence

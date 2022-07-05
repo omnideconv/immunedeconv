@@ -8,7 +8,6 @@
 #' @import stringr
 #'
 #' @name mouse_cell_type_mapping
-#' @docType package
 NULL
 
 #' Since DCQ and BASE provide estimates for several cell types, this function
@@ -20,7 +19,6 @@ NULL
 #'    methods as DCQ, or median for the scoring methods such as BASE.
 #' @return a data frame with the aggregated cell types
 #' @export
-
 reduce_mouse_cell_types <- function(deconvolution.results,
                                     method = c("sum", "median")) {
   table.mapping.path <- system.file("extdata", "mouse_deconvolution", "cell_correspondance.txt",
@@ -64,7 +62,6 @@ reduce_mouse_cell_types <- function(deconvolution.results,
 #' @return a dataframe with two columns: the exact cell type and the
 #'    correspondent, more general one
 #' @export
-
 get_dcq_cell_types_list <- function(method = c("dcq", "base")) {
   table.mapping.path <- system.file("extdata", "mouse_deconvolution", "cell_correspondance.txt",
     package = "immunedeconv", mustWork = TRUE

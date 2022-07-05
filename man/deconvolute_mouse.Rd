@@ -22,6 +22,11 @@ counts are prefereable.}
 
 \item{rmgenes}{noisy genes to be removed from the analysis}
 
+\item{column}{Only relevant if \code{gene_expression} is an ExpressionSet. Defines in which column
+of fData the HGNC symbol can be found.}
+
+\item{algorithm}{statistcal algorithm for SeqImmuCC (ignored by all other methods)}
+
 \item{...}{additional arguments passed to the respective method}
 }
 \value{

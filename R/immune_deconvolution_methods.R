@@ -275,6 +275,7 @@ deconvolute_cibersort <- function(gene_expression_matrix,
 #'    must be TPM-normalized, since the matrix accounts for mRNA bias
 #' @param arrays Set to TRUE if working with Microarray data instead of RNA-seq.
 #'    A different signature matrix will be used.
+#' @param ... additional arguments
 #'
 #' @export
 deconvolute_abis <- function(gene_expression_matrix,
@@ -292,7 +293,7 @@ deconvolute_abis <- function(gene_expression_matrix,
 #'     'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
 #'     'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
 #'     'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol'
-#' @param stat_method Choose statistical framework to generate the entichment scores.
+#' @param method Choose statistical framework to generate the entichment scores.
 #'     Default: 'ssgsea'. Available methods: 'ssgsea', 'gsva', 'plage', 'zscore', 'singScore'.
 #'     These mirror the parameter options of \code{GSVA::gsva()} with the exception of \code{singScore}
 #'     which leverages \code{singscore::multiScore()}

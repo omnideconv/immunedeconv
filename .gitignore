@@ -1,3 +1,6 @@
+# editors
+.vscode
+
 # Ignore R associated files
 .Rproj.user
 .Rprofile

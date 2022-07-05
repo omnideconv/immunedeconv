@@ -8,13 +8,12 @@
 #' @import stringr
 #' @import mMCPcounter
 #' @import ComICS
-#' @import biomaRt
+#' @importFrom biomaRt useEnsembl getLDS
 #' @importFrom tibble as_tibble
 #' @importFrom rlang dots_list
 #' @importFrom utils capture.output read.csv read.table tail write.table
 #'
 #' @name mouse_deconvolution
-#' @docType package
 NULL
 
 
@@ -211,6 +210,9 @@ deconvolute_base_algorithm <- function(gene_expression_matrix, n_permutations = 
 #'    counts are prefereable.
 #' @param method string specifying the method
 #' @param rmgenes noisy genes to be removed from the analysis
+#' @param column Only relevant if `gene_expression` is an ExpressionSet. Defines in which column
+#'   of fData the HGNC symbol can be found.
+#' @param algorithm statistcal algorithm for SeqImmuCC (ignored by all other methods)
 #' @param ... additional arguments passed to the respective method
 #' @return a dataset with the estimated fractions/scores, with samples in rows and cell types in column
 #'
@@ -242,6 +244,8 @@ deconvolute_mouse <- function(gene_expression_matrix,
 
 
 #' This function converts the mouse gene symbols into corresponding human ones.
+#'
+#' This function relies on the `biomaRt`` package.
 #'
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples.
 #'    Gene symbols must be the rownames of the matrix.

@@ -1,24 +1,24 @@
-#'  Source code for the ESTIMATE algorithm:
-#'  Estimate of Stromal and Immune Cells in Malignant Tumor Tissues from Expression Data
-#'  (https://doi.org/10.1038/ncomms3612)
-#'  Source: http://r-forge.r-project.org/projects/estimate/
-#'  Copyright: 2013-2022, MD Anderson Cancer Center (MDACC)
-#'  License: GPL-2
+#' Source code for the ESTIMATE algorithm:
+#' Estimate of Stromal and Immune Cells in Malignant Tumor Tissues from Expression Data
+#' (https://doi.org/10.1038/ncomms3612)
+#' Source: http://r-forge.r-project.org/projects/estimate/
+#' Copyright: 2013-2022, MD Anderson Cancer Center (MDACC)
+#' License: GPL-2
 #'
-#'  Source code adapted from: http://download.r-forge.r-project.org/bin/windows/contrib/3.3/estimate_1.0.13.zip
+#' Source code adapted from: http://download.r-forge.r-project.org/bin/windows/contrib/3.3/estimate_1.0.13.zip
 #'
 
 
 
-#'  ESTIMATE algortihm: This function computes stromal, immune, and ESTIMATE scores
-#'  per sample using gene expression data, through GSEA. The ESTIMATE score is used
-#'  to compute an estimate of the tumor purity
-#'  *Warning*: The tumor purity estimation was originally intended only for microarray
-#'  affymetrix data
+#' ESTIMATE algortihm: This function computes stromal, immune, and ESTIMATE scores
+#' per sample using gene expression data, through GSEA. The ESTIMATE score is used
+#' to compute an estimate of the tumor purity
+#' *Warning*: The tumor purity estimation was originally intended only for microarray
+#' affymetrix data
 #'
-#'  @param gene_expression_matrix a m x n matrix with m genes and n samples
+#' @param gene_expression_matrix a m x n matrix with m genes and n samples
 #'
-#'  @export
+#' @export
 deconvolute_estimate <- function(gene_expression_matrix) {
   estimate.genes.path <- system.file("extdata", "estimate", "estimate_genes.rds",
     package = "immunedeconv", mustWork = TRUE

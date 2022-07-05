@@ -49,12 +49,13 @@ Suggests:
     DiagrammeR,
     tidyr,
     ggplot2,
-    webshot
+    webshot,
+    covr
 Remotes:
     dviraran/xCell,
     GfellerLab/EPIC,
-    ebecht/MCPcounter/Source,
-    cit-bioinfo/mMCP-counter,
+    grst/MCPcounter,
+    grst/mMCPcounter,
     cansysbio/ConsensusTME
 VignetteBuilder: knitr
 License: GPL-2 + file LICENSE

@@ -2,7 +2,7 @@
 title: "Detailed Usage Example"
 output: rmarkdown::html_vignette
 vignette: >
-   %\VignetteIndexEntry{Detailed Example}
+   %\VignetteIndexEntry{Detailed Usage Example}
    %\VignetteEngine{knitr::rmarkdown}
    \usepackage[utf8]{inputenc}
 bibliography: references.bib

@@ -12,6 +12,8 @@ must be TPM-normalized, since the matrix accounts for mRNA bias}
 
 \item{arrays}{Set to TRUE if working with Microarray data instead of RNA-seq.
 A different signature matrix will be used.}
+
+\item{...}{additional arguments}
 }
 \description{
 Deconvolute using ABIS.

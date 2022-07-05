@@ -4,9 +4,15 @@
 \alias{deconvolute_estimate}
 \title{Source code for the ESTIMATE algorithm:
 Estimate of Stromal and Immune Cells in Malignant Tumor Tissues from Expression Data
-(https://doi.org/10.1038/ncomms3612)}
+(https://doi.org/10.1038/ncomms3612)
+Source: http://r-forge.r-project.org/projects/estimate/
+Copyright: 2013-2022, MD Anderson Cancer Center (MDACC)
+License: GPL-2}
 \usage{
 deconvolute_estimate(gene_expression_matrix)
+}
+\arguments{
+\item{gene_expression_matrix}{a m x n matrix with m genes and n samples}
 }
 \description{
 Source code adapted from: http://download.r-forge.r-project.org/bin/windows/contrib/3.3/estimate_1.0.13.zip
@@ -17,8 +23,4 @@ per sample using gene expression data, through GSEA. The ESTIMATE score is used
 to compute an estimate of the tumor purity
 \emph{Warning}: The tumor purity estimation was originally intended only for microarray
 affymetrix data
-
-@param gene_expression_matrix a m x n matrix with m genes and n samples
-
-@export
 }

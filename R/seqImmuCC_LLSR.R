@@ -53,7 +53,6 @@ seqImmuCC_LLSR <- function(signature, SampleData, w = NA, QN = T, sig.scale = F,
 
 
   # Quantile normalization of the sample data
-  library(preprocessCore)
   if (QN == T) {
     tmpc <- colnames(SampleData)
     tmpr <- rownames(SampleData)

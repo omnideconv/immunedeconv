@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">immunedeconv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
       </span>
     </div>
 
@@ -66,14 +66,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">deconvolute_mouse</span><span class="op">(</span>
-  <span class="va">gene_expression_matrix</span>,
-  method <span class="op">=</span> <span class="va">deconvolution_methods_mouse</span>,
-  rmgenes <span class="op">=</span> <span class="cn">NULL</span>,
-  column <span class="op">=</span> <span class="st">"gene_symbol"</span>,
-  algorithm <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">deconvolute_mouse</span><span class="op">(</span></span>
+<span>  <span class="va">gene_expression_matrix</span>,</span>
+<span>  method <span class="op">=</span> <span class="va">deconvolution_methods_mouse</span>,</span>
+<span>  rmgenes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column <span class="op">=</span> <span class="st">"gene_symbol"</span>,</span>
+<span>  algorithm <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -82,16 +82,34 @@
 <dd><p>a m x n matrix with m genes and n samples.
 Data should be TPM normalized, except when using seqImmuCC where raw
 counts are prefereable.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>string specifying the method</p></dd>
+
+
 <dt>rmgenes</dt>
 <dd><p>noisy genes to be removed from the analysis</p></dd>
+
+
+<dt>column</dt>
+<dd><p>Only relevant if <code>gene_expression</code> is an ExpressionSet. Defines in which column
+of fData the HGNC symbol can be found.</p></dd>
+
+
+<dt>algorithm</dt>
+<dd><p>statistcal algorithm for SeqImmuCC (ignored by all other methods)</p></dd>
+
+
 <dt>...</dt>
 <dd><p>additional arguments passed to the respective method</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a dataset with the estimated fractions/scores, with samples in rows and cell types in column</p>
+    
+
+<p>a dataset with the estimated fractions/scores, with samples in rows and cell types in column</p>
     </div>
 
   </div>
@@ -106,7 +124,7 @@ counts are prefereable.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

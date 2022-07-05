@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">immunedeconv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
       </span>
     </div>
 
@@ -66,18 +66,20 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">deconvolute_consensus_tme</span><span class="op">(</span>
-  <span class="va">gene_expression_matrix</span>,
-  indications <span class="op">=</span> <span class="cn">NULL</span>,
-  method <span class="op">=</span> <span class="st">"ssgsea"</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">deconvolute_consensus_tme</span><span class="op">(</span></span>
+<span>  <span class="va">gene_expression_matrix</span>,</span>
+<span>  indications <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"ssgsea"</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gene_expression_matrix</dt>
 <dd><p>a m x n matrix with m genes and n samples</p></dd>
+
+
 <dt>indications</dt>
 <dd><p>a n-vector giving and indication string (e.g. 'brca') for each sample.
 The method requires at least 2 samples of a certain cancer type.
@@ -85,14 +87,19 @@ Accepted indications are 'kich', 'blca', 'brca', 'cesc', 'gbm', 'hnsc', 'kirp', 
 'lihc', 'luad', 'lusc', 'prad', 'sarc', 'pcpg', 'paad', 'tgct',
 'ucec', 'ov', 'skcm', 'dlbc', 'kirc', 'acc', 'meso', 'thca',
 'uvm', 'ucs', 'thym', 'esca', 'stad', 'read', 'coad', 'chol'</p></dd>
-<dt>...</dt>
-<dd><p>passed through to the original ConsensusTME function. A native argument takes precedence
-over an immunedeconv argument. Documentation can be found at http://consensusTME.org</p></dd>
-<dt>stat_method</dt>
+
+
+<dt>method</dt>
 <dd><p>Choose statistical framework to generate the entichment scores.
 Default: 'ssgsea'. Available methods: 'ssgsea', 'gsva', 'plage', 'zscore', 'singScore'.
 These mirror the parameter options of <code><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">GSVA::gsva()</a></code> with the exception of <code>singScore</code>
 which leverages <code><a href="https://davislaboratory.github.io/singscore/reference/multiScore.html" class="external-link">singscore::multiScore()</a></code></p></dd>
+
+
+<dt>...</dt>
+<dd><p>passed through to the original ConsensusTME function. A native argument takes precedence
+over an immunedeconv argument. Documentation can be found at http://consensusTME.org</p></dd>
+
 </dl></div>
 
   </div>
@@ -107,7 +114,7 @@ which leverages <code><a href="https://davislaboratory.github.io/singscore/refer
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

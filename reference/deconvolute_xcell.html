@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">immunedeconv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
       </span>
     </div>
 
@@ -66,20 +66,24 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">deconvolute_xcell</span><span class="op">(</span>
-  <span class="va">gene_expression_matrix</span>,
-  <span class="va">arrays</span>,
-  expected_cell_types <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">deconvolute_xcell</span><span class="op">(</span></span>
+<span>  <span class="va">gene_expression_matrix</span>,</span>
+<span>  <span class="va">arrays</span>,</span>
+<span>  expected_cell_types <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gene_expression_matrix</dt>
 <dd><p>a m x n matrix with m genes and n samples</p></dd>
+
+
 <dt>arrays</dt>
 <dd><p>Set to TRUE if microarray data, to FALSE for RNASeq (<code>rnaseq</code> parameter in xCell)</p></dd>
+
+
 <dt>expected_cell_types</dt>
 <dd><p>a character list of the cell types to use
 in the analysis. If NULL runs xCell with all cell types.
@@ -87,10 +91,13 @@ The spillover compensation step may over compensate, thus it is always better
 to run xCell with a list of cell types that are expected to be in the mixture.
 The names of cell types in this list must be a subset of the cell types that are inferred by xCell.
 (<code>cell.types.use</code> parameter in xCell)</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Passed through to original xCell function. A native argument takes precedence
 over an immunedeconv argument (e.g. <code>rnaseq</code> takes precedence over <code>arrays</code>)
 See <a href="https://rdrr.io/github/dviraran/xCell/man/xCellAnalysis.html" class="external-link">xCellAnalysis</a></p></dd>
+
 </dl></div>
 
   </div>
@@ -105,7 +112,7 @@ See <a href="https://rdrr.io/github/dviraran/xCell/man/xCellAnalysis.html" class
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

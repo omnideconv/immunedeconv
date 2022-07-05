@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">immunedeconv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
       </span>
     </div>
 
@@ -85,41 +85,53 @@
 <img src="reference/figures/immunedeconv_logo_sm.png" alt=""><p class="caption">immunedeconv</p>
 </div>
 <p><strong>an R package for unified access to computational methods for estimating immune cell fractions from bulk RNA sequencing data.</strong></p>
-<p><img src="https://github.com/icbi-lab/immunedeconv/workflows/tests/badge.svg" alt="tests"><img src="https://github.com/icbi-lab/immunedeconv/workflows/conda/badge.svg" alt="test-conda"><a href="http://bioconda.github.io/recipes/r-immunedeconv/README.html" class="external-link"><img src="https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat" alt="install with bioconda"></a> <a href="https://github.com/icbi-lab/immunedeconv/blob/master/LICENSE.md" class="external-link"><img src="https://img.shields.io/badge/license-BSD-green.svg" alt="license"></a> <a href="https://icbi-lab.github.io/immunedeconv"><img src="https://img.shields.io/badge/docs-pkgdown-blue.svg" alt="docs"></a></p>
+<p><a href="https://github.com/omnideconv/immunedeconv/actions/workflows/test.yml" class="external-link"><img src="https://github.com/icbi-lab/immunedeconv/workflows/tests/badge.svg" alt="tests"></a> <a href="https://github.com/omnideconv/immunedeconv/actions/workflows/conda.yml" class="external-link"><img src="https://github.com/icbi-lab/immunedeconv/workflows/conda/badge.svg" alt="test-conda"></a> <a href="http://bioconda.github.io/recipes/r-immunedeconv/README.html" class="external-link"><img src="https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat" alt="install with bioconda"></a> <a href="https://github.com/icbi-lab/immunedeconv/blob/master/LICENSE.md" class="external-link"><img src="https://img.shields.io/badge/license-BSD-green.svg" alt="license"></a> <a href="https://icbi-lab.github.io/immunedeconv"><img src="https://img.shields.io/badge/docs-pkgdown-blue.svg" alt="docs"></a> <a href="https://app.codecov.io/gh/omnideconv/immunedeconv?branch=master" class="external-link"><img src="https://codecov.io/gh/omnideconv/immunedeconv/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></p>
 <div class="section level2">
 <h2 id="basic-usage">Basic usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
 </h2>
 <p>Deconvolution of human data:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">immunedeconv</span><span class="fu">::</span><span class="fu"><a href="reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">gene_expression_matrix</span>, <span class="st">"quantiseq"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">immunedeconv</span><span class="fu">::</span><span class="fu"><a href="reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">gene_expression_matrix</span>, <span class="st">"quantiseq"</span><span class="op">)</span></span></code></pre></div>
 <p>Deconvolution of mouse data:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">immunedeconv</span><span class="fu">::</span><span class="fu"><a href="reference/deconvolute_mouse.html">deconvolute_mouse</a></span><span class="op">(</span><span class="va">gene_expression_matrix</span>, <span class="st">"mmcp_counter"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">immunedeconv</span><span class="fu">::</span><span class="fu"><a href="reference/deconvolute_mouse.html">deconvolute_mouse</a></span><span class="op">(</span><span class="va">gene_expression_matrix</span>, <span class="st">"mmcp_counter"</span><span class="op">)</span></span></code></pre></div>
 <p>where <code>gene_expression_matrix</code> is a matrix with genes in rows and samples in columns. The rownames must be <a href="https://www.genenames.org/" class="external-link">HGNC</a> symbols for human data, or <a href="http://www.informatics.jax.org/mgihome/nomen/" class="external-link">MGI</a> gene symbols for mouse data. The colnames must be sample names. For human data, the method can be one of</p>
-<pre><code><span class="va">quantiseq</span>
-<span class="va">timer</span>
-<span class="va">cibersort</span>
-<span class="va">cibersort_abs</span>
-<span class="va">mcp_counter</span>
-<span class="va">xcell</span>
-<span class="va">epic</span>
-<span class="va">abis</span>
-<span class="va">consensus_tme</span></code></pre>
+<pre><code><span><span class="va">quantiseq</span></span>
+<span><span class="va">timer</span></span>
+<span><span class="va">cibersort</span></span>
+<span><span class="va">cibersort_abs</span></span>
+<span><span class="va">mcp_counter</span></span>
+<span><span class="va">xcell</span></span>
+<span><span class="va">epic</span></span>
+<span><span class="va">abis</span></span>
+<span><span class="va">consensus_tme</span></span>
+<span><span class="va">estimate</span></span></code></pre>
+<p>The <a href="https://bioinformatics.mdanderson.org/public-software/estimate/" class="external-link">ESTIMATE</a> algorithm, which computes a score for the tumoral, immune and stromal components and the fraction of tumor purity of a sample, has been implemented.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">immunedeconv</span><span class="fu">::</span><span class="fu"><a href="reference/deconvolute_estimate.html">deconvolute_estimate</a></span><span class="op">(</span><span class="va">gene_expression_matrix</span><span class="op">)</span></span></code></pre></div>
 <p>The methods available for the deconvolution of mouse data are</p>
-<pre><code><span class="va">mmcp_counter</span>
-<span class="va">seqimmucc</span>
-<span class="va">dcq</span>
-<span class="va">base</span></code></pre>
+<pre><code><span><span class="va">mmcp_counter</span></span>
+<span><span class="va">seqimmucc</span></span>
+<span><span class="va">dcq</span></span>
+<span><span class="va">base</span></span></code></pre>
 <p>In addition, human-based methods can be used to deconvolute mouse data through the conversion to orthologous gene names</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gene_expression_matrix</span> <span class="op">&lt;-</span> <span class="fu">immunedeconv</span><span class="fu">::</span><span class="fu"><a href="reference/mouse_genes_to_human.html">mouse_genes_to_human</a></span><span class="op">(</span><span class="va">gene_expression_matrix</span><span class="op">)</span>
-<span class="fu">immunedeconv</span><span class="fu">::</span><span class="fu"><a href="reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">gene_expression_matrix</span>, <span class="st">"quantiseq"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gene_expression_matrix</span> <span class="op">&lt;-</span> <span class="fu">immunedeconv</span><span class="fu">::</span><span class="fu"><a href="reference/mouse_genes_to_human.html">mouse_genes_to_human</a></span><span class="op">(</span><span class="va">gene_expression_matrix</span><span class="op">)</span></span>
+<span><span class="fu">immunedeconv</span><span class="fu">::</span><span class="fu"><a href="reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">gene_expression_matrix</span>, <span class="st">"quantiseq"</span><span class="op">)</span></span></code></pre></div>
 <p>Finally, certain methods can be used with custom signatures, consisting of either a signature matrix or signature genes for the cell types of interest. Since the information used to deconvolute the bulk is user-provided, these functions can be used for different tissues and organisms. The functions may require different input data formats, related to the requirements of each method. Please refer to their documentation. The available methods are</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>base<span class="op">:</span><span class="st">  </span><span class="kw">deconvolute_base_custom</span>()</span>
-<span id="cb6-2"><a href="#cb6-2"></a>cibersort norm<span class="op">/</span>abs<span class="op">:</span><span class="st">  </span><span class="kw">deconvolute_cibersort_custom</span>()</span>
-<span id="cb6-3"><a href="#cb6-3"></a>epic<span class="op">:</span><span class="st"> </span><span class="kw">deconvolute_epic_custom</span>()</span>
-<span id="cb6-4"><a href="#cb6-4"></a>consensus_tme<span class="op">:</span><span class="st"> </span><span class="kw">deconvolute_consensus_tme_custom</span>()</span></code></pre></div>
-<p>For more detailed usage instructions, see the Documentation: * <a href="https://omnideconv.org/immunedeconv/articles/immunedeconv.html" class="external-link">Getting started</a>. * <a href="https://omnideconv.org/immunedeconv/articles/detailed_example.html" class="external-link">Detailed example</a>. * <a href="https://omnideconv.org/immunedeconv/articles/detailed_example_mouse.html" class="external-link">Detailed example - mouse</a>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>base<span class="sc">:</span>  <span class="fu">deconvolute_base_custom</span>()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>cibersort norm<span class="sc">/</span>abs<span class="sc">:</span>  <span class="fu">deconvolute_cibersort_custom</span>()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>epic<span class="sc">:</span> <span class="fu">deconvolute_epic_custom</span>()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>consensus_tme<span class="sc">:</span> <span class="fu">deconvolute_consensus_tme_custom</span>()</span></code></pre></div>
+<p>For more detailed usage instructions, see the Documentation:</p>
+<ul>
+<li>
+<a href="https://omnideconv.org/immunedeconv/articles/immunedeconv.html" class="external-link">Getting started</a>.</li>
+<li>
+<a href="https://omnideconv.org/immunedeconv/articles/detailed_example.html" class="external-link">Detailed example</a>.</li>
+<li>
+<a href="https://omnideconv.org/immunedeconv/articles/detailed_example_mouse.html" class="external-link">Detailed example - mouse</a>.</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="available-methods-licenses-citations">Available methods, Licenses, Citations<a class="anchor" aria-label="anchor" href="#available-methods-licenses-citations"></a>
@@ -128,10 +140,10 @@
 <blockquote><p>Sturm, G., Finotello, F., Petitprez, F., Zhang, J. D., Baumbach, J., Fridman, W. H., …, List, M., Aneichyk, T. (2019). Comprehensive evaluation of transcriptome-based cell-type quantification methods for immuno-oncology. Bioinformatics, 35(14), i436-i445. <a href="https://doi.org/10.1093/bioinformatics/btz363" class="external-link uri">https://doi.org/10.1093/bioinformatics/btz363</a></p></blockquote>
 <table class="table">
 <colgroup>
-<col width="21%">
-<col width="24%">
-<col width="27%">
-<col width="27%">
+<col width="13%">
+<col width="1%">
+<col width="19%">
+<col width="66%">
 </colgroup>
 <thead><tr class="header">
 <th>method</th>
@@ -183,41 +195,48 @@
 </td>
 </tr>
 <tr class="odd">
+<td><a href="https://gfellerlab.shinyapps.io/EPIC_1-1/" class="external-link">ESTIMATE</a></td>
+<td>human</td>
+<td>free (<a href="https://bioinformatics.mdanderson.org/public-software/estimate/" class="external-link">GPL 2.0</a>)</td>
+<td>Yoshihara, K., Shahmoradgoli, M., Martínez, E., Vegesna, R., Kim, H., Torres-Garcia, W., Treviño, V., Shen, H., Laird, P. W., Levine, D. A., Carter, S. L., Getz, G., Stemke-Hale, K., Mills, G. B., &amp; Verhaak, R. G. (2013). Inferring tumour purity and stromal and immune cell admixture from expression data. Nature communications, 4, 2612. <a href="https://doi.org/10.1038/ncomms3612" class="external-link uri">https://doi.org/10.1038/ncomms3612</a>
+</td>
+</tr>
+<tr class="even">
 <td><a href="https://giannimonaco.shinyapps.io/ABIS/" class="external-link">ABIS</a></td>
 <td>human</td>
 <td>free (<a href="https://github.com/giannimonaco/ABIS" class="external-link">GPL 2.0</a>)</td>
 <td>Monaco, G., Lee, B., Xu, W., Mustafah, S., Hwang, Y. Y., …, Larbi, A. (2019). RNA-Seq Signatures Normalized by mRNA Abundance Allow Absolute Deconvolution of Human Immune Cell Types. Cell reports, 26(6), 1627–1640.e7. <a href="https://doi.org/10.1016/j.celrep.2019.01.041" class="external-link uri">https://doi.org/10.1016/j.celrep.2019.01.041</a>
 </td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a href="https://olliecast.shinyapps.io/Deconvolution_Benchmarking/" class="external-link">ConsensusTME</a></td>
 <td>human</td>
 <td>free (<a href="https://github.com/cansysbio/ConsensusTME/blob/master/LICENSE.md" class="external-link">GPL 3.0</a>)</td>
 <td>Jiménez-Sánchez, A., Cast, O., &amp; Miller, M. L. (2019). Comprehensive Benchmarking and Integration of Tumor Microenvironment Cell Estimation Methods. Cancer research, 79(24), 6238–6246. <a href="https://doi.org/10.1158/0008-5472.CAN-18-3560" class="external-link uri">https://doi.org/10.1158/0008-5472.CAN-18-3560</a>
 </td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="https://github.com/cit-bioinfo/mMCP-counter" class="external-link">mMCPCounter</a></td>
 <td>mouse</td>
 <td>free (<a href="https://github.com/cit-bioinfo/mMCP-counter/blob/master/LICENSE.md" class="external-link">GPL 3.0</a>)</td>
 <td>Petitprez, F., Levy, S., Sun, C. M., Meylan, M., …, de Reyniès, A. (2020). The murine Microenvironment Cell Population counter method to estimate abundance of tissue-infiltrating immune and stromal cell populations in murine samples using gene expression. Genome medicine, 12(1), 86. <a href="https://doi.org/10.1186/s13073-020-00783-w" class="external-link uri">https://doi.org/10.1186/s13073-020-00783-w</a>
 </td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a href="218.4.234.74:3200/immune/">seqImmuCC</a></td>
 <td>mouse</td>
 <td>free for non-commerical use only</td>
 <td>Chen, Z., Quan, L., Huang, A., Zhao, Q., Yuan, Y., Yuan, X., …, Wu, A. (2018). seq-ImmuCC: Cell-Centric View of Tissue Transcriptome Measuring Cellular Compositions of Immune Microenvironment From Mouse RNA-Seq Data. Frontiers in immunology, 9, 1286. <a href="https://doi.org/10.3389/fimmu.2018.01286" class="external-link uri">https://doi.org/10.3389/fimmu.2018.01286</a>
 </td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="http://dcq.tau.ac.il/" class="external-link">DCQ</a></td>
 <td>mouse</td>
 <td>free (<a href="https://cran.r-project.org/web/packages/ComICS/index.html" class="external-link">GPL 2.0</a>)</td>
 <td>Altboum, Z., Steuerman, Y., David, E., Barnett-Itzhaki, Z., Valadarsky, L., …, Amit, I. (2014). Digital cell quantification identifies global immune cell dynamics during influenza infection. Molecular systems biology, 10(2), 720. <a href="https://doi.org/10.1002/msb.134947" class="external-link uri">https://doi.org/10.1002/msb.134947</a>
 </td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>BASE</td>
 <td>mouse</td>
 <td>free</td>
@@ -255,15 +274,15 @@ conda activate deconvolution</code></pre>
 </h3>
 <p>We highly recommend using <code>conda</code>, as it will avoid incompatibilities between different package versions. That being said, you can also install <code>immunedeconv</code> as a regular R package in your default R installation. The installation typically completes within 30 minutes, depending on how many dependency packages need to be compiled.</p>
 <p>The easiest way to do so is to use the <code>remotes</code> package, which will automatically download all CRAN, Bioconductor and GitHub dependencies:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"omnideconv/immunedeconv"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"omnideconv/immunedeconv"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="credits">Credits<a class="anchor" aria-label="anchor" href="#credits"></a>
 </h2>
-<p>This package was originally developed by <a href="https://github.com/grst" class="external-link">Gregor Sturm</a> in 2018 at <a href="https://www.pieris.com/" class="external-link">Pieris Pharmaceuticals GmbH</a> in collaboration with the <a href="https://biomedical-big-data.de/" class="external-link">List Lab</a> and <a href="https://computationalbiomedicinegroup.github.io/" class="external-link">Francesca Finotello</a>. Gregor Sturm continued to support this package while at <a href="https://icbi.at" class="external-link">icbi-lab</a>. In 2022, this repository moved to the <a href="https://omnideconv.org" class="external-link">omnideconv</a> organization, a joint effort of the <a href="https://biomedical-big-data.de/" class="external-link">List Lab</a> and <a href="https://computationalbiomedicinegroup.github.io/" class="external-link">Finotello Lab</a> dedicated to improve accessibility of deconvolution methods. At this point <a href="https://github.com/LorenzoMerotto" class="external-link">Lorenzo Merotto</a> became primary maintainer of the immunedeconv package.</p>
+<p>This package was originally developed by <a href="https://github.com/grst" class="external-link">Gregor Sturm</a> in 2018 at <a href="https://www.pieris.com/" class="external-link">Pieris Pharmaceuticals GmbH</a> in collaboration with <a href="https://biomedical-big-data.de/" class="external-link">Markus List</a>, <a href="https://www.independentdatalab.com/team" class="external-link">Tatsiana Aneichyk</a>, and <a href="https://computationalbiomedicinegroup.github.io/" class="external-link">Francesca Finotello</a>. Gregor Sturm continued to support this package while at <a href="https://icbi.at" class="external-link">icbi-lab</a>. In 2022, this repository moved to the <a href="https://omnideconv.org" class="external-link">omnideconv</a> organization, a joint effort of the <a href="https://biomedical-big-data.de/" class="external-link">List Lab</a> and <a href="https://computationalbiomedicinegroup.github.io/" class="external-link">Finotello Lab</a> dedicated to improve accessibility of deconvolution methods. At this point <a href="https://github.com/LorenzoMerotto" class="external-link">Lorenzo Merotto</a> became primary maintainer of the immunedeconv package.</p>
 </div>
 
   </div>
@@ -281,7 +300,7 @@ conda activate deconvolution</code></pre>
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://opensource.org/licenses/BSD-3-Clause" class="external-link">BSD_3_clause</a> + file <a href="LICENSE-text.html">LICENSE</a>
+<a href="https://www.r-project.org/Licenses/GPL-2" class="external-link">GPL-2</a> + file <a href="LICENSE-text.html">LICENSE</a>
 </li>
 </ul>
 </div>
@@ -321,7 +340,7 @@ conda activate deconvolution</code></pre>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>

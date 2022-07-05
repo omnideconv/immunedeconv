@@ -18,7 +18,7 @@ the cell_fractions vector and combine them by taking the mean."><!-- mathjax -->
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">immunedeconv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
       </span>
     </div>
 
@@ -68,7 +68,7 @@ the cell_fractions vector and combine them by taking the mean.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">make_random_bulk</span><span class="op">(</span><span class="va">eset</span>, <span class="va">cell_fractions</span>, n_cells <span class="op">=</span> <span class="fl">500</span>, combine <span class="op">=</span> <span class="va">mean</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">make_random_bulk</span><span class="op">(</span><span class="va">eset</span>, <span class="va">cell_fractions</span>, n_cells <span class="op">=</span> <span class="fl">500</span>, combine <span class="op">=</span> <span class="va">mean</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -78,58 +78,69 @@ the cell_fractions vector and combine them by taking the mean.</p>
 Each sample is the gene expression of a single cell. The cell
 type of each cell needs to be denoted in the pData table in the
 <code>cell_type</code> column.</p></dd>
+
+
 <dt>cell_fractions</dt>
 <dd><p>named list indicating the fraction of each cell type
 which will be in the sample. The names of the list need to correspond
 to the <code>cell_type</code> column in the ExpressionSet.</p></dd>
+
+
 <dt>n_cells</dt>
 <dd><p>number of single cells to integrate into a sample</p></dd>
+
+
 <dt>combine</dt>
 <dd><p>callback function used to aggregate the counts.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a single-column tibble with simulated expression for each gene.
+    
+
+<p>a single-column tibble with simulated expression for each gene.
 The column sum is scaled to 1 million (TPM)</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/Biobase" class="external-link">Biobase</a></span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># generate toy matrix with three marker genes and three cell types</span></span>
-<span class="r-in"><span class="va">expr</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, <span class="fl">300</span><span class="op">)</span>,</span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span>, <span class="fl">300</span><span class="op">)</span>,</span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, <span class="fl">300</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># generate a featureData and phenoData data-frame. </span></span>
-<span class="r-in"><span class="co"># row names must be consistent between expr and featureData. </span></span>
-<span class="r-in"><span class="va">gene_names</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD8A"</span>, <span class="st">"CD4"</span>, <span class="st">"CD19"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span> <span class="op">=</span> <span class="va">gene_names</span></span>
-<span class="r-in"><span class="va">cell_types</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"T cell CD8+"</span>, <span class="fl">300</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"T cell CD4+"</span>, <span class="fl">300</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"B cell"</span>, <span class="fl">300</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pdata</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>cell_type<span class="op">=</span><span class="va">cell_types</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fdata</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>gene_symbol<span class="op">=</span><span class="va">gene_names</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">fdata</span><span class="op">)</span> <span class="op">=</span> <span class="va">gene_names</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># tie expr, fdata and pdata together in expression set</span></span>
-<span class="r-in"><span class="va">eset</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/class.ExpressionSet.html" class="external-link">ExpressionSet</a></span><span class="op">(</span><span class="va">expr</span>, </span>
-<span class="r-in">                     phenoData<span class="op">=</span><span class="fu">as</span><span class="op">(</span><span class="va">pdata</span>, <span class="st">"AnnotatedDataFrame"</span><span class="op">)</span>,</span>
-<span class="r-in">                     featureData<span class="op">=</span><span class="fu">as</span><span class="op">(</span><span class="va">fdata</span>, <span class="st">"AnnotatedDataFrame"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">                     </span>
-<span class="r-in"><span class="co"># make a random bulk sample. </span></span>
-<span class="r-in"><span class="fu">make_random_bulk</span><span class="op">(</span><span class="va">eset</span>,</span>
-<span class="r-in">                 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T cell CD8+"</span><span class="op">=</span><span class="fl">0.3</span>, <span class="st">"B cell"</span><span class="op">=</span><span class="fl">0.4</span>, <span class="st">"T cell CD4+"</span><span class="op">=</span><span class="fl">0.3</span><span class="op">)</span>,</span>
-<span class="r-in">                 n_cells<span class="op">=</span><span class="fl">1000</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/Biobase" class="external-link">Biobase</a></span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># generate toy matrix with three marker genes and three cell types</span></span></span>
+<span class="r-in"><span><span class="va">expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, <span class="fl">300</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>, <span class="fl">300</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">300</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># generate a featureData and phenoData data-frame.</span></span></span>
+<span class="r-in"><span><span class="co"># row names must be consistent between expr and featureData.</span></span></span>
+<span class="r-in"><span><span class="va">gene_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD8A"</span>, <span class="st">"CD4"</span>, <span class="st">"CD19"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">gene_names</span></span></span>
+<span class="r-in"><span><span class="va">cell_types</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"T cell CD8+"</span>, <span class="fl">300</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"T cell CD4+"</span>, <span class="fl">300</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"B cell"</span>, <span class="fl">300</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>cell_type <span class="op">=</span> <span class="va">cell_types</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>gene_symbol <span class="op">=</span> <span class="va">gene_names</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">fdata</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">gene_names</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># tie expr, fdata and pdata together in expression set</span></span></span>
+<span class="r-in"><span><span class="va">eset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/class.ExpressionSet.html" class="external-link">ExpressionSet</a></span><span class="op">(</span><span class="va">expr</span>,</span></span>
+<span class="r-in"><span>  phenoData <span class="op">=</span> <span class="fu">as</span><span class="op">(</span><span class="va">pdata</span>, <span class="st">"AnnotatedDataFrame"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  featureData <span class="op">=</span> <span class="fu">as</span><span class="op">(</span><span class="va">fdata</span>, <span class="st">"AnnotatedDataFrame"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># make a random bulk sample.</span></span></span>
+<span class="r-in"><span><span class="fu">make_random_bulk</span><span class="op">(</span><span class="va">eset</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T cell CD8+"</span> <span class="op">=</span> <span class="fl">0.3</span>, <span class="st">"B cell"</span> <span class="op">=</span> <span class="fl">0.4</span>, <span class="st">"T cell CD4+"</span> <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  n_cells <span class="op">=</span> <span class="fl">1000</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 1</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="text-decoration: underline;">300</span>000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="text-decoration: underline;">300</span>000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="text-decoration: underline;">400</span>000</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -144,7 +155,7 @@ The column sum is scaled to 1 million (TPM)</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

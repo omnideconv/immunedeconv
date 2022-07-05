@@ -64,6 +64,9 @@
     <loc>https://icbi-lab.github.io/immunedeconv/reference/custom_deconvolution_methods.html</loc>
   </url>
   <url>
+    <loc>https://icbi-lab.github.io/immunedeconv/reference/dataset_petitprez.html</loc>
+  </url>
+  <url>
     <loc>https://icbi-lab.github.io/immunedeconv/reference/dataset_racle.html</loc>
   </url>
   <url>
@@ -101,6 +104,9 @@
   </url>
   <url>
     <loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_epic_custom.html</loc>
+  </url>
+  <url>
+    <loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_estimate.html</loc>
   </url>
   <url>
     <loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_mcp_counter.html</loc>

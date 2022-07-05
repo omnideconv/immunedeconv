@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">immunedeconv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
       </span>
     </div>
 
@@ -66,18 +66,18 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">deconvolute</span><span class="op">(</span>
-  <span class="va">gene_expression</span>,
-  method <span class="op">=</span> <span class="va">deconvolution_methods</span>,
-  indications <span class="op">=</span> <span class="cn">NULL</span>,
-  tumor <span class="op">=</span> <span class="cn">TRUE</span>,
-  arrays <span class="op">=</span> <span class="cn">FALSE</span>,
-  column <span class="op">=</span> <span class="st">"gene_symbol"</span>,
-  rmgenes <span class="op">=</span> <span class="cn">NULL</span>,
-  scale_mrna <span class="op">=</span> <span class="cn">TRUE</span>,
-  expected_cell_types <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">deconvolute</span><span class="op">(</span></span>
+<span>  <span class="va">gene_expression</span>,</span>
+<span>  method <span class="op">=</span> <span class="va">deconvolution_methods</span>,</span>
+<span>  indications <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tumor <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  arrays <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  column <span class="op">=</span> <span class="st">"gene_symbol"</span>,</span>
+<span>  rmgenes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  scale_mrna <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  expected_cell_types <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -87,44 +87,65 @@
 Either: A numeric matrix or data.frame with HGNC gene symbols as rownames and sample identifiers as colnames.
 Or: A Biobase ExpressionSet with HGNC symbols in an fData column (see <code>column</code> parameter)
 In both cases, data must be on non-log scale.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>a string specifying the method.
 Supported methods are <code>xcell</code>, <code>...</code></p></dd>
+
+
 <dt>indications</dt>
 <dd><p>a character vector with one indication per
 sample for TIMER. Argument is ignored for all other methods.</p></dd>
+
+
 <dt>tumor</dt>
 <dd><p>use a signature matrix/procedure optimized for tumor samples,
 if supported by the method. Currently affects EPIC and quanTIseq.</p></dd>
+
+
 <dt>arrays</dt>
 <dd><p>Runs methods in a mode optimized for microarray data.
 Currently affects quanTIseq and CIBERSORT.</p></dd>
+
+
 <dt>column</dt>
 <dd><p>Only relevant if <code>gene_expression</code> is an ExpressionSet. Defines in which column
 of fData the HGNC symbol can be found.</p></dd>
+
+
 <dt>rmgenes</dt>
 <dd><p>a character vector of gene symbols. Exclude these genes from the analysis.
 Use this to exclude e.g. noisy genes.</p></dd>
+
+
 <dt>scale_mrna</dt>
 <dd><p>logical. If FALSE, disable correction for mRNA content of different cell types.
 This is supported by methods that compute an absolute score (EPIC and quanTIseq)</p></dd>
+
+
 <dt>expected_cell_types</dt>
 <dd><p>Limit the analysis to the cell types given in this list. If the cell
 types present in the sample are known <em>a priori</em>, setting this can improve results for
 xCell (see https://github.com/grst/immunedeconv/issues/1).</p></dd>
+
+
 <dt>...</dt>
 <dd><p>arguments passed to the respective method</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>data.frame</code> with <code>cell_type</code> as first column and a column with the
+    
+
+<p><code>data.frame</code> with <code>cell_type</code> as first column and a column with the
 calculated cell fractions for each sample.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Not run: deconvolute(gene_expression_matrix, "xcell")</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Not run: deconvolute(gene_expression_matrix, "xcell")</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
@@ -140,7 +161,7 @@ calculated cell fractions for each sample.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">immunedeconv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
       </span>
     </div>
 
@@ -66,11 +66,11 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">deconvolute_consensus_tme_custom</span><span class="op">(</span>
-  <span class="va">gene_expression_matrix</span>,
-  <span class="va">signature_genes</span>,
-  stat_method <span class="op">=</span> <span class="st">"ssgsea"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">deconvolute_consensus_tme_custom</span><span class="op">(</span></span>
+<span>  <span class="va">gene_expression_matrix</span>,</span>
+<span>  <span class="va">signature_genes</span>,</span>
+<span>  stat_method <span class="op">=</span> <span class="st">"ssgsea"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -78,14 +78,19 @@
     <dl><dt>gene_expression_matrix</dt>
 <dd><p>a m x n matrix with m genes and n samples. Data
 should be TPM normalized and log10 scaled.</p></dd>
+
+
 <dt>signature_genes</dt>
 <dd><p>a list with each element containing genes to represent a cell type. The cell types
 should be the names of each element of the list.</p></dd>
+
+
 <dt>stat_method</dt>
 <dd><p>Choose statistical framework to generate the entichment scores.
 Default: 'ssgsea'. Available methods: 'ssgsea', 'gsva', 'plage', 'zscore', 'singScore'.
 These mirror the parameter options of <code><a href="https://rdrr.io/pkg/GSVA/man/gsva.html" class="external-link">GSVA::gsva()</a></code> with the exception of <code>singScore</code>
 which leverages <code><a href="https://davislaboratory.github.io/singscore/reference/multiScore.html" class="external-link">singscore::multiScore()</a></code></p></dd>
+
 </dl></div>
     <div id="note">
     <h2>Note</h2>
@@ -105,7 +110,7 @@ only the user-provided signature will be used</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

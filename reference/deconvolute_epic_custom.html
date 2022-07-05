@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">immunedeconv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
       </span>
     </div>
 
@@ -66,38 +66,49 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">deconvolute_epic_custom</span><span class="op">(</span>
-  <span class="va">gene_expression_matrix</span>,
-  <span class="va">signature_matrix</span>,
-  <span class="va">signature_genes</span>,
-  genes_var <span class="op">=</span> <span class="cn">NULL</span>,
-  mrna_quantities <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">deconvolute_epic_custom</span><span class="op">(</span></span>
+<span>  <span class="va">gene_expression_matrix</span>,</span>
+<span>  <span class="va">signature_matrix</span>,</span>
+<span>  <span class="va">signature_genes</span>,</span>
+<span>  genes_var <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  mrna_quantities <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gene_expression_matrix</dt>
 <dd><p>a m x n matrix with m genes and n samples</p></dd>
+
+
 <dt>signature_matrix</dt>
 <dd><p>a m x l matrix with m genes and l cell types. This matrix
 should contain the whole set of genes</p></dd>
+
+
 <dt>signature_genes</dt>
 <dd><p>a character vector of the gene names to use as signature
 needs to be smaller than the genes in the signature matrix</p></dd>
+
+
 <dt>genes_var</dt>
 <dd><p>(optional) a m x l matrix with m genes and l cell types, with
 the variability of each gene expression for each cell type.
 This will be used in the optimization</p></dd>
+
+
+<dt>mrna_quantities</dt>
+<dd><p>(optional) A named numeric vector with
+the amount of mRNA in arbitrary units for each of the
+reference cells and of the other uncharacterized cells.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>passed through to EPIC. A native argument takes precedence
 over an immunedeconv argument.
 See <a href="https://rdrr.io/github/GfellerLab/EPIC/man/EPIC.html" class="external-link">EPIC</a></p></dd>
-<dt>mrna_cells</dt>
-<dd><p>(optional) A named numeric vector with
-the amount of mRNA in arbitrary units for each of the
-reference cells and of the other uncharacterized cells.</p></dd>
+
 </dl></div>
 
   </div>
@@ -112,7 +123,7 @@ reference cells and of the other uncharacterized cells.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

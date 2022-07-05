@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">immunedeconv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
       </span>
     </div>
 
@@ -66,25 +66,32 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">deconvolute_mmcp_counter</span><span class="op">(</span>
-  <span class="va">gene_expression_matrix</span>,
-  log2 <span class="op">=</span> <span class="cn">TRUE</span>,
-  gene_id <span class="op">=</span> <span class="st">"Gene.Symbol"</span>,
-  genome <span class="op">=</span> <span class="st">"GCRm39"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">deconvolute_mmcp_counter</span><span class="op">(</span></span>
+<span>  <span class="va">gene_expression_matrix</span>,</span>
+<span>  log2 <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  gene_id <span class="op">=</span> <span class="st">"Gene.Symbol"</span>,</span>
+<span>  genome <span class="op">=</span> <span class="st">"GCRm39"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>gene_expression_matrix</dt>
 <dd><p>a m x n matrix with m genes and n samples. Should be TPM normalized</p></dd>
+
+
 <dt>log2</dt>
 <dd><p>logical. If TRUE, log2 transforms the expression matrix</p></dd>
+
+
 <dt>gene_id</dt>
 <dd><p>specifies the format of the gene IDs. Possible choices are 'Gene.Symbol'
 (default), 'ENSEMBL.ID' or 'Probes' (Affymetrix array probes)</p></dd>
+
+
 <dt>genome</dt>
 <dd><p>specifies the mouse genome version to use, GCRm39 (default) or GCRm38</p></dd>
+
 </dl></div>
 
   </div>
@@ -99,7 +106,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

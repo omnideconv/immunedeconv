@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">immunedeconv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
       </span>
     </div>
 
@@ -66,16 +66,16 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">deconvolute_quantiseq.default</span><span class="op">(</span>
-  <span class="va">mix.mat</span>,
-  arrays <span class="op">=</span> <span class="cn">FALSE</span>,
-  signame <span class="op">=</span> <span class="st">"TIL10"</span>,
-  tumor <span class="op">=</span> <span class="cn">FALSE</span>,
-  mRNAscale <span class="op">=</span> <span class="cn">TRUE</span>,
-  method <span class="op">=</span> <span class="st">"lsei"</span>,
-  btotalcells <span class="op">=</span> <span class="cn">FALSE</span>,
-  rmgenes <span class="op">=</span> <span class="st">"unassigned"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">deconvolute_quantiseq.default</span><span class="op">(</span></span>
+<span>  <span class="va">mix.mat</span>,</span>
+<span>  arrays <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  signame <span class="op">=</span> <span class="st">"TIL10"</span>,</span>
+<span>  tumor <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  mRNAscale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"lsei"</span>,</span>
+<span>  btotalcells <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  rmgenes <span class="op">=</span> <span class="st">"unassigned"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -83,30 +83,45 @@
     <dl><dt>mix.mat</dt>
 <dd><p>table with the gene TPM (or microarray expression values) for all samples to be deconvoluted
 (Gene symbols on the first column and sample IDs on the first row). Expression data must be on non-log scale</p></dd>
+
+
 <dt>arrays</dt>
 <dd><p>specifies whether expression data are from microarrays (instead of RNA-seq).
 If TRUE, the "--rmgenes" parameter is set to "none".</p></dd>
+
+
 <dt>signame</dt>
 <dd><p>name of the signature matrix. Currently only <code>TIL10</code> is available.</p></dd>
+
+
 <dt>tumor</dt>
 <dd><p>specifies whether expression data are from tumor samples. If TRUE, signature genes
 with high expression in tumor samples are removed.
 Default: FALSE.</p></dd>
+
+
 <dt>mRNAscale</dt>
 <dd><p>specifies whether cell fractions must be scaled to account for cell-type-specific
 mRNA content.
 Default: TRUE.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>deconvolution method to be used: "hampel", "huber", or "bisquare" for robust regression
 with Huber, Hampel, or Tukey bisquare estimators, respectively, or "lsei" for constrained
 least squares regression. The fraction of uncharacterized cells ("other") is computed only
 by the "lsei" method.
 Default: "lsei".</p></dd>
+
+
 <dt>btotalcells</dt>
 <dd><p>compute cell densities instead of fractions
 Default: FALSE</p></dd>
+
+
 <dt>rmgenes</dt>
 <dd><p>Default: "default" for RNAseq, "none" for microArray data</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -129,7 +144,7 @@ bioRxiv 223180. https://doi.org/10.1101/223180.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

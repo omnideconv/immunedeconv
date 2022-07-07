@@ -2,11 +2,11 @@
 
 **an R package for unified access to computational methods for estimating immune cell fractions from bulk RNA sequencing data.**
 
-[![tests](https://github.com/icbi-lab/immunedeconv/workflows/tests/badge.svg)](https://github.com/omnideconv/immunedeconv/actions/workflows/test.yml)
-[![test-conda](https://github.com/icbi-lab/immunedeconv/workflows/conda/badge.svg)](https://github.com/omnideconv/immunedeconv/actions/workflows/conda.yml)
+[![tests](https://github.com/omnideconv/immunedeconv/actions/workflows/test.yml/badge.svg)](https://github.com/omnideconv/immunedeconv/actions/workflows/test.yml)
+[![test-conda](https://github.com/omnideconv/immunedeconv/actions/workflows/conda.yml/badge.svg)](https://github.com/omnideconv/immunedeconv/actions/workflows/conda.yml)
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/r-immunedeconv/README.html)
-[![license](https://img.shields.io/badge/license-GPL2-blue.svg)](https://github.com/icbi-lab/immunedeconv/blob/master/LICENSE.md)
-[![docs](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://icbi-lab.github.io/immunedeconv)
+[![license](https://img.shields.io/badge/license-GPL2-blue.svg)](https://github.com/omnideconv/immunedeconv/blob/master/LICENSE.md)
+[![docs](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://omnideconv.github.io/immunedeconv)
 [![Codecov test coverage](https://codecov.io/gh/omnideconv/immunedeconv/branch/master/graph/badge.svg)](https://app.codecov.io/gh/omnideconv/immunedeconv?branch=master)
 
 ## Basic usage
@@ -83,13 +83,13 @@ For more detailed usage instructions, see the Documentation:
 
 ## Available methods, Licenses, Citations
 
-Note that, while _immunedeconv_ itself is free ([BSD](https://github.com/icbi-lab/immunedeconv/blob/master/LICENSE)), you may need to obtain a license to use the individual methods. See the table below for more information. If you use this package in your work, please cite both our package and the method(s) you are using.
+Note that, while _immunedeconv_ itself is free ([BSD](https://github.com/omnideconv/immunedeconv/blob/master/LICENSE)), you may need to obtain a license to use the individual methods. See the table below for more information. If you use this package in your work, please cite both our package and the method(s) you are using.
 
 > Sturm, G., Finotello, F., Petitprez, F., Zhang, J. D., Baumbach, J., Fridman, W. H., ..., List, M., Aneichyk, T. (2019). Comprehensive evaluation of transcriptome-based cell-type quantification methods for immuno-oncology. Bioinformatics, 35(14), i436-i445. https://doi.org/10.1093/bioinformatics/btz363
 
 | method                                                                     | organism | license                                                                                                       | citation                                                                                                                                                                                                                                                                                                                                                                             |
 | -------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [quanTIseq](http://icbi.at/software/quantiseq/doc/index.html)              | human    | free ([BSD](https://github.com/icbi-lab/immunedeconv/blob/master/LICENSE.md))                                 | Finotello, F., Mayer, C., Plattner, C., Laschober, G., Rieder, D., Hackl, H., ..., Sopper, S. (2019). Molecular and pharmacological modulators of the tumor immune contexture revealed by deconvolution of RNA-seq data. Genome medicine, 11(1), 34. https://doi.org/10.1186/s13073-019-0638-6                                                                                       |
+| [quanTIseq](http://icbi.at/software/quantiseq/doc/index.html)              | human    | free ([BSD](https://github.com/omnideconv/immunedeconv/blob/master/LICENSE.md))                               | Finotello, F., Mayer, C., Plattner, C., Laschober, G., Rieder, D., Hackl, H., ..., Sopper, S. (2019). Molecular and pharmacological modulators of the tumor immune contexture revealed by deconvolution of RNA-seq data. Genome medicine, 11(1), 34. https://doi.org/10.1186/s13073-019-0638-6                                                                                       |
 | [TIMER](http://cistrome.org/TIMER/)                                        | human    | free ([GPL 2.0](http://cistrome.org/TIMER/download.html))                                                     | Li, B., Severson, E., Pignon, J.-C., Zhao, H., Li, T., Novak, J., … Liu, X. S. (2016). Comprehensive analyses of tumor immunity: implications for cancer immunotherapy. Genome Biology, 17(1), 174. https://doi.org/10.1186/s13059-016-1028-7                                                                                                                                        |
 | [CIBERSORT](https://cibersort.stanford.edu/)                               | human    | free for non-commerical use only                                                                              | Newman, A. M., Liu, C. L., Green, M. R., Gentles, A. J., Feng, W., Xu, Y., … Alizadeh, A. A. (2015). Robust enumeration of cell subsets from tissue expression profiles. Nature Methods, 12(5), 453–457. https://doi.org/10.1038/nmeth.3337                                                                                                                                          |
 | [MCPCounter](https://github.com/ebecht/MCPcounter)                         | human    | free ([GPL 3.0](https://github.com/ebecht/MCPcounter/blob/master/Source/License))                             | Becht, E., Giraldo, N. A., Lacroix, L., Buttard, B., Elarouci, N., Petitprez, F., … de Reyniès, A. (2016). Estimating the population abundance of tissue-infiltrating immune and stromal cell populations using gene expression. Genome Biology, 17(1), 218. https://doi.org/10.1186/s13059-016-1070-5                                                                               |
@@ -107,7 +107,7 @@ Note that, while _immunedeconv_ itself is free ([BSD](https://github.com/icbi-la
 
 For a benchmark comparison of the human-based methods, please see our [publication](https://doi.org/10.1101/463828).
 If you would like to benchmark additional methods, please see our [benchmark
-pipeline](https://github.com/icbi-lab/immune_deconvolution_benchmark).
+pipeline](https://github.com/omnideconv/immune_deconvolution_benchmark).
 
 ## Installation
 
@@ -152,4 +152,4 @@ remotes::install_github("omnideconv/immunedeconv")
 
 ## Credits
 
-This package was originally developed by [Gregor Sturm](https://github.com/grst) in 2018 at [Pieris Pharmaceuticals GmbH](https://www.pieris.com/) in collaboration with [Markus List](https://biomedical-big-data.de/), [Tatsiana Aneichyk](https://www.independentdatalab.com/team), and [Francesca Finotello](https://computationalbiomedicinegroup.github.io/). Gregor Sturm continued to support this package while at [icbi-lab](https://icbi.at). In 2022, this repository moved to the [omnideconv](https://omnideconv.org) organization, a joint effort of the [List Lab](https://biomedical-big-data.de/) and [Finotello Lab](https://computationalbiomedicinegroup.github.io/) dedicated to improve accessibility of deconvolution methods. At this point [Lorenzo Merotto](https://github.com/LorenzoMerotto) became primary maintainer of the immunedeconv package.
+This package was originally developed by [Gregor Sturm](https://github.com/grst) in 2018 at [Pieris Pharmaceuticals GmbH](https://www.pieris.com/) in collaboration with [Markus List](https://biomedical-big-data.de/), [Tatsiana Aneichyk](https://www.independentdatalab.com/team), and [Francesca Finotello](https://computationalbiomedicinegroup.github.io/). Gregor Sturm continued to support this package while at [ICBI (Med Uni Innsbruck)](https://icbi.at). In 2022, this repository moved to the [omnideconv](https://omnideconv.org) organization, a joint effort of the [List Lab](https://biomedical-big-data.de/) and [Finotello Lab](https://computationalbiomedicinegroup.github.io/) dedicated to improve accessibility of deconvolution methods. At this point [Lorenzo Merotto](https://github.com/LorenzoMerotto) became primary maintainer of the immunedeconv package.

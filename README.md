@@ -2,8 +2,8 @@
 
 **an R package for unified access to computational methods for estimating immune cell fractions from bulk RNA sequencing data.**
 
-[![tests](https://github.com/omnideconv/immunedeconv/workflows/test.yml/badge.svg)](https://github.com/omnideconv/immunedeconv/actions/workflows/test.yml)
-[![test-conda](https://github.com/omnideconv/immunedeconv/workflows/conda/badge.svg)](https://github.com/omnideconv/immunedeconv/actions/workflows/conda.yml)
+[![tests](https://github.com/omnideconv/immunedeconv/actions/workflows/test.yml/badge.svg)](https://github.com/omnideconv/immunedeconv/actions/workflows/test.yml)
+[![test-conda](https://github.com/omnideconv/immunedeconv/actions/workflows/conda/badge.svg)](https://github.com/omnideconv/immunedeconv/actions/workflows/conda.yml)
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/r-immunedeconv/README.html)
 [![license](https://img.shields.io/badge/license-GPL2-blue.svg)](https://github.com/omnideconv/immunedeconv/blob/master/LICENSE.md)
 [![docs](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://omnideconv.github.io/immunedeconv)

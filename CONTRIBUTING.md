@@ -92,32 +92,92 @@ to integrate the changes into yours.
 
 ### Tests
 
-Please write tests! We use [`testthat`](https://testthat.r-lib.org/) to ensure the package works correctly.
-You can refer to the [existing test suite](https://github.com/icbi-lab/immunedeconv/tree/master/tests)
-and the [Testing chapter from the R packages book](http://r-pkgs.had.co.nz/tests.html) when adding new tests.
+We use [`testthat`](https://testthat.r-lib.org/) for automated testing. Automated tests are small pieces of code that
+run the package with small example data to ensure that everything works as expected. If you add new functionality
+to one of the packages, please add the corresponding tests.
 
-TODO continuous integration
-TODO test locally
-TODO integration with rstudio
+To learn more about tests, please refer to the [testing chapter from the R packages book](http://r-pkgs.had.co.nz/tests.html),
+or take a look at one of our existing test suites, e.g. [immunedeconv](https://github.com/omnideconv/immunedeconv/tree/master/tests).
+
+If you are working with RStudio, you can simply press _Cmd/Ctrl + Shift + T_ to execute tests. It is also possible
+to execute tests from the R console:
+
+```r
+devtools::test()
+```
+
+Finally, our continuous integration will automatically run the tests on all pull requests.
 
 ### Conda
 
-TODO adding a dependency
-TODO testing to build the recipe locally
-TODO testing to build the recipe on the CI
-The conda recipe in [bioconda-recipes](TODO) needs to be updated when a new
-release of immunedeconv is created. For more details, see the
-[release](#making-a-release) section.
+For some of our packages (omnideconv, immunedeconv) we cannot distribute the package on the usual repositories
+(CRAN or Bioconductor), since several of our dependencies are not available from there. To provide an alternative
+way of installation in addition to `install_github`, we decided to provide [bioconda packages][bioconda] for those
+repositories.
+
+Conda is a platform-independent package manager that automatically resolves version conflicts and provides
+pre-compiled binaries of the packages. Therefore, conda tends to be faster and more reliable than a direct installation
+from GitHub.
+
+Each conda package has a YAML "recipe", which is hosted on [bioconda-recipes][] (e.g. [immunedeconv][immunedeconv-bioconda]).
+All dependencies must be available either on bioconda or [conda-forge][]. If a dependency is not available from
+there, you'll need to add it. To this end, please follow the instructions from [conda-forge][conda-forge-add-package]
+for general-purpose packages and [bioconda][bioconda-add-package] for packages specific to the biological sciences.
+
+The conda recipe in [bioconda-recipes][] needs to be updated when a new
+release of an omnideconv package is created. For more details, see the [release](#making-a-release) section.
+
+For omnideconv packages that provide a bioconda version, there should be a copy of the `meta.yml` from bioconda-recipes
+in the `.conda` directory. This file is used by the continuous integration to check that the conda recipe
+can be built and used at any time. This file should be kept in sync with the file from bioconda-recipes (i.e.
+when you have to add a dependency to the local `meta.yml` to make the tests pass, you will also need to
+add that depependency to the version from bioconda-recipes on the next release).
+
+It is also possible to test building the package locally. This might be useful for debugging:
+
+```bash
+cd .conda  # or whatever directory your `meta.yml` is in
+conda build . --no-anaconda-upload
+```
 
 ### Documentation
+
+Documentation is essential for the users to correctly use our package, so please take a lot of care when writing
+documentation.
+
+We use [roxygen2][] to build documentation from code comments. It automatically generates manual files (`.Rd`) and the
+`NAMESPACE` file that declares which external functions are used by the package. To learn more about roxygen2, please
+refer to their [getting started vignette][roxygen-get-started].
+
+To build the documentation, run
+
+```r
+devtools::document()
+```
+
+in an R console. If you are using Rstudio, you can simply press _Crtl/Cmd + Shift + D_.
+
+Alternatively, you can rely on our continuous integration to build the documentation of every push to a pull request.
+If the documentation was out of date, it will automatically add a commit with the updated documentation. If the CI
+added a commit to a branch you still have been working on locally, simply use
+
+```bash
+git pull --rebase
+```
+
+to integrate the changes into yours.
+
+#### Writing documentation
+
+To write good docstrings, it's good to keep the following points in mind
 
 - The roxygen2 docstring should describe what the function is doing (try to think about it from
   the prespective of the user).
 - The docstring should describe all parameters and return values.
-- Consider adding an example to one of the [vignettes](https://github.com/icbi-lab/immunedeconv/tree/master/vignettes).
+- Consider adding an example to one of the vignettes
 
-TODO run roxygen locally
-TODO run roxygen on CI
+To learn more about how to write good documentation for R packages, we recommend the "Documentation" chapters of the
+[R packages book][r-pkgs-doc].
 
 #### Previewing documentation
 
@@ -169,3 +229,12 @@ It is meant primarily as a reference for (future) mainainers of omnideconv repos
 [pak]: https://github.com/r-lib/pak
 [pre-commit]: https://pre-commit.com
 [pre-commit.ci]: https://pre-commit.ci
+[bioconda]: https://bioconda.github.io/
+[bioconda-recipes]: https://github.com/bioconda/bioconda-recipes/
+[immunedeconv-bioconda]: https://github.com/bioconda/bioconda-recipes/blob/master/recipes/r-immunedeconv/meta.yaml
+[conda-forge]: https://conda-forge.org/
+[conda-forge-add-package]: https://conda-forge.org/docs/maintainer/adding_pkgs.html
+[bioconda-add-package]: https://bioconda.github.io/contributor/index.html
+[roxygen2]: https://roxygen2.r-lib.org/
+[roxygen-get-started]: https://roxygen2.r-lib.org/articles/roxygen2.html
+[r-pkgs-doc]: https://r-pkgs.org/man.html

@@ -39,7 +39,7 @@ to get started quickly!
 We assume that you are already familiar with gith and with making pull requests on GitHub. If not, there are plenty
 of tutorials available online, e.g. the ["first contributions" tutorial][first-contributions]
 
-[first-contributions]: (https://github.com/firstcontributions/first-contributions/blob/main/README.md).
+[first-contributions]: https://github.com/firstcontributions/first-contributions/blob/main/README.md.
 
 ### Installing dev dependencies
 

@@ -39,7 +39,7 @@ to get started quickly!
 We assume that you are already familiar with gith and with making pull requests on GitHub. If not, there are plenty
 of tutorials available online, e.g. the ["first contributions" tutorial][first-contributions]
 
-[first-contributions]: https://github.com/firstcontributions/first-contributions/blob/main/README.md.
+[first-contributions]: https://github.com/firstcontributions/first-contributions/blob/main/README.md
 
 ### Installing dev dependencies
 
@@ -63,8 +63,8 @@ pak::pkg_install("omnideconv/immunedeconv", dependencies = TRUE)
 Continuous integration are automated services that run on every pull request such as
 
 - code consistency checks
-- build documentation
-- deploy website.
+- automated tests
+- building documentation
 
 We have continuous integration set-up for all repositories. What the different services
 are doing and how you can benefit from them is detailed in the following sections.
@@ -105,7 +105,7 @@ to integrate the changes into yours.
 
 Before a pull request can get merged, the code must pass `R CMD check`.
 
-You can test your packages passes the checks locally by running
+You can test if your packages passes the checks locally by running
 
 ```r
 devtools::check()
@@ -147,12 +147,12 @@ from GitHub.
 Each conda package has a YAML "recipe", which is hosted on [bioconda-recipes][] (e.g. [immunedeconv][immunedeconv-bioconda]).
 All dependencies must be available either on bioconda or [conda-forge][]. If a dependency is not available from
 there, you'll need to add it. To this end, please follow the instructions from [conda-forge][conda-forge-add-package]
-for general-purpose packages and [bioconda][bioconda-add-package] for packages specific to the biological sciences.
+for general-purpose packages, and [bioconda][bioconda-add-package] for packages specific to the biological sciences.
 
 The conda recipe in [bioconda-recipes][] needs to be updated when a new
-release of an omnideconv package is created. For more details, see the [release](#making-a-release) section.
+release of an omnideconv package is created. For more details, see the [making a release](#making-a-release) section.
 
-For omnideconv packages that provide a bioconda version, there should be a copy of the `meta.yml` from bioconda-recipes
+For omnideconv packages that provide a bioconda package, there should be a copy of the `meta.yml` from bioconda-recipes
 in the `.conda` directory. This file is used by the continuous integration to check that the conda recipe
 can be built and used at any time. This file should be kept in sync with the file from bioconda-recipes (i.e.
 when you have to add a dependency to the local `meta.yml` to make the tests pass, you will also need to
@@ -167,8 +167,7 @@ conda build . --no-anaconda-upload
 
 ### Documentation
 
-Documentation is essential for the users to correctly use our package, so please take a lot of care when writing
-documentation.
+Documentation is essential for the users to correctly use our packages, so please take a lot of care writing it.
 
 We use [roxygen2][] to build documentation from code comments. It automatically generates manual files (`.Rd`) and the
 `NAMESPACE` file that declares which external functions are used by the package. To learn more about roxygen2, please

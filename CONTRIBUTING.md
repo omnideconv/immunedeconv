@@ -58,6 +58,17 @@ install.packages("pak")
 pak::pkg_install("omnideconv/immunedeconv", dependencies = TRUE)
 ```
 
+### Continuous integration
+
+Continuous integration are automated services that run on every pull request such as
+
+- code consistency checks
+- build documentation
+- deploy website.
+
+We have continuous integration set-up for all repositories. What the different services
+are doing and how you can benefit from them is detailed in the following sections.
+
 ### Code-style
 
 We use [pre-commit][] to enforce consistent code-styles across projects. On every commit, pre-commit checks will either
@@ -89,6 +100,20 @@ git pull --rebase
 ```
 
 to integrate the changes into yours.
+
+### Checks
+
+Before a pull request can get merged, the code must pass `R CMD check`.
+
+You can test your packages passes the checks locally by running
+
+```r
+devtools::check()
+```
+
+in an R console.
+
+Alternatively, continuous integration will run the checks on every pull request.
 
 ### Tests
 
@@ -179,39 +204,58 @@ To write good docstrings, it's good to keep the following points in mind
 To learn more about how to write good documentation for R packages, we recommend the "Documentation" chapters of the
 [R packages book][r-pkgs-doc].
 
-#### Previewing documentation
+### pkgdown website
 
-TODO build locally
-TODO preview on CI
+We use [pkgdown][] to automatically create a documentation website for each package. The websites are served
+by GitHub pages from the `gh-pages` branch of each repository.
 
-#### Publishing documentation
+The website is built automatically by continuous integration of every pull request. If a pull request gets merged
+into the main branch, the website gets updated automatically. For each pull request a "preview link" is automatically
+generated and added as a comment. From this link, you can inspect how the website will look like given the changes
+from your pull request.
 
-The documentation is automatically built by the continuous integration, and
-published on the omnideconv website every time a pull-request is merged into the
-main branch.
+Alternatively, you can build and preview the website locally by running in an R console
 
-### Checks
-
-bioconductor vs CRAN vs freestyle
+```r
+pkgdown::build_site()
+```
 
 ### Making a release
 
 The package maintainers are in charge of creating releases whenever bugfixes or
 features were merged into the main branch.
 
-This project adheres to [semantic versioning](https://semver.org) for choosing a
-version number.
+Please adhere to [semantic versioning](https://semver.org) for choosing a
+version number, in brief:
 
-To make a release:
+> Given a version number MAJOR.MINOR.PATCH, increment the:
+>
+> - MAJOR version when you make incompatible API changes,
+> - MINOR version when you add functionality in a backwards compatible manner, and
+> - PATCH version when you make backwards compatible bug fixes.
+>
+> Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
 
-1. Create a release in the GitHub interface. Both the tag and the release title
-   should have the format `vX.X.X`.
-2. Provide a summary of the changes since the last release. Each change should
-   link to the corresponding issue or pull-request.
-3. Make sure to give appropriate credits to contributors
-4. Once the release is created, update the recipe on Bioconda. The Bioconda bot
-   should create a pull-request automatically within a day. Update the recipe if
-   necessary and approve and merge the pull-request. `
+#### Release checklist
+
+- [ ] Update the version number in `DESCRIPTION`
+- [ ] Create a release in the GitHub interface. Both the tag and the release title should have the format `vX.X.X`.
+- [ ] Write [release notes](#writing-release-notes) as described below.
+- [ ] Update the bioconda recipe, if applicable. The BiocondaBot should create a pull-request automatically within a day and
+      send a notification. Update the recipe if necessary, then approve and merge the pull-request.
+- [ ] Consider advertising the release, e.g. on twitter
+
+#### Writing release notes
+
+The release notes or "changelog" should provide an overview of the changes introduced since the last release.
+It is good practice to separate it in sections that correspond to the categories of changes used for semantic versioning, i.e.
+
+- backwards incompatible changes,
+- new features, and
+- bug fixes.
+
+Each change should link to the corresponding issue or pull-request. Please make sure to give appropriate credits
+to contributors.
 
 ### Repository set-up
 
@@ -238,3 +282,4 @@ It is meant primarily as a reference for (future) mainainers of omnideconv repos
 [roxygen2]: https://roxygen2.r-lib.org/
 [roxygen-get-started]: https://roxygen2.r-lib.org/articles/roxygen2.html
 [r-pkgs-doc]: https://r-pkgs.org/man.html
+[pkgdown]: https://pkgdown.r-lib.org/

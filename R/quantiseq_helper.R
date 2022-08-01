@@ -8,7 +8,6 @@
 NULL
 
 fixMixture <- function(mix.mat, arrays = FALSE) {
-
   # Map gene names
   mix.mat <- mapGenes(mix.mat)
 
@@ -115,7 +114,6 @@ quanTIseq <- function(currsig, currmix, scaling, method) {
   currmix <- as.matrix(currmix[cgenes, ])
 
   if (method == "lsei") {
-
     # Run deconvolution with constrained least squares
     G <- matrix(0, ncol = ncol(currsig), nrow = ncol(currsig))
     diag(G) <- 1
@@ -127,7 +125,6 @@ quanTIseq <- function(currsig, currmix, scaling, method) {
       scaling = scaling
     )
   } else {
-
     # Run deconvolution with robust regression
     results <- apply(currmix, 2, DCrr,
       A = currsig,
@@ -165,7 +162,6 @@ DClsei <- function(b, A, G, H, scaling) {
 }
 
 DCrr <- function(b, A, method, scaling) {
-
   # Robust regression
   m <- paste0("psi.", method)
   if (m == "psi.hampel") {

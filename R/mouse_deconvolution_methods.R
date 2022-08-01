@@ -139,7 +139,6 @@ deconvolute_seqimmucc <- function(gene_expression_matrix,
 deconvolute_dcq <- function(gene_expression_matrix,
                             ref_samples = NULL, n_repeats = 10,
                             combine_cells = TRUE, ...) {
-
   # We need to scale the counts
   gene_expression_matrix <- as.matrix(gene_expression_matrix)
 

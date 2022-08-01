@@ -9,7 +9,6 @@
 #'
 #' @importFrom MASS rlm
 deconvolute_abis_default <- function(expression, array = FALSE) {
-
   # 2 sets of operations for RNA/Microarray
 
   signature.path <- system.file("extdata", "abis", package = "immunedeconv", mustWork = TRUE)

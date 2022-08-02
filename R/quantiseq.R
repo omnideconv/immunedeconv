@@ -41,9 +41,11 @@ deconvolute_quantiseq.default <- function(mix.mat,
   message("\nRunning quanTIseq deconvolution module\n")
 
   # List of genes to be discarded
-  if (rmgenes == "unassigned" && arrays == TRUE) { # For Microarrays
+  if (rmgenes == "unassigned" && arrays == TRUE) {
+    # For Microarrays
     rmgenes <- "none"
-  } else if (rmgenes == "unassigned" && arrays == FALSE) { # For RNA-seq
+  } else if (rmgenes == "unassigned" && arrays == FALSE) {
+    # For RNA-seq
     rmgenes <- "default"
   }
 

@@ -18,7 +18,6 @@
 #'
 #'
 seqImmuCC_LLSR <- function(signature, SampleData, w = NA, QN = T, sig.scale = F, sig.stand = T, sample.scale = T, log = T) {
-
   # Expression profile format standarlization
   signature <- data.matrix(signature)
   SampleData <- data.matrix(SampleData)

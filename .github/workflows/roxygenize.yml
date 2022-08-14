@@ -23,7 +23,8 @@ jobs:
         with:
           fetch-depth: 0
           # extra token required to trigger github actions again on commit
-          token: ${{ secrets.BOT_GH_TOKEN }}
+          # fall back to GITHUB_TOKEN when a PR is made from a fork
+          token: ${{ secrets.BOT_GH_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2

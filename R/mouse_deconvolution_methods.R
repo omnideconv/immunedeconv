@@ -94,7 +94,7 @@ deconvolute_seqimmucc <- function(gene_expression_matrix,
 
     temp.expression.file <- tempfile()
 
-    write_tsv(as_tibble(gene_expression_matrix, rownames = "gene_symbol"), path = temp.expression.file)
+    write_tsv(as_tibble(gene_expression_matrix, rownames = "gene_symbol"), file = temp.expression.file)
     perm <- 100
     # results = CIBERSORT(signature.path, temp.expression.file, perm, QN=FALSE, ...)
     # results = results %>%

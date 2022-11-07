@@ -20,10 +20,11 @@ NULL
 cell_type_map <- NULL
 # gets attached on .onLoad, see zzz.R
 .get_cell_type_map <- function() {
-  readxl::read_xlsx(system.file("extdata", "cell_type_mapping.xlsx",
-    package = "immunedeconv", mustWork = TRUE
-  ),
-  sheet = "mapping"
+  readxl::read_xlsx(
+    system.file("extdata", "cell_type_mapping.xlsx",
+      package = "immunedeconv", mustWork = TRUE
+    ),
+    sheet = "mapping"
   ) %>%
     select(method_dataset, method_cell_type, cell_type) %>%
     na.omit()
@@ -49,10 +50,11 @@ available_datasets <- NULL
 cell_type_list <- NULL
 .get_cell_type_list <- function() {
   suppressWarnings({
-    tmp_sheet <- readxl::read_excel(system.file("extdata", "cell_type_mapping.xlsx",
-      package = "immunedeconv", mustWork = TRUE
-    ),
-    sheet = "controlled_vocabulary"
+    tmp_sheet <- readxl::read_excel(
+      system.file("extdata", "cell_type_mapping.xlsx",
+        package = "immunedeconv", mustWork = TRUE
+      ),
+      sheet = "controlled_vocabulary"
     )
   })
   tmp_list <- tmp_sheet %>%

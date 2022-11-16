@@ -57,8 +57,7 @@ Remotes:
     GfellerLab/EPIC,
     grst/MCPcounter,
     grst/mMCPcounter,
-    cansysbio/ConsensusTME,
-    federicomarini/quantiseqr
+    cansysbio/ConsensusTME
 VignetteBuilder: knitr
 License: GPL-2 + file LICENSE
 Encoding: UTF-8

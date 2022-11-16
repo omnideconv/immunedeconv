@@ -213,9 +213,15 @@ deconvolute_epic <- function(gene_expression_matrix, tumor, scale_mrna, ...) {
 #'
 #' @export
 deconvolute_quantiseq <- function(gene_expression_matrix, tumor, arrays, scale_mrna, ...) {
-  arguments <- dots_list(gene_expression_matrix, tumor = tumor, arrays = arrays, mRNAscale = scale_mrna, ..., .homonyms = "last")
-  call <- rlang::call2(deconvolute_quantiseq.default, !!!arguments)
-  res <- eval(call)
+  # arguments <- dots_list(gene_expression_matrix, tumor = tumor, arrays = arrays, mRNAscale = scale_mrna, ..., .homonyms = "last")
+  # call <- rlang::call2(deconvolute_quantiseq.default, !!!arguments)
+  # res <- eval(call)
+  
+  res <- quantiseqr::run_quantiseq(expression_data = gene_expression_matrix, 
+                                   is_arraydata = arrays, 
+                                   is_tumordata = tumor, 
+                                   scale_mRNA = scale_mrna, 
+                                   ...)
 
   sample_names <- res$Sample
   res_mat <- res %>%

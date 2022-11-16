@@ -39,7 +39,8 @@ Imports:
     ComICS,
     mMCPcounter,
     matrixStats,
-    stringr
+    stringr, 
+    quantiseqr
 Suggests:
     testthat,
     knitr,
@@ -56,7 +57,8 @@ Remotes:
     GfellerLab/EPIC,
     grst/MCPcounter,
     grst/mMCPcounter,
-    cansysbio/ConsensusTME
+    cansysbio/ConsensusTME, 
+    federicomarini/quantiseqr
 VignetteBuilder: knitr
 License: GPL-2 + file LICENSE
 Encoding: UTF-8

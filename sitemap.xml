@@ -118,9 +118,6 @@
     <loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_mouse.html</loc>
   </url>
   <url>
-    <loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_quantiseq.default.html</loc>
-  </url>
-  <url>
     <loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_quantiseq.html</loc>
   </url>
   <url>
@@ -185,9 +182,6 @@
   </url>
   <url>
     <loc>https://icbi-lab.github.io/immunedeconv/reference/node_by_name.html</loc>
-  </url>
-  <url>
-    <loc>https://icbi-lab.github.io/immunedeconv/reference/quantiseq_helper.html</loc>
   </url>
   <url>
     <loc>https://icbi-lab.github.io/immunedeconv/reference/reduce_mouse_cell_types.html</loc>

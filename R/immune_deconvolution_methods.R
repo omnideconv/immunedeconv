@@ -227,7 +227,6 @@ deconvolute_quantiseq <- function(gene_expression_matrix, tumor, arrays, scale_m
     select(-Sample) %>%
     as.matrix()
   rownames(res_mat) <- sample_names
-
   t(res_mat)
 }
 

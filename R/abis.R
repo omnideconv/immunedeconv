@@ -25,7 +25,7 @@ deconvolute_abis_default <- function(expression, array = FALSE) {
     signature <- read.delim(signature.path.micro, check.names = F)
     target <- read.delim(signature.path.target, header = F)
     genes <- intersect(rownames(expression), rownames(signature))
-    expression2 <- normalize.quantiles.use.target(as.matrix(expression[genes, ]), target[, 1], copy = TRUE, subset = NULL)
+    expression2 <- preprocessCore::normalize.quantiles.use.target(as.matrix(expression[genes, ]), target[, 1], copy = TRUE, subset = NULL)
     colnames(expression2) <- colnames(expression)
     rownames(expression2) <- genes
     Dec <- (apply(expression2, 2, function(x) coef(rlm(as.matrix(signature[genes, ]), x, maxit = 100)))) * 100

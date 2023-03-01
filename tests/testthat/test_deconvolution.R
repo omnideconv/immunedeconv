@@ -97,6 +97,19 @@ test_that("consensus_tme with multiple indications, ordered and unordered", {
 })
 
 
+test_that("consensus_tme with multiple indications, including Undetermined", {
+  indications_1 <- c("blca", "blca", "brca", "brca", "brca", "brca", "chol", "chol", "Undetermined", "Undetermined")
+  indications_2 <- c("brca", "Undetermined", "brca", "blca", "Undetermined", "chol", "chol", "brca", "brca", "blca")
+  res_1 <- deconvolute_consensus_tme(test_mat, indications = indications_1)
+  res_2 <- deconvolute_consensus_tme(test_mat, indications = indications_2)
+  assert("matrix dimensions consistent", ncol(res_1) == ncol(test_mat))
+  assert("matrix dimensions consistent", ncol(res_2) == ncol(test_mat))
+
+  order.samples <- order(toupper(indications_2))
+
+  assert("proper results", all(colnames(res_1)[order.samples] == colnames(res_2)))
+})
+
 test_that("generic deconvolution works for all methods", {
   lapply(deconvolution_methods, function(method) {
     # cibersort requires the binary path to be set, n/a in unittest.

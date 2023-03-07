@@ -18,12 +18,12 @@ test_that("DCQ works", {
 })
 
 test_that("BASE works", {
-  res <- deconvolute_base_algorithm(test_mat)
+  res <- deconvolute_base_algorithm(test_mat, n_permutations = 5)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
 })
 
 test_that("DCQ works without reducing cell types", {
-  res <- deconvolute_dcq(test_mat, combine_cells = FALSE)
+  res <- deconvolute_dcq(test_mat, combine_cells = FALSE, n_repeats = 5)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
 })
 

@@ -306,7 +306,7 @@ deconvolute_consensus_tme <- function(gene_expression_matrix,
                                       method = "ssgsea",
                                       ...) {
   indications <- toupper(indications)
-  indications[indications == 'UNFILTERED'] <- 'Unfiltered'
+  indications[indications == "UNFILTERED"] <- "Unfiltered"
   assert("indications fit to mixture matrix", length(indications) == ncol(gene_expression_matrix))
 
   gene_expression_matrix <- as.matrix(gene_expression_matrix)

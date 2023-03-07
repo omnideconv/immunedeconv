@@ -13,7 +13,7 @@ test_that("remapping with estimate works", {
   res <- deconvolute(test_mat, "estimate")
   res <- map_result_to_celltypes(res, c(
     "stroma score", "immune score",
-    "tumor purity score", "tumor purity fraction"
+    "estimate score", "tumor purity"
   ))
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
   assert("matrix dimensions consistent", nrow(res) == 4)

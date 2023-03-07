@@ -31,6 +31,7 @@ requirements:
     - bioconductor-biocparallel
     - bioconductor-preprocesscore
     - bioconductor-sva
+    - bioconductor-quantiseqr
     - r-xcell >=1.2
     - r-epic >=1.1
     - r-mcpcounter
@@ -53,6 +54,7 @@ requirements:
     - bioconductor-biocparallel
     - bioconductor-preprocesscore
     - bioconductor-sva
+    - bioconductor-quantiseqr
     - r-xcell >=1.2
     - r-epic >=1.1
     - r-mcpcounter

@@ -97,9 +97,9 @@ test_that("consensus_tme with multiple indications, ordered and unordered", {
 })
 
 
-test_that("consensus_tme with multiple indications, including Undetermined", {
-  indications_1 <- c("blca", "blca", "brca", "brca", "brca", "brca", "chol", "chol", "Undetermined", "Undetermined")
-  indications_2 <- c("brca", "Undetermined", "brca", "blca", "Undetermined", "chol", "chol", "brca", "brca", "blca")
+test_that("consensus_tme with multiple indications, including 'Unfiltered'", {
+  indications_1 <- c("blca", "blca", "brca", "brca", "chol", "chol", "Unfiltered", "Unfiltered")
+  indications_2 <- c("brca", "Unfiltered", "brca", "blca", "Unfiltered", "chol", "chol", "blca")
   res_1 <- deconvolute_consensus_tme(test_mat, indications = indications_1)
   res_2 <- deconvolute_consensus_tme(test_mat, indications = indications_2)
   assert("matrix dimensions consistent", ncol(res_1) == ncol(test_mat))

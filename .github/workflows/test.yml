@@ -20,6 +20,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
+          - { os: macOS-latest, r: "release" }
+          - { os: windows-latest, r: "release" }
           - { os: ubuntu-latest, r: "devel", http-user-agent: "release" }
           - { os: ubuntu-latest, r: "release" }
           - { os: ubuntu-latest, r: "oldrel-1" }
@@ -39,17 +41,17 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+
       - name: Manually install preprocessCore
         if: ${{ !(matrix.config.os == "windows-latest" || matrix.config.os == "macOS-latest") }}
         run: |
           git clone https://github.com/bmbolstad/preprocessCore.git
           cd preprocessCore
           R CMD INSTALL --configure-args="--disable-threading"  .
-
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::rcmdcheck
-          needs: check
 
       - uses: r-lib/actions/check-r-package@v2
         with:

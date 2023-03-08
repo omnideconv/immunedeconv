@@ -41,6 +41,12 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      - name: Manually install preprocessCore
+        run: |
+          git clone https://github.com/bmbolstad/preprocessCore.git
+          cd preprocessCore
+          R CMD INSTALL --configure-args="--disable-threading"  .
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
@@ -49,3 +55,5 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
+
+

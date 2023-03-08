@@ -40,6 +40,7 @@ jobs:
           use-public-rspm: true
 
       - name: Manually install preprocessCore
+        if: ${{ !(matrix.config.os == "windows-latest" || matrix.config.os == "macOS-latest") }}
         run: |
           git clone https://github.com/bmbolstad/preprocessCore.git
           cd preprocessCore

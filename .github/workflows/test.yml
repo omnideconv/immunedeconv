@@ -46,7 +46,7 @@ jobs:
           needs: check
 
       - name: Manually install preprocessCore
-        if: ${{ !(matrix.config.os == "windows-latest" || matrix.config.os == "macOS-latest") }}
+        if: ${{ !(matrix.config.os == 'windows-latest' || matrix.config.os == 'macOS-latest') }}
         run: |
           git clone https://github.com/bmbolstad/preprocessCore.git
           cd preprocessCore

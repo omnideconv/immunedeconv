@@ -29,6 +29,13 @@ jobs:
           extra-packages: any::covr
           needs: coverage
 
+      - name: Manually install preprocessCore
+        if: ${{ !(matrix.config.os == 'windows-latest' || matrix.config.os == 'macOS-latest') }}
+        run: |
+          git clone https://github.com/bmbolstad/preprocessCore.git
+          cd preprocessCore
+          R CMD INSTALL --configure-args="--disable-threading"  .
+
       - name: Test coverage
         run: covr::codecov(quiet = FALSE)
         shell: Rscript {0}

@@ -257,7 +257,7 @@ deconvolute_cibersort <- function(gene_expression_matrix,
   source(get("cibersort_binary", envir = config_env))
 
   tmp_mat <- tempfile()
-  write_tsv(as_tibble(gene_expression_matrix, rownames = "gene_symbol"), path = tmp_mat)
+  write_tsv(as_tibble(gene_expression_matrix, rownames = "gene_symbol"), file = tmp_mat)
 
   arguments <- dots_list(get("cibersort_mat", envir = config_env), tmp_mat,
     perm = 0,
@@ -309,6 +309,7 @@ deconvolute_consensus_tme <- function(gene_expression_matrix,
                                       method = "ssgsea",
                                       ...) {
   indications <- toupper(indications)
+  indications[indications == "UNFILTERED"] <- "Unfiltered"
   assert("indications fit to mixture matrix", length(indications) == ncol(gene_expression_matrix))
 
   gene_expression_matrix <- as.matrix(gene_expression_matrix)

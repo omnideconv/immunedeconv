@@ -57,7 +57,8 @@ Remotes:
     GfellerLab/EPIC,
     grst/MCPcounter,
     grst/mMCPcounter,
-    cansysbio/ConsensusTME
+    cansysbio/ConsensusTME,
+    lydiaMyr/ImmuCellAI-mouse
 VignetteBuilder: knitr
 License: GPL-2 + file LICENSE
 Encoding: UTF-8

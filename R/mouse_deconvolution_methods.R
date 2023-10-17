@@ -268,9 +268,11 @@ mouse_genes_to_human <- function(gene_expression_matrix, mirror = "www", manual_
   genes.retrieved <- NULL
   tryCatch(
     expr = {
-      genes.retrieved <<- getLDS(attributes = c("mgi_symbol"),
-                                 filters = "mgi_symbol", values = gene.names.mouse,
-                                 mart = mouse, attributesL = c("hgnc_symbol"), martL = human, uniqueRows = T)
+      genes.retrieved <<- getLDS(
+        attributes = c("mgi_symbol"),
+        filters = "mgi_symbol", values = gene.names.mouse,
+        mart = mouse, attributesL = c("hgnc_symbol"), martL = human, uniqueRows = T
+      )
 
       newGenes.counts <- gene_expression_matrix %>%
         left_join(., genes.retrieved, by = c("gene_name" = "MGI.symbol")) %>%
@@ -289,32 +291,33 @@ mouse_genes_to_human <- function(gene_expression_matrix, mirror = "www", manual_
 
       message(paste0("ATTENTION: Only the ", fraction, "% of genes was maintained"))
     },
-    error = function(e){
-      print('Cannot connect to ENSEMBL. Using alternative method. This will take some time.')
+    error = function(e) {
+      print("Cannot connect to ENSEMBL. Using alternative method. This will take some time.")
 
-      if(manual_annot){
-
+      if (manual_annot) {
         # Code adapted from: https://support.bioconductor.org/p/129636/#9144606
 
-        mouse_human_genes = read.csv("http://www.informatics.jax.org/downloads/reports/HOM_MouseHumanSequence.rpt",sep="\t")
+        mouse_human_genes <- read.csv("http://www.informatics.jax.org/downloads/reports/HOM_MouseHumanSequence.rpt", sep = "\t")
 
-        find_corr_gene <- function(gene, mouse_human_genes_df){
-          class_key = (mouse_human_genes_df %>%
-                         filter(Symbol == gene & Common.Organism.Name=="mouse, laboratory"))[['DB.Class.Key']]
-          if(!identical(class_key, integer(0)) ){
+        find_corr_gene <- function(gene, mouse_human_genes_df) {
+          class_key <- (mouse_human_genes_df %>%
+            filter(Symbol == gene & Common.Organism.Name == "mouse, laboratory"))[["DB.Class.Key"]]
+          if (!identical(class_key, integer(0))) {
             output <- NULL
-            human_genes = (mouse_human_genes_df %>% filter(DB.Class.Key == class_key & Common.Organism.Name=="human"))[,"Symbol"]
-            for(human_gene in human_genes){
-              output = append(output, human_gene)
+            human_genes <- (mouse_human_genes_df %>% filter(DB.Class.Key == class_key & Common.Organism.Name == "human"))[, "Symbol"]
+            for (human_gene in human_genes) {
+              output <- append(output, human_gene)
             }
-            if(!is.null(output)){
+            if (!is.null(output)) {
               return(
                 data.frame(
-                  'human_gene' = output,
-                  'mouse_gene' = gene))
+                  "human_gene" = output,
+                  "mouse_gene" = gene
+                )
+              )
             }
-
-          }}
+          }
+        }
 
         genes.retrieved <- map_dfr(gene.names.mouse, function(x) find_corr_gene(x, mouse_human_genes))
 
@@ -328,9 +331,9 @@ mouse_genes_to_human <- function(gene_expression_matrix, mirror = "www", manual_
           round(., 1)
 
         message(paste0("ATTENTION: Only the ", fraction, "% of genes was maintained"))
-
       }
-    })
+    }
+  )
 
   return(newGenes.counts)
 }

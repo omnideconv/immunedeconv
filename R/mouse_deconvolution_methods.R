@@ -331,93 +331,47 @@ deconvolute_mouse <- function(gene_expression_matrix,
 
 #' This function converts the mouse gene symbols into corresponding human ones.
 #'
-#' This function relies on the `biomaRt`` package and connects to the ENSEMBL repository
-#'  to retrieve the gene symbols. If ENSEMBL cannot be reached, another solution will be
-#'  used. Since it is memory intensive, users can choose not to run it.
+#' This function relies on the `biomaRt`` package.
 #'
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples.
 #'    Gene symbols must be the rownames of the matrix.
 #' @param mirror the ensembl mirror to use. Possible choices are 'www' (default),
 #'    'uswest', 'useast', 'asia'
-#' @param other_annot boolean, wether to run the other conversion method (might be memory intensive)
 #' @return the same matrix, with the counts for the corresponding human genes.
 #'    This matrix can directly be used with the immunedeconv methods. A message
 #'    will display the ratio of original genes which were converted.
 #'
 #' @export
-mouse_genes_to_human <- function(gene_expression_matrix, mirror = "www", manual_annot) {
+mouse_genes_to_human <- function(gene_expression_matrix, mirror = "www") {
   gene.names.mouse <- rownames(gene_expression_matrix)
   gene_expression_matrix$gene_name <- gene.names.mouse
 
+  # human = useMart('ensembl', dataset = 'hsapiens_gene_ensembl')
+  # mouse = useMart('ensembl', dataset = 'mmusculus_gene_ensembl')
   human <- useEnsembl("ensembl", dataset = "hsapiens_gene_ensembl", mirror = mirror)
   mouse <- useEnsembl("ensembl", dataset = "mmusculus_gene_ensembl", mirror = mirror)
+  genes.retrieved <- getLDS(
+    attributes = c("mgi_symbol"), filters = "mgi_symbol", values = gene.names.mouse,
+    mart = mouse, attributesL = c("hgnc_symbol"), martL = human, uniqueRows = T
+  )
 
-  genes.retrieved <- NULL
-  tryCatch(
-    expr = {
-      genes.retrieved <<- getLDS(attributes = c("mgi_symbol"),
-                                 filters = "mgi_symbol", values = gene.names.mouse,
-                                 mart = mouse, attributesL = c("hgnc_symbol"), martL = human, uniqueRows = T)
 
-      newGenes.counts <- gene_expression_matrix %>%
-        left_join(., genes.retrieved, by = c("gene_name" = "MGI.symbol")) %>%
-        select(., -c("gene_name")) %>%
-        select(., c("HGNC.symbol", everything())) %>%
-        .[!(is.na(.$HGNC.symbol)), ]
+  newGenes.counts <- gene_expression_matrix %>%
+    left_join(., genes.retrieved, by = c("gene_name" = "MGI.symbol")) %>%
+    select(., -c("gene_name")) %>%
+    select(., c("HGNC.symbol", everything())) %>%
+    .[!(is.na(.$HGNC.symbol)), ]
 
-      colnames(newGenes.counts)[1] <- "gene_name"
-      newGenes.counts <- newGenes.counts[!(duplicated(newGenes.counts$gene_name)), ] %>%
-        as.data.frame(.)
-      rownames(newGenes.counts) <- newGenes.counts$gene_name
-      newGenes.counts <- select(newGenes.counts, -c("gene_name"))
+  colnames(newGenes.counts)[1] <- "gene_name"
+  newGenes.counts <- newGenes.counts[!(duplicated(newGenes.counts$gene_name)), ] %>%
+    as.data.frame(.)
+  rownames(newGenes.counts) <- newGenes.counts$gene_name
+  newGenes.counts <- select(newGenes.counts, -c("gene_name"))
 
-      fraction <- 100 * (nrow(newGenes.counts) / nrow(gene_expression_matrix)) %>%
-        round(., 1)
+  fraction <- 100 * (nrow(newGenes.counts) / nrow(gene_expression_matrix)) %>%
+    round(., 1)
 
-      message(paste0("ATTENTION: Only the ", fraction, "% of genes was maintained"))
-  },
-    error = function(e){
-      print('Cannot connect to ENSEMBL. Using alternative method. This will take some time.')
-
-      if(manual_annot){
-
-        # Code adapted from: https://support.bioconductor.org/p/129636/#9144606
-
-        mouse_human_genes = read.csv("http://www.informatics.jax.org/downloads/reports/HOM_MouseHumanSequence.rpt",sep="\t")
-
-        find_corr_gene <- function(gene, mouse_human_genes_df){
-          class_key = (mouse_human_genes_df %>%
-                         filter(Symbol == gene & Common.Organism.Name=="mouse, laboratory"))[['DB.Class.Key']]
-          if(!identical(class_key, integer(0)) ){
-            output <- NULL
-            human_genes = (mouse_human_genes_df %>% filter(DB.Class.Key == class_key & Common.Organism.Name=="human"))[,"Symbol"]
-            for(human_gene in human_genes){
-              output = append(output, human_gene)
-            }
-            if(!is.null(output)){
-              return(
-                data.frame(
-                  'human_gene' = output,
-                  'mouse_gene' = gene))
-            }
-
-          }}
-
-        genes.retrieved <- map_dfr(gene.names.mouse, function(x) find_corr_gene(x, mouse_human_genes))
-
-        newGenes.counts <- gene_expression_matrix %>%
-          left_join(., genes.retrieved, by = c("gene_name" = "mouse_gene")) %>%
-          select(., -c("gene_name")) %>%
-          select(., c("human_gene", everything())) %>%
-          .[!(is.na(.$human_gene)), ]
-
-        fraction <- 100 * (nrow(newGenes.counts) / nrow(gene_expression_matrix)) %>%
-          round(., 1)
-
-        message(paste0("ATTENTION: Only the ", fraction, "% of genes was maintained"))
-
-      }
-  })
+  message(paste0("ATTENTION: Only the ", fraction, "% of genes was maintained"))
 
   return(newGenes.counts)
 }

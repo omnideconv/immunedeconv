@@ -4,7 +4,11 @@
 \alias{mouse_genes_to_human}
 \title{This function converts the mouse gene symbols into corresponding human ones.}
 \usage{
-mouse_genes_to_human(gene_expression_matrix, mirror = "www", manual_annot)
+mouse_genes_to_human(
+  gene_expression_matrix,
+  mirror = "www",
+  other_annot = TRUE
+)
 }
 \arguments{
 \item{gene_expression_matrix}{a m x n matrix with m genes and n samples.

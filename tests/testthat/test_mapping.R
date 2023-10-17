@@ -1,4 +1,3 @@
-
 test_that("cell_type mapping to a single method_cell_type are calculated correctly", {
   fractions <- data.frame(sample1 = c("B cell" = .3, "T cell CD4+" = .5, "Myeloid dendritic cell" = .2))
   cell_type <- "T cell CD4+"

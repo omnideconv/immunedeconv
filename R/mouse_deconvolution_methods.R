@@ -252,7 +252,7 @@ deconvolute_mouse <- function(gene_expression_matrix,
 #'    Gene symbols must be the rownames of the matrix.
 #' @param mirror the ensembl mirror to use. Possible choices are 'www' (default),
 #'    'uswest', 'useast', 'asia'
-#' @param other_annot boolean, wether to run the other conversion method (might be memory intensive)
+#' @param manual_annot boolean, wether to run the other conversion method (might be memory intensive)
 #' @return the same matrix, with the counts for the corresponding human genes.
 #'    This matrix can directly be used with the immunedeconv methods. A message
 #'    will display the ratio of original genes which were converted.

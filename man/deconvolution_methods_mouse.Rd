@@ -5,11 +5,11 @@
 \alias{deconvolution_methods_mouse}
 \title{List of supported mouse deconvolution methods
 The methods currently supported are
-\code{mmcp_counter}, \code{seqimmucc}, \code{dcq}, \code{base}
+\code{mmcp_counter}, \code{seqimmucc}, \code{dcq}, \code{base}, \code{immucellai_mouse}
 The object is a named vector. The names correspond to the display name of the method,
 the values to the internal name.}
 \format{
-An object of class \code{character} of length 4.
+An object of class \code{character} of length 5.
 }
 \usage{
 deconvolution_methods_mouse
@@ -17,7 +17,7 @@ deconvolution_methods_mouse
 \description{
 List of supported mouse deconvolution methods
 The methods currently supported are
-\code{mmcp_counter}, \code{seqimmucc}, \code{dcq}, \code{base}
+\code{mmcp_counter}, \code{seqimmucc}, \code{dcq}, \code{base}, \code{immucellai_mouse}
 The object is a named vector. The names correspond to the display name of the method,
 the values to the internal name.
 }

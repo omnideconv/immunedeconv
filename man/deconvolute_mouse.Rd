@@ -9,6 +9,7 @@ deconvolute_mouse(
   method = deconvolution_methods_mouse,
   rmgenes = NULL,
   column = "gene_symbol",
+  arrays = FALSE,
   algorithm = NULL,
   ...
 )
@@ -24,6 +25,8 @@ counts are prefereable.}
 
 \item{column}{Only relevant if \code{gene_expression} is an ExpressionSet. Defines in which column
 of fData the HGNC symbol can be found.}
+
+\item{arrays}{Set to TRUE if microarray data, to FALSE for RNASeq. Default FALSE}
 
 \item{algorithm}{statistcal algorithm for SeqImmuCC (ignored by all other methods)}
 

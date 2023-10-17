@@ -4,7 +4,7 @@
 \alias{mouse_genes_to_human}
 \title{This function converts the mouse gene symbols into corresponding human ones.}
 \usage{
-mouse_genes_to_human(gene_expression_matrix, mirror = "www")
+mouse_genes_to_human(gene_expression_matrix, mirror = "www", manual_annot)
 }
 \arguments{
 \item{gene_expression_matrix}{a m x n matrix with m genes and n samples.
@@ -12,6 +12,8 @@ Gene symbols must be the rownames of the matrix.}
 
 \item{mirror}{the ensembl mirror to use. Possible choices are 'www' (default),
 'uswest', 'useast', 'asia'}
+
+\item{other_annot}{boolean, wether to run the other conversion method (might be memory intensive)}
 }
 \value{
 the same matrix, with the counts for the corresponding human genes.
@@ -19,5 +21,7 @@ This matrix can directly be used with the immunedeconv methods. A message
 will display the ratio of original genes which were converted.
 }
 \description{
-This function relies on the `biomaRt`` package.
+This function relies on the `biomaRt`` package and connects to the ENSEMBL repository
+to retrieve the gene symbols. If ENSEMBL cannot be reached, another solution will be
+used. Since it is memory intensive, users can choose not to run it.
 }

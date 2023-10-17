@@ -8,6 +8,7 @@
 #' @import stringr
 #' @import mMCPcounter
 #' @import ComICS
+#' @import ImmuCellAImouse
 #' @importFrom biomaRt useEnsembl getLDS
 #' @importFrom tibble as_tibble
 #' @importFrom rlang dots_list
@@ -184,7 +185,7 @@ deconvolute_dcq <- function(gene_expression_matrix,
 #' @param combine_cells logical. This method estimates several cell types (~180).
 #'    If TRUE (default), these are combined into 19 major immune-stromal cell types.
 #' @export
-deconvolute_base_algorithm <- function(gene_expression_matrix, n_permutations = 100,
+deconvolute_base_algorithm <- function(gene_expression_matrix, n_permutations = 10,
                                        log10 = TRUE, combine_cells = TRUE) {
   base.compendium.path <- system.file("extdata", "mouse_deconvolution", "BASE_cell_compendium.rds",
     package = "immunedeconv", mustWork = TRUE
@@ -201,7 +202,7 @@ deconvolute_base_algorithm <- function(gene_expression_matrix, n_permutations = 
 }
 
 
-#' List of cells in the different immucell_ai layers (mouse method)
+#' List of cells in the different immucellai layers (mouse method)
 
 #' @param layer one of '1', '2', '3'
 #' @param print logical, wether to print the cell types included in the layer
@@ -212,12 +213,12 @@ get_immucellai_mouse_layers <- function(layer = c('1', '2', '3'), print = FALSE)
   layer <- match.arg(layer);
 
   cell_types <- switch(layer,
-                       '1' = c('B_cell', 'Dendritic_cell', 'T_cell', 'Granulocytes', 'Monocytes', 'NK', 'Macrophage'),
+                       '1' = c('B_cell', 'Dendritic_cells', 'T_cell', 'Granulocytes', 'Monocytes', 'NK', 'Macrophage'),
                        '2' = c('B1_cell', 'Follicular_B', 'Germinal_center_B', 'Marginal_Zone_B',
                                'Memory_B', 'Plasma_cell', 'cDC1', 'cDC2', 'MoDC', 'pDC', 'Basophil',
                                'Eosinophil', 'mast_cell', 'Neutrophils', 'M1_macrophage', 'M2_macrophage',
                                'CD4_T_cell', 'CD8_T_cell', 'NKT', 'Tgd'),
-                       '3' = c('CD4_Tm', 'Naive_CD4_T', 'T_helper_cell', 'Treg', 'CD8_Tc', 'CD8_Tcm', 'CD8_T_em',
+                       '3' = c('CD4_Tm', 'Naive_CD4_T', 'T_helper_cell', 'Treg', 'CD8_Tc', 'CD8_Tcm', 'CD8_Tem',
                                'CD8_Tex', 'Naive_CD8_T')
   )
 
@@ -241,19 +242,21 @@ get_immucellai_mouse_layers <- function(layer = c('1', '2', '3'), print = FALSE)
 #' @export
 #'
 deconvolute_immucellai_mouse <- function(gene_expression_matrix, arrays,
-                                         layer2 = FALSE, layer3 = FALSE) {
+                                         layer2 = FALSE, layer3 = FALSE, group = FALSE,
+                                         customer = FALSE, ...) {
 
   data.type <- ifelse(arrays, 'microarray', 'rnaseq')
-
-  ImmuCellAI_mouse(petiprez.data.tpm, data.type, 0, 0)
+  group.tag <- ifelse(group, 1, 0)
 
   arguments <- dots_list(
     sample = gene_expression_matrix,
     data_type = data.type,
-    ..., .homonyms = "last"
+    group_tag = group.tag,
+    customer = 0, ...,
+    .homonyms = "last"
   )
 
-  call <- rlang::call2(ImmuCellAImouse::ImmuCellAI_mouse, !!!arguments)
+  call <- rlang::call2(ImmuCellAI_mouse, !!!arguments)
   results <- eval(call)
   results <- as.data.frame(results$abundance)
 

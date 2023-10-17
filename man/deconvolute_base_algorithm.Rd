@@ -6,7 +6,7 @@
 \usage{
 deconvolute_base_algorithm(
   gene_expression_matrix,
-  n_permutations = 100,
+  n_permutations = 10,
   log10 = TRUE,
   combine_cells = TRUE
 )

@@ -84,7 +84,8 @@ test_that("get_all_children throws an error on unknown cell type", {
 test_that("get_all_children works without specifying a method", {
   cell_type <- "Myeloid dendritic cell"
   assert(all(sort(get_all_children(cell_type)) ==
-    sort(c("Myeloid dendritic cell resting", "Myeloid dendritic cell activated", "Myeloid dendritic cell"))))
+    sort(c("conventional Dendritic cell type 1", "conventional Dendritic cell type 2",
+           "Myeloid dendritic cell", "Myeloid dendritic cell resting", "Myeloid dendritic cell activated"))))
 
   cell_type <- "T cell CD4+"
   assert(all(sort(get_all_children(cell_type)) ==

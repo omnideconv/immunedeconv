@@ -5,7 +5,7 @@
 \alias{cell_type_list}
 \title{List with controlled cell-type vocabulary}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 76 rows and 3 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 86 rows and 3 columns.
 }
 \usage{
 cell_type_list

@@ -33,7 +33,7 @@ reference:
       - deconvolute_seqimmucc
       - deconvolute_base_algorithm
       - deconvolute_dcq
-      - mouse_genes_to_human
+      - convert_human_mouse_genes
   - title: Deconvolution methods with custom signature
     desc: Access to the individual deconvolution methods that allow the use of a custom signature (matrix or gene set)
     contents:

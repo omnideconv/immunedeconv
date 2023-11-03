@@ -4,18 +4,11 @@
 \alias{convert_human_mouse_genes}
 \title{This function converts the mouse gene symbols into corresponding human ones, and vice versa.}
 \usage{
-<<<<<<< HEAD:man/convert_human_mouse_genes.Rd
 convert_human_mouse_genes(
   gene_expression_matrix,
   mirror = "www",
   other_annot = TRUE,
   convert_to = c("human", "mouse")
-=======
-mouse_genes_to_human(
-  gene_expression_matrix,
-  mirror = "www",
-  other_annot = TRUE
->>>>>>> a7e4ee9993aa94f268e862263eaf226a251514f9:man/mouse_genes_to_human.Rd
 )
 }
 \arguments{

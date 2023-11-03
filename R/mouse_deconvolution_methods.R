@@ -260,7 +260,7 @@ deconvolute_mouse <- function(gene_expression_matrix,
 #'
 #' @export
 convert_human_mouse_genes <- function(gene_expression_matrix, mirror = "www",
-                                      other_annot = TRUE, convert_to = c('human', 'mouse')) {
+                                      other_annot = TRUE, convert_to = c("human", "mouse")) {
   gene.names <- rownames(gene_expression_matrix)
   gene_expression_matrix$gene_name <- gene.names
 
@@ -270,25 +270,25 @@ convert_human_mouse_genes <- function(gene_expression_matrix, mirror = "www",
   genes.retrieved <- NULL
   tryCatch(
     expr = {
-
-      if(convert_to == 'human'){
-        mart.use = mouse
-        mart.link = human
-        attr = 'mgi_symbol'
-        attr.link = 'hgnc_symbol'
+      if (convert_to == "human") {
+        mart.use <- mouse
+        mart.link <- human
+        attr <- "mgi_symbol"
+        attr.link <- "hgnc_symbol"
       } else {
-        mart.use = human
-        mart.link = mouse
-        attr = 'hgnc_symbol'
-        attr.link = 'mgi_symbol'
+        mart.use <- human
+        mart.link <- mouse
+        attr <- "hgnc_symbol"
+        attr.link <- "mgi_symbol"
       }
 
       genes.retrieved <<- getLDS(
         attributes = c(attr),
         filters = attr, values = gene.names,
-        mart = mart.use, attributesL = c(attr.link), martL = mart.link, uniqueRows = T)
+        mart = mart.use, attributesL = c(attr.link), martL = mart.link, uniqueRows = T
+      )
 
-      if(convert_to == 'human'){
+      if (convert_to == "human") {
         newGenes.counts <<- gene_expression_matrix %>%
           left_join(., genes.retrieved, by = c("gene_name" = "MGI.symbol")) %>%
           select(., -c("gene_name")) %>%
@@ -301,21 +301,19 @@ convert_human_mouse_genes <- function(gene_expression_matrix, mirror = "www",
       }
     },
     error = function(e) {
-
       if (other_annot) {
         print("Cannot connect to ENSEMBL. Using alternative method. This will take some time.")
         # Code adapted from: https://support.bioconductor.org/p/129636/#9144606
 
         mouse_human_genes <- read.csv("http://www.informatics.jax.org/downloads/reports/HOM_MouseHumanSequence.rpt", sep = "\t")
 
-        find_corr_gene <- function(gene, mouse_human_genes_df, convert_to = c('human', 'mouse')) {
-
-          if(convert_to == 'human'){
-            orgn.name <- 'mouse, laboratory'
-            new.orgn <- 'human'
+        find_corr_gene <- function(gene, mouse_human_genes_df, convert_to = c("human", "mouse")) {
+          if (convert_to == "human") {
+            orgn.name <- "mouse, laboratory"
+            new.orgn <- "human"
           } else {
-            orgn.name <- 'human'
-            new.orgn <- 'mouse, laboratory'
+            orgn.name <- "human"
+            new.orgn <- "mouse, laboratory"
           }
 
           class_key <- (mouse_human_genes_df %>%
@@ -330,8 +328,11 @@ convert_human_mouse_genes <- function(gene_expression_matrix, mirror = "www",
             }
 
             if (!is.null(output)) {
-              return(data.frame("new_gene" = output,
-                                "old_gene" = gene))}
+              return(data.frame(
+                "new_gene" = output,
+                "old_gene" = gene
+              ))
+            }
           }
         }
 

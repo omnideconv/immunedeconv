@@ -226,7 +226,7 @@ correspondent gene names with <code>biomaRt</code>. Since the gene names
 are retrieved from the Ensembl database, it can happen that the command
 has to be run with different Emsembl mirrors (see the documentation)</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dataset_petitprez_humanGenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mouse_genes_to_human.html">mouse_genes_to_human</a></span><span class="op">(</span><span class="va">dataset_petitprez</span><span class="op">$</span><span class="va">expr_mat</span>, mirror <span class="op">=</span> <span class="st">'uswest'</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">dataset_petitprez_humanGenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/convert_human_mouse_genes.html">convert_human_mouse_genes</a></span><span class="op">(</span><span class="va">dataset_petitprez</span><span class="op">$</span><span class="va">expr_mat</span>, convert_to <span class="op">=</span> <span class="st">'human'</span><span class="op">)</span></span>
 <span><span class="va">res_MCPcounter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">dataset_petitprez_humanGenes</span>, <span class="st">'mcp_counter'</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">

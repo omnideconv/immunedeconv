@@ -55,6 +55,9 @@
     <loc>https://icbi-lab.github.io/immunedeconv/reference/check_cancer_types.html</loc>
   </url>
   <url>
+    <loc>https://icbi-lab.github.io/immunedeconv/reference/convert_human_mouse_genes.html</loc>
+  </url>
+  <url>
     <loc>https://icbi-lab.github.io/immunedeconv/reference/create_base_compendium.html</loc>
   </url>
   <url>
@@ -176,9 +179,6 @@
   </url>
   <url>
     <loc>https://icbi-lab.github.io/immunedeconv/reference/mouse_deconvolution.html</loc>
-  </url>
-  <url>
-    <loc>https://icbi-lab.github.io/immunedeconv/reference/mouse_genes_to_human.html</loc>
   </url>
   <url>
     <loc>https://icbi-lab.github.io/immunedeconv/reference/node_by_name.html</loc>

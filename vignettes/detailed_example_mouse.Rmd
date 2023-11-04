@@ -70,7 +70,7 @@ Human-based methods can still be used to deconvolve mouse data through the use o
 
 
 ```R
-dataset_petitprez_humanGenes <- mouse_genes_to_human(dataset_petitprez$expr_mat, mirror = 'uswest')
+dataset_petitprez_humanGenes <- convert_human_mouse_genes(dataset_petitprez$expr_mat, convert_to = 'human')
 res_MCPcounter <- deconvolute(dataset_petitprez_humanGenes, 'mcp_counter')
 
 ```

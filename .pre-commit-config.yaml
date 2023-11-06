@@ -2,7 +2,7 @@
 # R specific hooks: https://github.com/lorenzwalthert/precommit
 repos:
   - repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.3.2.9021
+    rev: v0.3.2.9025
     hooks:
       - id: style-files
         args: [--style_pkg=styler, --style_fun=tidyverse_style]
@@ -12,7 +12,7 @@ repos:
       - id: no-debug-statement
       - id: deps-in-desc
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: end-of-file-fixer
         exclude: '\.Rd'

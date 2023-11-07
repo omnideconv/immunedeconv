@@ -265,16 +265,16 @@ deconvolute_mouse <- function(gene_expression_matrix,
 #' @export
 convert_human_mouse_genes <- function(gene_expression_matrix, mirror = "www",
                                       other_annot = TRUE, convert_to = c("human", "mouse")) {
-
   vect <- FALSE
-  if(!is.vector(gene_expression_matrix)){
+  if (!is.vector(gene_expression_matrix)) {
     gene.names <- rownames(gene_expression_matrix)
     gene_expression_matrix <- as.data.frame(gene_expression_matrix)
     gene_expression_matrix$gene_name <- gene.names
   } else {
     gene_expression_matrix <- data.frame(
-      'gene_name' = gene_expression_matrix,
-      'X' = rep(0, length(gene_expression_matrix)))
+      "gene_name" = gene_expression_matrix,
+      "X" = rep(0, length(gene_expression_matrix))
+    )
     vect <- TRUE
   }
 
@@ -376,7 +376,7 @@ convert_human_mouse_genes <- function(gene_expression_matrix, mirror = "www",
 
   message(paste0("ATTENTION: Only the ", fraction, "% of genes was maintained"))
 
-  if(!vect){
+  if (!vect) {
     return(newGenes.counts)
   } else {
     return(rownames(newGenes.counts))

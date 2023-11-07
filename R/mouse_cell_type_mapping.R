@@ -84,7 +84,7 @@ get_dcq_cell_types_list <- function(method = c("dcq", "base")) {
   }
 
   method.output <- data.frame(
-    Name = all.cell.types,
+    'Name' = all.cell.types
   )
 
   method.output <- left_join(method.output, cell.types.table) %>%

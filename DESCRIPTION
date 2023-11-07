@@ -22,6 +22,7 @@ Imports:
     limSolve (>= 1.5.5.1),
     e1071 (>= 1.6),
     parallel (>= 3.4),
+    purrr,
     rlang,
     BiocParallel,
     preprocessCore,

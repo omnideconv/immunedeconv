@@ -4,6 +4,7 @@
 #' @import dplyr
 #' @importFrom testit assert
 #' @import readr
+#' @import purrr
 #' @importFrom matrixStats rowSds
 #' @import stringr
 #' @import mMCPcounter
@@ -249,10 +250,13 @@ deconvolute_mouse <- function(gene_expression_matrix,
 #'  used. Since it is memory intensive, users can choose not to run it.
 #'
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples.
-#'    Gene symbols must be the rownames of the matrix.
+#'    Gene symbols must be the rownames of the matrix. If genes map to multiple gene symbols, the median
+#'    expression will be returned.
+#'    Can also be a m x 1 vector of the gene names. IN this case, only the converted genes will
+#'    be returned.
 #' @param mirror the ensembl mirror to use. Possible choices are 'www' (default),
 #'    'uswest', 'useast', 'asia'
-#' @param other_annot boolean, wether to run the other conversion method (might be memory intensive)
+#' @param other_annot boolean, wether to run the alternative conversion method
 #' @param convert_to one of 'human' or 'mouse'. Specifies the organism of the orthologs to look for
 #' @return the same matrix, with the counts for the corresponding human genes.
 #'    This matrix can directly be used with the immunedeconv methods. A message
@@ -261,15 +265,25 @@ deconvolute_mouse <- function(gene_expression_matrix,
 #' @export
 convert_human_mouse_genes <- function(gene_expression_matrix, mirror = "www",
                                       other_annot = TRUE, convert_to = c("human", "mouse")) {
-  gene.names <- rownames(gene_expression_matrix)
-  gene_expression_matrix$gene_name <- gene.names
 
-  human <- useEnsembl("ensembl", dataset = "hsapiens_gene_ensembl", mirror = mirror)
-  mouse <- useEnsembl("ensembl", dataset = "mmusculus_gene_ensembl", mirror = mirror)
+  vect <- FALSE
+  if(!is.vector(gene_expression_matrix)){
+    gene.names <- rownames(gene_expression_matrix)
+    gene_expression_matrix <- as.data.frame(gene_expression_matrix)
+    gene_expression_matrix$gene_name <- gene.names
+  } else {
+    gene_expression_matrix <- data.frame(
+      'gene_name' = gene_expression_matrix,
+      'X' = rep(0, length(gene_expression_matrix)))
+    vect <- TRUE
+  }
 
   genes.retrieved <- NULL
   tryCatch(
     expr = {
+      human <- useEnsembl("ensembl", dataset = "hsapiens_gene_ensembl", mirror = mirror)
+      mouse <- useEnsembl("ensembl", dataset = "mmusculus_gene_ensembl", mirror = mirror)
+
       if (convert_to == "human") {
         mart.use <- mouse
         mart.link <- human
@@ -361,5 +375,10 @@ convert_human_mouse_genes <- function(gene_expression_matrix, mirror = "www",
     round(., 1)
 
   message(paste0("ATTENTION: Only the ", fraction, "% of genes was maintained"))
-  return(newGenes.counts)
+
+  if(!vect){
+    return(newGenes.counts)
+  } else {
+    return(rownames(newGenes.counts))
+  }
 }

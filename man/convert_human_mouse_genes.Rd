@@ -13,12 +13,15 @@ convert_human_mouse_genes(
 }
 \arguments{
 \item{gene_expression_matrix}{a m x n matrix with m genes and n samples.
-Gene symbols must be the rownames of the matrix.}
+Gene symbols must be the rownames of the matrix. If genes map to multiple gene symbols, the median
+expression will be returned.
+Can also be a m x 1 vector of the gene names. IN this case, only the converted genes will
+be returned.}
 
 \item{mirror}{the ensembl mirror to use. Possible choices are 'www' (default),
 'uswest', 'useast', 'asia'}
 
-\item{other_annot}{boolean, wether to run the other conversion method (might be memory intensive)}
+\item{other_annot}{boolean, wether to run the alternative conversion method}
 
 \item{convert_to}{one of 'human' or 'mouse'. Specifies the organism of the orthologs to look for}
 }

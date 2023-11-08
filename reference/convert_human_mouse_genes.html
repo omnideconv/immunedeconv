@@ -82,7 +82,10 @@ used. Since it is memory intensive, users can choose not to run it.</p>
     <h2>Arguments</h2>
     <dl><dt>gene_expression_matrix</dt>
 <dd><p>a m x n matrix with m genes and n samples.
-Gene symbols must be the rownames of the matrix.</p></dd>
+Gene symbols must be the rownames of the matrix. If genes map to multiple gene symbols, the median
+expression will be returned.
+Can also be a m x 1 vector of the gene names. IN this case, only the converted genes will
+be returned.</p></dd>
 
 
 <dt>mirror</dt>
@@ -91,7 +94,7 @@ Gene symbols must be the rownames of the matrix.</p></dd>
 
 
 <dt>other_annot</dt>
-<dd><p>boolean, wether to run the other conversion method (might be memory intensive)</p></dd>
+<dd><p>boolean, wether to run the alternative conversion method</p></dd>
 
 
 <dt>convert_to</dt>

@@ -4,7 +4,7 @@
 #' @import dplyr
 #' @importFrom testit assert
 #' @import readr
-#' @import purrr
+#' @importFrom purrr map_dfr
 #' @importFrom matrixStats rowSds
 #' @import stringr
 #' @import mMCPcounter

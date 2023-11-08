@@ -47,5 +47,5 @@ test_that("generic deconvolution works for all methods", {
 #     as.data.frame() %>%
 #     tibble::column_to_rownames("gene_symbol")
 #   test_mat_newGenes <- convert_human_mouse_genes(test_mat_human[1:1000, ], convert_to = "mouse")
-#   assert("matrix dimensions consistent", ncol(test_mat_newGenes) == ncol(test_mat))
+#   assert("matrix dimensions consistent", ncol(test_mat_newGenes) == ncol(test_mat_human))
 # })

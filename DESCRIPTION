@@ -11,6 +11,7 @@ Depends:
     R (>= 4.1),
     EPIC
 Imports:
+    purrr (>= 1.0.2),
     dplyr (>= 0.7),
     magrittr (>= 1.5),
     readr (>= 1.1),

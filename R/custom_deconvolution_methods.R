@@ -19,7 +19,7 @@ NULL
 #' List of methods that support the use of a custom signature
 #'
 #' The available methods are
-#' `epic`, `cibersort`, `cibersort_abs`, `consensus_tme`, `base`
+#' `epic`, `cibersort`, `cibersort_abs`, `consensus_tme`, `seqimmucc`
 #'
 #' The object is a named vector. The names correspond to the display name of the method,
 #' the values to the internal name.
@@ -29,7 +29,7 @@ custom_deconvolution_methods <- c(
   "EPIC" = "epic",
   "CIBERSORT" = "cibersort",
   "ConsensusTME" = "consensus_tme",
-  "BASE" = "base"
+  "seqImmuCC" = "seqimmucc"
 )
 
 
@@ -153,18 +153,38 @@ deconvolute_consensus_tme_custom <- function(gene_expression_matrix, signature_g
 }
 
 
+#' Deconvolute using seqImmuCC (LLSR regression) and a custom signature matrix
+#'
+#' @param gene_expression_matrix a m x n matrix with m genes and n samples. Data
+#'    should be TPM normalized and log10 scaled.
+#' @param signature_matrix a m x l matrix with m genes and l cell types. The
+#'   matrix should contain only a subset of the genes useful for the analysis.
+#' @param ... passed to the original seqImmuCC_LLSR fnuction
+#' @export
+#'
+deconvolute_seqimmucc_custom <- function(gene_expression_matrix,
+                                         signature_matrix,
+                                         ...) {
+
+  results <- seqImmuCC_LLSR(signature_matrix, gene_expression_matrix, ...)
+  results <- results[, !colnames(results) %in% c('Correlation', 'RMSE')]
+
+  return(t(results))
+}
+
+
 
 #' Deconvolute using BASE and a custom signature matrix
 #'
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples. Data
 #'    should be TPM normalized and log10 scaled.
 #' @param signature_matrix a m x l matrix with m genes and l cell types. Data
-#'    should be non normalized, as the normalization wil be done in the construction
+#'    should be non normalized, as the normalization will be done in the construction
 #'    of the compendium (internal structure)
 #' @param n_permutations the number of permutations of each sample expression
 #'    to generate. These are used to normalize the results.
 #' @param log10 logical. if TRUE, log10 transforms the expression matrix.
-#' @export
+#'
 #'
 deconvolute_base_custom <- function(gene_expression_matrix,
                                     signature_matrix,

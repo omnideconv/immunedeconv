@@ -16,7 +16,7 @@ deconvolute_base_custom(
 should be TPM normalized and log10 scaled.}
 
 \item{signature_matrix}{a m x l matrix with m genes and l cell types. Data
-should be non normalized, as the normalization wil be done in the construction
+should be non normalized, as the normalization will be done in the construction
 of the compendium (internal structure)}
 
 \item{n_permutations}{the number of permutations of each sample expression

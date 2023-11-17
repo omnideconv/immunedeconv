@@ -6,7 +6,8 @@ test_mat <- as.matrix(test_mat)
 
 
 test_that("seqimmucc works with a custom signature matrix", {
-  sign_mat <- matrix(120 * runif(1500), ncol = 10)
+  test_mat <- dataset_racle$expr_mat
+  sign_mat <- matrix(120 * runif(15000), ncol = 5)
   colnames(sign_mat) <- c(
     "A", "B", "C", "D",
     "E", "F", "G", "H",

@@ -159,13 +159,23 @@ deconvolute_consensus_tme_custom <- function(gene_expression_matrix, signature_g
 #'    should be TPM normalized and log10 scaled.
 #' @param signature_matrix a m x l matrix with m genes and l cell types. The
 #'   matrix should contain only a subset of the genes useful for the analysis.
-#' @param ... passed to the original seqImmuCC_LLSR fnuction
+#' @param ... passed to the original seqImmuCC_LLSR function
 #' @export
 #'
 deconvolute_seqimmucc_custom <- function(gene_expression_matrix,
                                          signature_matrix,
                                          ...) {
-  results <- seqImmuCC_LLSR(signature_matrix, gene_expression_matrix, ...)
+
+  arguments <- dots_list(
+    signature = signature_matrix,
+    SampleData = gene_expression_matrix, ..., .homonyms = "last"
+  )
+
+  call <- rlang::call2(seqImmuCC_LLSR, !!!arguments)
+  results <- eval(call)
+
+
+  #results <- seqImmuCC_LLSR(signature_matrix, gene_expression_matrix, ..., .homonyms = "last")
   results <- results[, !colnames(results) %in% c("Correlation", "RMSE")]
 
   return(t(results))

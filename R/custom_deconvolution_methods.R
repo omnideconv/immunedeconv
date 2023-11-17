@@ -165,9 +165,8 @@ deconvolute_consensus_tme_custom <- function(gene_expression_matrix, signature_g
 deconvolute_seqimmucc_custom <- function(gene_expression_matrix,
                                          signature_matrix,
                                          ...) {
-
   results <- seqImmuCC_LLSR(signature_matrix, gene_expression_matrix, ...)
-  results <- results[, !colnames(results) %in% c('Correlation', 'RMSE')]
+  results <- results[, !colnames(results) %in% c("Correlation", "RMSE")]
 
   return(t(results))
 }

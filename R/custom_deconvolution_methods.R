@@ -171,26 +171,3 @@ deconvolute_seqimmucc_custom <- function(gene_expression_matrix,
   return(t(results))
 }
 
-
-
-#' Deconvolute using BASE and a custom signature matrix
-#'
-#' @param gene_expression_matrix a m x n matrix with m genes and n samples. Data
-#'    should be TPM normalized and log10 scaled.
-#' @param signature_matrix a m x l matrix with m genes and l cell types. Data
-#'    should be non normalized, as the normalization will be done in the construction
-#'    of the compendium (internal structure)
-#' @param n_permutations the number of permutations of each sample expression
-#'    to generate. These are used to normalize the results.
-#' @param log10 logical. if TRUE, log10 transforms the expression matrix.
-#'
-#'
-deconvolute_base_custom <- function(gene_expression_matrix,
-                                    signature_matrix,
-                                    n_permutations = 100,
-                                    log10 = TRUE) {
-  new.cell.compendium <- create_base_compendium(signature_matrix)
-  results <- base_algorithm(gene_expression_matrix, new.cell.compendium, perm = n_permutations)
-
-  return(t(results))
-}

@@ -170,4 +170,3 @@ deconvolute_seqimmucc_custom <- function(gene_expression_matrix,
 
   return(t(results))
 }
-

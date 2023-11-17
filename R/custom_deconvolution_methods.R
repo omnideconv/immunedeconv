@@ -165,7 +165,6 @@ deconvolute_consensus_tme_custom <- function(gene_expression_matrix, signature_g
 deconvolute_seqimmucc_custom <- function(gene_expression_matrix,
                                          signature_matrix,
                                          ...) {
-
   arguments <- dots_list(
     signature = signature_matrix,
     SampleData = gene_expression_matrix, ..., .homonyms = "last"
@@ -175,7 +174,7 @@ deconvolute_seqimmucc_custom <- function(gene_expression_matrix,
   results <- eval(call)
 
 
-  #results <- seqImmuCC_LLSR(signature_matrix, gene_expression_matrix, ..., .homonyms = "last")
+  # results <- seqImmuCC_LLSR(signature_matrix, gene_expression_matrix, ..., .homonyms = "last")
   results <- results[, !colnames(results) %in% c("Correlation", "RMSE")]
 
   return(t(results))

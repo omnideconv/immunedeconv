@@ -40,7 +40,7 @@ reference:
       - custom_deconvolution_methods
       - deconvolute_cibersort_custom
       - deconvolute_epic_custom
-      - deconvolute_base_custom
+      - deconvolute_seqimmucc_custom
       - deconvolute_consensus_tme_custom
   - title: Cell type mapping
     desc: Map cell types and datasets to a controlled vocabulary.

@@ -13,7 +13,7 @@ should be TPM normalized and log10 scaled.}
 \item{signature_matrix}{a m x l matrix with m genes and l cell types. The
 matrix should contain only a subset of the genes useful for the analysis.}
 
-\item{...}{passed to the original seqImmuCC_LLSR fnuction}
+\item{...}{passed to the original seqImmuCC_LLSR function}
 }
 \description{
 Deconvolute using seqImmuCC (LLSR regression) and a custom signature matrix

@@ -331,6 +331,8 @@ deconvolute_consensus_tme <- function(gene_expression_matrix,
     list.results[[t]] <- cur.results
   }
 
+  rownames <- Reduce(intersect, lapply(list.results, rownames))
+  list.results <- lapply(list.results, function(x) x[rownames, ])
   results <- Reduce(cbind, list.results)
 
   colnames(results) <- colnames(gene_expression_matrix)

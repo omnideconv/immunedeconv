@@ -5,7 +5,7 @@
 \alias{cell_type_tree}
 \title{Available cell types in the controlled vocabulary organized as a lineage tree.}
 \format{
-An object of class \code{Node} (inherits from \code{R6}) of length 43.
+An object of class \code{Node} (inherits from \code{R6}) of length 42.
 }
 \usage{
 cell_type_tree

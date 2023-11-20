@@ -175,7 +175,7 @@ deconvolute_seqimmucc_custom <- function(gene_expression_matrix,
 
 
   # results <- seqImmuCC_LLSR(signature_matrix, gene_expression_matrix, ..., .homonyms = "last")
-  results <- results[, !colnames(results) %in% c("Correlation", "RMSE")]
+  results <- results[, !colnames(results) %in% c("Correlation", "RSEM")]
 
   return(t(results))
 }

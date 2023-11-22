@@ -25,12 +25,11 @@ jobs:
       - name: Setup Minoconda
         uses: conda-incubator/setup-miniconda@v2
         with:
-          miniconda-version: 23.10.0
           auto-update-conda: true
           use-mamba: true
           channels: conda-forge,bioconda
           channel-priority: true
-          python-version: 3.8
+          python-version: 3.10
 
       - name: Set-up channels and install conda build
         run: |

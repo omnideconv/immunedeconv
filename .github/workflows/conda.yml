@@ -28,6 +28,8 @@ jobs:
           auto-update-conda: true
           miniforge-version: latest
           use-mamba: false
+          conda version : 23.10.0
+          conda-build version : 3.27.0
           channels: conda-forge,bioconda
           channel-priority: true
           python-version: 3.9

@@ -28,6 +28,7 @@ jobs:
           auto-update-conda: true
           miniforge-version: latest
           use-mamba: true
+          mamba-version: latest
           channels: conda-forge,bioconda
           channel-priority: true
           python-version: 3.9

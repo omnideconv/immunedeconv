@@ -27,8 +27,7 @@ jobs:
         with:
           auto-update-conda: true
           miniforge-version: latest
-          use-mamba: true
-          mamba-version: latest
+          use-mamba: false
           channels: conda-forge,bioconda
           channel-priority: true
           python-version: 3.9
@@ -41,5 +40,5 @@ jobs:
       - name: build and test package
         run: |
           cd .conda
-          mamba build . --no-anaconda-upload
+          conda build . --no-anaconda-upload
         shell: bash

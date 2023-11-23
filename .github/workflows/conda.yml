@@ -40,6 +40,5 @@ jobs:
       - name: build and test package
         run: |
           cd .conda
-          conda create -n myenv -y conda-build
-          conda run --no-capture-output -n myenv conda build . --no-anaconda-upload
+          mamba build . --no-anaconda-upload
         shell: bash

@@ -34,7 +34,7 @@ jobs:
 
       - name: Set-up channels and install conda build
         run: |
-          conda install -y conda-build conda-verify boa
+          conda install -y conda-build=3.25.0 conda-verify boa
         shell: bash
 
       - name: build and test package

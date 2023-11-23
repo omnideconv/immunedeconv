@@ -34,11 +34,12 @@ jobs:
 
       - name: Set-up channels and install conda build
         run: |
-          conda install -y conda-build=3.25.0 conda-verify boa
+          mamba install -y conda-build=3.25.0 conda-verify boa
         shell: bash
 
       - name: build and test package
         run: |
           cd .conda
-          mamba build . --no-anaconda-upload
+          mamba create -n myenv -y conda-build
+          mamba run --no-capture-output -n myenv mamba build . --no-anaconda-upload
         shell: bash

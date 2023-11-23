@@ -26,10 +26,8 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
-          miniforge-version: latest
-          use-mamba: false
-          conda version : 23.10.0
-          conda-build version : 3.27.0
+          miniforge-version: 23.3.0-0
+          use-mamba: true
           channels: conda-forge,bioconda
           channel-priority: true
           python-version: 3.9

@@ -328,14 +328,20 @@ deconvolute_consensus_tme <- function(gene_expression_matrix,
       t, method
     )
 
+    colnames(cur.results) <- colnames(gene_expression_matrix)[cur.samples]
     list.results[[t]] <- cur.results
   }
 
-  rownames <- Reduce(intersect, lapply(list.results, rownames))
-  list.results <- lapply(list.results, function(x) x[rownames, ])
-  results <- Reduce(cbind, list.results)
+  list.results <- lapply(list.results, function(x) as.data.frame(x))
 
-  colnames(results) <- colnames(gene_expression_matrix)
+  if(length(tumor.types) > 1){
+    results <- Reduce(function(x, y) merge(x, y, all=TRUE),
+                      lapply(list.results, function(x) data.frame(x, rn = row.names(x))))
+
+    results <- column_to_rownames(results, 'rn')
+  } else{
+    results <- list.results[[1]]
+  }
 
   return(results)
 }

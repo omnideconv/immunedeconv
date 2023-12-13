@@ -54,4 +54,3 @@ test_that("mouse gene names in vector can be converted into their human ortholog
   newGenes <- convert_human_mouse_genes(rownames(test_mat[1:1000, ]), convert_to = "human")
   assert("gene names are in vector form", is.vector(newGenes))
 })
-

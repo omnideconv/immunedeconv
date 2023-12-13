@@ -15,7 +15,7 @@
 #' @param sig.stand logical.If TRUE, standardizes the signature matrix
 #' @param sample.scale logical. If TRUE, scales the sample expression
 #' @param log logical. If TRUE, log transforms signature and expression data
-#'
+#' @export
 #'
 seqImmuCC_LLSR <- function(signature, SampleData, w = NA, QN = T, sig.scale = F, sig.stand = T, sample.scale = T, log = T) {
   # Expression profile format standarlization

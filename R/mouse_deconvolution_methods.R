@@ -271,6 +271,7 @@ convert_human_mouse_genes <- function(gene_expression_matrix, mirror = "www",
     gene_expression_matrix <- as.data.frame(gene_expression_matrix)
     gene_expression_matrix$gene_name <- gene.names
   } else {
+    gene.names <- gene_expression_matrix
     gene_expression_matrix <- data.frame(
       "gene_name" = gene_expression_matrix,
       "X" = rep(0, length(gene_expression_matrix))

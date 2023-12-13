@@ -5,8 +5,9 @@ test_mat <- as.matrix(test_mat)
 
 
 
-test_that("BASE works with a custom signature matrix", {
-  sign_mat <- matrix(120 * runif(1500), ncol = 10)
+test_that("seqimmucc works with a custom signature matrix", {
+  test_mat <- dataset_racle$expr_mat
+  sign_mat <- matrix(120 * runif(15000), ncol = 10)
   colnames(sign_mat) <- c(
     "A", "B", "C", "D",
     "E", "F", "G", "H",
@@ -15,7 +16,7 @@ test_that("BASE works with a custom signature matrix", {
 
   rownames(sign_mat) <- sample(rownames(test_mat), nrow(sign_mat))
 
-  res <- deconvolute_base_custom(test_mat, sign_mat)
+  res <- deconvolute_seqimmucc_custom(test_mat, sign_mat)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
   assert("matrix dimensions consistent", nrow(res) == ncol(sign_mat))
 })

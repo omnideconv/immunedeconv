@@ -19,7 +19,7 @@ NULL
 #' List of methods that support the use of a custom signature
 #'
 #' The available methods are
-#' `epic`, `cibersort`, `cibersort_abs`, `consensus_tme`, `base`
+#' `epic`, `cibersort`, `cibersort_abs`, `consensus_tme`, `seqimmucc`
 #'
 #' The object is a named vector. The names correspond to the display name of the method,
 #' the values to the internal name.
@@ -29,7 +29,7 @@ custom_deconvolution_methods <- c(
   "EPIC" = "epic",
   "CIBERSORT" = "cibersort",
   "ConsensusTME" = "consensus_tme",
-  "BASE" = "base"
+  "seqImmuCC" = "seqimmucc"
 )
 
 
@@ -153,25 +153,29 @@ deconvolute_consensus_tme_custom <- function(gene_expression_matrix, signature_g
 }
 
 
-
-#' Deconvolute using BASE and a custom signature matrix
+#' Deconvolute using seqImmuCC (LLSR regression) and a custom signature matrix
 #'
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples. Data
 #'    should be TPM normalized and log10 scaled.
-#' @param signature_matrix a m x l matrix with m genes and l cell types. Data
-#'    should be non normalized, as the normalization wil be done in the construction
-#'    of the compendium (internal structure)
-#' @param n_permutations the number of permutations of each sample expression
-#'    to generate. These are used to normalize the results.
-#' @param log10 logical. if TRUE, log10 transforms the expression matrix.
+#' @param signature_matrix a m x l matrix with m genes and l cell types. The
+#'   matrix should contain only a subset of the genes useful for the analysis.
+#' @param ... passed to the original seqImmuCC_LLSR function
 #' @export
 #'
-deconvolute_base_custom <- function(gene_expression_matrix,
-                                    signature_matrix,
-                                    n_permutations = 100,
-                                    log10 = TRUE) {
-  new.cell.compendium <- create_base_compendium(signature_matrix)
-  results <- base_algorithm(gene_expression_matrix, new.cell.compendium, perm = n_permutations)
+deconvolute_seqimmucc_custom <- function(gene_expression_matrix,
+                                         signature_matrix,
+                                         ...) {
+  arguments <- dots_list(
+    signature = signature_matrix,
+    SampleData = gene_expression_matrix, ..., .homonyms = "last"
+  )
+
+  call <- rlang::call2(seqImmuCC_LLSR, !!!arguments)
+  results <- eval(call)
+
+
+  # results <- seqImmuCC_LLSR(signature_matrix, gene_expression_matrix, ..., .homonyms = "last")
+  results <- results[, !colnames(results) %in% c("Correlation", "RSEM")]
 
   return(t(results))
 }

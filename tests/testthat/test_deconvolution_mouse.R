@@ -39,13 +39,18 @@ test_that("generic deconvolution works for all methods", {
   })
 })
 
-# test_that("mouse gene names can be converted into their human orthologus, and vice versa", {
-#   test_mat_newGenes <- convert_human_mouse_genes(test_mat[1:1000, ], convert_to = "human")
-#   assert("matrix dimensions consistent", ncol(test_mat_newGenes) == ncol(test_mat))
-#
-#   test_mat_human <- read_tsv("bulk_mat.tsv") %>%
-#     as.data.frame() %>%
-#     tibble::column_to_rownames("gene_symbol")
-#   test_mat_newGenes <- convert_human_mouse_genes(test_mat_human[1:1000, ], convert_to = "mouse")
-#   assert("matrix dimensions consistent", ncol(test_mat_newGenes) == ncol(test_mat_human))
-# })
+test_that("mouse gene names can be converted into their human orthologus, and vice versa", {
+  test_mat_newGenes <- convert_human_mouse_genes(test_mat[1:1000, ], convert_to = "human")
+  assert("matrix dimensions consistent", ncol(test_mat_newGenes) == ncol(test_mat))
+
+  test_mat_human <- read_tsv("bulk_mat.tsv") %>%
+    as.data.frame() %>%
+    tibble::column_to_rownames("gene_symbol")
+  test_mat_newGenes <- convert_human_mouse_genes(test_mat_human[1:1000, ], convert_to = "mouse")
+  assert("matrix dimensions consistent", ncol(test_mat_newGenes) == ncol(test_mat_human))
+})
+
+test_that("mouse gene names in vector can be converted into their human orthologus, and vice versa", {
+  newGenes <- convert_human_mouse_genes(rownames(test_mat[1:1000, ]), convert_to = "human")
+  assert("gene names are in vector form", is.vector(newGenes))
+})

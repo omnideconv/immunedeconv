@@ -124,25 +124,27 @@ In addition, human-based methods can be used to deconvolute mouse data through t
 to the corresponding human orthologues
 
 ```R
-gene_expression_matrix <- immunedeconv::mouse_genes_to_human(gene_expression_matrix)
+gene_expression_matrix <- immunedeconv::convert_human_mouse_genes(gene_expression_matrix, convert_to = "human")
 immunedeconv::deconvolute(gene_expression_matrix, "quantiseq")
 ```
 
 ## Deconvolution using a custom signature 
 
 Finally, certain methods can be used with custom signatures, consisting of either a signature matrix or signature genes 
-for the cell types of interest. Since the information used to deconvolute the bulk is user-provided, these functions can be 
-used for different tissues and organisms. 
+for the cell types of interest. Since the information used to deconvolute the bulk is user-provided, these functions can be used for different tissues and organisms. 
 The functions may require different input data formats, related to the requirements of each method. Please refer to their documentation. 
 The available methods are
 
 
 ```r
-base:  deconvolute_base_custom()
 cibersort norm/abs:  deconvolute_cibersort_custom()
 epic: deconvolute_epic_custom()
 consensus_tme: deconvolute_consensus_tme_custom()
+seqimmucc: deconvolute_seqimmucc_custom()
 ```
+
+Please note that using the `deconvolute_seqimmucc_custom()` with a custom signature matrix will automatically use the LLSR regression method. 
+If you wish to use the nuSVR regression method, use the `deconvolute_cibersort_custom()` function. 
 
 
 ## Example
@@ -241,8 +243,7 @@ with(cell_type_hierarchy, {
 
 For each method, each cell-type is mapped to a node in the tree.
 If you are curious, it's all defined in [this excel
-sheet](https://github.com/grst/immunedeconv/blob/master/inst/extdata/cell_type_mapping.xlsx).
-
+sheet](https://github.com/omnideconv/immunedeconv/blob/master/inst/extdata/cell_type_mapping.xlsx).
 This tree can be used to summarize scores along the tree. For instance,
 quanTIseq provides scores for regulatory and non-regulatory CD4+ T cells independently, but you are
 interested in the fraction of overall CD4+ T cells. In that case you can use
@@ -300,15 +301,11 @@ a score in arbitrary units.
 
 # FAQs
 ### Can I specify a custom signature matrix through immunedeconv?
-No, currently not. The reason is that the methods are conceptually different.
-Some are marker gene based and others deconvolution-based. CIBERSORT performs
-feature-selection on the matrix while EPIC and quanTIseq don't. EPIC uses *all*
-genes to estimate the inter-sample variance while quanTIseq uses marker genes
-only. This is also being discussed in
-[#15](https://github.com/grst/immunedeconv/issues/15).
+Currentl, four methods (EPIC, CIBERSORT, ConsensusTME and seqImmuCC) allow users to provide their own signature matrix and/or gene set. 
+Please note that the format of the signatures might vary across methods. 
+In addition, since the embedded signatures were optimized for the methods, user-provided ones might have a worse performance. 
+If you want to know more, please see [#15](https://github.com/grst/immunedeconv/issues/15).
 
-You can, however, provide custom signatures for most individual methods (see
-next question).
 
 ### I want to use a special feature of a method, but I cannot access it through the `deconvolute` function.
 You can access each method individually through the `deconvolute_xxx` function.

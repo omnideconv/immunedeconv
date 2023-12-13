@@ -26,19 +26,20 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
-          miniforge-version: latest
+          miniforge-version: 23.3.0-0
           use-mamba: true
           channels: conda-forge,bioconda
           channel-priority: true
-          python-version: 3.8
+          python-version: 3.9
 
       - name: Set-up channels and install conda build
         run: |
-          mamba install -y conda-build conda-verify boa
+          conda install -y conda-build=3.25.0 conda-verify boa
         shell: bash
 
       - name: build and test package
         run: |
           cd .conda
-          mamba build . --no-anaconda-upload
+          conda create -n myenv -y conda-build
+          conda run --no-capture-output -n myenv conda build . --no-anaconda-upload
         shell: bash

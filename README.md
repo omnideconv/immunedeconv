@@ -85,7 +85,11 @@ For more detailed usage instructions, see the Documentation:
 
 Note that, while _immunedeconv_ itself is free ([BSD](https://github.com/omnideconv/immunedeconv/blob/master/LICENSE)), you may need to obtain a license to use the individual methods. See the table below for more information. If you use this package in your work, please cite both our package and the method(s) you are using.
 
-> Sturm, G., Finotello, F., Petitprez, F., Zhang, J. D., Baumbach, J., Fridman, W. H., ..., List, M., Aneichyk, T. (2019). Comprehensive evaluation of transcriptome-based cell-type quantification methods for immuno-oncology. Bioinformatics, 35(14), i436-i445. https://doi.org/10.1093/bioinformatics/btz363
+> Sturm G, Finotello F, Petitprez F, Zhang JD, Baumbach J, Fridman WH, List M, Aneichyk T. Comprehensive evaluation of transcriptome-based cell-type quantification methods for immuno-oncology. Bioinformatics. 2019 Jul 15;35(14):i436-i445. doi: 10.1093/bioinformatics/btz363. 
+
+If you use _immunedeconv_ for the deconvolution of mouse transcriptomic data, please cite:
+
+>  Merotto L, Sturm G, Dietrich A, List M, Finotello F. Making mouse transcriptomics deconvolution accessible with immunedeconv. Bioinform Adv. 2024 Feb 28;4(1):vbae032. doi: 10.1093/bioadv/vbae032. 
 
 | method                                                                     | organism | license                                                                                                       | citation                                                                                                                                                                                                                                                                                                                                                                             |
 | -------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

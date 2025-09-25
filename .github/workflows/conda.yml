@@ -40,8 +40,5 @@ jobs:
       - name: build and test package
         shell: bash
         run: |
-          set -x
-          pwd
-          ls -la .conda || true
           cd .conda
-          mamba mambabuild .
+          mamba build . --no-anaconda-upload

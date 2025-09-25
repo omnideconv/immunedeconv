@@ -6,16 +6,21 @@ repos:
     hooks:
       - id: style-files
         args: [--style_pkg=styler, --style_fun=tidyverse_style]
+        additional_dependencies:
+          - any::styler
+          - any::R.utils
       - id: readme-rmd-rendered
+        additional_dependencies:
+          - any::rmarkdown
+          - any::knitr
+          - any::R.utils
       - id: parsable-R
+        additional_dependencies:
+          - any::R.utils
       - id: no-browser-statement
       - id: no-debug-statement
       - id: deps-in-desc
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
-    hooks:
-      - id: end-of-file-fixer
-        exclude: '\.Rd'
+      
   - repo: https://github.com/pre-commit-ci/pre-commit-ci-config
     rev: v1.6.1
     hooks:

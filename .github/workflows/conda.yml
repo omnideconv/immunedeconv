@@ -37,8 +37,13 @@ jobs:
           mamba install -y conda-build conda-verify boa
         shell: bash
 
-      - name: build and test package
+      - name: Install build tools
+        run: mamba install -y conda-build boa
+        shell: bash
+
+      - name: Build (boa)
         shell: bash
         run: |
+          set -x
           cd .conda
-          mamba build . --no-anaconda-upload
+          boa build .

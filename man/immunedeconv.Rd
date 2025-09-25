@@ -2,9 +2,28 @@
 % Please edit documentation in R/immune_deconvolution_methods.R
 \docType{package}
 \name{immunedeconv}
+\alias{immunedeconv-package}
 \alias{immunedeconv}
 \title{Collection of immune cell deconvolution methods.}
 \description{
 Immunedeconv is an an R package for unified access to computational methods for
 estimating immune cell fractions from bulk RNA sequencing data.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https:/omnideconv.org/immunedeconv}
+  \item \url{https://github.com/omnideconv/immunedeconv}
+  \item Report bugs at \url{https://github.com/omnideconv/immunedeconv/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Lorenzo Merotto \email{lorenzo.merotto@uibk.ac.at}
+
+Authors:
+\itemize{
+  \item Gregor Sturm \email{mail@gregor-sturm.de}
+}
+
 }

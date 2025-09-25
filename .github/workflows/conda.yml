@@ -30,15 +30,23 @@ jobs:
           use-mamba: true
           channels: conda-forge,bioconda
           channel-priority: true
-          python-version: 3.8
+          python-version: 3.10
 
       - name: Set-up channels and install conda build
         run: |
-          mamba install -y conda-build conda-verify boa
+          mamba install -y conda-build conda-verify
         shell: bash
+      
+      # Guard: fail if any step still references boa/.conda/build
+      - name: Guard against wrong recipe path
+        shell: bash
+        run: |
+          set -euxo pipefail
+          ! grep -RInE 'mambabuild|boa build|\.conda/build' .github || { echo "Found a bad reference"; exit 1; }
 
       - name: build and test package
         run: |
-          cd .conda
-          mamba build . --no-anaconda-upload
+          set -euxo pipefail
+          test -f .conda/meta.yaml
+          mamba build .conda --no-anaconda-upload
         shell: bash

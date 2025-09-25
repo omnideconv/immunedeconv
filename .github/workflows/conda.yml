@@ -41,9 +41,9 @@ jobs:
         run: mamba install -y conda-build boa
         shell: bash
 
-      - name: Build (boa)
+      - name: Build (conda-build)
         shell: bash
         run: |
           set -x
           cd .conda
-          boa build .
+          mamba build . --no-anaconda-upload

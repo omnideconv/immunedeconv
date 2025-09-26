@@ -36,7 +36,7 @@ jobs:
         run: |
           mamba install -y conda-build conda-verify
         shell: bash
-      
+
       - name: Guard against wrong recipe path
         shell: bash
         run: |

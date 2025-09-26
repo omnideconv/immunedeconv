@@ -91,6 +91,11 @@ If you use _immunedeconv_ for the deconvolution of mouse transcriptomic data, pl
 
 > Merotto L, Sturm G, Dietrich A, List M, Finotello F. Making mouse transcriptomics deconvolution accessible with immunedeconv. Bioinform Adv. 2024 Feb 28;4(1):vbae032. doi: 10.1093/bioadv/vbae032.
 
+
+For the mouse/custom-based methods, cite:
+
+> Merotto, L., Sturm, G., Dietrich, A., List, M., Finotello, F. (2024). Making mouse transcriptomics deconvolution accessible with immunedeconv, Bioinformatics Advances, Volume 4, Issue 1. https://doi.org/10.1093/bioadv/vbae032
+
 | method                                                                     | organism | license                                                                                                       | citation                                                                                                                                                                                                                                                                                                                                                                             |
 | -------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [quanTIseq](http://icbi.at/software/quantiseq/doc/index.html)              | human    | free ([BSD](https://github.com/omnideconv/immunedeconv/blob/master/LICENSE.md))                               | Finotello, F., Mayer, C., Plattner, C., Laschober, G., Rieder, D., Hackl, H., ..., Sopper, S. (2019). Molecular and pharmacological modulators of the tumor immune contexture revealed by deconvolution of RNA-seq data. Genome medicine, 11(1), 34. https://doi.org/10.1186/s13073-019-0638-6                                                                                       |

@@ -41,5 +41,5 @@ jobs:
         run: |
           set -euxo pipefail
           test -f .conda/meta.yaml
-          mamba build .conda
+          conda build .conda --no-anaconda-upload
         shell: bash

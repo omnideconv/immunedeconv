@@ -91,7 +91,6 @@ If you use _immunedeconv_ for the deconvolution of mouse transcriptomic data, pl
 
 > Merotto L, Sturm G, Dietrich A, List M, Finotello F. Making mouse transcriptomics deconvolution accessible with immunedeconv. Bioinform Adv. 2024 Feb 28;4(1):vbae032. doi: 10.1093/bioadv/vbae032.
 
-
 For the mouse/custom-based methods, cite:
 
 > Merotto, L., Sturm, G., Dietrich, A., List, M., Finotello, F. (2024). Making mouse transcriptomics deconvolution accessible with immunedeconv, Bioinformatics Advances, Volume 4, Issue 1. https://doi.org/10.1093/bioadv/vbae032

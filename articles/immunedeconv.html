@@ -226,8 +226,11 @@ documentation. The available methods are</p>
 <span class="citation">(<a href="#ref-EPIC2017">Racle et al.
 2017</a>)</span>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="fu">immunedeconv</span><span class="fu">::</span><span class="va"><a href="../reference/dataset_racle.html">dataset_racle</a></span><span class="op">$</span><span class="va">expr_mat</span>, <span class="st">"quantiseq"</span><span class="op">)</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">res</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="fu">immunedeconv</span><span class="fu">::</span><span class="va"><a href="../reference/dataset_racle.html">dataset_racle</a></span><span class="op">$</span><span class="va">expr_mat</span>, <span class="st">"quantiseq"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by</span></span>
+<span><span class="co">## 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'</span></span></code></pre>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">res</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">cell_type</th>
@@ -329,12 +332,12 @@ license, and download the CIBERSORT source code.</p>
 <p>Note the storage location of these files. When using
 <code>immunedeconv</code>, you need to tell the package where it can
 find those files:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https:/omnideconv.org/immunedeconv">immunedeconv</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/set_cibersort_binary.html">set_cibersort_binary</a></span><span class="op">(</span><span class="st">"/path/to/CIBERSORT.R"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/set_cibersort_mat.html">set_cibersort_mat</a></span><span class="op">(</span><span class="st">"/path/to/LM22.txt"</span><span class="op">)</span></span></code></pre></div>
 <p>Afterwards, you can call</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">your_mixture_matrix</span>, <span class="st">"cibersort"</span><span class="op">)</span>   <span class="co"># or 'cibersort_abs'</span></span></code></pre></div>
 <p>as for any other method.</p>
 </div>
@@ -344,13 +347,13 @@ find those files:</p>
 <p>TIMER and ConsensusTME uses indication-specific reference profiles.
 Therefore, you <em>must</em> specify the tumor type when running TIMER
 or ConsensusTME:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">your_mixture_matrix</span>, <span class="st">"timer"</span>,</span>
 <span>            indications<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SKCM"</span>, <span class="st">"SKCM"</span>, <span class="st">"BLCA"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><code>indications</code> needs to be a vector that specifies an
 indication for each sample (=column) in the mixture matrix. The
 indications supported by TIMER are</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">immunedeconv</span><span class="fu">::</span><span class="va"><a href="../reference/timer_available_cancers.html">timer_available_cancers</a></span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1] "kich" "blca" "brca" "cesc" "gbm"  "hnsc" "kirp" "lgg"  "lihc" "luad"</span></span>
 <span><span class="co">## [11] "lusc" "prad" "sarc" "pcpg" "paad" "tgct" "ucec" "ov"   "skcm" "dlbc"</span></span>
@@ -377,7 +380,7 @@ both samples and genes in a single object.</p>
 instead of a gene expression matrix. In that case, <code>pData</code>
 requires a column that contains gene symbols. Which one needs to be
 specified in the <code><a href="../reference/deconvolute.html">deconvolute()</a></code> call:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">my_expression_set</span>, <span class="st">"quantiseq"</span>, column <span class="op">=</span> <span class="st">"&lt;column name&gt;"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -397,7 +400,7 @@ instance, quanTIseq provides scores for regulatory and non-regulatory
 CD4+ T cells independently, but you are interested in the fraction of
 overall CD4+ T cells. In that case you can use
 <code>map_result_to_celltypes</code> to sum up the scores:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="fu">immunedeconv</span><span class="fu">::</span><span class="va"><a href="../reference/dataset_racle.html">dataset_racle</a></span><span class="op">$</span><span class="va">expr_mat</span>, <span class="st">"quantiseq"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/map_result_to_celltypes.html">map_result_to_celltypes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T cell CD4+"</span><span class="op">)</span>, <span class="st">"quantiseq"</span><span class="op">)</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">res</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>

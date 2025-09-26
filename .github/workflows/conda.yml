@@ -30,15 +30,16 @@ jobs:
           use-mamba: true
           channels: conda-forge,bioconda
           channel-priority: true
-          python-version: 3.8
+          python-version: 3.9
 
       - name: Set-up channels and install conda build
         run: |
-          mamba install -y conda-build conda-verify boa
+          mamba install -y conda-build conda-verify
         shell: bash
 
       - name: build and test package
         run: |
-          cd .conda
-          mamba build . --no-anaconda-upload
+          set -euxo pipefail
+          test -f .conda/meta.yaml
+          conda build .conda --no-anaconda-upload
         shell: bash

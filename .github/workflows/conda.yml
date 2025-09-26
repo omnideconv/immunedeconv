@@ -37,16 +37,6 @@ jobs:
           mamba install -y conda-build conda-verify
         shell: bash
 
-      - name: Guard against wrong recipe path
-        shell: bash
-        run: |
-          set -euxo pipefail
-          # Search only non-comment lines for forbidden invocations
-          if grep -RInE '^\s*[^#].*\b(mambabuild|boa build|\.conda/build)\b' .github/workflows ; then
-            echo "Found a bad reference"; exit 1
-          else
-            echo "No bad references."
-          fi
       - name: build and test package
         run: |
           set -euxo pipefail

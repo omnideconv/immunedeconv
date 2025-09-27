@@ -2,7 +2,7 @@
 
 package:
   name: {{ name }}
-  version: "develop" 
+  version: "develop"
 
 source:
   path: ".."
@@ -68,7 +68,7 @@ test:
     - '$R -e "library(''immunedeconv'')"'
 
 about:
-  home: https://github.com/icbi-lab/immunedeconv
+  home: https://github.com/omnideconv/immunedeconv
   license: BSD_3_clause
   summary: "collection of methods for immune cell deconvolution of bulk RNA-seq samples."
   license_family: BSD

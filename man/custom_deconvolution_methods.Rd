@@ -12,7 +12,7 @@ custom_deconvolution_methods
 }
 \description{
 The available methods are
-\code{epic}, \code{cibersort}, \code{cibersort_abs}, \code{consensus_tme}, \code{base}
+\code{epic}, \code{cibersort}, \code{cibersort_abs}, \code{consensus_tme}, \code{seqimmucc}
 }
 \details{
 The object is a named vector. The names correspond to the display name of the method,

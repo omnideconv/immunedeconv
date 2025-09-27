@@ -27,7 +27,6 @@
 <url><loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_abis.html</loc></url>
 <url><loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_abis_default.html</loc></url>
 <url><loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_base_algorithm.html</loc></url>
-<url><loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_base_custom.html</loc></url>
 <url><loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_cibersort.html</loc></url>
 <url><loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_cibersort_custom.html</loc></url>
 <url><loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_consensus_tme.html</loc></url>
@@ -41,6 +40,7 @@
 <url><loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_mouse.html</loc></url>
 <url><loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_quantiseq.html</loc></url>
 <url><loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_seqimmucc.html</loc></url>
+<url><loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_seqimmucc_custom.html</loc></url>
 <url><loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_timer.html</loc></url>
 <url><loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolute_xcell.html</loc></url>
 <url><loc>https://icbi-lab.github.io/immunedeconv/reference/deconvolution_methods.html</loc></url>

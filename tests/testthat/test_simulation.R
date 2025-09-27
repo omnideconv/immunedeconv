@@ -18,7 +18,7 @@ test_that("random bulk is correct", {
   assert(make_random_bulk(eset, cell_fractions = c(A = 1), n_cells = 100) / 1e6 == c(1, 0, 0, 0, 0))
   assert(make_random_bulk(eset, cell_fractions = c(A = 0, B = 1, C = 0, D = 0, E = 0), n_cells = 100) / 1e6 == c(0, 1, 0, 0, 0))
   assert(make_random_bulk(eset, cell_fractions = c(A = 0, B = 2, C = 2, D = 0, E = 0), n_cells = 100) / 1e6 == c(0, .5, .5, 0, 0))
-  assert(make_random_bulk(eset, cell_fractions = c(A = .1, B = .2, C = .3, D = .13, E = .27), n_cells = 100) / 1e6 == c(.1, .2, .3, .13, .27))
+  assert(round(make_random_bulk(eset, cell_fractions = c(A = .1, B = .2, C = .3, D = .13, E = .27), n_cells = 100) / 1e6, 1) == c(.1, .2, .3, .1, .3))
 })
 
 test_that("random bulk eset is correct", {

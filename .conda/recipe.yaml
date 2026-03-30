@@ -15,7 +15,7 @@ requirements:
     - r-base >=4.1
     - r-dplyr >=0.7
     - r-magrittr >=1.5
-    - r-readr >=1.1
+    - r-readr >=1.4
     - r-readxl >=1.0
     - r-testit >=0.7
     - r-tibble >=1.4.2
@@ -38,7 +38,7 @@ requirements:
     - r-base >=4.1
     - r-dplyr >=0.7
     - r-magrittr >=1.5
-    - r-readr >=1.1
+    - r-readr >=1.4
     - r-readxl >=1.0
     - r-testit >=0.7
     - r-tibble >=1.4.2

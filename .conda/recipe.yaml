@@ -1,19 +1,14 @@
-{% set name = "r-immunedeconv" %}
-
 package:
-  name: {{ name }}
+  name: immunedeconv
   version: "develop"
 
 source:
   path: ".."
 
 build:
-  script: $R CMD INSTALL --build .
+  script: R CMD INSTALL --build .
   number: 0
   noarch: generic
-  rpaths:
-    - lib/R/lib/
-    - lib/
 
 requirements:
   host:
@@ -63,19 +58,19 @@ requirements:
     - r-consensustme
     - r-mmcpcounter
 
-test:
-  commands:
-    - '$R -e "library(''immunedeconv'')"'
+tests:
+  - r:
+      libraries:
+        - immunedeconv
 
 about:
-  home: https://github.com/omnideconv/immunedeconv
-  license: BSD_3_clause
+  repository: https://github.com/omnideconv/immunedeconv
+  homepage: https://omnideconv.org/immunedeconv/
+  license: GPL-2.0-only
   summary: "collection of methods for immune cell deconvolution of bulk RNA-seq samples."
-  license_family: BSD
   license_file: LICENSE
+  description: Collection of methods for immune cell deconvolution of bulk RNA-seq samples.
 
 extra:
-  recipe-maintainers:
-    - grst
   identifiers:
     - doi:10.1101/463828

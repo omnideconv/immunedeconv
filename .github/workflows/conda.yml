@@ -10,6 +10,10 @@ on:
   pull_request:
     branches: [master]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   tests:
     runs-on: ${{ matrix.os }}
@@ -20,26 +24,20 @@ jobs:
         os: ["ubuntu-latest", "macos-latest"]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - name: Setup Minoconda
-        uses: conda-incubator/setup-miniconda@v2
+      - name: Setup Miniconda
+        uses: conda-incubator/setup-miniconda@v3
         with:
-          auto-update-conda: true
-          miniforge-version: latest
-          use-mamba: true
+          mamba-version: "*"
           channels: conda-forge,bioconda
-          channel-priority: true
-          python-version: 3.9
+          channel-priority: strict
+          python-version: ${{ matrix.python }}
 
-      - name: Set-up channels and install conda build
+      - name: install rattler-build
         run: |
-          mamba install -y conda-build conda-verify
-        shell: bash
+          mamba install -y rattler-build
 
       - name: build and test package
         run: |
-          set -euxo pipefail
-          test -f .conda/meta.yaml
-          conda build .conda --no-anaconda-upload
-        shell: bash
+          cd .conda && rattler-build build -c conda-forge -c bioconda

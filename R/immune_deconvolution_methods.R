@@ -159,12 +159,43 @@ deconvolute_xcell <- function(gene_expression_matrix, arrays, expected_cell_type
 #' @param gene_expression_matrix a m x n matrix with m genes and n samples
 #' @param feature_types type of identifiers used for expression features. May be
 #'  one of `"affy133P2_probesets","HUGO_symbols","ENTREZ_ID"`
+#' @param log_transform  Controls whether the expression matrix is log2-transformed before
+#'  running MCP-counter. MCP-counter expects log-transformed data. One of `NULL` (default),
+#'  `TRUE`, or `FALSE`.
+#'  \itemize{
+#'    \item `NULL` – auto-detect: if `max(gene_expression_matrix) > 50` the data are assumed
+#'      to be in linear (TPM) scale and will be log2(x + 1)-transformed.
+#'    \item `TRUE` – always apply log2(x + 1) transformation.
+#'    \item `FALSE` – assume data are already log-transformed; no transformation is applied.
+#'  }
 #' @param ... passed through to original MCP-counter function. A native argument takes precedence
 #'   over an immunedeconv argument (e.g. `featureType` takes precedence over `feature_types`)
 #'  See [MCPcounter.estimate](https://github.com/ebecht/MCPcounter/blob/master/Source/R/MCPcounter.R#L19).
 #'
 #' @export
-deconvolute_mcp_counter <- function(gene_expression_matrix, feature_types = "HUGO_symbols", ...) {
+deconvolute_mcp_counter <- function(gene_expression_matrix, feature_types = "HUGO_symbols",
+                                    log_transform = NULL, ...) {
+  if (is.null(log_transform)) {
+    if (max(gene_expression_matrix, na.rm = TRUE) > 50) {
+      message(
+        "MCP-counter expects log-transformed expression data. ",
+        "The input data appears to be in linear (TPM) scale (max value > 50) and will be ",
+        "log2(x + 1)-transformed automatically. Set `log_transform = TRUE` or ",
+        "`log_transform = FALSE` to force or disable this behaviour."
+      )
+      gene_expression_matrix <- log2(gene_expression_matrix + 1)
+    } else {
+      message(
+        "MCP-counter expects log-transformed expression data. ",
+        "The input data appears to be already log-transformed (max value <= 50). ",
+        "No transformation applied. Set `log_transform = TRUE` or ",
+        "`log_transform = FALSE` to override this automatic detection."
+      )
+    }
+  } else if (isTRUE(log_transform)) {
+    gene_expression_matrix <- log2(gene_expression_matrix + 1)
+  }
+
   arguments <- dots_list(gene_expression_matrix, featuresType = feature_types, ..., .homonyms = "last")
   call <- rlang::call2(MCPcounter::MCPcounter.estimate, !!!arguments)
   eval(call)

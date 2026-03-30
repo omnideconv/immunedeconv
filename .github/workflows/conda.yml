@@ -17,6 +17,9 @@ concurrency:
 jobs:
   tests:
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash -el {0} # -l for login shell (conda), -e to fail on error
     name: conda ${{ matrix.os }}
     strategy:
       fail-fast: false

@@ -5,8 +5,6 @@
 #' @importFrom testit assert
 #' @importFrom dplyr select
 #' @importFrom stats na.omit
-#' @importFrom readxl read_xlsx read_excel
-#' @importFrom data.tree FromDataFrameNetwork
 #' @import magrittr
 #'
 #' @name cell_type_mapping
@@ -22,7 +20,7 @@ NULL
 cell_type_map <- NULL
 # gets attached on .onLoad, see zzz.R
 .get_cell_type_map <- function() {
-  read_xlsx(
+  readxl::read_xlsx(
     system.file("extdata", "cell_type_mapping.xlsx",
       package = "immunedeconv", mustWork = TRUE
     ),
@@ -52,7 +50,7 @@ available_datasets <- NULL
 cell_type_list <- NULL
 .get_cell_type_list <- function() {
   suppressWarnings({
-    tmp_sheet <- read_excel(
+    tmp_sheet <- readxl::read_excel(
       system.file("extdata", "cell_type_mapping.xlsx",
         package = "immunedeconv", mustWork = TRUE
       ),
@@ -77,7 +75,7 @@ cell_type_tree <- NULL
 .get_cell_type_tree <- function() {
   cell_type_list %>%
     as.data.frame() %>%
-    FromDataFrameNetwork()
+    data.tree::FromDataFrameNetwork()
 }
 
 

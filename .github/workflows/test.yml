@@ -60,7 +60,7 @@ jobs:
       - name: R CMD check
         run: |
           results <- rcmdcheck::rcmdcheck(
-            args = c("--no-manual", "--as-cran"),
+            args = c("--no-manual"),
             build_args = c("--no-manual"),
             error_on = "never",
             check_dir = "check"

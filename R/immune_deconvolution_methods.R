@@ -183,7 +183,7 @@ deconvolute_mcp_counter <- function(gene_expression_matrix, feature_types = "HUG
         "log2(x + 1)-transformed automatically. Set `log_transform = TRUE` or ",
         "`log_transform = FALSE` to force or disable this behaviour."
       )
-      gene_expression_matrix <- log2(gene_expression_matrix + 1)
+      gene_expression_matrix <- log2(as.matrix(gene_expression_matrix) + 1)
     } else {
       message(
         "MCP-counter expects log-transformed expression data. ",
@@ -193,7 +193,7 @@ deconvolute_mcp_counter <- function(gene_expression_matrix, feature_types = "HUG
       )
     }
   } else if (isTRUE(log_transform)) {
-    gene_expression_matrix <- log2(gene_expression_matrix + 1)
+    gene_expression_matrix <- log2(as.matrix(gene_expression_matrix) + 1)
   }
 
   arguments <- dots_list(gene_expression_matrix, featuresType = feature_types, ..., .homonyms = "last")

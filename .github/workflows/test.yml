@@ -52,7 +52,33 @@ jobs:
           cd preprocessCore
           R CMD INSTALL --configure-args="--disable-threading"  .
 
-      - uses: r-lib/actions/check-r-package@v2
+      # Simpler version – re-enable once the "stack imbalance" dependency bug is fixed:
+      # - uses: r-lib/actions/check-r-package@v2
+      #   with:
+      #     upload-snapshots: true
+
+      - name: R CMD check
+        run: |
+          results <- rcmdcheck::rcmdcheck(
+            args = c("--no-manual"),
+            build_args = c("--no-manual"),
+            error_on = "never",
+            check_dir = "check"
+          )
+          # Filter out known dependency bug (stack imbalance in '::' / '<-')
+          real_warnings <- Filter(
+            function(w) !grepl("stack imbalance", w),
+            results$warnings
+          )
+          if (length(results$errors) > 0 || length(real_warnings) > 0) {
+            print(results)
+            stop("R CMD check found errors or warnings.")
+          }
+        shell: Rscript {0}
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@main
         with:
-          upload-snapshots: true
-          error-on: '"error"'
+          name: ${{ matrix.config.os }}-r${{ matrix.config.r }}-results
+          path: check

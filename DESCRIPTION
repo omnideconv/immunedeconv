@@ -14,7 +14,7 @@ Imports:
     purrr (>= 1.0.2),
     dplyr (>= 0.7),
     magrittr (>= 1.5),
-    readr (>= 1.1),
+    readr (>= 1.4),
     readxl (>= 1.0),
     testit (>= 0.7),
     tibble (>= 1.4.2),

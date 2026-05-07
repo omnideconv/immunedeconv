@@ -183,7 +183,7 @@ tidyverse/ggplot2.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Paired"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_x_discrete</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">res_quantiseq</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="detailed_example_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
+<p><img src="detailed_example_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="768"></p>
 <p>We observe that</p>
 <ul>
 <li>the first two samples (LAU355, LAU1314) appear to contain a large
@@ -194,9 +194,8 @@ amount of “uncharacterized cells”</li>
 associated with bad prognosis.</li>
 </ul>
 <p>Estimating the amount of “uncharacterized cells” is a novel feature
-introduced by quanTIseq and EPIC <span class="citation">Finotello et al.
-(2019)</span>. This estimate often corresponds to the fraction of tumor
-cells in the sample.</p>
+introduced by quanTIseq and EPIC <span class="citation"><span class="nocase">Finotello et al.</span> (2019)</span>. This estimate
+often corresponds to the fraction of tumor cells in the sample.</p>
 <p>Let’s now apply MCP-counter to the same dataset.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_mcp_counter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">dataset_racle</span><span class="op">$</span><span class="va">expr_mat</span>, <span class="st">"mcp_counter"</span><span class="op">)</span></span></code></pre></div>
@@ -216,7 +215,7 @@ samples.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, vjust <span class="op">=</span> <span class="fl">0.5</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="detailed_example_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="detailed_example_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="672"></p>
 <p>With the scores being in arbitrary units, the results are not useful
 for judging if a cell type is present in the sample, or not. However, we
 can compare the relative values between samples and relate them to the
@@ -264,19 +263,18 @@ accuracy we can expect.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="va">cell_type</span> <span class="op">~</span> <span class="va">method</span>, scales <span class="op">=</span> <span class="st">"free_y"</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Dark2"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="detailed_example_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
+<p><img src="detailed_example_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="576"></p>
 <p>(MCP counter does not provide estimates for CD4+ T cells.)</p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-quantiseq2017" class="csl-entry">
-Finotello, Francesca, Clemens Mayer, Christina Plattner, Gerhard
-Laschober, Dietmar Rieder, Hubert Hackl, Anne Krogsdam, et al. 2019.
-<span>“Molecular and Pharmacological Modulators of the Tumor Immune
-Contexture Revealed by Deconvolution of RNA-Seq Data.”</span> <em>Genome
-Medicine</em> 11 (1): 34.
+<span class="nocase">Finotello, Francesca, Clemens Mayer, Christina
+Plattner, et al.</span> 2019. <span>“Molecular and Pharmacological
+Modulators of the Tumor Immune Contexture Revealed by Deconvolution of
+RNA-Seq Data.”</span> <em>Genome Medicine</em> 11 (1): 34.
 </div>
 <div id="ref-EPIC2017" class="csl-entry">
 Racle, Julien, Kaat de Jonge, Petra Baumgaertner, Daniel E Speiser, and
@@ -303,7 +301,7 @@ expression data</span>.”</span> <em>eLife</em> 6 (November): e26476. <a href="
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer>

@@ -77,9 +77,9 @@
 
 
 
-      </header><link href="immunedeconv_files/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+      </header><link href="immunedeconv_files/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
 <script src="immunedeconv_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="immunedeconv_files/viz-1.8.2/viz.js"></script><link href="immunedeconv_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
-<script src="immunedeconv_files/grViz-binding-1.0.11/grViz.js"></script><div class="row">
+<script src="immunedeconv_files/grViz-binding-1.0.12/grViz.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Getting started with immunedeconv</h1>
@@ -144,7 +144,7 @@ Vector Regression (SVR) (CIBERSORT) constrained least square regression
 <h3 id="input-data">Input Data<a class="anchor" aria-label="anchor" href="#input-data"></a>
 </h3>
 <p>The input data is a <code>gene</code>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>×</mo><annotation encoding="application/x-tex">\times</annotation></semantics></math><code>sample</code> gene expression matrix. In general values should
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>×</mi><annotation encoding="application/x-tex">\times</annotation></semantics></math><code>sample</code> gene expression matrix. In general values should
 be</p>
 <ul>
 <li>TPM-normalized</li>
@@ -231,11 +231,8 @@ use the nuSVR regression method, use the
 <span class="citation">(<a href="#ref-EPIC2017">Racle et al.
 2017</a>)</span>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="fu">immunedeconv</span><span class="fu">::</span><span class="va"><a href="../reference/dataset_racle.html">dataset_racle</a></span><span class="op">$</span><span class="va">expr_mat</span>, <span class="st">"quantiseq"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by</span></span>
-<span><span class="co">## 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'</span></span></code></pre>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">res</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="fu">immunedeconv</span><span class="fu">::</span><span class="va"><a href="../reference/dataset_racle.html">dataset_racle</a></span><span class="op">$</span><span class="va">expr_mat</span>, <span class="st">"quantiseq"</span><span class="op">)</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">res</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">cell_type</th>
@@ -337,12 +334,12 @@ license, and download the CIBERSORT source code.</p>
 <p>Note the storage location of these files. When using
 <code>immunedeconv</code>, you need to tell the package where it can
 find those files:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https:/omnideconv.org/immunedeconv">immunedeconv</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/set_cibersort_binary.html">set_cibersort_binary</a></span><span class="op">(</span><span class="st">"/path/to/CIBERSORT.R"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/set_cibersort_mat.html">set_cibersort_mat</a></span><span class="op">(</span><span class="st">"/path/to/LM22.txt"</span><span class="op">)</span></span></code></pre></div>
 <p>Afterwards, you can call</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">your_mixture_matrix</span>, <span class="st">"cibersort"</span><span class="op">)</span>   <span class="co"># or 'cibersort_abs'</span></span></code></pre></div>
 <p>as for any other method.</p>
 </div>
@@ -352,13 +349,13 @@ find those files:</p>
 <p>TIMER and ConsensusTME uses indication-specific reference profiles.
 Therefore, you <em>must</em> specify the tumor type when running TIMER
 or ConsensusTME:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">your_mixture_matrix</span>, <span class="st">"timer"</span>,</span>
 <span>            indications<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SKCM"</span>, <span class="st">"SKCM"</span>, <span class="st">"BLCA"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><code>indications</code> needs to be a vector that specifies an
 indication for each sample (=column) in the mixture matrix. The
 indications supported by TIMER are</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">immunedeconv</span><span class="fu">::</span><span class="va"><a href="../reference/timer_available_cancers.html">timer_available_cancers</a></span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1] "kich" "blca" "brca" "cesc" "gbm"  "hnsc" "kirp" "lgg"  "lihc" "luad"</span></span>
 <span><span class="co">## [11] "lusc" "prad" "sarc" "pcpg" "paad" "tgct" "ucec" "ov"   "skcm" "dlbc"</span></span>
@@ -385,7 +382,7 @@ both samples and genes in a single object.</p>
 instead of a gene expression matrix. In that case, <code>pData</code>
 requires a column that contains gene symbols. Which one needs to be
 specified in the <code><a href="../reference/deconvolute.html">deconvolute()</a></code> call:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="va">my_expression_set</span>, <span class="st">"quantiseq"</span>, column <span class="op">=</span> <span class="st">"&lt;column name&gt;"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -404,7 +401,7 @@ tree. For instance, quanTIseq provides scores for regulatory and
 non-regulatory CD4+ T cells independently, but you are interested in the
 fraction of overall CD4+ T cells. In that case you can use
 <code>map_result_to_celltypes</code> to sum up the scores:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deconvolute.html">deconvolute</a></span><span class="op">(</span><span class="fu">immunedeconv</span><span class="fu">::</span><span class="va"><a href="../reference/dataset_racle.html">dataset_racle</a></span><span class="op">$</span><span class="va">expr_mat</span>, <span class="st">"quantiseq"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/map_result_to_celltypes.html">map_result_to_celltypes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T cell CD4+"</span><span class="op">)</span>, <span class="st">"quantiseq"</span><span class="op">)</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">res</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -508,7 +505,7 @@ request.</p>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Finotello2018" class="csl-entry">
 Finotello, Francesca, and Zlatko Trajanoski. 2018. <span>“<span class="nocase">Quantifying tumor-infiltrating immune cells from
 transcriptomics data</span>.”</span> <em>Cancer Immunology,
@@ -521,9 +518,8 @@ enumeration of cancer and immune cell types from bulk tumor gene
 expression data</span>.”</span> <em>eLife</em> 6 (November): e26476. <a href="https://doi.org/10.7554/eLife.26476" class="external-link">https://doi.org/10.7554/eLife.26476</a>.
 </div>
 <div id="ref-sturm2019" class="csl-entry">
-Sturm, Gregor, Francesca Finotello, Florent Petitprez, Jitao David
-Zhang, Jan Baumbach, Wolf H Fridman, Markus List, and Tatsiana Aneichyk.
-2019. <span>“Comprehensive Evaluation of Transcriptome-Based Cell-Type
+Sturm, Gregor, Francesca Finotello, Florent Petitprez, et al. 2019.
+<span>“Comprehensive Evaluation of Transcriptome-Based Cell-Type
 Quantification Methods for Immuno-Oncology.”</span>
 <em>Bioinformatics</em> 35 (14): i436–45.
 </div>
@@ -546,7 +542,7 @@ Quantification Methods for Immuno-Oncology.”</span>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer>

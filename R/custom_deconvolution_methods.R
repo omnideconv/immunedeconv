@@ -64,8 +64,8 @@ deconvolute_cibersort_custom <- function(gene_expression_matrix, signature_matri
 
   temp.expression.file <- tempfile()
   temp.signature.file <- tempfile()
-  write_tsv(as_tibble(gene_expression_matrix, rownames = "gene_symbol"), path = temp.expression.file)
-  write_tsv(as_tibble(signature_matrix, rownames = "gene_symbol"), path = temp.signature.file)
+  write_tsv(as_tibble(gene_expression_matrix, rownames = "gene_symbol"), file = temp.expression.file)
+  write_tsv(as_tibble(signature_matrix, rownames = "gene_symbol"), file = temp.signature.file)
 
 
   arguments <- dots_list(temp.signature.file, temp.expression.file,

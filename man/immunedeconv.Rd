@@ -12,7 +12,7 @@ estimating immune cell fractions from bulk RNA sequencing data.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https:/omnideconv.org/immunedeconv}
+  \item https:/omnideconv.org/immunedeconv
   \item \url{https://github.com/omnideconv/immunedeconv}
   \item Report bugs at \url{https://github.com/omnideconv/immunedeconv/issues}
 }
@@ -23,6 +23,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Lorenzo Merotto \email{lorenzo.merotto@uibk.ac.at}
   \item Gregor Sturm \email{mail@gregor-sturm.de}
 }
 

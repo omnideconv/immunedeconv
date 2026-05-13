@@ -134,7 +134,7 @@ summarise_children <- function(df) {
   df[set_to_zero] <- 0
 
   # finally, sum up the children.
-  df_sum <- summarise_all(df, funs(sum))
+  df_sum <- summarise(df, across(everything(), sum))
   df_sum
 }
 

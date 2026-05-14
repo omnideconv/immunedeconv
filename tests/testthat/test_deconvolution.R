@@ -41,6 +41,45 @@ test_that("mcp_counter works", {
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
 })
 
+test_that("mcp_counter log_transform auto-detects raw TPM data", {
+  # test_mat has max value > 50, so auto-detection should log-transform
+  expect_message(
+    res <- deconvolute_mcp_counter(test_mat),
+    "log2\\(x \\+ 1\\)-transformed automatically"
+  )
+  assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+})
+
+test_that("mcp_counter log_transform auto-detects already log-transformed data", {
+  log_mat <- log2(test_mat + 1)
+  # max value should be <= 50, so auto-detection should not transform
+  expect_message(
+    res <- deconvolute_mcp_counter(log_mat),
+    "appears to be already log-transformed"
+  )
+  assert("matrix dimensions consistent", ncol(res) == ncol(log_mat))
+})
+
+test_that("mcp_counter log_transform NULL and TRUE give same result for raw TPM", {
+  # test_mat is raw TPM (max > 50), so NULL should auto-transform just like TRUE
+  suppressMessages(res_null <- deconvolute_mcp_counter(test_mat, log_transform = NULL))
+  res_true <- deconvolute_mcp_counter(test_mat, log_transform = TRUE)
+  expect_equal(res_null, res_true)
+})
+
+test_that("mcp_counter log_transform NULL and FALSE give same result for log-transformed data", {
+  log_mat <- log2(test_mat + 1)
+  # log_mat is already log-transformed (max <= 50), so NULL should skip like FALSE
+  suppressMessages(res_null <- deconvolute_mcp_counter(log_mat, log_transform = NULL))
+  res_false <- deconvolute_mcp_counter(log_mat, log_transform = FALSE)
+  expect_equal(res_null, res_false)
+})
+
+test_that("mcp_counter log_transform can be passed via deconvolute", {
+  res <- deconvolute(test_mat, "mcp_counter", log_transform = FALSE)
+  assert("matrix dimensions consistent", ncol(res) == ncol(test_mat) + 1)
+})
+
 test_that("epic works", {
   res <- deconvolute_epic(test_mat, tumor = TRUE, scale_mrna = TRUE)
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))

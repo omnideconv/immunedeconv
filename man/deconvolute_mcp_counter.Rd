@@ -7,6 +7,7 @@
 deconvolute_mcp_counter(
   gene_expression_matrix,
   feature_types = "HUGO_symbols",
+  log_transform = NULL,
   ...
 )
 }
@@ -15,6 +16,16 @@ deconvolute_mcp_counter(
 
 \item{feature_types}{type of identifiers used for expression features. May be
 one of \verb{"affy133P2_probesets","HUGO_symbols","ENTREZ_ID"}}
+
+\item{log_transform}{Controls whether the expression matrix is log2-transformed before
+running MCP-counter. MCP-counter expects log-transformed data. One of \code{NULL} (default),
+\code{TRUE}, or \code{FALSE}.
+\itemize{
+\item \code{NULL} – auto-detect: if \code{max(gene_expression_matrix) > 50} the data are assumed
+to be in linear (TPM) scale and will be log2(x + 1)-transformed.
+\item \code{TRUE} – always apply log2(x + 1) transformation.
+\item \code{FALSE} – assume data are already log-transformed; no transformation is applied.
+}}
 
 \item{...}{passed through to original MCP-counter function. A native argument takes precedence
 over an immunedeconv argument (e.g. \code{featureType} takes precedence over \code{feature_types})

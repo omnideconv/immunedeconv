@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">immunedeconv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.4</span>
       </span>
     </div>
 
@@ -69,6 +69,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">deconvolute_mcp_counter</span><span class="op">(</span></span>
 <span>  <span class="va">gene_expression_matrix</span>,</span>
 <span>  feature_types <span class="op">=</span> <span class="st">"HUGO_symbols"</span>,</span>
+<span>  log_transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -84,6 +85,16 @@
 <dt id="arg-feature-types">feature_types<a class="anchor" aria-label="anchor" href="#arg-feature-types"></a></dt>
 <dd><p>type of identifiers used for expression features. May be
 one of <code>"affy133P2_probesets","HUGO_symbols","ENTREZ_ID"</code></p></dd>
+
+
+<dt id="arg-log-transform">log_transform<a class="anchor" aria-label="anchor" href="#arg-log-transform"></a></dt>
+<dd><p>Controls whether the expression matrix is log2-transformed before
+running MCP-counter. MCP-counter expects log-transformed data. One of <code>NULL</code> (default),
+<code>TRUE</code>, or <code>FALSE</code>.</p><ul><li><p><code>NULL</code> – auto-detect: if <code>max(gene_expression_matrix) &gt; 50</code> the data are assumed
+to be in linear (TPM) scale and will be log2(x + 1)-transformed.</p></li>
+<li><p><code>TRUE</code> – always apply log2(x + 1) transformation.</p></li>
+<li><p><code>FALSE</code> – assume data are already log-transformed; no transformation is applied.</p></li>
+</ul></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

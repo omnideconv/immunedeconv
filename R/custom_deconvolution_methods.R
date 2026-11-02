@@ -15,7 +15,6 @@
 NULL
 
 
-
 #' List of methods that support the use of a custom signature
 #'
 #' The available methods are
@@ -38,7 +37,6 @@ custom_deconvolution_methods <- c(
 #
 # These functions let the users specify a custom signature matrix for the analysis
 ###########################################################################
-
 
 
 #' Deconvolute using CIBERSORT or CIBERSORT abs and a custom signature matrix.
@@ -125,8 +123,6 @@ deconvolute_epic_custom <- function(gene_expression_matrix, signature_matrix,
 
   t(epic_res_raw$cellFractions)
 }
-
-
 
 
 #' Deconvolute using ConsesnusTME and a custom signature matrix

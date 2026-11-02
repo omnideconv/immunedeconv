@@ -34,8 +34,6 @@ deconvolution_methods_mouse <- c(
 )
 
 
-
-
 ############################################################################
 # Deconvolution functions for consistently accessing each method
 #
@@ -43,7 +41,6 @@ deconvolution_methods_mouse <- c(
 # They can also be used by the end-user to access method-specific
 # arguments.
 ############################################################################
-
 
 
 #' Deconvolute using mMCP-counter
@@ -200,7 +197,6 @@ deconvolute_base_algorithm <- function(gene_expression_matrix, n_permutations = 
 
   return(t(results))
 }
-
 
 
 #' Perform deconvolution on a mouse RNAseq dataset

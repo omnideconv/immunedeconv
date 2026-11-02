@@ -54,8 +54,6 @@ reduce_mouse_cell_types <- function(deconvolution.results,
 }
 
 
-
-
 #' This function returns the list of all cell types in BASE/DCQ results,
 #'    along with the cell type they are mapped to
 #' @param method the method for which we want to get the cell types

@@ -287,12 +287,36 @@ deconvolute_cibersort <- function(gene_expression_matrix,
   source(get("cibersort_binary", envir = config_env))
 
   tmp_mat <- tempfile()
-  write_tsv(as_tibble(gene_expression_matrix, rownames = "gene_symbol"), file = tmp_mat)
-
   arguments <- dots_list(get("cibersort_mat", envir = config_env), tmp_mat,
     perm = 0,
     QN = quantile_norm, absolute = absolute, abs_method = abs_method, ..., .homonyms = "last"
   )
+
+
+  # Compatibility with CIBERSORT R script v1.02:
+  # v1.02 should match v1.04 results in relative mode and raise an error in absolute mode.
+  # Omit unsupported absolute-mode arguments. v1.02 filters to shared genes
+  # without aligning their order, which can pair expression values with the
+  # wrong signature genes. Therefore, align input rows to the signature before calling it.
+  # Unlike v1.04, v1.02 does not allow duplicate gene names in the expression matrix.
+  if (grepl("\\bv1\\.02\\b", readLines(get("cibersort_binary", envir = config_env), n = 1))) {
+    if (absolute) stop("CIBERSORT R script v1.02 does not support absolute mode; use version 1.04 or switch to relative mode.")
+    arguments[c("absolute", "abs_method")] <- NULL
+    signature <- read.table(get("cibersort_mat", envir = config_env),
+      header = TRUE, sep = "\t", row.names = 1, check.names = FALSE
+    )
+    genes <- rownames(gene_expression_matrix)
+    if (anyDuplicated(genes)) stop("CIBERSORT R script v1.02 requires unique gene names.")
+    common <- rownames(signature)[rownames(signature) %in% genes]
+    gene_expression_matrix <- gene_expression_matrix[
+      c(common, setdiff(genes, common)), ,
+      drop = FALSE
+    ]
+  }
+
+
+  write_tsv(as_tibble(gene_expression_matrix, rownames = "gene_symbol"), file = tmp_mat)
+
   call <- rlang::call2(CIBERSORT, !!!arguments)
   res <- eval(call)
 

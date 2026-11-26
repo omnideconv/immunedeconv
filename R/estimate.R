@@ -9,7 +9,6 @@
 #'
 
 
-
 #' ESTIMATE algortihm: This function computes stromal, immune, and ESTIMATE scores
 #' per sample using gene expression data, through GSEA. The ESTIMATE score is used
 #' to compute an estimate of the tumor purity

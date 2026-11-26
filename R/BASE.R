@@ -121,7 +121,6 @@ base_algorithm <- function(data, reg, perm = 100, median.norm = T) {
 }
 
 
-
 #' Souce code to create the compendium used kin the BASE algorithm, containing
 #'    up- and down-regulated weight sets that specify the
 # 	    specificity by which each gene is expressed by a given cell.

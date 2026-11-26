@@ -48,40 +48,56 @@ import(methods)
 import(readr)
 import(stringr)
 import(sva)
-importFrom(Biobase,ExpressionSet)
-importFrom(Biobase,exprs)
-importFrom(Biobase,fData)
-importFrom(Biobase,pData)
+importFrom(Biobase,
+  ExpressionSet,
+  exprs,
+  fData,
+  pData
+)
 importFrom(BiocParallel,bpparam)
 importFrom(EPIC,EPIC)
 importFrom(MASS,rlm)
-importFrom(biomaRt,getLDS)
-importFrom(biomaRt,useEnsembl)
+importFrom(biomaRt,
+  getLDS,
+  useEnsembl
+)
 importFrom(dplyr,select)
-importFrom(grDevices,dev.off)
-importFrom(grDevices,pdf)
-importFrom(graphics,abline)
-importFrom(graphics,barplot)
-importFrom(graphics,box)
-importFrom(graphics,mtext)
-importFrom(matrixStats,rowMedians)
-importFrom(matrixStats,rowSds)
+importFrom(grDevices,
+  dev.off,
+  pdf
+)
+importFrom(graphics,
+  abline,
+  barplot,
+  box,
+  mtext
+)
+importFrom(matrixStats,
+  rowMedians,
+  rowSds
+)
 importFrom(preprocessCore,normalize.quantiles)
 importFrom(purrr,map_dfr)
 importFrom(rlang,dots_list)
-importFrom(stats,aggregate)
-importFrom(stats,lm)
-importFrom(stats,lsfit)
-importFrom(stats,median)
-importFrom(stats,na.omit)
-importFrom(stats,qqplot)
+importFrom(stats,
+  aggregate,
+  lm,
+  lsfit,
+  median,
+  na.omit,
+  qqplot
+)
 importFrom(testit,assert)
-importFrom(tibble,as_tibble)
-importFrom(tibble,column_to_rownames)
-importFrom(tibble,rowid_to_column)
-importFrom(utils,assignInMyNamespace)
-importFrom(utils,capture.output)
-importFrom(utils,read.csv)
-importFrom(utils,read.table)
-importFrom(utils,tail)
-importFrom(utils,write.table)
+importFrom(tibble,
+  as_tibble,
+  column_to_rownames,
+  rowid_to_column
+)
+importFrom(utils,
+  assignInMyNamespace,
+  capture.output,
+  read.csv,
+  read.table,
+  tail,
+  write.table
+)

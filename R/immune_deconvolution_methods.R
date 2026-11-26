@@ -73,7 +73,6 @@ set_cibersort_mat <- function(path) {
 }
 
 
-
 ###########################################################################
 # Deconvolution functions for consistently accessing each method
 #
@@ -399,7 +398,6 @@ deconvolute_consensus_tme <- function(gene_expression_matrix,
 
   return(results)
 }
-
 
 
 #' Annotate unified cell_type names

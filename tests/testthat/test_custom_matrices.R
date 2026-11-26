@@ -4,7 +4,6 @@ test_mat <- read_tsv("bulk_mat.tsv") %>%
 test_mat <- as.matrix(test_mat)
 
 
-
 test_that("seqimmucc works with a custom signature matrix", {
   test_mat <- dataset_racle$expr_mat
   sign_mat <- matrix(120 * runif(15000), ncol = 10)
@@ -20,7 +19,6 @@ test_that("seqimmucc works with a custom signature matrix", {
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
   assert("matrix dimensions consistent", nrow(res) == ncol(sign_mat))
 })
-
 
 
 test_that("EPIC works with a custom signature matrix", {
@@ -70,8 +68,6 @@ test_that("EPIC works with a custom signature matrix and variances", {
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
   assert("matrix dimensions consistent", nrow(res) == (ncol(sign_mat) + 1))
 })
-
-
 
 
 test_that("ConsensusTME works with a custom signature matrix", {

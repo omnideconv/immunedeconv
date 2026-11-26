@@ -303,12 +303,15 @@ deconvolute_cibersort <- function(gene_expression_matrix,
     if (absolute) stop("CIBERSORT R script v1.02 does not support absolute mode; use version 1.04 or switch to relative mode.")
     arguments[c("absolute", "abs_method")] <- NULL
     signature <- read.table(get("cibersort_mat", envir = config_env),
-      header = TRUE, sep = "\t", row.names = 1, check.names = FALSE)
+      header = TRUE, sep = "\t", row.names = 1, check.names = FALSE
+    )
     genes <- rownames(gene_expression_matrix)
     if (anyDuplicated(genes)) stop("CIBERSORT R script v1.02 requires unique gene names.")
     common <- rownames(signature)[rownames(signature) %in% genes]
     gene_expression_matrix <- gene_expression_matrix[
-      c(common, setdiff(genes, common)), , drop = FALSE]
+      c(common, setdiff(genes, common)), ,
+      drop = FALSE
+    ]
   }
 
 
